@@ -5,18 +5,20 @@
 // Contraptions stored to JSON data (done)
 // Basic block actions (done)
 // Contraptions can deal damage to each other (done)
+// Nice looking edit popup that behaves properly (done)
+// Restricted build area (done)
+// better camera (done)
+// Rocket block (done)
+
+
 
 // Version 0.2: 
 
-// Restricted build area (done)
-// better camera (done)
 // Better Build Menu
-// Nice looking edit popup that behaves properly
 // Blocktype buttons
 // Save button not as a keybind
 // Load button not as a keybind
 // Clear as a button not a keybind
-// Rocket block (done)
 // Levels
 // Level builder for devs
 

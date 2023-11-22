@@ -111,6 +111,33 @@ class Camera {
         // Return the corrected mouse position
         return new Vector2(correctedX, correctedY);
     }
+
+    toggleFullScreen() {
+        let container = document.getElementById('game-container');
     
+        if (!document.fullscreenElement) {
+            // If not in fullscreen mode, enter fullscreen mode
+            if (container.requestFullscreen) {
+                container.requestFullscreen();
+            } else if (container.mozRequestFullScreen) { /* Firefox */
+                container.mozRequestFullScreen();
+            } else if (container.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                container.webkitRequestFullscreen();
+            } else if (container.msRequestFullscreen) { /* IE/Edge */
+                container.msRequestFullscreen();
+            }
+        } else {
+            // If already in fullscreen mode, exit fullscreen mode
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+                document.msExitFullscreen();
+            }
+        }
+    }
 }
 export { Camera };

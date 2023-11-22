@@ -1,17 +1,17 @@
 import { World } from './world.js';
-import Building from './building_refactor.js';
+import Building from './building.js';
 import { Camera } from './camera.js';
 // Create an engine
 var engine = Matter.Engine.create();
 
 // Create a renderer
+var container = document.getElementById('game-container');
 var render = Matter.Render.create({
-    element: document.body,
+    element: container,
     engine: engine,
     options: {
         wireframes: false // Set wireframes to false to show styles
     }
-    
 });
 var mouse = Matter.Mouse.create(render.canvas);
 // create the camera

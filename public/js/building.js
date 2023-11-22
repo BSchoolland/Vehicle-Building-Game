@@ -2,8 +2,295 @@
 import {BasicBlock, WheelBlock, CannonBlock, rocketBoosterBlock } from './blocks.js';
 import {Contraption} from './contraption.js';
 
+class rightClickMenu {
+    constructor() {
+        this.block = null;
+        // create a menu for the block
+        this.menu = document.createElement('div');
+        this.menu.classList.add('menu');
+        // create a button to flip the block
+        this.flipButton = document.createElement('button');
+        this.flipButton.classList.add('menu-button');
+        this.flipButton.innerText = 'Flip';
+        this.menu.appendChild(this.flipButton);
+        // create a button to remove the block
+        this.removeButton = document.createElement('button');
+        this.removeButton.classList.add('menu-button');
+        this.removeButton.innerText = 'Remove';
+        this.menu.appendChild(this.removeButton);
+        // create a button to cancel
+        this.cancelButton = document.createElement('button');
+        this.cancelButton.classList.add('menu-button');
+        this.cancelButton.innerText = 'Cancel';
+        this.menu.appendChild(this.cancelButton);
+        // if the user clicks outside the menu, hide it
+        document.body.addEventListener('click', (event) => {
+            if (event.target != this.menu) {
+                this.hide();
+            }
+        });
+        // style the menu
+        this.menu.classList.add('right-click-menu');
+        // set the button class
+        this.flipButton.classList.add('right-click-menu-button');
+        this.removeButton.classList.add('right-click-menu-button');
+        this.cancelButton.classList.add('right-click-menu-button');
+        // hide the menu
+        this.hide();
+        // Add the menu to the game container
+        let gameContainer = document.getElementById('game-container');
+        gameContainer.appendChild(this.menu);
+    }
+    setSelectBlock(block) {
+        this.block = block;
+        // set the button functions
+        this.flipButton.onclick = () => {
+            this.block.contraption.flipX(this.block);
+            this.hide();
+        };
+        this.removeButton.onclick = () => {
+            this.block.contraption.removeBlock(this.block);
+            this.hide();
+        };
+        this.cancelButton.onclick = () => {
+            this.hide();
+        };
+    }
+
+    show(x, y) {
+        // Position the menu
+        this.menu.style.position = 'absolute';
+        this.menu.style.left = `${x}px`;
+        this.menu.style.top = `${y}px`;
+        // display the menu
+        this.menu.style.display = 'block';
+    }
+    hide() {
+        // hide the menu
+        this.menu.style.display = 'none';
+    }
+}
+
+// a build menu class, for the bottom of the screen.
+// the build menu will contain buttons for each block type, a button to save the contraption, a button to load a contraption, a button to clear the contraption, and a button to toggle build mode.
+class BuildMenu {
+    constructor(building) {
+        this.building = building;
+        // create the build menu
+        this.menu = document.createElement('div');
+        this.menu.classList.add('menu');
+        // create a button for each block type
+        this.basicBlockButton = document.createElement('button');
+        this.basicBlockButton.classList.add('menu-button');
+        this.basicBlockButton.innerText = 'Basic Block (1)';
+        this.menu.appendChild(this.basicBlockButton);
+        this.wheelBlockButton = document.createElement('button');
+        this.wheelBlockButton.classList.add('menu-button');
+        this.wheelBlockButton.innerText = 'Wheel Block (2)';
+        this.menu.appendChild(this.wheelBlockButton);
+        this.cannonBlockButton = document.createElement('button');
+        this.cannonBlockButton.classList.add('menu-button');
+        this.cannonBlockButton.innerText = 'Cannon Block (3)';
+        this.menu.appendChild(this.cannonBlockButton);
+        this.rocketBoosterBlockButton = document.createElement('button');
+        this.rocketBoosterBlockButton.classList.add('menu-button');
+        this.rocketBoosterBlockButton.innerText = 'Rocket Booster Block (4)';
+        this.menu.appendChild(this.rocketBoosterBlockButton);
+        // create a button to save the contraption
+        this.saveButton = document.createElement('button');
+        this.saveButton.classList.add('menu-button');
+        this.saveButton.innerText = 'Save';
+        this.menu.appendChild(this.saveButton);
+        // create a button to load a contraption
+        this.loadButton = document.createElement('button');
+        this.loadButton.classList.add('menu-button');
+        this.loadButton.innerText = 'Load';
+        this.menu.appendChild(this.loadButton);
+        // create a button to clear the contraption
+        this.clearButton = document.createElement('button');
+        this.clearButton.classList.add('menu-button');
+        this.clearButton.innerText = 'Clear';
+        this.menu.appendChild(this.clearButton);
+        // create a button to toggle build mode
+        this.buildModeButton = document.createElement('button');
+        this.buildModeButton.classList.add('menu-button');
+        this.buildModeButton.innerText = 'Build Mode (b)';
+        this.menu.appendChild(this.buildModeButton);
+        // button to toggle fullscreen
+        this.fullscreenButton = document.createElement('button');
+        this.fullscreenButton.classList.add('menu-button');
+        this.fullscreenButton.innerText = 'Fullscreen';
+        this.menu.appendChild(this.fullscreenButton);
+        // style the menu
+        this.menu.classList.add('build-menu');
+        // set the button class
+        this.basicBlockButton.classList.add('build-menu-button');
+        this.wheelBlockButton.classList.add('build-menu-button');
+        this.cannonBlockButton.classList.add('build-menu-button');
+        this.rocketBoosterBlockButton.classList.add('build-menu-button');
+        this.saveButton.classList.add('build-menu-button');
+        this.loadButton.classList.add('build-menu-button');
+        this.clearButton.classList.add('build-menu-button');
+        this.buildModeButton.classList.add('build-menu-button');
+        // Add the menu to the game container
+        let gameContainer = document.getElementById('game-container');
+        gameContainer.appendChild(this.menu);
+        // initialize the menu
+        this.init(building);
+    }
+    init(building) {
+        // set the button functions
+        this.basicBlockButton.onclick = () => {
+            // make sure build mode is enabled
+            if (!building.buildInProgress) {
+                return;
+            }
+            building.setCurrentBlockType(BasicBlock);
+            // set this button's class to active
+            this.basicBlockButton.classList.add('active');
+            this.wheelBlockButton.classList.remove('active');
+            this.cannonBlockButton.classList.remove('active');
+            this.rocketBoosterBlockButton.classList.remove('active');
+        };
+        this.wheelBlockButton.onclick = () => {
+            // make sure build mode is enabled
+            if (!building.buildInProgress) {
+                return;
+            }
+            building.setCurrentBlockType(WheelBlock);
+            // set this button's class to active
+            this.basicBlockButton.classList.remove('active');
+            this.wheelBlockButton.classList.add('active');
+            this.cannonBlockButton.classList.remove('active');
+            this.rocketBoosterBlockButton.classList.remove('active');
+        };
+        this.cannonBlockButton.onclick = () => {
+            // make sure build mode is enabled
+            if (!building.buildInProgress) {
+                return;
+            }
+            building.setCurrentBlockType(CannonBlock);
+            this.basicBlockButton.classList.remove('active');
+            this.wheelBlockButton.classList.remove('active');
+            this.cannonBlockButton.classList.add('active');
+            this.rocketBoosterBlockButton.classList.remove('active');
+        };
+        this.rocketBoosterBlockButton.onclick = () => {
+            // make sure build mode is enabled
+            if (!building.buildInProgress) {
+                return;
+            }
+            building.setCurrentBlockType(rocketBoosterBlock);
+            this.basicBlockButton.classList.remove('active');
+            this.wheelBlockButton.classList.remove('active');
+            this.cannonBlockButton.classList.remove('active');
+            this.rocketBoosterBlockButton.classList.add('active');
+        };
+        this.saveButton.onclick = () => {
+            // make sure build mode is enabled
+            if (!building.buildInProgress) {
+                return;
+            }
+            // save the contraption to a JSON object
+            let contraptionJson = building.contraption.save();
+            // download the JSON object as a file
+            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(contraptionJson));
+            let dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "contraption.json");
+            dlAnchorElem.click();
+        };
+        this.loadButton.onclick = () => {
+            if (!building.buildInProgress) {
+                return;
+            }
+            // bring up a file input dialog
+            let fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.click();
+            // when a file is selected, load the contraption
+            fileInput.onchange = (event) => {
+                let file = event.target.files[0];
+                let reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = () => {
+                    let contraptionJson = JSON.parse(reader.result);
+                    // clear the existing contraption
+                    building.contraption.clear();
+                    // load the contraption from the JSON object
+                    building.contraption.load(contraptionJson);
+                };
+            };
+        };
+        this.clearButton.onclick = () => {
+            if (!building.buildInProgress) {
+                return;
+            }
+            building.contraption.clear();
+        };
+        this.buildModeButton.onclick = () => {
+            building.buildInProgress = !building.buildInProgress;
+            if (building.buildInProgress) {
+                // set this button's class to active
+                this.buildModeButton.classList.add('active');
+                // activate the basic block button and set the current block type to BasicBlock
+                this.basicBlockButton.classList.add('active');
+                building.setCurrentBlockType(BasicBlock);
+                console.log('Build mode enabled');
+                if (building.contraption) {
+                    building.contraption.despawn();
+                }
+                else {
+                    console.log('Creating new contraption');
+                    building.contraption = new Contraption(building.engine, building.camera);
+                }
+                // display a grid over the build area
+                building.displayGrid();
+                // get rid of the camera target
+                building.camera.removeTarget();
+                // set the camera viewport to the size of the build area
+                building.camera.setViewport(building.buildArea.width * 2, building.buildArea.height * 2);
+                // set the camera position to the center of the build area
+
+                building.camera.setCenterPosition(building.buildArea.x + building.buildArea.width / 2, building.buildArea.y + building.buildArea.height / 2);
+            } else {
+                // remove the active class from all the block type buttons
+                this.basicBlockButton.classList.remove('active');
+                this.wheelBlockButton.classList.remove('active');
+                this.cannonBlockButton.classList.remove('active');
+                this.rocketBoosterBlockButton.classList.remove('active');
+                // remove the active class from this button
+                this.buildModeButton.classList.remove('active');
+                building.removeGrid();
+                console.log('Build mode disabled');
+                // spawn the contraption
+                building.contraption.spawn();
+
+                // set the camera viewport to the size of the canvas
+                const canvas = document.querySelector('canvas');
+                building.camera.setViewport(canvas.width, canvas.height);
 
 
+                // set the camera target to a block in the contraption
+
+                building.camera.setTarget(building.contraption.blocks[0]);
+            }
+        };
+        this.fullscreenButton.onclick = () => {
+            this.building.camera.toggleFullScreen();
+        };
+        // Assuming this is inside a method where 'this' refers to an object that has 'building' property
+        const menu = document.querySelector('.build-menu'); // Adjust the selector as needed
+
+        menu.style.bottom = '0px'; // Distance from the bottom of the canvas
+        menu.style.left = 500; //`${rect.left + (rect.width / 2) - (menu.offsetWidth / 2)}px`; // Center horizontally
+        
+    }
+}
+
+        
+
+// a refactored version of the building class
 class Building {
     constructor(engine, camera) {
         this.engine = engine;
@@ -19,6 +306,10 @@ class Building {
         };
         this.grid = 50;
         this.gridLines = [];
+        // right click menu
+        this.rightClickMenu = new rightClickMenu();
+        // build menu
+        this.buildMenu = new BuildMenu(this);
     }
 
     setCurrentBlockType(blockType) {
@@ -28,16 +319,15 @@ class Building {
     init() {
         // Add event listener for canvas click
         const canvas = document.querySelector('canvas');
-        // Add event listener for left click
+        // Add event listener for placing blocks
         canvas.addEventListener('click', (event) => this.handleCanvasClick(event));
-        // Add event listener for space bar
+        // Add event listener for keys
         document.addEventListener('keydown', (event) => this.handleKeyDown(event));
-        // Add event listener for right click
+        // Add event listener for block editing
         canvas.addEventListener('contextmenu', (event) => this.handleRightClick(event));
-
     }
 
-    handleCanvasClick(event) {
+    handleCanvasClick(_event) {
         // make sure build mode is enabled
         if (!this.buildInProgress) {
             return;
@@ -69,58 +359,19 @@ class Building {
         // Add the block to the contraption
         this.contraption.addBlock(newBlock);
     }
-    createRightClickMenu(block) {
-        // create a menu for the block
-        let menu = document.createElement('div');
-        menu.classList.add('menu');
-        // create a button to flip the block
-        let flipButton = document.createElement('button');
-        flipButton.classList.add('menu-button');
-        flipButton.innerText = 'Flip';
-        flipButton.onclick = () => {
-            this.contraption.flipX(block);
-            menu.remove();
+    showRightClickMenu(block, event) {
+        // set the menu's block
+        this.rightClickMenu.setSelectBlock(block);
+        // get the relative click position using the event
+        let pos = {
+            x: event.clientX,
+            y: event.clientY
         };
-        menu.appendChild(flipButton);
-        // create a button to remove the block
-        let removeButton = document.createElement('button');
-        removeButton.classList.add('menu-button');
-        removeButton.innerText = 'Remove';
-        removeButton.onclick = () => {
-            this.contraption.removeBlock(block);
-            menu.remove();
-        };
-        menu.appendChild(removeButton);
-        // create a button to cancel
-        let cancelButton = document.createElement('button');
-        cancelButton.classList.add('menu-button');
-        cancelButton.innerText = 'Cancel';
-        cancelButton.onclick = () => {
-            menu.remove();
-        };
-        menu.appendChild(cancelButton);
-        // Add the menu to the document
-    document.body.appendChild(menu);
+        // show the menu
+        this.rightClickMenu.show(pos.x, pos.y);
+    }
 
-    // Get the canvas element and its bounding rectangle
-    let canvas = document.querySelector('canvas'); // Adjust selector if necessary
-    let rect = canvas.getBoundingClientRect();
-
-    // Convert block's position to screen coordinates
-    let scaleX = canvas.width / rect.width; // Canvas vs. screen scaling for width
-    let scaleY = canvas.height / rect.height; // Canvas vs. screen scaling for height
-
-    // Calculate the screen position
-    let screenX = rect.left + block.x * scaleX;
-    let screenY = rect.top + block.y * scaleY;
-
-    // Position the menu
-    menu.style.position = 'absolute';
-    menu.style.left = `${screenX}px`;
-    menu.style.top = `${screenY}px`;
-}
-
-    handleRightClick(_e) {
+    handleRightClick(event) {
         // edit the block at the click position
         // make sure build mode is enabled
         if (!this.buildInProgress) {
@@ -135,62 +386,26 @@ class Building {
         // find the block at this position
         let block = this.contraption.blocks.find(block => block.x === x && block.y === y);
         if (block) {
-            this.createRightClickMenu(block);
+            this.showRightClickMenu(block, event);
         }
     }
 
     handleKeyDown(event) {
-        // If the space bar is pressed, toggle build mode
-        if (event.keyCode === 32) {
-            this.buildInProgress = !this.buildInProgress;
-            if (this.buildInProgress) {
-                console.log('Build mode enabled');
-                if (this.contraption) {
-                    this.contraption.despawn();
-                }
-                else {
-                    console.log('Creating new contraption');
-                    this.contraption = new Contraption(this.engine, this.camera);
-                }
-                // display a grid over the build area
-                this.displayGrid();
-                // get rid of the camera target
-                this.camera.removeTarget();
-                // set the camera viewport to the size of the build area 
-                this.camera.setViewport(this.buildArea.width * 2, this.buildArea.height * 2);
-
-                // set the camera position to the center of the build area
-                this.camera.setCenterPosition(this.buildArea.x + this.buildArea.width / 2, this.buildArea.y + this.buildArea.height / 2);
-                
-            } else {
-                this.removeGrid();
-                console.log('Build mode disabled');
-                // spawn the contraption
-                this.contraption.spawn();
-
-                // set the camera viewport to the size of the canvas
-                const canvas = document.querySelector('canvas');
-                this.camera.setViewport(canvas.width, canvas.height);
-                // set the camera target to a block in the contraption
-                this.camera.setTarget(this.contraption.blocks[0]);
-                
-            }
-        }
-        // if the 1 key is pressed, set the current block type to BasicBlock
+        // if the 1 key is pressed, click the basic block button
         if (event.keyCode === 49) {
-            this.setCurrentBlockType(BasicBlock);
+            this.buildMenu.basicBlockButton.click();
         }
-        // if the 2 key is pressed, set the current block type to WheelBlock
+        // if the 2 key is pressed, click the wheel block button
         if (event.keyCode === 50) {
-            this.setCurrentBlockType(WheelBlock);
+            this.buildMenu.wheelBlockButton.click();
         }
-        // if the 3 key is pressed, set the current block type to CannonBlock
+        // if the 3 key is pressed, click the cannon block button
         if (event.keyCode === 51) {
-            this.setCurrentBlockType(CannonBlock);
+            this.buildMenu.cannonBlockButton.click();
         }
-        // if the 4 key is pressed, set the current block type to rocketBoosterBlock
+        // if the 4 key is pressed, click the rocket booster block button
         if (event.keyCode === 52) {
-            this.setCurrentBlockType(rocketBoosterBlock);
+            this.buildMenu.rocketBoosterBlockButton.click();
         }
         // If the Z key is pressed, undo the last block placed
         if (event.keyCode === 90) {
@@ -200,50 +415,10 @@ class Building {
         if (event.keyCode === 88) {
             this.contraption.redo();
         }
-        // If the C key is pressed, clear the contraption
-        if (event.keyCode === 67) {
-            if (!this.buildInProgress) {
-                return;
-            }
-            this.contraption.clear();
-        }
-        // if the S key is pressed, save the contraption
-        if (event.keyCode === 83) {
-            // make sure build mode is enabled
-            if (!this.buildInProgress) {
-                return;
-            }
-            // save the contraption to a JSON object
-            let contraptionJson = this.contraption.save();
-            // download the JSON object as a file
-            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(contraptionJson));
-            let dlAnchorElem = document.createElement('a');
-            dlAnchorElem.setAttribute("href", dataStr);
-            dlAnchorElem.setAttribute("download", "contraption.json");
-            dlAnchorElem.click();
-        }
-        // if the L key is pressed, load a contraption
-        if (event.keyCode === 76) {
-            if (!this.buildInProgress) {
-                return;
-            }
-            // bring up a file input dialog
-            let fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.click();
-            // when a file is selected, load the contraption
-            fileInput.onchange = (event) => {
-                let file = event.target.files[0];
-                let reader = new FileReader();
-                reader.readAsText(file);
-                reader.onload = () => {
-                    let contraptionJson = JSON.parse(reader.result);
-                    // clear the existing contraption
-                    this.contraption.clear();
-                    // load the contraption from the JSON object
-                    this.contraption.load(contraptionJson);
-                };
-            };
+
+        // if the B key is pressed, toggle build mode
+        if (event.keyCode === 66) {
+            this.buildMenu.buildModeButton.click();
         }
     }
     displayGrid() {

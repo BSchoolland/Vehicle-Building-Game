@@ -1,5 +1,5 @@
 // Plan:
-// Version 0.1:
+// Version 0.1: (completed)
 
 // 3 Block types (done)
 // Contraptions stored to JSON data (done)
@@ -7,18 +7,21 @@
 // Contraptions can deal damage to each other (done)
 // Nice looking edit popup that behaves properly (done)
 // Restricted build area (done)
-// better camera (done)
+// Camera (done)
 // Rocket block (done)
 
 
 
-// Version 0.2: 
+// Version 0.2: (completed)
 
-// Better Build Menu
-// Blocktype buttons
-// Save button not as a keybind
-// Load button not as a keybind
-// Clear as a button not a keybind
+// Better Build Menu (done)
+// Blocktype buttons (done)
+// Save button not as a keybind (done)
+// Load button not as a keybind (done)
+// Clear as a button not a keybind (done)
+
+// version 0.2.1
+
 // Levels
 // Level builder for devs
 

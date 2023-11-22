@@ -1,0 +1,33 @@
+/* Style for the right-click menu container */
+.right-click-menu {
+    background-color: #1a3a5f; /* Dark blue background */
+    border: 1px solid #557da6; /* Lighter blue border */
+    color: #e4e8ec; /* Light text color */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    font-family: 'Courier New', monospace; /* Font that gives a typewritten or technical feel */
+    text-align: center; /* Center align the content */
+}
+
+/* Style for each button in the menu */
+.right-click-menu-button {
+    background-color: #2b5572; /* Slightly lighter blue for buttons */
+    color: #e4e8ec; /* Light text color for contrast */
+    border: none;
+    padding: 5px 10px;
+    margin: 10px 0; /* Adjusted margin for vertical stacking */
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase; /* Makes text uppercase for a more formal look */
+    font-weight: bold;
+    display: block; /* Make buttons block-level elements */
+    width: 100%; /* Adjust the width as needed */
+    margin-left: auto; /* Auto margins for horizontal centering */
+    margin-right: auto;
+}
+
+.right-click-menu-button:hover {
+    background-color: #3b6f92; /* Change background on hover for interactive feel */
+}

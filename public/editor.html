@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Game Level Editor</title>
-    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.16.1/build/matter.min.js"></script>
+    <title>Matter.js simulation</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+    <!-- import css -->
+    <link rel="stylesheet" href="css/menu.css">
 </head>
 <body>
-    <script type="module" src="js/editor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+    <!-- game container object -->
+    <div id="game-container"></div>
+    <!-- runs the matter.js simulation -->
+    <script type="module" src = "js/editor.js"></script>
 </body>
 </html>

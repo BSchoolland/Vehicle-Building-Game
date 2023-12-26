@@ -1,13 +1,9 @@
-import {BasicBlock, WheelBlock, CannonBlock, rocketBoosterBlock} from './blocks.js';
+import { GrassBlock } from "./mapBlocks";
 const blockTypes = {
-    BasicBlock,
-    WheelBlock,
-    CannonBlock,
-    rocketBoosterBlock
+    GrassBlock
 };
-
 // This file contains the Contraption class which is used to represent a contraption in the game.
-class Contraption {
+class Level {
     constructor(engine, camera = 'AI') {
         this.engine = engine;
         if (camera === 'AI') {
@@ -62,13 +58,6 @@ class Contraption {
         // add the action to the action stack
         if (addToActionStack){
             this.actionStack.push({ action: 'remove', block: block });
-        }
-    }
-    flipX(block, addToActionStack = true) {
-        block.flipX();
-        // add the action to the action stack
-        if (addToActionStack){
-            this.actionStack.push({ action: 'flipX', block: block });
         }
     }
     // save the contraption to a JSON object
@@ -128,43 +117,6 @@ class Contraption {
             this.totalHitPoints += block.hitPoints;
         });
     }
-    // spawn the contraption in the world by making all blocks movable
-    spawn(x = 0, y = 0) {
-        // set the position of each block to be relative to x and y
-        this.blocks.forEach(block => {
-            block.x += x;
-            block.y += y;
-        });  
-        // reset all blocks (this fixes a bug where blocks would be spawned with incorrect positions)
-        this.blocks.forEach(block => {
-            block.reset(false);
-        });
-        // weld all blocks
-        this.blocks.forEach(block => {
-            block.makeWelds();
-        });
-        // calculate the cost and hit points
-        this.calculateCost();
-        this.calculateHitPoints();
-        // make all blocks movable
-        this.blocks.forEach(block => {
-            block.makeMovable();
-        });
-        // reset the undo stack and action stack
-        this.actionStack = [];
-        this.undoStack = [];
-        // the contraption has been spawned
-        this.spawned = true;
-    }
-    // despawn the contraption by making all blocks static
-    despawn() {
-        this.spawned = false;
-        this.blocks.forEach(block => {
-            block.reset();
-        });
-        
-    }
-    // undo the last block placed
     undo() {
         if (this.actionStack.length > 0) {
             var lastAction = this.actionStack.pop();
@@ -196,22 +148,6 @@ class Contraption {
             this.actionStack.push(lastUndoAction);
         }
     }
-
-    // update the contraption
-    update() {
-        // update all blocks
-        this.blocks.forEach(block => {
-            block.update();
-        }); 
-    }
-    // press a key
-    pressKey(key) {
-        this.keysPressed[key] = true;
-    }
-    // release a key
-    releaseKey(key) {
-        this.keysPressed[key] = false;
-    }
 }
 
-export { Contraption };
+export { Level };

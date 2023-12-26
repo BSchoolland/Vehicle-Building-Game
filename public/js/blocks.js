@@ -32,13 +32,15 @@ class Block {
         this.flippedX = false;
         this.simetricalX = true; // most blocks are simetrical in the x direction
     }
-    reset() {
+    reset(atOriginalPosition = true) {
         // deletes all bodies and constraints then recreates them at the original position
         this.removeFromWorld(this.contraption.engine.world);
         this.bodies = [];
         this.constraints = [];
-        this.x = this.originalX;
-        this.y = this.originalY;
+        if (atOriginalPosition) {
+            this.x = this.originalX;
+            this.y = this.originalY;
+        }
         this.makeBodies();
         this.makeConstraints();
         this.resetValues();
@@ -615,7 +617,7 @@ class rocketBoosterBlock extends Block {
 
     }
     resetValues() {
-        this.fuel = 100;
+        this.fuel = 300;
     }
     update() {
         // check if the rocket has fuel and the shift key is pressed
@@ -641,6 +643,5 @@ class rocketBoosterBlock extends Block {
             }, 100);      
         }
     }
-
 }
 export { BasicBlock, WheelBlock, CannonBlock, rocketBoosterBlock };

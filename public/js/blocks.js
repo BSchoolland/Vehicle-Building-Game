@@ -352,6 +352,7 @@ class WheelBlock extends Block {
         this.weldableFaces = ['top'];
         this.touchingGround = false;
         this.spinSpeed = 0.5;
+        this.acceleration = 0.15;
 
         // this block is not simetrical in the x direction
         this.simetricalX = false;
@@ -360,6 +361,8 @@ class WheelBlock extends Block {
         this.bodies.push(Matter.Bodies.rectangle(this.x, this.y-20, 50, 10, { render: { fillStyle: this.color }}));
         this.bodies[0].block = this;
         this.bodies.push(Matter.Bodies.circle(this.x, this.y, 15, { render: { fillStyle: this.secondaryColor }}));
+        // set the friction of the circle very high so it has grip
+        this.bodies[1].friction = 100;
         this.bodies[1].block = this;
     }
     makeConstraints() {
@@ -391,15 +394,21 @@ class WheelBlock extends Block {
     update() {
 
         // drive
-        let spin = this.spinSpeed;
+        let targetVelocity = this.spinSpeed;
         if (this.flippedX) {
-            spin = -spin;
+            targetVelocity = -targetVelocity;
         }
         if (this.contraption.keysPressed['a']) {
-            // apply a force to the left
-            Matter.Body.setAngularVelocity(this.bodies[1], -spin);
+            targetVelocity = -targetVelocity;
+            let currentVelocity = this.bodies[1].angularVelocity;
+            let velocityChange = (targetVelocity - currentVelocity) * this.acceleration;
+            let spin = velocityChange + currentVelocity;
+            Matter.Body.setAngularVelocity(this.bodies[1], spin);
         } else if (this.contraption.keysPressed['d']) {
             // apply a force to the right
+            let currentVelocity = this.bodies[1].angularVelocity;
+            let velocityChange = (targetVelocity - currentVelocity) * this.acceleration;
+            let spin = velocityChange + currentVelocity;
             Matter.Body.setAngularVelocity(this.bodies[1], spin);
         }
         

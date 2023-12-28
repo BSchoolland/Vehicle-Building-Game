@@ -86,8 +86,8 @@ class RampBlockR extends Block {
     }
     makeBodies() {
        // a right triangle that is the color of the block
-       let vertices ='100 0 0 100 100 100';
-       this.bodies.push(Matter.Bodies.fromVertices(this.x + (50-33.3333), this.y + (50-33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+       let vertices ='200 0 0 100 200 100';
+       this.bodies.push(Matter.Bodies.fromVertices(this.x + (50-66.6666), this.y + (50-33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
     }
 }
 
@@ -103,10 +103,29 @@ class GoalBlock extends Block {
     makeBodies() {
         // a square that is the color of the block
         this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, this.width, this.height, { isStatic: true, render: { fillStyle: this.color } }));
+        // make the goal not collide with anything
+        this.bodies[0].collisionFilter =  {
+            category: 0x0002,
+        },
         this.bodies[0].block = this;
     }
+    checkForWin(playerContraption) {
+        // check if the player contraption is touching the goal
+        let bodies = []
+        for (let i = 0; i < playerContraption.blocks.length; i++) {
+            bodies.push(playerContraption.blocks[i].bodies[0]);
+        }
+        for (let i = 0; i < bodies.length; i++) {
+            // since the goal cannot collide with anything, check if the block is within 25 pixels of the goal
+            if (bodies[i].position.x > this.bodies[0].position.x - 25 && bodies[i].position.x < this.bodies[0].position.x + 25 && bodies[i].position.y > this.bodies[0].position.y - 25 && bodies[i].position.y < this.bodies[0].position.y + 25) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
 
 
 
-export {GrassBlock, RampBlockL, RampBlockR, GoalBlock};
+export {GrassBlock, RampBlockL, RampBlockR, GoalBlock}; 

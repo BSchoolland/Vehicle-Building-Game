@@ -12,17 +12,28 @@ class rightClickMenu {
         this.flipButton = document.createElement('button');
         this.flipButton.classList.add('menu-button');
         this.flipButton.innerText = 'Flip';
+        this.flipButton.onclick = () => {
+            this.block.flipX();
+            this.hide();
+        }
         this.menu.appendChild(this.flipButton);
         // create a button to remove the block
         this.removeButton = document.createElement('button');
         this.removeButton.classList.add('menu-button');
         this.removeButton.innerText = 'Remove';
         this.menu.appendChild(this.removeButton);
+        this.removeButton.onclick = () => {
+            this.block.contraption.removeBlock(this.block);
+            this.hide();
+        }
         // create a button to cancel
         this.cancelButton = document.createElement('button');
         this.cancelButton.classList.add('menu-button');
         this.cancelButton.innerText = 'Cancel';
         this.menu.appendChild(this.cancelButton);
+        this.cancelButton.onclick = () => {
+            this.hide();
+        }
         // if the user clicks outside the menu, hide it
         document.body.addEventListener('click', (event) => {
             if (event.target != this.menu) {
@@ -42,7 +53,7 @@ class rightClickMenu {
         gameContainer.appendChild(this.menu);
     }
     setSelectBlock(block) {
-        this.block.contraption.removeBlock(this.block);
+        this.block = block;
     }
 
     show(x, y) {
@@ -56,6 +67,7 @@ class rightClickMenu {
     hide() {
         // hide the menu
         this.menu.style.display = 'none';
+        
     }
 }
 
@@ -225,13 +237,8 @@ class BuildMenu {
                 this.basicBlockButton.classList.add('active');
                 building.setCurrentBlockType(BasicBlock);
                 console.log('Build mode enabled');
-                if (building.contraption) {
-                    building.contraption.despawn();
-                }
-                else {
-                    console.log('Creating new contraption');
-                    building.contraption = new Contraption(building.engine, building.camera);
-                }
+                // despawn the contraption
+                building.contraption.despawn();
                 // display a grid over the build area
                 building.displayGrid();
                 // get rid of the camera target
@@ -285,7 +292,7 @@ class Building {
         this.camera = camera;
         this.currentBlockType = BasicBlock; // Default block type
         this.buildInProgress = false;
-        this.contraption = null;
+        this.contraption = new Contraption(this.engine, this.camera);
         this.buildArea = {
             x: 100,
             y: 200,

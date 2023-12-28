@@ -1,48 +1,56 @@
-import { GrassBlock } from "./mapBlocks";
+import { GrassBlock, RampBlockL, RampBlockR, GoalBlock } from './mapBlocks.js';
 const blockTypes = {
-    GrassBlock
+    GrassBlock,
+    RampBlockL,
+    RampBlockR,
+    GoalBlock
 };
-// This file contains the Contraption class which is used to represent a contraption in the game.
+// This file contains the Level class which is used to represent a Level in the game.
 class Level {
-    constructor(engine, camera = 'AI') {
+    constructor(engine, playerContraption) {
         this.engine = engine;
-        if (camera === 'AI') {
-            // the camera is an AI
-            this.camera = {
-                position: { x: 0, y: 0 },
-                mouseDown: false,
-                mouseUp: false,
-                mousePressed: false
-            };
-            this.AI = true;
-        } else {
-            // the mouse is a player
-            this.camera = camera;
-            this.AI = false;
-        }
+        this.playerContraption = playerContraption;
         this.blocks = [];
         this.actionStack = [];
         this.undoStack = [];
-        // basic stats
-        this.cost = 0;
-        this.totalHitPoints = 0;
-        this.spawned = false;
-        this.keysPressed = {};
-        // while the contraption is spawned, it will be updated
+        this.frameCount = 0;
+        // check for a win every 30 frames (to save on performance)
         Matter.Events.on(engine, 'beforeUpdate', () => {
-            if (this.spawned) {
-                this.update();
+            this.frameCount++;
+            if (this.frameCount > 30) {
+                this.frameCount = 0;
+                if (this.goal != null) {
+                    if(this.goal.checkForWin(this.playerContraption)){
+                        console.log("You win!");
+                        this.celebrate();
+                        // TODO: add a win screen, and then load the next level
+                    }
+                }
             }
         });
-        // watch for key presses
-        if (!this.AI) {
-            document.addEventListener('keydown', (event) => this.pressKey(event.key));
-            document.addEventListener('keyup', (event) => this.releaseKey(event.key));
-        } 
-        
+    }
+    celebrate() {
+        // make loads of confetti above the goal
+        for (let i = 0; i < 100; i++) {
+            let confettiColors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5"];
+            let x = this.goal.x + Math.random() * 100 - 50;
+            let y = this.goal.y - Math.random() * 100;
+            let color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            let confetti = Matter.Bodies.circle(x, y, 5, { render: { fillStyle: color } });
+            Matter.Body.setVelocity(confetti, { x: Math.random() * 20 - 10, y: Math.random() * 20 - 10 });
+            // make the confetti not collide with anything
+            confetti.collisionFilter =  {
+                category: 0x0003,
+            },
+            Matter.World.add(this.engine.world, confetti);
+            // remove the confetti after 5 seconds
+            setTimeout(() => {
+                Matter.World.remove(this.engine.world, confetti);
+            }, 5000);
+        }
     }
     addBlock(block, addToActionStack = true) {
-        block.contraption = this;
+        block.Level = this;
         this.blocks.push(block);
         // add the block to the world
         block.addToWorld(this.engine.world);
@@ -60,33 +68,36 @@ class Level {
             this.actionStack.push({ action: 'remove', block: block });
         }
     }
-    // save the contraption to a JSON object
+    // save the Level to a JSON object
     save() {
-        var contraptionJson = {};
-        contraptionJson.blocks = [];
+        var LevelJson = {};
+        LevelJson.blocks = [];
         this.blocks.forEach(block => {
-            contraptionJson.blocks.push(block.save());
+            LevelJson.blocks.push(block.save());
         });
-        return contraptionJson;
+        return LevelJson;
     }
-    // load a contraption from a JSON object
-    load(contraptionJson) {
-        // Clear existing blocks in the contraption
-        this.clear(); // Assuming this.clear() removes all blocks from the contraption
+    // load a Level from a JSON object
+    load(LevelJson) {
+        // Clear existing blocks in the Level
+        this.clear(); // Assuming this.clear() removes all blocks from the Level
     
         // Load new blocks from JSON
-        contraptionJson.blocks.forEach(blockJson => {
+        LevelJson.blocks.forEach(blockJson => {
             // Get the block type constructor
             const BlockType = blockTypes[blockJson.type];
             if (BlockType) {
                 // Create a new block instance
                 let newBlock = new BlockType(blockJson.x, blockJson.y);
                 // flip the block if necessary
-                // Add the block to the contraption
+                // Add the block to the Level
                 this.addBlock(newBlock); 
 
                 if (blockJson.flippedX) {
                     newBlock.flipX();
+                }
+                if (BlockType === GoalBlock) {
+                    this.goal = newBlock;
                 }
             } else {
                 console.error(`Unknown block type: ${blockJson.type}`);
@@ -101,21 +112,6 @@ class Level {
         // Reset the undo stack and action stack
         this.actionStack = [];
         this.undoStack = [];
-    }
-
-    // calculate the total cost of the contraption
-    calculateCost() {
-        this.cost = 0;
-        this.blocks.forEach(block => {
-            this.cost += block.cost;
-        });
-    }
-    // calculate the total hit points of the contraption
-    calculateHitPoints() {
-        this.totalHitPoints = 0;
-        this.blocks.forEach(block => {
-            this.totalHitPoints += block.hitPoints;
-        });
     }
     undo() {
         if (this.actionStack.length > 0) {

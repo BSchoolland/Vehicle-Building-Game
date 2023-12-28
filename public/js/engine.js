@@ -45,9 +45,9 @@ Matter.Events.on(engine, 'beforeUpdate', () => {
     camera.smoothUpdate();
 });
 
-// get the JSON data for the terrain
-var terrainJson = await (await fetch('json-levels/level1.json')).json();
-
-var gameWorld = new World(engine, terrainJson);
-gameWorld.loadTerrain();
-// gameWorld.LoadEnemyContraption();
+console.log(building.contraption)
+// create the world
+import { Level } from './level.js';
+const LoadLevel = new Level(engine, building.contraption);
+const LevelJson = await (await fetch('json-levels/level0.json')).json();
+LoadLevel.load(LevelJson);

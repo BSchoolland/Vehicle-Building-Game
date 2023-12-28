@@ -29,12 +29,9 @@
  Level System
  limit which blocks can be used in which levels 
  level select menu
-
-##### version 0.2.2
  level 1: a simple straight drive 3 blocks, 2 wheels.
  level 2: Drive with a cannon platform defending.  5 blocks, 4 wheels, 2 cannons.
  level 3: A jump over a gap, then battle a cannon car. 3 blocks, 3 wheels, 1 cannon, 1 rocket.
-
 
 
 #### Version 0.3

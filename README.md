@@ -1,5 +1,5 @@
 ### Version Plan
- Plan:
+
 #### Version 0.1: (completed)
 
  3 Block types (done)

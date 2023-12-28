@@ -1,4 +1,3 @@
-import { World } from './world.js';
 import Building from './building.js';
 import { Camera } from './camera.js';
 // Create an engine
@@ -47,7 +46,7 @@ Matter.Events.on(engine, 'beforeUpdate', () => {
 
 console.log(building.contraption)
 // create the world
-import { Level } from './level.js';
+import { Level } from '../world/level.js';
 const LoadLevel = new Level(engine, building.contraption);
 const LevelJson = await (await fetch('json-levels/level0.json')).json();
 LoadLevel.load(LevelJson);

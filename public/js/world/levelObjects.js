@@ -1,6 +1,6 @@
 // a file to hold classes for the level objects
 // import the contraption class
-import { Contraption } from './contraption.js';
+import { Contraption } from '../vehicle/contraption.js';
 // class for the terrain objects
 class terrainObject {
     constructor(x, y, width = 50, height = 50, color = 'green') {

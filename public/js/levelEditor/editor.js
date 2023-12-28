@@ -1,6 +1,6 @@
-import { World } from './world.js';
+import { World } from '../world.js';
 import Building from './mapbuilding.js';
-import { Camera } from './camera.js';
+import { Camera } from '../game/camera.js';
 // Create an engine
 var engine = Matter.Engine.create();
 

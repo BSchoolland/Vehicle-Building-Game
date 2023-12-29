@@ -392,7 +392,6 @@ class WheelBlock extends Block {
         }));
     }   
     update() {
-
         // drive
         let targetVelocity = this.spinSpeed;
         if (this.flippedX) {
@@ -527,6 +526,58 @@ class CannonBlock extends Block {
     }
 }
 
+// a spike block that can damage other blocks
+class SpikeBlock extends Block {
+    constructor (x, y, contaption) {
+        super(x, y, contaption, 20, 'A spike block', 100, '#3b2004', [], []);
+        this.makeBodies();
+        this.makeConstraints();
+        this.weldableFaces = ['right'];
+        this.damageMultiplier = 1; // does 1 damage times velocity it hits at
+        this.damageCooldown = 0.5; // seconds
+        this.lastHit = 0; // the last time the block hit something
+        // this block is not simetrical in the x direction
+        this.simetricalX = false;
+        const Events = Matter.Events;
+        // watch for collisions
+        Events.on(this.contaption.engine, 'collisionStart', event => {
+            event.pairs.forEach(pair => {
+                // Check if one of the bodies is bodyA
+                if (pair.bodyA === this.bodies[0] || pair.bodyB === this.bodies[0]) {
+                    // Remove the other body
+                    const otherBody = pair.bodyA === this.bodies[0] ? pair.bodyB : pair.bodyA;
+                    this.hit(otherBody);
+                }
+            });
+        });
+    }
+    makeBodies() {
+        // create a triangle
+        let vertices ='0 0 50 25 0 50';
+        this.bodies.push(Matter.Bodies.fromVertices(this.x - 33.333/4, this.y, Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+        this.bodies[0].block = this;
+    }
+    makeConstraints() {
+        // no constraints
+    }
+    hit(otherBody) {
+        // check if the other body is a block
+        if (otherBody.block) {
+            // make sure the block is not within the same contraption
+            if (otherBody.block.contraption !== this.contraption) {
+                // check if this spike block is on cooldown
+                if (Date.now() - this.lastHit >= this.damageCooldown * 1000) {
+                    // damage the other block
+                    let velocityDifference = Matter.Vector.sub(otherBody.velocity, this.bodies[0].velocity);
+                    otherBody.block.damage(this.damageMultiplier * Math.abs(velocityDifference.x + velocityDifference.y) ** 2 ); // damage is proportional to the velocity squared
+                    // record the time of the hit
+                    this.lastHit = Date.now();
+                }
+            }
+        }
+    }
+}
+
 // a rocket booster block that can propel the contraption
 class rocketBoosterBlock extends Block {
     constructor (x, y, contaption) {
@@ -653,4 +704,4 @@ class rocketBoosterBlock extends Block {
         }
     }
 }
-export { BasicBlock, WheelBlock, CannonBlock, rocketBoosterBlock };
+export { BasicBlock, WheelBlock, CannonBlock, rocketBoosterBlock, SpikeBlock };

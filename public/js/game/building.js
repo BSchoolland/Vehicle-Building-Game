@@ -1,5 +1,5 @@
 // Import necessary classes from your block definitions
-import {BasicBlock, WheelBlock, CannonBlock, rocketBoosterBlock } from '../vehicle/blocks.js';
+import {BasicBlock, WheelBlock, CannonBlock, rocketBoosterBlock, SpikeBlock } from '../vehicle/blocks.js';
 import {Contraption} from '../vehicle/contraption.js';
 
 class rightClickMenu {
@@ -96,6 +96,10 @@ class BuildMenu {
         this.rocketBoosterBlockButton.classList.add('menu-button');
         this.rocketBoosterBlockButton.innerText = 'Rocket Booster Block (4)';
         this.menu.appendChild(this.rocketBoosterBlockButton);
+        this.spikeBlockButton = document.createElement('button');
+        this.spikeBlockButton.classList.add('menu-button');
+        this.spikeBlockButton.innerText = 'Spike Block (5)';
+        this.menu.appendChild(this.spikeBlockButton);
         // create a button to save the contraption
         this.saveButton = document.createElement('button');
         this.saveButton.classList.add('menu-button');
@@ -128,6 +132,7 @@ class BuildMenu {
         this.wheelBlockButton.classList.add('build-menu-button');
         this.cannonBlockButton.classList.add('build-menu-button');
         this.rocketBoosterBlockButton.classList.add('build-menu-button');
+        this.spikeBlockButton.classList.add('build-menu-button');
         this.saveButton.classList.add('build-menu-button');
         this.loadButton.classList.add('build-menu-button');
         this.clearButton.classList.add('build-menu-button');
@@ -151,6 +156,7 @@ class BuildMenu {
             this.wheelBlockButton.classList.remove('active');
             this.cannonBlockButton.classList.remove('active');
             this.rocketBoosterBlockButton.classList.remove('active');
+            this.spikeBlockButton.classList.remove('active');
         };
         this.wheelBlockButton.onclick = () => {
             // make sure build mode is enabled
@@ -163,6 +169,7 @@ class BuildMenu {
             this.wheelBlockButton.classList.add('active');
             this.cannonBlockButton.classList.remove('active');
             this.rocketBoosterBlockButton.classList.remove('active');
+            this.spikeBlockButton.classList.remove('active');
         };
         this.cannonBlockButton.onclick = () => {
             // make sure build mode is enabled
@@ -174,6 +181,7 @@ class BuildMenu {
             this.wheelBlockButton.classList.remove('active');
             this.cannonBlockButton.classList.add('active');
             this.rocketBoosterBlockButton.classList.remove('active');
+            this.spikeBlockButton.classList.remove('active');
         };
         this.rocketBoosterBlockButton.onclick = () => {
             // make sure build mode is enabled
@@ -185,6 +193,19 @@ class BuildMenu {
             this.wheelBlockButton.classList.remove('active');
             this.cannonBlockButton.classList.remove('active');
             this.rocketBoosterBlockButton.classList.add('active');
+            this.spikeBlockButton.classList.remove('active');
+        };
+        this.spikeBlockButton.onclick = () => {
+            // make sure build mode is enabled
+            if (!building.buildInProgress) {
+                return;
+            }
+            building.setCurrentBlockType(SpikeBlock);
+            this.basicBlockButton.classList.remove('active');
+            this.wheelBlockButton.classList.remove('active');
+            this.cannonBlockButton.classList.remove('active');
+            this.rocketBoosterBlockButton.classList.remove('active');
+            this.spikeBlockButton.classList.add('active');
         };
         this.saveButton.onclick = () => {
             // make sure build mode is enabled
@@ -254,6 +275,7 @@ class BuildMenu {
                 this.wheelBlockButton.classList.remove('active');
                 this.cannonBlockButton.classList.remove('active');
                 this.rocketBoosterBlockButton.classList.remove('active');
+                this.spikeBlockButton.classList.remove('active');
                 // remove the active class from this button
                 this.buildModeButton.classList.remove('active');
                 building.removeGrid();
@@ -401,6 +423,10 @@ class Building {
         // if the 4 key is pressed, click the rocket booster block button
         if (event.keyCode === 52) {
             this.buildMenu.rocketBoosterBlockButton.click();
+        }
+        // if key 5 is pressed click the spike block button
+        if (event.keyCode === 53) {
+            this.buildMenu.spikeBlockButton.click();
         }
         // If the Z key is pressed, undo the last block placed
         if (event.keyCode === 90) {

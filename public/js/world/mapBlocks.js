@@ -27,6 +27,9 @@ class Block {
         blockJson.y = this.y;
         return blockJson;
     }
+    damage(ammount) { // players cannot damage terrain blocks
+        console.log("would have damaged block at " + this.x + ", " + this.y + " by " + ammount + " health");
+    }
 }
 
 

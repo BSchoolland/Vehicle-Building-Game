@@ -13,7 +13,7 @@
 
 
 
-#### Version 0.2:
+#### Version 0.2: (completed)
 
  Better Build Menu (done)
  Blocktype buttons (done)
@@ -21,17 +21,14 @@
  Load button not as a keybind (done)
  Clear as a button not a keybind (done)
 
-##### version 0.2.1
+##### version 0.2.1 (completed)
 
  Level builder for devs (done)
  Blocks to build with (done)
  block interactions with contraptions (done)
- Level System
- limit which blocks can be used in which levels 
- level select menu
- level 1: a simple straight drive 3 blocks, 2 wheels.
- level 2: Drive with a cannon platform defending.  5 blocks, 4 wheels, 2 cannons.
- level 3: A jump over a gap, then battle a cannon car. 3 blocks, 3 wheels, 1 cannon, 1 rocket.
+ Level System (done)
+ level select menu (done)
+ 3 Prototype Levels (done)
 
 
 #### Version 0.3
@@ -57,6 +54,8 @@
 #### Version 0.6
 
  Seat block, anything detached from it is destroyed
+ limit which blocks can be used in which levels 
+
 
 
 ### Version 1:

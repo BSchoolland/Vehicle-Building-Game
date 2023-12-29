@@ -5,11 +5,12 @@ const blockTypes = {
     RampBlockR,
     GoalBlock
 };
-// This file contains the Level class which is used to represent a Level in the game.
-class Level {
+// A Level is a collection of blocks that can be saved and loaded
+class LevelManager {
     constructor(engine, playerContraption) {
         this.engine = engine;
         this.playerContraption = playerContraption;
+        this.levels = [];
         this.blocks = [];
         this.actionStack = [];
         this.undoStack = [];
@@ -27,6 +28,22 @@ class Level {
                     }
                 }
             }
+        });
+    }
+
+    init() {
+        this.populateLevels();
+    }
+    // populate the levels array with the JSON data
+    populateLevels() {
+        const paths = [
+            '../../json-levels/level1.json',
+            '../../json-levels/level2.json',
+            '../../json-levels/level3.json'
+        ];
+        paths.forEach(async (path) => {
+            var levelJson = await (await fetch(path)).json();
+            this.levels.push(levelJson);
         });
     }
     celebrate() {
@@ -78,10 +95,11 @@ class Level {
         return LevelJson;
     }
     // load a Level from a JSON object
-    load(LevelJson) {
+    load(levelIndex) {
+        var LevelJson = this.levels[levelIndex];
         // Clear existing blocks in the Level
-        this.clear(); // Assuming this.clear() removes all blocks from the Level
-    
+        this.clear(); // remove all blocks from the Level
+        console.log(LevelJson);
         // Load new blocks from JSON
         LevelJson.blocks.forEach(blockJson => {
             // Get the block type constructor
@@ -144,6 +162,27 @@ class Level {
             this.actionStack.push(lastUndoAction);
         }
     }
+    loadLevelSelector() {
+        console.log("load level selector");
+        // a screen to select the level to play
+        let levelSelector = document.createElement('div');
+        levelSelector.id = "level-selector";
+        document.body.appendChild(levelSelector);
+        // add a title
+        let title = document.createElement('h1');
+        title.innerHTML = "Select a level";
+        levelSelector.appendChild(title);
+        // add a button for each level
+        this.levels.forEach((level, index) => {
+            let button = document.createElement('button');
+            button.innerHTML = `Level ${index + 1}`;
+            button.addEventListener('click', () => {
+                this.load(index);
+                levelSelector.remove();
+            });
+            levelSelector.appendChild(button);
+        });
+    }
 }
 
-export { Level };
+export { LevelManager };

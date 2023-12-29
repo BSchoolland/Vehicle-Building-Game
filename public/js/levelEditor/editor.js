@@ -1,4 +1,3 @@
-import { World } from '../world.js';
 import Building from './mapbuilding.js';
 import { Camera } from '../game/camera.js';
 // Create an engine
@@ -48,5 +47,3 @@ Matter.Events.on(engine, 'beforeUpdate', () => {
     camera.smoothUpdate();
 });
 
-// get the JSON data for the terrain
-var terrainJson = await (await fetch('json-levels/level1.json')).json();

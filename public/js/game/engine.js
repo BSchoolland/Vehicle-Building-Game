@@ -1,5 +1,6 @@
 import Building from './building.js';
 import { Camera } from './camera.js';
+import { LevelManager } from '../world/level.js';
 // Create an engine
 var engine = Matter.Engine.create();
 
@@ -45,8 +46,11 @@ Matter.Events.on(engine, 'beforeUpdate', () => {
 });
 
 console.log(building.contraption)
-// create the world
-import { Level } from '../world/level.js';
-const LoadLevel = new Level(engine, building.contraption);
-const LevelJson = await (await fetch('json-levels/level0.json')).json();
-LoadLevel.load(LevelJson);
+
+const levelObject = new LevelManager(engine, building.contraption);
+levelObject.init();
+// load the level selector screen
+// after a short delay to allow the levels to load
+setTimeout(() => {
+    levelObject.loadLevelSelector();
+}, 1000);

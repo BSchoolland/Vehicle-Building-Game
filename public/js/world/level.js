@@ -66,15 +66,13 @@ class LevelManager {
             }, 5000);
         }
         // after a 1 second delay, load the next level
+        this.playerContraption.clear();
         setTimeout(() => {
             // clear the level
             this.clear();
-            // despawn the player
-            // clear the player contraption
-            this.playerContraption.clear();
             //open the next level
             this.loadLevelSelector();
-        }, 1000);
+        }, 3000);
         
     }
     addBlock(block, addToActionStack = true) {

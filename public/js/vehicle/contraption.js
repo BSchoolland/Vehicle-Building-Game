@@ -1,9 +1,9 @@
-import {BasicBlock, WheelBlock, CannonBlock, rocketBoosterBlock} from './blocks.js';
+import {BasicBlock, WheelBlock, rocketBoosterBlock, SpikeBlock} from './blocks.js';
 const blockTypes = {
     BasicBlock,
     WheelBlock,
-    CannonBlock,
-    rocketBoosterBlock
+    rocketBoosterBlock,
+    SpikeBlock
 };
 
 // This file contains the Contraption class which is used to represent a contraption in the game.

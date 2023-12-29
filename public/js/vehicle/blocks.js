@@ -136,6 +136,9 @@ class Block {
             
         }
     }
+    hit(otherBody) { // to be defined in subclasses
+        // called when the block is hit by another body
+    }
     flipX(firstTime = true) {
         // make sure the block is not simetrical in the x direction
         if (this.simetricalX) {
@@ -426,18 +429,7 @@ class SpikeBlock extends Block {
         this.lastHit = 0; // the last time the block hit something
         // this block is not simetrical in the x direction
         this.simetricalX = false;
-        const Events = Matter.Events;
-        // watch for collisions
-        Events.on(this.contaption.engine, 'collisionStart', event => {
-            event.pairs.forEach(pair => {
-                // Check if one of the bodies is bodyA
-                if (pair.bodyA === this.bodies[0] || pair.bodyB === this.bodies[0]) {
-                    // Remove the other body
-                    const otherBody = pair.bodyA === this.bodies[0] ? pair.bodyB : pair.bodyA;
-                    this.hit(otherBody);
-                }
-            });
-        });
+        
     }
     makeBodies() {
         // create a triangle
@@ -449,20 +441,15 @@ class SpikeBlock extends Block {
         // no constraints
     }
     hit(otherBody) {
-        // check if the other body is a block
-        if (otherBody.block) {
-            // make sure the block is not within the same contraption
-            if (otherBody.block.contraption !== this.contraption) {
-                // check if this spike block is on cooldown
-                if (Date.now() - this.lastHit >= this.damageCooldown * 1000) {
-                    // damage the other block
-                    let velocityDifference = Matter.Vector.sub(otherBody.velocity, this.bodies[0].velocity);
-                    otherBody.block.damage(this.damageMultiplier * Math.abs(velocityDifference.x + velocityDifference.y) ** 2 ); // damage is proportional to the velocity squared
-                    // record the time of the hit
-                    this.lastHit = Date.now();
-                }
-            }
+        // check if this spike block is on cooldown
+        if (Date.now() - this.lastHit >= this.damageCooldown * 1000) {
+            // damage the other block
+            let velocityDifference = Matter.Vector.sub(otherBody.velocity, this.bodies[0].velocity);
+            otherBody.block.damage(this.damageMultiplier * Math.abs(velocityDifference.x + velocityDifference.y) ** 2 ); // damage is proportional to the velocity squared
+            // record the time of the hit
+            this.lastHit = Date.now();
         }
+         
     }
 }
 

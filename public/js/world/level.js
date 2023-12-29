@@ -48,7 +48,7 @@ class LevelManager {
     }
     celebrate() {
         // make loads of confetti above the goal
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 500; i++) {
             let confettiColors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5"];
             let x = this.goal.x + Math.random() * 100 - 50;
             let y = this.goal.y - Math.random() * 100;
@@ -65,6 +65,17 @@ class LevelManager {
                 Matter.World.remove(this.engine.world, confetti);
             }, 5000);
         }
+        // after a 1 second delay, load the next level
+        setTimeout(() => {
+            // clear the level
+            this.clear();
+            // despawn the player
+            // clear the player contraption
+            this.playerContraption.clear();
+            //open the next level
+            this.loadLevelSelector();
+        }, 1000);
+        
     }
     addBlock(block, addToActionStack = true) {
         block.Level = this;
@@ -167,6 +178,7 @@ class LevelManager {
         // a screen to select the level to play
         let levelSelector = document.createElement('div');
         levelSelector.id = "level-selector";
+        levelSelector.className = "level-select-menu";
         document.body.appendChild(levelSelector);
         // add a title
         let title = document.createElement('h1');
@@ -175,6 +187,7 @@ class LevelManager {
         // add a button for each level
         this.levels.forEach((level, index) => {
             let button = document.createElement('button');
+            button.className = "level-select-button";
             button.innerHTML = `Level ${index + 1}`;
             button.addEventListener('click', () => {
                 this.load(index);

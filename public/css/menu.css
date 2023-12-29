@@ -76,3 +76,36 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
     color: #1a3a5f; /* Dark text color for contrast */
 }
+
+.level-select-menu {
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translateX(-50%); /* Center the div horizontally */
+    background-color: #1a3a5f; /* Dark blue background */
+    border: 1px solid #557da6; /* Lighter blue border */
+    color: #e4e8ec; /* Light text color */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1); 
+    font-family: 'Courier New', monospace; /* Font that gives a typewritten or technical feel */
+    display: flex; /* Use flexbox for horizontal layout */
+    justify-content: center; /* Center items horizontally */
+    /* display items vertically rather than horizontally */
+    flex-direction: column;
+}
+
+/* Style for each button in the level select menu */
+.level-select-button {
+    background-color: #2b5572; /* Slightly lighter blue for buttons */
+    color: #e4e8ec; /* Light text color for contrast */
+    border: none;
+    padding: 5px 10px;
+    margin: 5px 0; /* Vertical margin for spacing between buttons */
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase; /* Makes text uppercase for a more formal look */
+    font-weight: bold;
+}
+

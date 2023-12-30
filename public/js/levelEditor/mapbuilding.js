@@ -434,7 +434,6 @@ class Building {
         }
         this.gridLines = [];
     }
-        
 }
 
 export default Building;

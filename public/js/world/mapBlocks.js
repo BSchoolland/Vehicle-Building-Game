@@ -126,9 +126,46 @@ class GoalBlock extends Block {
         }
         return false;
     }
-
 }
 
+// a block that denotates the player's building area
+class BuildingAreaBlock extends Block {
+    constructor(x, y, level) { 
+        super(x, y, level, "rgb(0, 215, 255)");
+        this.width = 100;
+        this.height = 100;  
+        this.bodies = [];
+        this.makeBodies();
+    }
+    makeBodies() {
+        // a square that is the color of the block
+        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, this.width, this.height, { isStatic: true, render: { fillStyle: this.color } }));
+        // make the block not collide with anything
+        this.bodies[0].collisionFilter =  {
+            category: 0x0002,
+        },
+        this.bodies[0].block = this;
+    }
+}
 
+// a block that denotates an enemy vehicle spawn point
+class EnemySpawnBlock extends Block {
+    constructor(x, y, level) { 
+        super(x, y, level, "rgb(255, 0, 0)");
+        this.width = 100;
+        this.height = 100;  
+        this.bodies = [];
+        this.makeBodies();
+    }
+    makeBodies() {
+        // a square that is the color of the block
+        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, this.width, this.height, { isStatic: true, render: { fillStyle: this.color } }));
+        // make the block not collide with anything
+        this.bodies[0].collisionFilter =  {
+            category: 0x0002,
+        },
+        this.bodies[0].block = this;
+    }
+}
 
-export {GrassBlock, RampBlockL, RampBlockR, GoalBlock}; 
+export {GrassBlock, RampBlockL, RampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock}; 

@@ -449,7 +449,6 @@ class SpikeBlock extends Block {
             // record the time of the hit
             this.lastHit = Date.now();
         }
-         
     }
 }
 
@@ -549,7 +548,6 @@ class rocketBoosterBlock extends Block {
                 visible: false
             }
         }));
-
     }
     resetValues() {
         this.fuel = 300;

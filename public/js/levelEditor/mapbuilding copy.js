@@ -1,9 +1,67 @@
-// Import the block classes from public/js/world/mapBlocks.js
-import {GrassBlock, RampBlockL, RampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock} from '../world/mapBlocks.js';
-import { LevelManager } from '../world/level.js';
+// Import necessary classes from your block definitions
+import {GrassBlock, RampBlockR, RampBlockL, GoalBlock} from '../world/mapBlocks.js';
+import { Level } from '../world/level.js';
+const RampBlock = RampBlockR;
+class rightClickMenu {
+    constructor() {
+        this.block = null;
+        // create a menu for the block
+        this.menu = document.createElement('div');
+        this.menu.classList.add('menu');
+        // create a button to flip the block
+        this.flipButton = document.createElement('button');
+        this.flipButton.classList.add('menu-button');
+        this.flipButton.innerText = 'Flip';
+        this.menu.appendChild(this.flipButton);
+        // create a button to remove the block
+        this.removeButton = document.createElement('button');
+        this.removeButton.classList.add('menu-button');
+        this.removeButton.innerText = 'Remove';
+        this.menu.appendChild(this.removeButton);
+        // create a button to cancel
+        this.cancelButton = document.createElement('button');
+        this.cancelButton.classList.add('menu-button');
+        this.cancelButton.innerText = 'Cancel';
+        this.menu.appendChild(this.cancelButton);
+        // if the user clicks outside the menu, hide it
+        document.body.addEventListener('click', (event) => {
+            if (event.target != this.menu) {
+                this.hide();
+            }
+        });
+        // style the menu
+        this.menu.classList.add('right-click-menu');
+        // set the button class
+        this.flipButton.classList.add('right-click-menu-button');
+        this.removeButton.classList.add('right-click-menu-button');
+        this.cancelButton.classList.add('right-click-menu-button');
+        // hide the menu
+        this.hide();
+        // Add the menu to the game container
+        let gameContainer = document.getElementById('game-container');
+        gameContainer.appendChild(this.menu);
+    }
+    setSelectBlock(block) {
+        this.block = block;
+        this.block.Level.removeBlock(this.block);
+    }
+
+    show(x, y) {
+        // Position the menu
+        this.menu.style.position = 'absolute';
+        this.menu.style.left = `${x}px`;
+        this.menu.style.top = `${y}px`;
+        // display the menu
+        this.menu.style.display = 'block';
+    }
+    hide() {
+        // hide the menu
+        this.menu.style.display = 'none';
+    }
+}
 
 // a build menu class, for the bottom of the screen.
-// the build menu will contain buttons for each block type, a button to save the level, a button to load a level, a button to clear the level, and a button to toggle build mode.
+// the build menu will contain buttons for each block type, a button to save the Level, a button to load a Level, a button to clear the Level, and a button to toggle build mode.
 class BuildMenu {
     constructor(building) {
         this.building = building;
@@ -11,26 +69,33 @@ class BuildMenu {
         this.menu = document.createElement('div');
         this.menu.classList.add('menu');
         // create a button for each block type
-        this.blockTypes = [
-            { name: 'Grass Block', key: '1', type: GrassBlock },
-            { name: 'Ramp Block (L)', key: '2', type: RampBlockL },
-            { name: 'Ramp Block (R)', key: '3', type: RampBlockR },
-            { name: 'Goal Block', key: '4', type: GoalBlock },
-            { name: 'Building Area Block', key: '5', type: BuildingAreaBlock },
-            { name: 'Enemy Spawn Block', key: '6', type: EnemySpawnBlock }
-        ];
-        this.createBlockButtons();
-        // create a button to save the level
+        this.GrassBlockButton = document.createElement('button');
+        this.GrassBlockButton.classList.add('menu-button');
+        this.GrassBlockButton.innerText = 'Basic Block (1)';
+        this.menu.appendChild(this.GrassBlockButton);
+        this.GoalBlockButton = document.createElement('button');
+        this.GoalBlockButton.classList.add('menu-button');
+        this.GoalBlockButton.innerText = 'Wheel Block (2)';
+        this.menu.appendChild(this.GoalBlockButton);
+        this.RampBlockButton = document.createElement('button');
+        this.RampBlockButton.classList.add('menu-button');
+        this.RampBlockButton.innerText = 'Cannon Block (3)';
+        this.menu.appendChild(this.RampBlockButton);
+        this.RampBlockLButton = document.createElement('button');
+        this.RampBlockLButton.classList.add('menu-button');
+        this.RampBlockLButton.innerText = 'Rocket Booster Block (4)';
+        this.menu.appendChild(this.RampBlockLButton);
+        // create a button to save the Level
         this.saveButton = document.createElement('button');
         this.saveButton.classList.add('menu-button');
         this.saveButton.innerText = 'Save';
         this.menu.appendChild(this.saveButton);
-        // create a button to load a level
+        // create a button to load a Level
         this.loadButton = document.createElement('button');
         this.loadButton.classList.add('menu-button');
         this.loadButton.innerText = 'Load';
         this.menu.appendChild(this.loadButton);
-        // create a button to clear the level
+        // create a button to clear the Level
         this.clearButton = document.createElement('button');
         this.clearButton.classList.add('menu-button');
         this.clearButton.innerText = 'Clear';
@@ -48,6 +113,10 @@ class BuildMenu {
         // style the menu
         this.menu.classList.add('build-menu');
         // set the button class
+        this.GrassBlockButton.classList.add('build-menu-button');
+        this.GoalBlockButton.classList.add('build-menu-button');
+        this.RampBlockButton.classList.add('build-menu-button');
+        this.RampBlockLButton.classList.add('build-menu-button');
         this.saveButton.classList.add('build-menu-button');
         this.loadButton.classList.add('build-menu-button');
         this.clearButton.classList.add('build-menu-button');
@@ -58,39 +127,66 @@ class BuildMenu {
         // initialize the menu
         this.init(building);
     }
-    createBlockButtons() {
-        this.blockButtons = {};
-        this.blockTypes.forEach(blockType => {
-            let button = document.createElement('button');
-            button.classList.add('menu-button', 'build-menu-button');
-            button.innerText = `${blockType.name} (${blockType.key})`;
-            button.setAttribute('data-keycode', blockType.key.charCodeAt(0)); // Store keycode as a data attribute
-            button.onclick = () => {
-                this.building.setCurrentBlockType(blockType.type);
-                // Remove the active class from all the block type buttons
-                Object.values(this.blockButtons).forEach(button => button.classList.remove('active'));
-                // Set this button's class to active
-                button.classList.add('active');
-            }
-            this.menu.appendChild(button);
-            this.blockButtons[blockType.type.name] = button;
-        });
-    }
-
     init(building) {
         // set the button functions
+        this.GrassBlockButton.onclick = () => {
+            // make sure build mode is enabled
+            if (!building.buildInProgress) {
+                return;
+            }
+            building.setCurrentBlockType(GrassBlock);
+            // set this button's class to active
+            this.GrassBlockButton.classList.add('active');
+            this.GoalBlockButton.classList.remove('active');
+            this.RampBlockButton.classList.remove('active');
+            this.RampBlockLButton.classList.remove('active');
+        };
+        this.GoalBlockButton.onclick = () => {
+            // make sure build mode is enabled
+            if (!building.buildInProgress) {
+                return;
+            }
+            building.setCurrentBlockType(GoalBlock);
+            // set this button's class to active
+            this.GrassBlockButton.classList.remove('active');
+            this.GoalBlockButton.classList.add('active');
+            this.RampBlockButton.classList.remove('active');
+            this.RampBlockLButton.classList.remove('active');
+        };
+        this.RampBlockButton.onclick = () => {
+            // make sure build mode is enabled
+            if (!building.buildInProgress) {
+                return;
+            }
+            building.setCurrentBlockType(RampBlock);
+            this.GrassBlockButton.classList.remove('active');
+            this.GoalBlockButton.classList.remove('active');
+            this.RampBlockButton.classList.add('active');
+            this.RampBlockLButton.classList.remove('active');
+        };
+        this.RampBlockLButton.onclick = () => {
+            // make sure build mode is enabled
+            if (!building.buildInProgress) {
+                return;
+            }
+            building.setCurrentBlockType(RampBlockL);
+            this.GrassBlockButton.classList.remove('active');
+            this.GoalBlockButton.classList.remove('active');
+            this.RampBlockButton.classList.remove('active');
+            this.RampBlockLButton.classList.add('active');
+        };
         this.saveButton.onclick = () => {
             // make sure build mode is enabled
             if (!building.buildInProgress) {
                 return;
             }
-            // save the level to a JSON object
-            let LevelManagerJson = building.level.save();
+            // save the Level to a JSON object
+            let LevelJson = building.Level.save();
             // download the JSON object as a file
-            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(LevelManagerJson));
+            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(LevelJson));
             let dlAnchorElem = document.createElement('a');
             dlAnchorElem.setAttribute("href", dataStr);
-            dlAnchorElem.setAttribute("download", "level.json");
+            dlAnchorElem.setAttribute("download", "Level.json");
             dlAnchorElem.click();
         };
         this.loadButton.onclick = () => {
@@ -101,17 +197,17 @@ class BuildMenu {
             let fileInput = document.createElement('input');
             fileInput.type = 'file';
             fileInput.click();
-            // when a file is selected, load the level
+            // when a file is selected, load the Level
             fileInput.onchange = (event) => {
                 let file = event.target.files[0];
                 let reader = new FileReader();
                 reader.readAsText(file);
                 reader.onload = () => {
-                    let LevelManagerJson = JSON.parse(reader.result);
-                    // clear the existing level
-                    building.level.clear();
-                    // load the level from the JSON object
-                    building.level.load(LevelManagerJson);
+                    let LevelJson = JSON.parse(reader.result);
+                    // clear the existing Level
+                    building.Level.clear();
+                    // load the Level from the JSON object
+                    building.Level.load(LevelJson);
                 };
             };
         };
@@ -119,16 +215,24 @@ class BuildMenu {
             if (!building.buildInProgress) {
                 return;
             }
-            building.level.clear();
+            building.Level.clear();
         };
         this.buildModeButton.onclick = () => {
             building.buildInProgress = !building.buildInProgress;
             if (building.buildInProgress) {
                 // set this button's class to active
                 this.buildModeButton.classList.add('active');
-                // activate the grass block button
-                this.blockButtons['GrassBlock'].click();
+                // activate the basic block button and set the current block type to GrassBlock
+                this.GrassBlockButton.classList.add('active');
+                building.setCurrentBlockType(GrassBlock);
                 console.log('Build mode enabled');
+                if (building.Level) {
+                    building.Level.despawn();
+                }
+                else {
+                    console.log('Creating new Level');
+                    building.Level = new Level(building.engine, building.camera);
+                }
                 // display a grid over the build area
                 building.displayGrid();
                 // get rid of the camera target
@@ -140,22 +244,21 @@ class BuildMenu {
                 building.camera.setCenterPosition(building.buildArea.x + building.buildArea.width / 2, building.buildArea.y + building.buildArea.height / 2);
             } else {
                 // remove the active class from all the block type buttons
-                Object.values(this.blockButtons).forEach(button => button.classList.remove('active'));
-                // Remove the active class from the build mode button
+                this.GrassBlockButton.classList.remove('active');
+                this.GoalBlockButton.classList.remove('active');
+                this.RampBlockButton.classList.remove('active');
+                this.RampBlockLButton.classList.remove('active');
+                // remove the active class from this button
                 this.buildModeButton.classList.remove('active');
                 building.removeGrid();
                 console.log('Build mode disabled');
-
-                // Spawn the level
-                building.level.spawn();
-
+                // spawn the Level
+                building.Level.spawn();
                 // set the camera viewport to the size of the canvas
                 const canvas = document.querySelector('canvas');
                 building.camera.setViewport(canvas.width, canvas.height);
-
-                // set the camera target to a block in the level
-
-                building.camera.setTarget(building.level.blocks[0]);
+                // set the camera target to a block in the Level
+                building.camera.setTarget(building.Level.blocks[0]);
             }
         };
         this.fullscreenButton.onclick = () => {
@@ -177,18 +280,19 @@ class Building {
     constructor(engine, camera) {
         this.engine = engine;
         this.camera = camera;
-        this.currentBlockType = GrassBlock;
+        this.currentBlockType = GrassBlock; // Default block type
         this.buildInProgress = false;
-        this.level = new LevelManager(this.engine, this.camera);
+        this.Level = null;
         this.buildArea = {
-            x: 0,
-            y: 0,
-            width: 800*2,
-            height: 600
+            x: 100,
+            y: 200,
+            width: 300,
+            height: 200
         };
-        this.grid = 100;
+        this.grid = 50;
         this.gridLines = [];
-
+        // right click menu
+        this.rightClickMenu = new rightClickMenu();
         // build menu
         this.buildMenu = new BuildMenu(this);
     }
@@ -228,28 +332,28 @@ class Building {
             console.log('Cannot place block here');
             return;
         }
-        // make sure there is not already a block in the level here
-        for (let i = 0; i < this.level.blocks.length; i++) {
-            if (this.level.blocks[i].x === x && this.level.blocks[i].y === y) {
+        // make sure there is not already a block in the Level here
+        for (let i = 0; i < this.Level.blocks.length; i++) {
+            if (this.Level.blocks[i].x === x && this.Level.blocks[i].y === y) {
                 console.log('Cannot place block here');
                 return;
             }
         }
         // Create a new block at the click position
-        let newBlock = new this.currentBlockType(x, y, this.level);
-        // Add the block to the level
-        this.level.addBlock(newBlock);
+        let newBlock = new this.currentBlockType(x, y, this.Level);
+        // Add the block to the Level
+        this.Level.addBlock(newBlock);
     }
     showRightClickMenu(block, event) {
         // set the menu's block
-        this.RightClickMenu.setSelectBlock(block);
+        this.rightClickMenu.setSelectBlock(block);
         // get the relative click position using the event
         let pos = {
             x: event.clientX,
             y: event.clientY
         };
         // show the menu
-        this.RightClickMenu.show(pos.x, pos.y);
+        this.rightClickMenu.show(pos.x, pos.y);
     }
 
     handleRightClick(event) {
@@ -265,26 +369,36 @@ class Building {
         let x = Math.round(pos.x / this.grid) * this.grid;
         let y = Math.round(pos.y / this.grid) * this.grid;
         // find the block at this position
-        let block = this.level.blocks.find(block => block.x === x && block.y === y);
+        let block = this.Level.blocks.find(block => block.x === x && block.y === y);
         if (block) {
-            // delete the block
-            this.level.removeBlock(block);
+            this.showRightClickMenu(block, event);
         }
     }
 
     handleKeyDown(event) {
-        Object.values(this.buildMenu.blockButtons).forEach(button => {
-            if (button.getAttribute('data-keycode') == event.keyCode) {
-                button.click();
-            }
-        });
+        // if the 1 key is pressed, click the basic block button
+        if (event.keyCode === 49) {
+            this.buildMenu.GrassBlockButton.click();
+        }
+        // if the 2 key is pressed, click the wheel block button
+        if (event.keyCode === 50) {
+            this.buildMenu.GoalBlockButton.click();
+        }
+        // if the 3 key is pressed, click the cannon block button
+        if (event.keyCode === 51) {
+            this.buildMenu.RampBlockButton.click();
+        }
+        // if the 4 key is pressed, click the rocket booster block button
+        if (event.keyCode === 52) {
+            this.buildMenu.RampBlockLButton.click();
+        }
         // If the Z key is pressed, undo the last block placed
         if (event.keyCode === 90) {
-            this.level.undo();
+            this.Level.undo();
         }
         // If the X key is pressed, redo the last block placed
         if (event.keyCode === 88) {
-            this.level.redo();
+            this.Level.redo();
         }
 
         // if the B key is pressed, toggle build mode
@@ -316,7 +430,6 @@ class Building {
         }
         this.gridLines = [];
     }
-        
 }
 
 export default Building;

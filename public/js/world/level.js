@@ -1,15 +1,18 @@
-import { GrassBlock, RampBlockL, RampBlockR, GoalBlock } from './mapBlocks.js';
+import { GrassBlock, RampBlockL, RampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock } from './mapBlocks.js';
 const blockTypes = {
     GrassBlock,
     RampBlockL,
     RampBlockR,
-    GoalBlock
+    GoalBlock,
+    BuildingAreaBlock,
+    EnemySpawnBlock
 };
 // A Level is a collection of blocks that can be saved and loaded
 class LevelManager {
-    constructor(engine, playerContraption) {
+    constructor(engine, building) {
         this.engine = engine;
-        this.playerContraption = playerContraption;
+        this.playerContraption = building.contraption;
+        this.building = building;
         this.levels = [];
         this.blocks = [];
         this.actionStack = [];
@@ -110,13 +113,49 @@ class LevelManager {
         this.clear(); // remove all blocks from the Level
         console.log(LevelJson);
         // Load new blocks from JSON
+        let buildAreaDefined = false;
+        this.building.setBuildArea(
+        {
+            x: -1,
+            y: -1,
+            width: 0,
+            height: 0
+        }
+        )
+        console.log(this.building.buildArea)
         LevelJson.blocks.forEach(blockJson => {
             // Get the block type constructor
             const BlockType = blockTypes[blockJson.type];
             if (BlockType) {
+                if (blockJson.type === "BuildingAreaBlock") {
+                    // don't add building area blocks to the level, instead use them to increase the size of the building area
+                    if (!buildAreaDefined) {
+                        buildAreaDefined = true;
+                        this.building.setBuildArea(
+                            {
+                                x: blockJson.x - 50,
+                                y: blockJson.y - 50,
+                                width: 100,
+                                height: 100
+                            }
+                        )
+                    }
+                    else {
+                        // if the square is outside the current build area, expand the build area
+                        if (blockJson.x + 50 > this.building.buildArea.x + this.building.buildArea.width) {
+                            this.building.buildArea.width = blockJson.x + 50 - this.building.buildArea.x;
+                        }
+                        if (blockJson.y + 50 > this.building.buildArea.y + this.building.buildArea.height) {
+                            this.building.buildArea.height = blockJson.y + 50 - this.building.buildArea.y;
+                        }
+                    }
+                    // for now, add the block to the level as well
+                    let newBlock = new BlockType(blockJson.x, blockJson.y);
+                    this.addBlock(newBlock);
+                    return;
+                }
                 // Create a new block instance
                 let newBlock = new BlockType(blockJson.x, blockJson.y);
-                // flip the block if necessary
                 // Add the block to the Level
                 this.addBlock(newBlock); 
 

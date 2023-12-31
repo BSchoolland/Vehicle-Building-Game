@@ -252,7 +252,7 @@ class Building {
         this.buildArea = {
             x: 100,
             y: 200,
-            width: 300,
+            width: 600,
             height: 200
         };
         this.grid = 50;
@@ -261,8 +261,7 @@ class Building {
         this.RightClickMenu = new RightClickMenu();
         // build menu
         this.buildMenu = new BuildMenu(this);
-    }
-
+    }  
     setCurrentBlockType(blockType) {
         this.currentBlockType = blockType;
     }
@@ -361,8 +360,12 @@ class Building {
             this.buildMenu.buildModeButton.click();
         }
     }
+    setBuildArea(buildArea) {   
+        this.buildArea = buildArea;
+    }
     displayGrid() {
-        const buildArea = this.buildArea;
+        let buildArea = this.buildArea;
+        console.log(this.buildArea);
         const gridSpacing = this.grid;
     
         // Vertical lines

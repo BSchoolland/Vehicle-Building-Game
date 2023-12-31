@@ -47,7 +47,7 @@ Matter.Events.on(engine, 'beforeUpdate', () => {
 
 console.log(building.contraption)
 
-const levelObject = new LevelManager(engine, building.contraption);
+const levelObject = new LevelManager(engine, building);
 levelObject.init();
 // load the level selector screen
 // after a short delay to allow the levels to load

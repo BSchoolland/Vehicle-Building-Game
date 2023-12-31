@@ -46,6 +46,15 @@ class Block {
         this.resetValues();
         this.addToWorld(this.contraption.engine.world);
     }
+    makeInvisible() { // make all bodies and constraints invisible
+        this.bodies.forEach(body => {
+            body.render.visible = false;
+        });
+        this.constraints.forEach(constraint => {
+            constraint.render.visible = false;
+        });
+        console.log('made invisible');
+    }
     makeBodies() {
         // will be defined in subclasses
     }

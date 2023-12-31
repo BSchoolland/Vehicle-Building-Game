@@ -51,7 +51,9 @@ class RightClickMenu {
         // Add the menu to the game container
         let gameContainer = document.getElementById('game-container');
         gameContainer.appendChild(this.menu);
-        this.startLevel = () => {}
+    }
+    startLevel() {
+        // will be defined later
     }
     setSelectBlock(block) {
         this.block = block;

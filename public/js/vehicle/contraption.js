@@ -97,7 +97,7 @@ class Contraption {
     load(contraptionJson) {
         // Clear existing blocks in the contraption
         this.clear(); // Assuming this.clear() removes all blocks from the contraption
-    
+        
         // Load new blocks from JSON
         contraptionJson.blocks.forEach(blockJson => {
             // Get the block type constructor
@@ -108,7 +108,6 @@ class Contraption {
                 // flip the block if necessary
                 // Add the block to the contraption
                 this.addBlock(newBlock); 
-
                 if (blockJson.flippedX) {
                     newBlock.flipX();
                 }
@@ -117,6 +116,29 @@ class Contraption {
             }
         });
     }
+    moveTo(x, y) {
+        // figure out the center of the contraption
+        var centerX = 0;
+        var centerY = 0;
+        this.blocks.forEach(block => {
+            centerX += block.x;
+            centerY += block.y;
+        });
+        centerX /= this.blocks.length;
+        centerY /= this.blocks.length;
+        // move the contraption so that the center is at x and y
+        x -= centerX;
+        y -= centerY;
+        this.blocks.forEach(block => {
+            block.x += x;
+            block.y += y;
+        }); 
+        // reset all blocks to update their positions
+        this.blocks.forEach(block => {
+            block.reset(false);
+        }); 
+        console.log("moved contraption to " + x + ", " + y);
+    }   
     clear() {
         // Make a copy of the blocks array and iterate over it
         [...this.blocks].forEach(block => {

@@ -220,9 +220,12 @@ class LevelManager {
                     let enemyContraptionJson = this.enemyContraptionsJSON[enemyType - 1];
                     // load the enemy contraption
                     const EnemyContraption = new Contraption(this.engine);
-                    EnemyContraption.load(enemyContraptionJson);
+                    EnemyContraption.load(enemyContraptionJson, 'AI');
+                    // move the enemy contraption to the spawn point
+                    EnemyContraption.moveTo(blockJson.x, blockJson.y);
                     // add the enemy contraption to the enemy contraptions array
                     this.enemyContraptions.push([EnemyContraption, blockJson.x, blockJson.y]);
+                    return;
                 }
 
                 // Create a new block instance

@@ -33,11 +33,11 @@
 
 #### Version 0.3
 
- Collisions deal damage
+ More satisfying damage
  Add a piston block
- Add a mele block
+ Add a mele block (done)
  Add an Armor block
- 3 Prototype Levels
+ 3 more Prototype Levels
 
 #### Version 0.4 
 

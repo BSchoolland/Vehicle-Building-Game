@@ -1,9 +1,11 @@
-import { GrassBlock, RampBlockL, RampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock } from './mapBlocks.js';
+import { GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock } from './mapBlocks.js';
 import { Contraption } from '../vehicle/contraption.js'
 const blockTypes = {
     GrassBlock,
     RampBlockL,
+    slightRampBlockL,
     RampBlockR,
+    slightRampBlockR,
     GoalBlock,
     BuildingAreaBlock,
     EnemySpawnBlock
@@ -46,7 +48,9 @@ class LevelManager {
         const paths = [
             '../../json-levels/level1.json',
             '../../json-levels/level2.json',
-            '../../json-levels/level3.json'
+            '../../json-levels/level3.json',
+            '../../json-levels/level4.json',
+            '../../json-levels/level5.json',
         ];
         paths.forEach(async (path) => {
             var levelJson = await (await fetch(path)).json();

@@ -58,7 +58,7 @@ class GrassBlock extends Block {
     }
 }
 
-// a ramp block
+// a left ramp block
 class RampBlockL extends Block {
     constructor(x, y, level) {
         // random green color
@@ -71,13 +71,49 @@ class RampBlockL extends Block {
     }
     makeBodies() {
        // a right triangle that is the color of the block
-       let vertices ='0 0 0 100 100 100';
+       let vertices ='100 0 100 100 0 100';
+       this.bodies.push(Matter.Bodies.fromVertices(this.x + (50-33.3333), this.y + (50-33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+    }
+}
+
+// a longer left ramp block
+class slightRampBlockL extends Block {
+    constructor(x, y, level) {
+        // random green color
+        let color = grassColors[Math.floor(Math.random() * grassColors.length)];
+        super(x, y, level, color);
+        this.width = 100;
+        this.height = 100;  
+        this.bodies = [];
+        this.makeBodies();
+    }
+    makeBodies() {
+        // a right triangle that is the color of the block
+        let vertices = '200 100 0 0 0 100';
+        this.bodies.push(Matter.Bodies.fromVertices(this.x + (-50+66.6666), this.y + (50-33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+    }
+}
+
+// a right ramp block
+class RampBlockR extends Block {
+    constructor(x, y, level) {
+        // random green color
+        let color = grassColors[Math.floor(Math.random() * grassColors.length)];
+        super(x, y, level, color);
+        this.width = 100;
+        this.height = 100;  
+        this.bodies = [];
+        this.makeBodies();
+    }
+    makeBodies() {
+       // a right triangle that is the color of the block
+       let vertices ='0 0 100 100 0 100';
        this.bodies.push(Matter.Bodies.fromVertices(this.x - (50-33.3333), this.y + (50-33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
     }
 }
 
-// a ramp block
-class RampBlockR extends Block {
+// a longer right ramp block
+class slightRampBlockR extends Block {
     constructor(x, y, level) {
         // random green color
         let color = grassColors[Math.floor(Math.random() * grassColors.length)];
@@ -176,4 +212,4 @@ class EnemySpawnBlock extends Block {
     }
 }
 
-export {GrassBlock, RampBlockL, RampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock}; 
+export {GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock}; 

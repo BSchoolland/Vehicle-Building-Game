@@ -111,7 +111,7 @@ class BuildMenu {
                     // clear the existing level
                     building.level.clear();
                     // load the level from the JSON object
-                    building.level.load(LevelManagerJson);
+                    building.level.loadForEditing(LevelManagerJson);
                 };
             };
         };

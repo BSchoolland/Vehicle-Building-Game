@@ -285,8 +285,8 @@ class Building {
         // get the click position
         let pos = this.camera.getMousePosition();
         // Round the position to the nearest grid line
-        let x = Math.round(pos.x / this.grid) * this.grid;
-        let y = Math.round(pos.y / this.grid) * this.grid;
+        let x = Math.round((pos.x - 25) / this.grid) * this.grid + 25;
+        let y = Math.round((pos.y - 25) / this.grid) * this.grid + 25;
         
         // make sure the position is within the build area
         if (x < this.buildArea.x || x > this.buildArea.x + this.buildArea.width) {
@@ -331,8 +331,8 @@ class Building {
         let pos = this.camera.getMousePosition();
         
         // Round the position to the nearest grid line
-        let x = Math.round(pos.x / this.grid) * this.grid;
-        let y = Math.round(pos.y / this.grid) * this.grid;
+        let x = Math.round((pos.x - 25) / this.grid) * this.grid + 25;
+        let y = Math.round((pos.y - 25) / this.grid) * this.grid + 25;
         // find the block at this position
         let block = this.contraption.blocks.find(block => block.x === x && block.y === y);
         if (block) {
@@ -369,15 +369,15 @@ class Building {
         const gridSpacing = this.grid;
     
         // Vertical lines
-        for (let x = buildArea.x; x <= buildArea.x + buildArea.width + gridSpacing; x += gridSpacing) {
-            let line = Matter.Bodies.rectangle(x - gridSpacing / 2, buildArea.y + buildArea.height / 2, 1, buildArea.height + gridSpacing, { isStatic: true, render: { visible: true }});
+        for (let x = buildArea.x; x <= buildArea.x + buildArea.width; x += gridSpacing) {
+            let line = Matter.Bodies.rectangle(x + 25 - gridSpacing / 2, buildArea.y + buildArea.height / 2, 1, buildArea.height, { isStatic: true, render: { visible: true }});
             Matter.World.add(this.engine.world, line);
             this.gridLines.push(line);
         }
     
         // Horizontal lines
-        for (let y = buildArea.y; y <= buildArea.y + buildArea.height + gridSpacing; y += gridSpacing) {
-            let line = Matter.Bodies.rectangle(buildArea.x + buildArea.width / 2, y - gridSpacing / 2, buildArea.width + gridSpacing, 1, { isStatic: true, render: { visible: true }});
+        for (let y = buildArea.y; y <= buildArea.y + buildArea.height; y += gridSpacing) {
+            let line = Matter.Bodies.rectangle(buildArea.x + buildArea.width / 2, y + 25 - gridSpacing / 2, buildArea.width, 1, { isStatic: true, render: { visible: true }});
             Matter.World.add(this.engine.world, line);
             this.gridLines.push(line);
         }

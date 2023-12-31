@@ -106,8 +106,39 @@ class LevelManager {
         });
         return LevelJson;
     }
+
+    loadForEditing(LevelJson) {
+        // Clear existing blocks in the Level
+        this.clear(); // remove all blocks from the Level
+        console.log(LevelJson);
+        // Load new blocks from JSON
+        LevelJson.blocks.forEach(blockJson => {
+            // Get the block type constructor
+            const BlockType = blockTypes[blockJson.type];
+            if (BlockType) {
+                // Create a new block instance
+                let newBlock = new BlockType(blockJson.x, blockJson.y);
+                // Add the block to the Level
+                this.addBlock(newBlock); 
+
+                if (blockJson.flippedX) {
+                    newBlock.flipX();
+                }
+                if (BlockType === GoalBlock) {
+                    this.goal = newBlock;
+                }
+            } else {
+                console.error(`Unknown block type: ${blockJson.type}`);
+            }
+        });
+    }
     // load a Level from a JSON object
     load(levelIndex) {
+        if (!this.building.buildArea) {
+            console.log("level editing mode");
+            this.loadForEditing(levelIndex);
+            return;
+        }
         var LevelJson = this.levels[levelIndex];
         // Clear existing blocks in the Level
         this.clear(); // remove all blocks from the Level
@@ -148,10 +179,16 @@ class LevelManager {
                         if (blockJson.y + 50 > this.building.buildArea.y + this.building.buildArea.height) {
                             this.building.buildArea.height = blockJson.y + 50 - this.building.buildArea.y;
                         }
+                        // check if the square is above or to the left of the current build area
+                        if (blockJson.x - 50 < this.building.buildArea.x) {
+                            this.building.buildArea.width += this.building.buildArea.x - blockJson.x + 50;
+                            this.building.buildArea.x = blockJson.x - 50;
+                        }
+                        if (blockJson.y - 50 < this.building.buildArea.y) {
+                            this.building.buildArea.height += this.building.buildArea.y - blockJson.y + 50;
+                            this.building.buildArea.y = blockJson.y - 50;
+                        }
                     }
-                    // for now, add the block to the level as well
-                    let newBlock = new BlockType(blockJson.x, blockJson.y);
-                    this.addBlock(newBlock);
                     return;
                 }
                 // Create a new block instance

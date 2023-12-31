@@ -1,4 +1,5 @@
 import { GrassBlock, RampBlockL, RampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock } from './mapBlocks.js';
+import { Contraption } from '../vehicle/contraption.js'
 const blockTypes = {
     GrassBlock,
     RampBlockL,
@@ -14,6 +15,8 @@ class LevelManager {
         this.playerContraption = building.contraption;
         this.building = building;
         this.levels = [];
+        this.enemyContraptionsJSON = [];
+        this.enemyContraptions = [];
         this.blocks = [];
         this.actionStack = [];
         this.undoStack = [];
@@ -36,6 +39,7 @@ class LevelManager {
 
     init() {
         this.populateLevels();
+        this.populateEnemyContraptions();
     }
     // populate the levels array with the JSON data
     populateLevels() {
@@ -47,6 +51,18 @@ class LevelManager {
         paths.forEach(async (path) => {
             var levelJson = await (await fetch(path)).json();
             this.levels.push(levelJson);
+        });
+    }
+    populateEnemyContraptions() {
+        const paths = [
+            '../../json-contraptions/enemy1.json'
+            // '../../json-contraptions/enemy2.json',
+            // '../../json-contraptions/enemy3.json'
+        ];
+        paths.forEach(async (path) => {
+            var contraptionJson = await (await fetch(path)).json();
+            console.log(contraptionJson);
+            this.enemyContraptionsJSON.push(contraptionJson);
         });
     }
     celebrate() {
@@ -134,6 +150,8 @@ class LevelManager {
     }
     // load a Level from a JSON object
     load(levelIndex) {
+        this.enemyContraptions = []; // clear the enemy contraptions
+
         if (!this.building.buildArea) {
             console.log("level editing mode");
             this.loadForEditing(levelIndex);
@@ -191,6 +209,22 @@ class LevelManager {
                     }
                     return;
                 }
+                if (blockJson.type === "EnemySpawnBlock") { // spawn in an enemy contraption
+                    // get the enemyType
+                    let enemyType = blockJson.enemyType;
+                    if (enemyType === undefined) {
+                        enemyType = 1;
+                    }
+                    console.log(enemyType)
+                    // get the enemy contraption's JSON
+                    let enemyContraptionJson = this.enemyContraptionsJSON[enemyType - 1];
+                    // load the enemy contraption
+                    const EnemyContraption = new Contraption(this.engine);
+                    EnemyContraption.load(enemyContraptionJson);
+                    // add the enemy contraption to the enemy contraptions array
+                    this.enemyContraptions.push([EnemyContraption, blockJson.x, blockJson.y]);
+                }
+
                 // Create a new block instance
                 let newBlock = new BlockType(blockJson.x, blockJson.y);
                 // Add the block to the Level
@@ -205,6 +239,17 @@ class LevelManager {
             } else {
                 console.error(`Unknown block type: ${blockJson.type}`);
             }
+        });
+        this.building.startLevel = this.startLevel.bind(this);
+    }
+    startLevel() {
+        // despawn all enemy contraptions
+        this.enemyContraptions.forEach(enemyContraption => {
+            enemyContraption[0].despawn();
+        });
+        // spawn in the enemy contraptions
+        this.enemyContraptions.forEach(enemyContraption => {
+            enemyContraption[0].spawn(enemyContraption[1], enemyContraption[2]);
         });
     }
     clear() {

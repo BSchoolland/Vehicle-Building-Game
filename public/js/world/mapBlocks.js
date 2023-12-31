@@ -166,6 +166,14 @@ class EnemySpawnBlock extends Block {
         },
         this.bodies[0].block = this;
     }
+    save() { // override in order to specify the type of enemy to spawn
+        var blockJson = {};
+        blockJson.type = this.constructor.name;
+        blockJson.x = this.x;
+        blockJson.y = this.y;
+        blockJson.enemyType = 1; // default to enemy type 1
+        return blockJson;
+    }
 }
 
 export {GrassBlock, RampBlockL, RampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock}; 

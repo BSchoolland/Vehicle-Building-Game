@@ -51,6 +51,7 @@ class RightClickMenu {
         // Add the menu to the game container
         let gameContainer = document.getElementById('game-container');
         gameContainer.appendChild(this.menu);
+        this.startLevel = () => {}
     }
     setSelectBlock(block) {
         this.block = block;
@@ -217,7 +218,8 @@ class BuildMenu {
 
                 // Spawn the contraption
                 building.contraption.spawn();
-
+                // start the level
+                building.startLevel();
                 // set the camera viewport to the size of the canvas
                 const canvas = document.querySelector('canvas');
                 building.camera.setViewport(canvas.width, canvas.height);

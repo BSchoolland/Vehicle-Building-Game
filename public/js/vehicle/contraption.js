@@ -144,10 +144,24 @@ class Contraption {
     // spawn the contraption in the world by making all blocks movable
     spawn(x = 0, y = 0) {
         // set the position of each block to be relative to x and y
-        this.blocks.forEach(block => {
-            block.x += x;
-            block.y += y;
-        });  
+        // figure out the center of the contraption
+        if (!(x === 0 && y === 0)) {
+            var centerX = 0;
+            var centerY = 0;
+            this.blocks.forEach(block => {
+                centerX += block.x;
+                centerY += block.y;
+            });
+            centerX /= this.blocks.length;
+            centerY /= this.blocks.length;
+            // move the contraption so that the center is at x and y
+            x -= centerX;
+            y -= centerY;
+            this.blocks.forEach(block => {
+                block.x += x;
+                block.y += y;
+            });  
+        }
         // reset all blocks (this fixes a bug where blocks would be spawned with incorrect positions)
         this.blocks.forEach(block => {
             block.reset(false);

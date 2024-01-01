@@ -98,6 +98,29 @@ class Block {
     damage(amount) {
         // subtract the amount from the hitpoints
         this.hitPoints -= amount;
+        let numSparks;
+        if (amount > 200){
+            numSparks = 200;
+        }
+        else {
+            numSparks = amount;
+        }
+        // add a shower of sparks
+        for (var i = 0; i < numSparks; i++) {
+            // create a spark with a random position and velocity
+            let spark = Matter.Bodies.circle(this.bodies[0].position.x + Math.random() * 10 - 5, this.bodies[0].position.y + Math.random() * 10 - 5, 2, { render: { fillStyle: '#ff0000' }});
+            Matter.Body.setVelocity(spark, { x: Math.random() * 10 - 5, y: Math.random() * 10 - 10});
+            // change the color by a random amount
+            spark.render.fillStyle = '#ff' + Math.floor(Math.random() * 100).toString(16) + '00';
+            // make the spark unable to collide with other blocks
+            spark.collisionFilter = { mask: 0x0002 };
+            // add the spark to the world
+            Matter.World.add(this.contraption.engine.world, spark);
+            // remove the spark after 1 second
+            setTimeout(() => {
+                Matter.World.remove(this.contraption.engine.world, spark);
+            }, 1000);
+        }
         // check if the block is destroyed
         if (this.hitPoints <= 0) {
             // flash the block red
@@ -122,10 +145,12 @@ class Block {
                     });
                 }
             });
+            // give a bit of upward velocity to the block
+            Matter.Body.setVelocity(this.bodies[0], { x: 0, y: -5 });
             // after 1 second, remove the block from the world
             setTimeout(() => {
                 this.removeFromWorld(this.contraption.engine.world);
-            }, 1000);
+            }, 200);
         } else {
             // flash the block red
             this.bodies.forEach(body => {

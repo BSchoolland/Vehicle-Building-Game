@@ -37,7 +37,7 @@
  Add a piston block
  Add a mele block (done)
  Add an Armor block
- 3 more Prototype Levels
+ 2 more Prototype Levels (done)
 
 #### Version 0.4 
 

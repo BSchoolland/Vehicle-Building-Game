@@ -34,36 +34,38 @@
 #### Version 0.3
 
  More satisfying damage (done)
- Add a piston block
  Add a mele block (done)
- Add an Armor block
  2 more Prototype Levels (done)
 
 #### Version 0.3.1
     
  Add a Grapple block
  Add a TNT block
- Create more enemies
- Create more levels
+ Add a spring block
 
+#### Version 0.4: 
 
-#### Version 0.4 
+    very basic AI
+    More enemies
+    
+#### Version 0.5 
 
  Main Menu
  Level Select Improvements
  limit which blocks can be used in which levels 
 
-#### Version 0.4.1
-
+#### Version 0.5.1
+    Add a text block for tutorials
     Create world 1: the tutorial world
 
-#### Version 0.4.2
+#### Version 0.5.2
     
     Add map painter allowing for recoloring of blocks
     Add Moving platforms
+    Add background blocks (non-interactable)
     Create world 2: the forest world
 
-#### Version 0.4.3
+#### Version 0.5.3
     
     Add sinking sand / mud block
     Create world 3: The desert world
@@ -72,10 +74,6 @@
     Add water block
     Create world 5: The ocean world
 
-#### Version 0.5: 
-
- very basic AI
- Rework levels, and add more.
 
 #### Version 0.6
 

@@ -1,5 +1,5 @@
 import Block from './baseBlockClass.js';
-import { LocalToWorld, WorldToLocal } from '../utils.js';
+import { LocalToWorld, WorldToLocal, constrainBodyToBody } from '../utils.js';
 
 // a grappling hook block that can grab onto other blocks, and reel them in
 class GrappleBlock extends Block {

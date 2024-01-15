@@ -39,9 +39,9 @@
 
 #### Version 0.3.1
     
- Add a Grapple block
- Add a TNT block
- Add a spring block
+ - Add a Grapple block (done)
+ - Add a TNT block
+ -  Add a spring block
 
 #### Version 0.4: 
 

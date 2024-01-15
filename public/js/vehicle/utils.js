@@ -54,5 +54,6 @@ function constrainBodyToBody(bodyA, bodyB) {
 
 export {
     LocalToWorld,
-    WorldToLocal
+    WorldToLocal,
+    constrainBodyToBody
 }

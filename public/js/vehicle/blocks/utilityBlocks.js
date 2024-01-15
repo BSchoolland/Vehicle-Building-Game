@@ -20,6 +20,8 @@ class GrappleBlock extends Block {
         this.currentSquareLength = 0;
         this.simetricalX = false;
         this.hookWelds = []; // welds between the hook and the block it is attached to
+        this.grappleConstraint = null;
+        this.grappleAimConstraint = null;
     }
     makeBodies(){
         // create a flat surface on the left side of the block
@@ -38,48 +40,8 @@ class GrappleBlock extends Block {
         this.bodies[3].block = this;
     }
     makeConstraints(){
-        // constrain the joint and the flat surface rigidly using two constraints
-        let bodyA = this.bodies[0];
-        let bodyB = this.bodies[3];
-        let localPointA = { x: -(bodyA.bounds.max.x - bodyA.bounds.min.x) / 2, y: 10 };
-        // turn the points into world coordinates
-        let worldPointA = LocalToWorld(bodyA, localPointA);
-        // turn world coordinates into bodyB local coordinates
-        let localPointB = WorldToLocal(bodyB, worldPointA);
-        // constraint 0
-        this.constraints.push(Matter.Constraint.create({
-            bodyA: this.bodies[0], // the flat surface
-            bodyB: this.bodies[3], // the joint
-            pointA: localPointA,
-            pointB: localPointB,
-            stiffness: 0.5,
-            length: 0,
-            // invisible
-            render: {
-                visible: false
-            }
-        }));
-        // 
-        localPointA = { x: -(bodyA.bounds.max.x - bodyA.bounds.min.x) / 2, y: -10 };
-        // turn the points into world coordinates
-        worldPointA = LocalToWorld(bodyA, localPointA);
-        // turn world coordinates into bodyB local coordinates
-        localPointB = WorldToLocal(bodyB, worldPointA);
-        // constraint 1
-        this.constraints.push(Matter.Constraint.create({
-            bodyA: this.bodies[0], // the flat surface
-            bodyB: this.bodies[3], // the joint
-            pointA: localPointA,
-            pointB: localPointB,
-            stiffness: 0.5,
-            length: 0,
-            // invisible
-            render: {
-                visible: false
-            }
-        }));
-        // constrain the joint and the grappling hook, allowing rotation (constraint 2)
-        this.constraints.push(Matter.Constraint.create({
+        // constrain the joint and the grappling hook, allowing rotation
+        this.grappleConstraint = (Matter.Constraint.create({
             bodyA: this.bodies[2], // the grappling hook
             bodyB: this.bodies[3], // the joint
             pointA: { x: -10, y: 0 },
@@ -91,34 +53,8 @@ class GrappleBlock extends Block {
                 visible: false
             }
         }));
-        // constrain the left flat surface and the bottom flat surface, making a right angle (constraint 3)
-        this.constraints.push(Matter.Constraint.create({
-            bodyA: this.bodies[0], // the left flat surface
-            bodyB: this.bodies[1], // the bottom flat surface
-            pointA: { x: 5, y: 20 },
-            pointB: { x: -20, y: 0 },
-            stiffness: 1,
-            length: 0,
-            // invisible
-            render: {
-                visible: false
-            }
-        }));
-        // constraint 4 
-        this.constraints.push(Matter.Constraint.create({
-            bodyA: this.bodies[0], // the left flat surface
-            bodyB: this.bodies[1], // the bottom flat surface
-            pointA: { x: 45, y: 20 },
-            pointB: { x: 20, y: 0 },
-            stiffness: 1,
-            length: 0,
-            // invisible
-            render: {
-                visible: false
-            }
-        }));
-        // a weak constraint between the joint and the grappling hook (constraint 5)
-        this.constraints.push(Matter.Constraint.create({
+        // a constraint between the grappling hook and the joint, limiting rotation
+        this.grappleAimConstraint = (Matter.Constraint.create({
             bodyA: this.bodies[2], // the grappling hook
             bodyB: this.bodies[3], // the joint
             pointA: { x: 10, y: 0 },
@@ -130,6 +66,20 @@ class GrappleBlock extends Block {
                 visible: false
             }
         }));
+        // add the constraints to the block
+        this.constraints.push(this.grappleConstraint);
+        this.constraints.push(this.grappleAimConstraint);
+
+        // constrain the joint and the flat surface rigidly using constrainBodyToBody
+        let bodyA = this.bodies[0];
+        let bodyB = this.bodies[3];
+        let constraints = constrainBodyToBody(bodyA, bodyB);
+        this.constraints.push(...constraints);
+        // constrain the left side and the bottom side of the block rigidly using constrainBodyToBody
+        bodyA = this.bodies[0];
+        bodyB = this.bodies[1];
+        constraints = constrainBodyToBody(bodyA, bodyB);
+        this.constraints.push(...constraints);
     }
     update() { // shoot the grappling hook, or reel it in
         // check if the right mouse button is pressed
@@ -147,10 +97,9 @@ class GrappleBlock extends Block {
         this.readyToShoot = false;
         // shoot the grappling hook forward
 
-        // make constraints 2, 4, and 5 infinitely weak
-        this.constraints[2].stiffness = 0;
-        this.constraints[4].stiffness = 0;
-        this.constraints[5].stiffness = 0;
+        // make the grappling constraints weak
+        this.grappleConstraint.stiffness = 0;
+        this.grappleAimConstraint.stiffness = 0;
         // set the rope length to the maximum
         this.currentRopeLength = this.maxRopeLength;
         this.currentSquareLength = this.ropeSqrMaxLength;
@@ -188,8 +137,8 @@ class GrappleBlock extends Block {
         let sqrDistance = (this.bodies[2].position.x - this.bodies[3].position.x) ** 2 +
                           (this.bodies[2].position.y - this.bodies[3].position.y) ** 2;
         
-        let LengthA = Math.sqrt(sqrDistance) - 1;
-        let LengthB = this.rope.length - 1;
+        let LengthA = Math.sqrt(sqrDistance) - 3;
+        let LengthB = this.rope.length - 3;
         let newLength = Math.min(LengthA, LengthB);
         this.currentRopeLength = newLength;
         this.currentSquareLength = newLength * newLength;
@@ -219,13 +168,17 @@ class GrappleBlock extends Block {
                         pointB: { x: 0, y: 0 },
                         stiffness: 0.5,
                         render: {
-                            visible: true
+                            visible: false
                         }
                     });
                     // add the weld to the welds array
                     this.hookWelds.push(weld);
                     // add the weld to the world
                     Matter.World.add(this.contraption.engine.world, weld);
+                    // after 0.1 seconds, make the hook unable to grab onto blocks
+                    setTimeout(() => {
+                        this.readyToHook = false;
+                    }, 500);
                 }
             }
         }
@@ -263,10 +216,9 @@ class GrappleBlock extends Block {
     resetValues() {
         this.destroyRope();
         this.readyToShoot = true;
-        // set the stiffness of constraints 2, 4, and 5 back to their original values
-        this.constraints[2].stiffness = 1;
-        this.constraints[4].stiffness = 1;
-        this.constraints[5].stiffness = 0.1;
+        // set the stiffness of grapple constraints back to their original values
+        this.grappleConstraint.stiffness = 1;
+        this.grappleAimConstraint.stiffness = 0.1;
         // make the hook unable to grab onto blocks
         this.readyToHook = false;
     }

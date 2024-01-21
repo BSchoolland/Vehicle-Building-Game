@@ -11,4 +11,4 @@ finally, go to localhost:3000 and you should see the game!
 ### Try the game
 (web hosting not yet set up)
 ### Licence
-This project is licenced under the MIT License -- see the [LICENSE](LICENSE) file for details.
+This project is licenced under the MIT License -- see the [LICENSE](LICENSE.txt) file for details.

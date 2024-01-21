@@ -29,9 +29,10 @@ Version 0.3 (completed)
 Version 0.3.1
 - Add a Grapple block (done)
 - Add a TNT block (done)
+
 Version 0.4:
--very basic AI
--More enemies
+- very basic AI
+- More enemies
 
 Version 0.5
 - Main Menu

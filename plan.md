@@ -31,18 +31,19 @@ Version 0.3.1
 - Add a TNT block (done)
 
 Version 0.4:
-- very basic AI
-- More enemies
+- very basic AI (done)
+- More enemies (done)
 
 Version 0.5
-- Main Menu
-- Level Select Improvements
-
-Version 0.6
 - Seat block, anything detached from it is destroyed
 - Prevent glitches that allow for blocks outside of build area
 - limit which blocks can be used in which levels
 - Limit contraption loading, so that it only works if enough build space and parts are avalable
+
+Version 0.6
+- Main Menu  
+- Level Select Improvements
+
 Version 0.7
 - Final Levels
 

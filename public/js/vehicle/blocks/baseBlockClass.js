@@ -11,6 +11,7 @@ class Block {
         this.cost = cost;
         this.description = description;
         this.hitPoints = hitPoints;
+        this.maxHitPoints = hitPoints;
         this.color = color;
         this.bodies = bodies;
         this.constraints = constraints;
@@ -19,6 +20,8 @@ class Block {
         // orientation
         this.flippedX = false;
         this.simetricalX = true; // most blocks are simetrical in the x direction
+        this.sparks = 0; // number of sparks here right now
+        this.maxSparks = 200; // max number of sparks
     }
     reset(atOriginalPosition = true) {
         // deletes all bodies and constraints then recreates them at the original position
@@ -50,8 +53,8 @@ class Block {
         // will be defined in subclasses
     }
     resetValues() {
-        // will be defined in subclasses
         // called when the block is reset
+        this.hitPoints = this.maxHitPoints;
     }
     update() {
         // will be defined in subclasses
@@ -86,15 +89,14 @@ class Block {
     damage(amount) {
         // subtract the amount from the hitpoints
         this.hitPoints -= amount;
-        let numSparks;
-        if (amount > 200){
-            numSparks = 200;
-        }
-        else {
-            numSparks = amount;
-        }
+        let numSparks = amount;
         // add a shower of sparks
         for (var i = 0; i < numSparks; i++) {
+            if (this.sparks >= this.maxSparks) {
+                // don't add any more sparks
+                break;
+            }
+            this.sparks++;
             // create a spark with a random position and velocity
             let spark = Matter.Bodies.circle(this.bodies[0].position.x + Math.random() * 10 - 5, this.bodies[0].position.y + Math.random() * 10 - 5, 2, { render: { fillStyle: '#ff0000' }});
             Matter.Body.setVelocity(spark, { x: Math.random() * 10 - 5, y: Math.random() * 10 - 10});
@@ -107,6 +109,7 @@ class Block {
             // remove the spark after 1 second
             setTimeout(() => {
                 Matter.World.remove(this.contraption.engine.world, spark);
+                this.sparks--;
             }, 1000);
         }
         // check if the block is destroyed

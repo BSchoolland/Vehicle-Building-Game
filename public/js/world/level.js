@@ -55,7 +55,23 @@ class LevelManager {
         paths.forEach(async (path) => {
             var levelJson = await (await fetch(path)).json();
             this.levels.push(levelJson);
+            // if the levelSelector is open, add a button for the new level
+            if (document.getElementById('level-selector')) {
+                let level = this.levels.length - 1;
+                let button = document.createElement('button');
+                button.className = "level-select-button";
+                button.innerHTML = `Level ${level + 1}`;
+                button.addEventListener('click', () => {
+                    this.load(level);
+                    document.getElementById('level-selector').remove();
+                });
+                document.getElementById('level-selector').appendChild(button);
+            }
+
         });
+        console.log(this.levels);
+        console.log(this.levels.length);
+        
     }
     populateEnemyContraptions() {
         const paths = [
@@ -310,8 +326,12 @@ class LevelManager {
         let title = document.createElement('h1');
         title.innerHTML = "Select a level";
         levelSelector.appendChild(title);
+        // log the length of the levels array
+        console.log(this.levels);
+        console.log(this.levels.length);
         // add a button for each level
         this.levels.forEach((level, index) => {
+            console.log(index);
             let button = document.createElement('button');
             button.className = "level-select-button";
             button.innerHTML = `Level ${index + 1}`;
@@ -319,6 +339,7 @@ class LevelManager {
                 this.load(index);
                 levelSelector.remove();
             });
+            console.log(button);
             levelSelector.appendChild(button);
         });
     }

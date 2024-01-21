@@ -75,6 +75,7 @@ class LevelManager {
         const enemies = {
             box: '../../json-enemies/box.json',
             smallSpikeCar: '../../json-enemies/small-spike-car.json',
+            terrifyingBombCar: '../../json-enemies/terrifying-bomb-car.json',
         }
         Object.keys(enemies).forEach(async (key) => {
             var enemyJson = await (await fetch(enemies[key])).json();
@@ -138,6 +139,8 @@ class LevelManager {
         this.blocks.forEach(block => {
             LevelJson.blocks.push(block.save());
         });
+        // add an empty commands array to the JSON (this will be filled by devs and used by the AI)
+        LevelJson.commands = [];
         return LevelJson;
     }
 
@@ -240,6 +243,8 @@ class LevelManager {
                     // load the enemy contraption
                     const EnemyContraption = new Contraption(this.engine);
                     EnemyContraption.load(enemyContraptionJson, 'AI');
+                    // load the commands
+                    EnemyContraption.AiLoadCommands(enemyContraptionJson.commands);
                     // move the enemy contraption to the spawn point
                     EnemyContraption.moveTo(blockJson.x, blockJson.y);
                     // add the enemy contraption to the enemy contraptions array
@@ -269,10 +274,12 @@ class LevelManager {
         this.enemyContraptions.forEach(enemyContraption => {
             enemyContraption[0].despawn();
         });
+
         // spawn in the enemy contraptions
         this.enemyContraptions.forEach(enemyContraption => {
             enemyContraption[0].spawn(enemyContraption[1], enemyContraption[2]);
         });
+
     }
     clear() {
         // Make a copy of the blocks array and iterate over it

@@ -1,0 +1,16 @@
+{
+  "blocks": [
+    { "type": "BasicBlock", "x": 1425, "y": 475, "flippedX": false },
+    { "type": "BasicBlock", "x": 1475, "y": 475, "flippedX": false },
+    { "type": "WheelBlock", "x": 1475, "y": 525, "flippedX": false },
+    { "type": "TNTBlock", "x": 1525, "y": 475, "flippedX": false },
+    { "type": "WheelBlock", "x": 1375, "y": 525, "flippedX": false },
+    { "type": "BasicBlock", "x": 1375, "y": 475, "flippedX": false },
+    { "type": "rocketBoosterBlock", "x": 1325, "y": 475, "flippedX": false },
+    { "type": "BasicBlock", "x": 1475, "y": 375, "flippedX": false }
+  ],
+  "commands": [
+    { "key": "d", "start": 1.0, "end": 5.0},
+    { "key": "Shift", "start": 2.0, "end": 4.0}
+  ]
+}

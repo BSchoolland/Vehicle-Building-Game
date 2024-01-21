@@ -36,6 +36,6 @@
     { "type": "BuildingAreaBlock", "x": 1400, "y": 500 },
     { "type": "GoalBlock", "x": 100, "y": 500 },
     { "type": "EnemySpawnBlock", "x": 300, "y": 500, "enemyType": "box" },
-    { "type": "EnemySpawnBlock", "x": 500, "y": 500, "enemyType": "smallSpikeCar" }
+    { "type": "EnemySpawnBlock", "x": 500, "y": 500, "enemyType": "terrifyingBombCar" }
   ]
 }

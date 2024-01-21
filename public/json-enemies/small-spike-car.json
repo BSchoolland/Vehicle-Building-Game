@@ -5,5 +5,8 @@
     { "type": "WheelBlock", "x": 1375, "y": 525, "flippedX": false },
     { "type": "BasicBlock", "x": 1325, "y": 475, "flippedX": false },
     { "type": "SpikeBlock", "x": 1275, "y": 475, "flippedX": true }
+  ],
+  "commands": [
+    { "key": "a", "start": 1.0, "end": 5.0}
   ]
 }

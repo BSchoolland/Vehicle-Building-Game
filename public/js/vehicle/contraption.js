@@ -1,9 +1,10 @@
-import {BasicBlock, WheelBlock, rocketBoosterBlock, SpikeBlock} from './blocks.js';
+import {BasicBlock, WheelBlock, rocketBoosterBlock, SpikeBlock, TNTBlock} from './blocks.js';
 const blockTypes = {
     BasicBlock,
     WheelBlock,
     rocketBoosterBlock,
-    SpikeBlock
+    SpikeBlock,
+    TNTBlock
 };
 
 // This file contains the Contraption class which is used to represent a contraption in the game.
@@ -18,12 +19,14 @@ class Contraption {
                 mouseUp: false,
                 mousePressed: false
             };
-            this.AI = true;
+            this.Ai = true;
         } else {
             // the mouse is a player
             this.camera = camera;
-            this.AI = false;
+            this.Ai = false;
         }
+        this.AiCommands = [];
+        this.AiClockStarted = 0; // will keep track of when the commands started
         this.blocks = [];
         this.actionStack = [];
         this.undoStack = [];
@@ -39,7 +42,7 @@ class Contraption {
             }
         });
         // watch for key presses
-        if (!this.AI) {
+        if (!this.Ai) {
             document.addEventListener('keydown', (event) => this.pressKey(event.key));
             document.addEventListener('keyup', (event) => this.releaseKey(event.key));
         } 
@@ -56,8 +59,24 @@ class Contraption {
                 }
             });
         });
-        
     }
+    AiLoadCommands(commands) {
+        this.AiCommands = commands;
+        console.log("loaded commands");
+    }
+    AiUpdate() {
+        this.keysPressed = {};
+        // find the number of seconds since the commands started
+        let seconds = (Date.now() - this.AiClockStarted) / 1000;
+        // loop through the commands to find any with "start" times less than the current time and "end" times greater than the current time
+        this.AiCommands.forEach(command => {
+            if (command.start <= seconds && command.end >= seconds) {
+                // activate that key
+                this.pressKey(command.key);
+            }
+        });
+    }
+
     addBlock(block, addToActionStack = true) {
         block.contraption = this;
         this.blocks.push(block);
@@ -204,6 +223,10 @@ class Contraption {
         this.undoStack = [];
         // the contraption has been spawned
         this.spawned = true;
+        // if this is an AI, start the clock
+        if (this.Ai) {
+            this.AiClockStarted = Date.now();
+        }
     }
     // despawn the contraption by making all blocks static
     despawn() {
@@ -252,6 +275,10 @@ class Contraption {
         this.blocks.forEach(block => {
             block.update();
         }); 
+        // if this is an AI, update the AI
+        if (this.Ai) {
+            this.AiUpdate();
+        }
     }
     // press a key
     pressKey(key) {

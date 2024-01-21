@@ -1,0 +1,9 @@
+{
+  "blocks": [
+    { "type": "BasicBlock", "x": 1375, "y": 475, "flippedX": false },
+    { "type": "WheelBlock", "x": 1325, "y": 525, "flippedX": false },
+    { "type": "WheelBlock", "x": 1375, "y": 525, "flippedX": false },
+    { "type": "BasicBlock", "x": 1325, "y": 475, "flippedX": false },
+    { "type": "SpikeBlock", "x": 1275, "y": 475, "flippedX": true }
+  ]
+}

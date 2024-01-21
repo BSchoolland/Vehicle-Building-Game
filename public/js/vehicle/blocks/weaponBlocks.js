@@ -13,6 +13,7 @@ class SpikeBlock extends Block {
         this.lastHit = 0; // the last time the block hit something
         // this block is not simetrical in the x direction
         this.simetricalX = false;
+        this.baseDamage = 30;
         
     }
     makeBodies() {
@@ -27,11 +28,27 @@ class SpikeBlock extends Block {
     hit(thisBody, otherBody) {
         // check if this spike block is on cooldown
         if (Date.now() - this.lastHit >= this.damageCooldown * 1000) {
+            // make sure the other block is in a contraption
+            if (!otherBody.block) return;
+            if (!otherBody.block.contraption) return;
+            // make sure the other block is not a spike block
+            if (otherBody.block instanceof SpikeBlock) return;
             // damage the other block
             let velocityDifference = Matter.Vector.sub(otherBody.velocity, this.bodies[0].velocity);
-            otherBody.block.damage(this.damageMultiplier * Math.abs(velocityDifference.x + velocityDifference.y) ** 2 ); // damage is proportional to the velocity squared
+            
+            otherBody.block.damage(this.baseDamage + this.damageMultiplier * Math.abs(velocityDifference.x + velocityDifference.y) ** 2 ); // damage is proportional to the velocity squared
             // record the time of the hit
             this.lastHit = Date.now();
+            // knock both blocks back
+            // find the angle between the blocks
+            let angle = Matter.Vector.angle(this.bodies[0].position, otherBody.position);
+            // find the distance between the blocks
+            let distance = Matter.Vector.magnitude(Matter.Vector.sub(this.bodies[0].position, otherBody.position));
+            // find the distance to move the blocks
+            let moveDistance = (this.bodies[0].circleRadius + otherBody.circleRadius - distance) / 2;
+            // add velocity to both blocks3434
+            Matter.Body.setVelocity(this.bodies[0], { x: Math.cos(angle) * moveDistance , y: Math.sin(angle) * moveDistance * 0.5});
+            Matter.Body.setVelocity(otherBody, { x: -Math.cos(angle) * moveDistance/2, y: -Math.sin(angle) * moveDistance});
         }
     }
 }
@@ -152,7 +169,6 @@ class TNTBlock extends Block {
         });
         // add a cluster of explosions randomly around the block
         for (var i = 0; i < 30; i++) {
-        
             // create a circle explosion
             let explosion = Matter.Bodies.circle(x + Math.random() * 100 - 50, y + Math.random() * 100 - 50, 30 + Math.random() * 50, { render: { fillStyle: '#ff0000' }});
             // change the color by a random amount

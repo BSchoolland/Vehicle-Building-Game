@@ -17,7 +17,7 @@ class LevelManager {
         this.playerContraption = building.contraption;
         this.building = building;
         this.levels = [];
-        this.enemyContraptionsJSON = [];
+        this.enemyContraptionsJSON = {};
         this.enemyContraptions = [];
         this.blocks = [];
         this.actionStack = [];
@@ -68,22 +68,20 @@ class LevelManager {
                 document.getElementById('level-selector').appendChild(button);
             }
 
-        });
-        console.log(this.levels);
-        console.log(this.levels.length);
-        
+        });        
     }
     populateEnemyContraptions() {
-        const paths = [
-            '../../json-contraptions/enemy1.json'
-            // '../../json-contraptions/enemy2.json',
-            // '../../json-contraptions/enemy3.json'
-        ];
-        paths.forEach(async (path) => {
-            var contraptionJson = await (await fetch(path)).json();
-            console.log(contraptionJson);
-            this.enemyContraptionsJSON.push(contraptionJson);
+        console.log("populate enemy contraptions");
+        const enemies = {
+            box: '../../json-enemies/box.json',
+            smallSpikeCar: '../../json-enemies/small-spike-car.json',
+        }
+        Object.keys(enemies).forEach(async (key) => {
+            var enemyJson = await (await fetch(enemies[key])).json();
+            this.enemyContraptionsJSON[key] = enemyJson;
         });
+        console.log(this.enemyContraptionsJSON);
+
     }
     celebrate() {
         // make loads of confetti above the goal
@@ -180,7 +178,6 @@ class LevelManager {
         var LevelJson = this.levels[levelIndex];
         // Clear existing blocks in the Level
         this.clear(); // remove all blocks from the Level
-        console.log(LevelJson);
         // Load new blocks from JSON
         let buildAreaDefined = false;
         this.building.setBuildArea(
@@ -233,11 +230,13 @@ class LevelManager {
                     // get the enemyType
                     let enemyType = blockJson.enemyType;
                     if (enemyType === undefined) {
-                        enemyType = 1;
+                        enemyType = "box";
                     }
                     console.log(enemyType)
                     // get the enemy contraption's JSON
-                    let enemyContraptionJson = this.enemyContraptionsJSON[enemyType - 1];
+                    console.log(this.enemyContraptionsJSON);
+                    let enemyContraptionJson = this.enemyContraptionsJSON[enemyType]
+                    console.log(enemyContraptionJson);
                     // load the enemy contraption
                     const EnemyContraption = new Contraption(this.engine);
                     EnemyContraption.load(enemyContraptionJson, 'AI');

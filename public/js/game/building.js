@@ -1,5 +1,5 @@
 // Import necessary classes from your block definitions
-import {BasicBlock, WheelBlock, rocketBoosterBlock, SpikeBlock, GrappleBlock, TNTBlock } from '../vehicle/blocks.js';
+import {BasicBlock, SeatBlock, WheelBlock, rocketBoosterBlock, SpikeBlock, GrappleBlock, TNTBlock } from '../vehicle/blocks.js';
 import {Contraption} from '../vehicle/contraption.js';
 
 class RightClickMenu {
@@ -89,6 +89,7 @@ class BuildMenu {
             { name: 'Rocket Booster Block', key: '4', type: rocketBoosterBlock },
             { name: 'Spike Block', key: '5', type: SpikeBlock },
             { name: 'Grapple Block', key: '6', type: GrappleBlock },
+            { name: 'Seat Block', key: '7', type: SeatBlock },
         ];
         this.createBlockButtons();
         // create a button to save the contraption

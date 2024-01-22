@@ -86,6 +86,9 @@ class Camera {
     }
 
     setTarget(target) {
+        if (!target) {
+            return;
+        }
         this.setCenterPosition(target.bodies[0].position.x, target.bodies[0].position.y);
         this.target = target;
     }

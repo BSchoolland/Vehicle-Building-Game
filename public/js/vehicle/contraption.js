@@ -60,6 +60,8 @@ class Contraption {
                 }
             });
         });
+        // set the seat
+        this.seat = null;
     }
     AiLoadCommands(commands) {
         this.AiCommands = commands;
@@ -124,7 +126,7 @@ class Contraption {
             const BlockType = blockTypes[blockJson.type];
             if (BlockType) {
                 // Create a new block instance
-                let newBlock = new BlockType(blockJson.x, blockJson.y);
+                let newBlock = new BlockType(blockJson.x, blockJson.y, this);
                 // flip the block if necessary
                 // Add the block to the contraption
                 this.addBlock(newBlock); 

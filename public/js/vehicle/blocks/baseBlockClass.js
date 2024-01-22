@@ -47,7 +47,6 @@ class Block {
         this.constraints.forEach(constraint => {
             constraint.render.visible = false;
         });
-        console.log('made invisible');
     }
     makeBodies() {
         // will be defined in subclasses
@@ -381,14 +380,12 @@ class Block {
                 });
             }
         });
-        console.log(connectedBlocks);
         // check how far each adjacent block is from the seat, choose the closest one, and set this block's blocksFromSeat to 1 more than that
         let closestBlock = null;
         let closestDistance = 1000000;
         connectedBlocks.forEach(block => {
             // find the distance between the block and the seat
             let distance = block.blocksFromSeat;
-            console.log(distance);
             if (distance < closestDistance) {
                 closestBlock = block;
                 closestDistance = distance;

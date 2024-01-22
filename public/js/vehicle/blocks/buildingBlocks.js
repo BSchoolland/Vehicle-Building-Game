@@ -2,13 +2,13 @@ import  Block  from './baseBlockClass.js';
 import { LocalToWorld, WorldToLocal, constrainBodyToBody } from '../utils.js';
 
 // a function that makes a stickman to sit in the seat
-function makeStickMan(x, y) {
-    const head = Matter.Bodies.circle(x-5, y-18, 7, { render: { fillStyle: '#FFFFFF' }, });
-    const body = Matter.Bodies.rectangle(x - 5, y - 3, 5, 30, { render: { fillStyle: '#FFFFFF' } });
-    const leftArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 3, { render: { fillStyle: '#FFFFFF' } });
-    const rightArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 3, { render: { fillStyle: '#FFFFFF' } });
-    const leftLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 3, { render: { fillStyle: '#FFFFFF' } });
-    const rightLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 3, { render: { fillStyle: '#FFFFFF' } });
+function makeStickMan(x, y, color='#FFFFFF') {
+    const head = Matter.Bodies.circle(x-5, y-18, 7, { render: { fillStyle: color }, });
+    const body = Matter.Bodies.rectangle(x - 5, y - 3, 5, 30, { render: { fillStyle: color } });
+    const leftArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 3, { render: { fillStyle: color } });
+    const rightArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 3, { render: { fillStyle: color } });
+    const leftLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 3, { render: { fillStyle: color } });
+    const rightLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 3, { render: { fillStyle: color } });
     // make all the bodies unable to collide with anything
     head.collisionFilter = { mask: 0x0002 };
     body.collisionFilter = { mask: 0x0003 };
@@ -73,6 +73,7 @@ function makeStickMan(x, y) {
 class SeatBlock extends Block {
     constructor (x, y, contaption) {
         super(x, y, contaption, 20, 'A seat block', 100, '#3b2004', [], []);
+        this.contaption.seat = this;
         this.secondaryColor = '#3d3d3d';
         this.makeBodies();
         this.makeConstraints();
@@ -87,7 +88,13 @@ class SeatBlock extends Block {
         this.bodies.push(Matter.Bodies.rectangle(this.x + 5, this.y+20, 40, 10, { render: { fillStyle: this.color }}));
         this.bodies[1].block = this;
         // make a stickman to sit in the seat
-        const stickMan = makeStickMan(this.x, this.y);
+        let stickMan = null;
+        if (!this.contaption.Ai) { 
+            stickMan = makeStickMan(this.x, this.y);
+        }
+        else { // a red stickman for the AI
+            stickMan = makeStickMan(this.x, this.y, '#ff0000');
+        }
         this.bodies.push(...stickMan[0]);
         this.constraints.push(...stickMan[1]); // don't like that this is in makeBodies() but it works
     }

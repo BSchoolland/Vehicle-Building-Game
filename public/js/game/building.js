@@ -228,9 +228,9 @@ class BuildMenu {
                 const canvas = document.querySelector('canvas');
                 building.camera.setViewport(canvas.width, canvas.height);
 
-                // set the camera target to a block in the contraption
+                // set the camera target to the seat
 
-                building.camera.setTarget(building.contraption.blocks[0]);
+                building.camera.setTarget(building.contraption.seat);
             }
         };
         this.fullscreenButton.onclick = () => {

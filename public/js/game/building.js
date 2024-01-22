@@ -3,7 +3,8 @@ import {BasicBlock, SeatBlock, WheelBlock, rocketBoosterBlock, SpikeBlock, Grapp
 import {Contraption} from '../vehicle/contraption.js';
 
 class RightClickMenu {
-    constructor() {
+    constructor(building) {
+        this.building = building;
         this.block = null;
         // create a menu for the block
         this.menu = document.createElement('div');
@@ -24,6 +25,8 @@ class RightClickMenu {
         this.menu.appendChild(this.removeButton);
         this.removeButton.onclick = () => {
             this.block.contraption.removeBlock(this.block);
+            // update the button limits
+            this.building.buildMenu.updateButtonLimits();
             this.hide();
         }
         // create a button to cancel
@@ -76,69 +79,82 @@ class RightClickMenu {
 // a build menu class, for the bottom of the screen.
 // the build menu will contain buttons for each block type, a button to save the contraption, a button to load a contraption, a button to clear the contraption, and a button to toggle build mode.
 class BuildMenu {
-    constructor(building) {
-        this.building = building;
-        // create the build menu
-        this.menu = document.createElement('div');
-        this.menu.classList.add('menu');
-        // create a button for each block type
+    constructor(building, blockTypes = false) {
+      this.building = building;
+      // create the build menu
+      this.menu = document.createElement("div");
+      this.menu.classList.add("menu");
+      // create a button for each block type
+      if (blockTypes) {
+        this.blockTypes = blockTypes;
+        // for each "type" replace the string with the actual class
+        this.blockTypes.forEach((blockType, index) => {
+          this.blockTypes[index].type = eval(blockType.type);
+        });
+      } else {
         this.blockTypes = [
-            { name: 'Basic Block', key: '1', type: BasicBlock },
-            { name: 'Wheel Block', key: '2', type: WheelBlock },
-            { name: 'TNT Block', key: '3', type: TNTBlock },
-            { name: 'Rocket Booster Block', key: '4', type: rocketBoosterBlock },
-            { name: 'Spike Block', key: '5', type: SpikeBlock },
-            { name: 'Grapple Block', key: '6', type: GrappleBlock },
-            { name: 'Seat Block', key: '7', type: SeatBlock },
+          { name: "Basic Block", key: "1", type: BasicBlock, limit: 100 },
+          { name: "Wheel Block", key: "2", type: WheelBlock, limit: 100 },
+          { name: "TNT Block", key: "3", type: TNTBlock, limit: 100 },
+          {
+            name: "Rocket Booster Block",
+            key: "4",
+            type: rocketBoosterBlock,
+            limit: 100,
+          },
+          { name: "Spike Block", key: "5", type: SpikeBlock, limit: 100 },
+          { name: "Grapple Block", key: "6", type: GrappleBlock, limit: 100 },
+          { name: "Seat Block", key: "7", type: SeatBlock, limit: 100 },
         ];
-        this.createBlockButtons();
-        // create a button to save the contraption
-        this.saveButton = document.createElement('button');
-        this.saveButton.classList.add('menu-button');
-        this.saveButton.innerText = 'Save';
-        this.menu.appendChild(this.saveButton);
-        // create a button to load a contraption
-        this.loadButton = document.createElement('button');
-        this.loadButton.classList.add('menu-button');
-        this.loadButton.innerText = 'Load';
-        this.menu.appendChild(this.loadButton);
-        // create a button to clear the contraption
-        this.clearButton = document.createElement('button');
-        this.clearButton.classList.add('menu-button');
-        this.clearButton.innerText = 'Clear';
-        this.menu.appendChild(this.clearButton);
-        // create a button to toggle build mode
-        this.buildModeButton = document.createElement('button');
-        this.buildModeButton.classList.add('menu-button');
-        this.buildModeButton.innerText = 'Build Mode (b)';
-        this.menu.appendChild(this.buildModeButton);
-        // button to toggle fullscreen
-        this.fullscreenButton = document.createElement('button');
-        this.fullscreenButton.classList.add('menu-button');
-        this.fullscreenButton.innerText = 'Fullscreen';
-        this.menu.appendChild(this.fullscreenButton);
-        // style the menu
-        this.menu.classList.add('build-menu');
-        // set the button class
-        this.saveButton.classList.add('build-menu-button');
-        this.loadButton.classList.add('build-menu-button');
-        this.clearButton.classList.add('build-menu-button');
-        this.buildModeButton.classList.add('build-menu-button');
-        // Add the menu to the game container
-        let gameContainer = document.getElementById('game-container');
-        gameContainer.appendChild(this.menu);
-        // initialize the menu
-        this.init(building);
+      }
+      this.createBlockButtons();
+      // create a button to save the contraption
+      this.saveButton = document.createElement("button");
+      this.saveButton.classList.add("menu-button");
+      this.saveButton.innerText = "Save";
+      this.menu.appendChild(this.saveButton);
+      // create a button to load a contraption
+      this.loadButton = document.createElement("button");
+      this.loadButton.classList.add("menu-button");
+      this.loadButton.innerText = "Load";
+      this.menu.appendChild(this.loadButton);
+      // create a button to clear the contraption
+      this.clearButton = document.createElement("button");
+      this.clearButton.classList.add("menu-button");
+      this.clearButton.innerText = "Clear";
+      this.menu.appendChild(this.clearButton);
+      // create a button to toggle build mode
+      this.buildModeButton = document.createElement("button");
+      this.buildModeButton.classList.add("menu-button");
+      this.buildModeButton.innerText = "Build Mode (b)";
+      this.menu.appendChild(this.buildModeButton);
+      // button to toggle fullscreen
+      this.fullscreenButton = document.createElement("button");
+      this.fullscreenButton.classList.add("menu-button");
+      this.fullscreenButton.innerText = "Fullscreen";
+      this.menu.appendChild(this.fullscreenButton);
+      // style the menu
+      this.menu.classList.add("build-menu");
+      // set the button class
+      this.saveButton.classList.add("build-menu-button");
+      this.loadButton.classList.add("build-menu-button");
+      this.clearButton.classList.add("build-menu-button");
+      this.buildModeButton.classList.add("build-menu-button");
+      // Add the menu to the game container
+      let gameContainer = document.getElementById("game-container");
+      gameContainer.appendChild(this.menu);
+      // initialize the menu
+      this.init(building);
     }
     createBlockButtons() {
         this.blockButtons = {};
         this.blockTypes.forEach(blockType => {
             let button = document.createElement('button');
             button.classList.add('menu-button', 'build-menu-button');
-            button.innerText = `${blockType.name} (${blockType.key})`;
-            button.setAttribute('data-keycode', blockType.key.charCodeAt(0)); // Store keycode as a data attribute
+            button.innerHTML = `${blockType.name}<br>0/${blockType.limit}`; 
+            button.setAttribute('data-keycode', blockType.key.charCodeAt(0)); 
             button.onclick = () => {
-                this.building.setCurrentBlockType(blockType.type);
+                this.building.setCurrentBlockType(blockType.type, blockType.limit);
                 // Remove the active class from all the block type buttons
                 Object.values(this.blockButtons).forEach(button => button.classList.remove('active'));
                 // Set this button's class to active
@@ -148,7 +164,25 @@ class BuildMenu {
             this.blockButtons[blockType.type.name] = button;
         });
     }
-
+    updateButtonLimits() {
+        // get the number of each block in the contraption
+        let blockTypeCount = {};
+        this.building.contraption.blocks.forEach(block => {
+            if (blockTypeCount[block.constructor.name]) {
+                blockTypeCount[block.constructor.name]++;
+            } else {
+                blockTypeCount[block.constructor.name] = 1;
+            }
+        });
+        // update the button limits
+        this.blockTypes.forEach(blockType => {
+            if (blockTypeCount[blockType.type.name]) {
+                this.blockButtons[blockType.type.name].innerHTML = `${blockType.name}<br>${blockTypeCount[blockType.type.name]}/${blockType.limit}`;
+            } else {
+                this.blockButtons[blockType.type.name].innerHTML = `${blockType.name}<br>0/${blockType.limit}`;
+            }
+        });
+    }
     init(building) {
         // set the button functions
         this.saveButton.onclick = () => {
@@ -241,7 +275,6 @@ class BuildMenu {
 
         menu.style.bottom = '0px'; // Distance from the bottom of the canvas
         menu.style.left = 500; //`${rect.left + (rect.width / 2) - (menu.offsetWidth / 2)}px`; // Center horizontally
-        
     }
 }
 
@@ -253,6 +286,7 @@ class Building {
         this.engine = engine;
         this.camera = camera;
         this.currentBlockType = BasicBlock; // Default block type
+        this.currentBlockTypeLimit = 100; // Default limit for each block type
         this.buildInProgress = false;
         this.contraption = new Contraption(this.engine, this.camera);
         this.buildArea = {
@@ -264,14 +298,19 @@ class Building {
         this.grid = 50;
         this.gridLines = [];
         // right click menu
-        this.RightClickMenu = new RightClickMenu();
+        this.RightClickMenu = new RightClickMenu(this);
         // build menu
         this.buildMenu = new BuildMenu(this);
     }  
-    setCurrentBlockType(blockType) {
+    setCurrentBlockType(blockType, limit) {
         this.currentBlockType = blockType;
+        this.currentBlockTypeLimit = limit;
     }
-
+    makeNewBuildMenu(blockTypes) { // makes a new build menu with the given block types (for levels that limit the blocks that can be used)
+        // remove the old build menu
+        this.buildMenu.menu.remove();
+        this.buildMenu = new BuildMenu(this, blockTypes);
+    }
     init() {
         // Add event listener for canvas click
         const canvas = document.querySelector('canvas');
@@ -310,10 +349,26 @@ class Building {
                 return;
             }
         }
+        // find how many of each block are already in the contraption, and make sure the limit has not been reached
+        let blockTypeCount = {};
+        this.contraption.blocks.forEach(block => {
+            if (blockTypeCount[block.constructor.name]) {
+                blockTypeCount[block.constructor.name]++;
+            } else {
+                blockTypeCount[block.constructor.name] = 1;
+            }
+        });
+        if (blockTypeCount[this.currentBlockType.name] >= this.currentBlockTypeLimit) {
+            console.log('Limit reached for this block type');
+            return;
+        }
+
         // Create a new block at the click position
         let newBlock = new this.currentBlockType(x, y, this.contraption);
         // Add the block to the contraption
         this.contraption.addBlock(newBlock);
+        // update the button limits
+        this.buildMenu.updateButtonLimits();
     }
     showRightClickMenu(block, event) {
         // set the menu's block

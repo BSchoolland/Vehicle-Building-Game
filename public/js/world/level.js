@@ -267,6 +267,11 @@ class LevelManager {
                 console.error(`Unknown block type: ${blockJson.type}`);
             }
         });
+        // if the leve has buildingBlockTypes, then set the building's buildingBlockTypes
+        if (LevelJson.buildingBlockTypes) {
+            this.building.makeNewBuildMenu(LevelJson.buildingBlockTypes);
+        }
+        // start the level
         this.building.startLevel = this.startLevel.bind(this);
     }
     startLevel() {

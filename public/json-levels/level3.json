@@ -70,5 +70,25 @@
     { "type": "EnemySpawnBlock", "x": 500, "y": 400, "enemyType": "smallSpikeCar" },
     { "type": "BuildingAreaBlock", "x": 300, "y": 400 },
     { "type": "BuildingAreaBlock", "x": 300, "y": 300 }
+  ],
+  "commands": [],
+  "buildingBlockTypes": [
+    { "name": "Basic Block", "key": "1", "type": "BasicBlock", "limit": 100 },
+    { "name": "Wheel Block", "key": "2", "type": "WheelBlock", "limit": 100 },
+    { "name": "TNT Block", "key": "3", "type": "TNTBlock", "limit": 100 },
+    {
+      "name": "Rocket Booster Block",
+      "key": "4",
+      "type": "rocketBoosterBlock",
+      "limit": 100
+    },
+    { "name": "Spike Block", "key": "5", "type": "SpikeBlock", "limit": 100 },
+    {
+      "name": "Grapple Block",
+      "key": "6",
+      "type": "GrappleBlock",
+      "limit": 100
+    },
+    { "name": "Seat Block", "key": "7", "type": "SeatBlock", "limit": 1 }
   ]
 }

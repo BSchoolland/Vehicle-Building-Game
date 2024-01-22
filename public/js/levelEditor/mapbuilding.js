@@ -88,6 +88,22 @@ class BuildMenu {
             }
             // save the level to a JSON object
             let LevelManagerJson = building.level.save();
+            const buildingBlockTypes = [
+                { name: "Basic Block", key: "1", type: "BasicBlock", limit: 100 },
+                { name: "Wheel Block", key: "2", type: "WheelBlock", limit: 100 },
+                { name: "TNT Block", key: "3", type: "TNTBlock", limit: 100 },
+                {
+                  name: "Rocket Booster Block",
+                  key: "4",
+                  type: "rocketBoosterBlock",
+                  limit: 100,
+                },
+                { name: "Spike Block", key: "5", type: "SpikeBlock", limit: 100 },
+                { name: "Grapple Block", key: "6", type: "GrappleBlock", limit: 100 },
+                { name: "Seat Block", key: "7", type: "SeatBlock", limit: 1 },
+              ];
+            // save the block types to the JSON object
+            LevelManagerJson.buildingBlockTypes = buildingBlockTypes;
             // download the JSON object as a file
             let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(LevelManagerJson));
             let dlAnchorElem = document.createElement('a');

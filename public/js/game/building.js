@@ -56,7 +56,7 @@ class RightClickMenu {
         gameContainer.appendChild(this.menu);
     }
     startLevel() {
-        // will be defined later
+        // bound by the level manager, DO NOT CHANGE
     }
     setSelectBlock(block) {
         this.block = block;
@@ -215,17 +215,19 @@ class BuildMenu {
                 reader.onload = () => {
                     let contraptionJson = JSON.parse(reader.result);
                     // clear the existing contraption
-                    building.contraption.clear();
+                    building.contraption.clear();                   
                     // load the contraption from the JSON object
                     building.contraption.load(contraptionJson);
                 };
             };
         };
         this.clearButton.onclick = () => {
-            if (!building.buildInProgress) {
-                return;
-            }
-            building.contraption.clear();
+          if (!building.buildInProgress) {
+            return;
+          }
+          building.contraption.clear();
+          // update the button limits
+          this.updateButtonLimits();
         };
         this.buildModeButton.onclick = () => {
             building.buildInProgress = !building.buildInProgress;
@@ -302,6 +304,10 @@ class Building {
         // build menu
         this.buildMenu = new BuildMenu(this);
     }  
+    toggleBuildingMode() {
+        // click the build mode button
+        this.buildMenu.buildModeButton.click();
+    }
     setCurrentBlockType(blockType, limit) {
         this.currentBlockType = blockType;
         this.currentBlockTypeLimit = limit;

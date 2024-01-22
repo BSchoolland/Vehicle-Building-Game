@@ -267,12 +267,18 @@ class LevelManager {
                 console.error(`Unknown block type: ${blockJson.type}`);
             }
         });
-        // if the leve has buildingBlockTypes, then set the building's buildingBlockTypes
+        // if the leve' has buildingBlockTypes, then set the building's buildingBlockTypes
         if (LevelJson.buildingBlockTypes) {
             this.building.makeNewBuildMenu(LevelJson.buildingBlockTypes);
         }
-        // start the level
+        // bind the startLevel function to the building
         this.building.startLevel = this.startLevel.bind(this);
+        // clear the building's contraption
+        this.building.contraption.clear();
+        // deactivate building mode by clicking the building button if it is active
+        if (this.building.buildInProgress) {
+            this.building.toggleBuildingMode();
+        }
     }
     startLevel() {
         // despawn all enemy contraptions

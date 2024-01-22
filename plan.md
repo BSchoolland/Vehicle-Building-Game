@@ -44,11 +44,23 @@ Version 0.6
 - Main Menu
 - Keybinding
 - Level Select Improvements
+- Add a remote block, for keeping pieces of the contraption going without direct connection
 
 Version 0.7
-- Final Levels
+- Sound design
+- Add a visual backdrop
+- Improve sparks
+
+Version 0.8
+- Create World 1 Levels
+- Add tutorial
+
+Version 0.9
+- Create world 2 Levels
+
+Version 0.10
+- Create World 3 Levels
 
 Version 1.0:
 - Save Level progress
-- Add stars?
 - Web hosting

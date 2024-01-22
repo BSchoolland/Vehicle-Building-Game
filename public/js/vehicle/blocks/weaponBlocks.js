@@ -8,13 +8,12 @@ class SpikeBlock extends Block {
         this.makeBodies();
         this.makeConstraints();
         this.weldableFaces = ['right'];
-        this.damageMultiplier = 10; // does 1 damage times velocity it hits at
-        this.damageCooldown = 0.5; // seconds
+        this.damageMultiplier = 10;
+        this.damageCooldown = 0.05; // seconds
         this.lastHit = 0; // the last time the block hit something
         // this block is not simetrical in the x direction
         this.simetricalX = false;
-        this.baseDamage = 30;
-        
+        this.baseDamage = 30; // the base damage of the block, before being increased by velocity
     }
     makeBodies() {
         // create a triangle

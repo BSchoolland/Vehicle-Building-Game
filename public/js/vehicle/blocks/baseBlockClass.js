@@ -22,6 +22,8 @@ class Block {
         this.simetricalX = true; // most blocks are simetrical in the x direction
         this.sparks = 0; // number of sparks here right now
         this.maxSparks = 200; // max number of sparks
+
+        this.blocksFromSeat = 0; // used to determine if the block is connected to the seat
     }
     reset(atOriginalPosition = true) {
         // deletes all bodies and constraints then recreates them at the original position
@@ -57,8 +59,8 @@ class Block {
         this.hitPoints = this.maxHitPoints;
     }
     update() {
-        // will be defined in subclasses
-        // called every frame
+        // check distance from seat
+        this.checkConnected();
     }
 
     addToWorld(world) {
@@ -347,6 +349,54 @@ class Block {
                     this.welds.push(weld);
                 }
             }
+        }
+    }
+    // function for making sure the block is connected to the seat
+    checkConnected() {
+        // if the block is destroyed, don't check if it is connected
+        if (this.hitPoints <= 0) {
+            return;
+        }
+        // find the adjacent blocks
+        // Array to store connected blocks
+        let connectedBlocks = [];
+
+        // Iterate over all blocks in the contraption
+        this.contraption.blocks.forEach(block => {
+            // Check if the block has welds
+            if (block.welds.length > 0) {
+                // Check if the weld is attached to the target block
+                block.welds.forEach(weld => {
+                    if (weld.bodyA === this.bodies[0] || weld.bodyB === this.bodies[0]) {
+                        // Add the block to the connected blocks array
+                        connectedBlocks.push(block);
+                    }
+                });
+            }
+        });
+        console.log(connectedBlocks);
+        // check how far each adjacent block is from the seat, choose the closest one, and set this block's blocksFromSeat to 1 more than that
+        let closestBlock = null;
+        let closestDistance = 1000000;
+        connectedBlocks.forEach(block => {
+            // find the distance between the block and the seat
+            let distance = block.blocksFromSeat;
+            console.log(distance);
+            if (distance < closestDistance) {
+                closestBlock = block;
+                closestDistance = distance;
+            }
+        });
+        // set the blocksFromSeat to 1 more than the closest block
+        if (closestBlock) {
+            this.blocksFromSeat = closestBlock.blocksFromSeat + 1;
+        }
+        else { // this has been disconnected from all other blocks, destroy it
+            this.damage(this.maxHitPoints)
+        }
+        // if this is too far from the seat, destroy it
+        if (this.blocksFromSeat > 25) {
+            this.damage(this.maxHitPoints);
         }
     }
 }

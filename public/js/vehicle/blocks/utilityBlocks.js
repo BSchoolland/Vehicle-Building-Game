@@ -82,6 +82,7 @@ class GrappleBlock extends Block {
         this.constraints.push(...constraints);
     }
     update() { // shoot the grappling hook, or reel it in
+        super.update();
         // check if the right mouse button is pressed
         if (this.contraption.keysPressed['r']) {
             this.shootGrapplingHook();

@@ -51,6 +51,7 @@ class WheelBlock extends Block {
         }));
     }   
     update() {
+        super.update();
         // drive
         let targetVelocity = this.spinSpeed;
         if (this.flippedX) {
@@ -176,6 +177,7 @@ class rocketBoosterBlock extends Block {
         this.fuel = 300;
     }
     update() {
+        super.update();
         // check if the rocket has fuel and the shift key is pressed
         if (this.contraption.keysPressed['Shift'] && this.fuel > 0) {
             // decrease the fuel

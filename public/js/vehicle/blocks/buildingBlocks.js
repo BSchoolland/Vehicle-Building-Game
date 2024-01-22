@@ -118,7 +118,7 @@ class SeatBlock extends Block {
             bodyB: this.bodies[4], // the stickman's left arm
             pointA: { x: 40, y: -5 },
             pointB: { x: 20, y: 2 },
-            stiffness: 0.01,
+            stiffness: 0.001,
             length: 0,
             render: {
                 visible: false
@@ -161,6 +161,9 @@ class SeatBlock extends Block {
     }
     spawn() {
         super.spawn();
+    }
+    checkConnected() { // this block is always connected as it is the core of the vehicle
+        this.blocksFromSeat = 0;
     }
 }
 

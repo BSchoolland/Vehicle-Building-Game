@@ -41,7 +41,8 @@ Version 0.5
 - Limit contraption loading, so that it only works if enough build space and parts are avalable
 
 Version 0.6
-- Main Menu  
+- Main Menu
+- Keybinding
 - Level Select Improvements
 
 Version 0.7

@@ -174,6 +174,7 @@ class rocketBoosterBlock extends Block {
         }));
     }
     resetValues() {
+        super.resetValues();
         this.fuel = 300;
     }
     update() {

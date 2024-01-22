@@ -24,6 +24,7 @@ class Block {
         this.maxSparks = 200; // max number of sparks
 
         this.blocksFromSeat = 0; // used to determine if the block is connected to the seat
+        this.timing = 0; // used to keep track of how often the block is updated
     }
     reset(atOriginalPosition = true) {
         // deletes all bodies and constraints then recreates them at the original position
@@ -57,10 +58,16 @@ class Block {
     resetValues() {
         // called when the block is reset
         this.hitPoints = this.maxHitPoints;
+        this.blocksFromSeat = 0;
     }
     update() {
         // check distance from seat
-        this.checkConnected();
+        // to save resources, only check every 10 frames
+        this.timing++;
+        if (this.timing <= 10) {
+            this.checkConnected();
+            this.timing = 0;
+        }
     }
 
     addToWorld(world) {

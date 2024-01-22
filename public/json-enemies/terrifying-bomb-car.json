@@ -7,7 +7,7 @@
     { "type": "WheelBlock", "x": 1375, "y": 525, "flippedX": false },
     { "type": "BasicBlock", "x": 1375, "y": 475, "flippedX": false },
     { "type": "rocketBoosterBlock", "x": 1325, "y": 475, "flippedX": false },
-    { "type": "BasicBlock", "x": 1475, "y": 375, "flippedX": false }
+    { "type": "SeatBlock", "x": 1475, "y": 425, "flippedX": false }
   ],
   "commands": [
     { "key": "d", "start": 1.0, "end": 5.0},

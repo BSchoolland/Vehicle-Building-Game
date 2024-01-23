@@ -1,0 +1,22 @@
+{
+  "blocks": [
+    { "type": "BasicBlock", "x": 1475, "y": 525, "flippedX": false },
+    { "type": "BasicBlock", "x": 1425, "y": 525, "flippedX": false },
+    { "type": "BasicBlock", "x": 1375, "y": 525, "flippedX": false },
+    { "type": "BasicBlock", "x": 1325, "y": 475, "flippedX": false },
+    { "type": "BasicBlock", "x": 1325, "y": 425, "flippedX": false },
+    { "type": "BasicBlock", "x": 1325, "y": 375, "flippedX": false },
+    { "type": "BasicBlock", "x": 1375, "y": 375, "flippedX": false },
+    { "type": "BasicBlock", "x": 1425, "y": 375, "flippedX": false },
+    { "type": "BasicBlock", "x": 1475, "y": 375, "flippedX": false },
+    { "type": "GrappleBlock", "x": 1475, "y": 475, "flippedX": false },
+    { "type": "SeatBlock", "x": 1375, "y": 475, "flippedX": false },
+    { "type": "rocketBoosterBlock", "x": 1425, "y": 475, "flippedX": false },
+    { "type": "BasicBlock", "x": 1325, "y": 525, "flippedX": false }
+  ],
+  "commands": [
+    { "key": "Shift", "start": 46.0, "end": 55.0},
+    { "key": "r", "start": 46.0, "end": 47.0},
+    { "key": "f", "start": 47.0, "end": 57.0}
+  ]
+}

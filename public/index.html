@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Contraption Chaos</title>
+    <title>Wrecking Wheels</title>
     <style>
         canvas {
             border: 1px solid #000;
@@ -10,12 +11,16 @@
     <!-- import css -->
     <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body></body>
-    <div class="container">
-        <h1>Welcome to Contraption Chaos!</h1>
-        <a href="editor.html" class="button">Level Editor</a>
-        <a href="campaign.html" class="button">Campaign</a>
-    </div>
-    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+<div id="game-container"></div>
+<div class="container">
+    <h1>Welcome to Wrecking Wheels!</h1>
+    <a href="editor.html" class="button">Level Editor</a>
+    <a href="campaign.html" class="button">Campaign</a>
+</div>
+<script type="module" src="js/game/index.js"></script>
 </body>
+
 </html>

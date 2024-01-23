@@ -1,0 +1,16 @@
+{
+  "blocks": [
+    { "type": "BasicBlock", "x": 175, "y": 75, "flippedX": false },
+    { "type": "WheelBlock", "x": 275, "y": 125, "flippedX": false },
+    { "type": "WheelBlock", "x": 175, "y": 125, "flippedX": false },
+    { "type": "BasicBlock", "x": 275, "y": 75, "flippedX": false },
+    { "type": "SeatBlock", "x": 275, "y": 25, "flippedX": false },
+    { "type": "BasicBlock", "x": 175, "y": 25, "flippedX": false },
+    { "type": "BasicBlock", "x": 175, "y": -25, "flippedX": false },
+    { "type": "BasicBlock", "x": 225, "y": -25, "flippedX": false },
+    { "type": "TNTBlock", "x": 225, "y": 25, "flippedX": false }
+  ],
+  "commands": [
+    
+  ]
+}

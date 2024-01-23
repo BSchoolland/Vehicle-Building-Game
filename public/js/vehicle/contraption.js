@@ -1,11 +1,12 @@
-import {BasicBlock, SeatBlock, WheelBlock, rocketBoosterBlock, SpikeBlock, TNTBlock} from './blocks.js';
+import {BasicBlock, SeatBlock, WheelBlock, rocketBoosterBlock, SpikeBlock, TNTBlock, GrappleBlock} from './blocks.js';
 const blockTypes = {
     BasicBlock,
     WheelBlock,
     rocketBoosterBlock,
     SpikeBlock,
     TNTBlock,
-    SeatBlock
+    SeatBlock,
+    GrappleBlock
 };
 
 // This file contains the Contraption class which is used to represent a contraption in the game.
@@ -71,6 +72,9 @@ class Contraption {
         this.keysPressed = {};
         // find the number of seconds since the commands started
         let seconds = (Date.now() - this.AiClockStarted) / 1000;
+        if (!this.AiCommands) {
+            return;
+        }
         // loop through the commands to find any with "start" times less than the current time and "end" times greater than the current time
         this.AiCommands.forEach(command => {
             if (command.start <= seconds && command.end >= seconds) {

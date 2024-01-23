@@ -1,31 +1,9 @@
-body{
-    background-image: url('/img/background.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-}
-
-body::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* make the background darker */
-    background-color: rgba(0, 0, 0, 0.2);
-    z-index: -1;
-}
-
 @keyframes drop {
     0% { 
-        transform: translateY(-100%);
-    }
-    75% {
-        transform: translateY(10px);
+        transform: translateY(0%);
     }
     100% {
-        transform: translateY(0%);
+        transform: translateY(-97%);
     }
 }
 
@@ -40,13 +18,18 @@ body::after {
     width: 100vw;
     /* animation to drop down from top */
     animation: drop 1.25s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+body {
+    overflow: hidden;
 }
 
 h1 {
     /* very large, centered, and with a drop shadow */
     font-size: 80px;
     text-align: center;
-    text-shadow: 2px 2px 4px #000000;
+    text-shadow: 2px 2px 4px #ffffff;
     margin-top: 50px;
     margin-bottom: 50px;
 }

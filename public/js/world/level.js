@@ -76,6 +76,20 @@ class LevelManager {
             box: '../../json-enemies/box.json',
             smallSpikeCar: '../../json-enemies/small-spike-car.json',
             terrifyingBombCar: '../../json-enemies/terrifying-bomb-car.json',
+            W: '../../json-enemies/W.json',
+            R: '../../json-enemies/R.json',
+            E: '../../json-enemies/E.json',
+            C: '../../json-enemies/C.json',
+            K: '../../json-enemies/K.json',
+            I: '../../json-enemies/I.json',
+            N: '../../json-enemies/N.json',
+            G: '../../json-enemies/G.json',
+            // W
+            H: '../../json-enemies/H.json',
+            // E
+            // E
+            L: '../../json-enemies/L.json',
+            S: '../../json-enemies/S.json',
         }
         Object.keys(enemies).forEach(async (key) => {
             var enemyJson = await (await fetch(enemies[key])).json();
@@ -170,7 +184,7 @@ class LevelManager {
         });
     }
     // load a Level from a JSON object
-    load(levelIndex) {
+    load(levelIndex, optionalJson = null) {
         this.enemyContraptions = []; // clear the enemy contraptions
 
         if (!this.building.buildArea) {
@@ -179,6 +193,10 @@ class LevelManager {
             return;
         }
         var LevelJson = this.levels[levelIndex];
+
+        if (optionalJson) {
+            LevelJson = optionalJson;
+        }
         // Clear existing blocks in the Level
         this.clear(); // remove all blocks from the Level
         // Load new blocks from JSON

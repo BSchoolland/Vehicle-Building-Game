@@ -21,7 +21,7 @@ class Block {
         this.flippedX = false;
         this.simetricalX = true; // most blocks are simetrical in the x direction
         this.sparks = 0; // number of sparks here right now
-        this.maxSparks = 200; // max number of sparks
+        this.maxSparks = 50; // max number of sparks
 
         this.blocksFromSeat = 0; // used to determine if the block is connected to the seat
         this.timing = 0; // used to keep track of how often the block is updated
@@ -237,8 +237,8 @@ class Block {
         for (var i = 0; i < this.contraption.blocks.length; i++) {
             // check if the block is adjacent
             // find the x and y distance between the two blocks
-            let xDistance = (this.x - this.contraption.blocks[i].x);
-            let yDistance = (this.y - this.contraption.blocks[i].y);
+            let xDistance = (this.originalX - this.contraption.blocks[i].originalX);
+            let yDistance = (this.originalY - this.contraption.blocks[i].originalY);
             // check if block is to the right
             if (xDistance === 50 && yDistance === 0) {
                 // check if the weldable faces match
@@ -260,7 +260,7 @@ class Block {
                         pointB: localPointB,
                         stiffness: 1,
                         render: { 
-                            visible: true
+                            visible: false
                         }
                     });
                     Matter.World.add(this.contraption.engine.world, weld);
@@ -289,7 +289,7 @@ class Block {
                         pointB: localPointB,
                         stiffness: 1,
                         render: {
-                            visible: true
+                            visible: false
                         }
                     });
                     Matter.World.add(this.contraption.engine.world, weld);
@@ -318,7 +318,7 @@ class Block {
                         pointB: localPointB,
                         stiffness: 1,
                         render: {
-                            visible: true
+                            visible: false
                         }
                     });
                     Matter.World.add(this.contraption.engine.world, weld);
@@ -347,7 +347,7 @@ class Block {
                         pointB: localPointB,
                         stiffness: 1,
                         render: {
-                            visible: true
+                            visible: false
                         }
                     });
                     Matter.World.add(this.contraption.engine.world, weld);

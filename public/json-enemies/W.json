@@ -1,0 +1,25 @@
+{
+  "blocks": [
+    { "type": "BasicBlock", "x": 175, "y": 75, "flippedX": false },
+    { "type": "BasicBlock", "x": 175, "y": 125, "flippedX": false },
+    { "type": "BasicBlock", "x": 225, "y": 125, "flippedX": false },
+    { "type": "BasicBlock", "x": 225, "y": 75, "flippedX": false },
+    { "type": "BasicBlock", "x": 125, "y": 125, "flippedX": false },
+    { "type": "BasicBlock", "x": 75, "y": 125, "flippedX": false },
+    { "type": "BasicBlock", "x": 75, "y": 25, "flippedX": false },
+    { "type": "BasicBlock", "x": 75, "y": 75, "flippedX": false },
+    { "type": "BasicBlock", "x": 325, "y": 125, "flippedX": false },
+    { "type": "BasicBlock", "x": 275, "y": 125, "flippedX": false },
+    { "type": "BasicBlock", "x": 325, "y": 75, "flippedX": false },
+    { "type": "SeatBlock", "x": 175, "y": 25, "flippedX": true },
+    { "type": "GrappleBlock", "x": 225, "y": 25, "flippedX": false }
+  ],
+  "commands": [
+    { "key": "r", "start": 20.0, "end": 22.0},
+    { "key": "f", "start": 25.0, "end": 27.0},
+    { "key": "r", "start": 27.0, "end": 28.0},
+    { "key": "f", "start": 29.0, "end": 30.0},
+    { "key": "r", "start": 50.0, "end": 52.0},
+    { "key": "f", "start": 52.0, "end": 60.0}
+  ]
+}

@@ -146,6 +146,10 @@ class BuildMenu {
       // initialize the menu
       this.init(building);
     }
+    hide() { // make the menu invisible and unclickable
+        this.menu.style.display = 'none';
+        this.menu.style.pointerEvents = 'none';
+    }
     createBlockButtons() {
         this.blockButtons = {};
         this.blockTypes.forEach(blockType => {
@@ -284,9 +288,10 @@ class BuildMenu {
 
 // a refactored version of the building class
 class Building {
-    constructor(engine, camera) {
+    constructor(engine, camera, keybinds = true) {
         this.engine = engine;
         this.camera = camera;
+        this.keybinds = keybinds;
         this.currentBlockType = BasicBlock; // Default block type
         this.currentBlockTypeLimit = 100; // Default limit for each block type
         this.buildInProgress = false;
@@ -413,6 +418,9 @@ class Building {
                 button.click();
             }
         });
+        if (!this.keybinds) {
+            return;
+        }
         // If the Z key is pressed, undo the last block placed
         if (event.keyCode === 90) {
             this.contraption.undo();

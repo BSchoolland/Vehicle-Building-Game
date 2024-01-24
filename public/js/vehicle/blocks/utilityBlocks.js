@@ -22,6 +22,9 @@ class GrappleBlock extends Block {
         this.hookWelds = []; // welds between the hook and the block it is attached to
         this.grappleConstraint = null;
         this.grappleAimConstraint = null;
+        // by default, the activation key is 'r' and the reverse activation key is 'f'
+        this.activationKey = 'r';
+        this.reverseActivationKey = 'f';
     }
     makeBodies(){
         // create a flat surface on the left side of the block
@@ -84,10 +87,10 @@ class GrappleBlock extends Block {
     update() { // shoot the grappling hook, or reel it in
         super.update();
         // check if the right mouse button is pressed
-        if (this.contraption.keysPressed['r']) {
+        if (this.contraption.keysPressed[this.activationKey]) {
             this.shootGrapplingHook();
         }
-        if (this.contraption.keysPressed['f']) {
+        if (this.contraption.keysPressed[this.reverseActivationKey]) {
             this.reelGrapple();
         }
     }

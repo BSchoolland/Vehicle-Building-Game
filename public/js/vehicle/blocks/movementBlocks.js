@@ -12,9 +12,11 @@ class WheelBlock extends Block {
         this.touchingGround = false;
         this.spinSpeed = 0.5;
         this.acceleration = 0.15;
-
         // this block is not simetrical in the x direction
         this.simetricalX = false;
+        // by default, the activation key is 'd' and the reverse activation key is 'a'
+        this.activationKey = 'd';
+        this.reverseActivationKey = 'a';
     }
     makeBodies() {
         this.bodies.push(Matter.Bodies.rectangle(this.x, this.y-20, 50, 10, { render: { fillStyle: this.color }}));
@@ -57,13 +59,13 @@ class WheelBlock extends Block {
         if (this.flippedX) {
             targetVelocity = -targetVelocity;
         }
-        if (this.contraption.keysPressed['a']) {
+        if (this.contraption.keysPressed[this.reverseActivationKey]) {
             targetVelocity = -targetVelocity;
             let currentVelocity = this.bodies[1].angularVelocity;
             let velocityChange = (targetVelocity - currentVelocity) * this.acceleration;
             let spin = velocityChange + currentVelocity;
             Matter.Body.setAngularVelocity(this.bodies[1], spin);
-        } else if (this.contraption.keysPressed['d']) {
+        } else if (this.contraption.keysPressed[this.activationKey]) {
             // apply a force to the right
             let currentVelocity = this.bodies[1].angularVelocity;
             let velocityChange = (targetVelocity - currentVelocity) * this.acceleration;
@@ -90,6 +92,8 @@ class rocketBoosterBlock extends Block {
 
         // this block is not simetrical in the x direction
         this.simetricalX = false;
+        // by default, the activation key is 'Shift'
+        this.activationKey = 'Shift';
     }
     makeBodies() {
         // create a flat surface on the right side of the block
@@ -179,8 +183,8 @@ class rocketBoosterBlock extends Block {
     }
     update() {
         super.update();
-        // check if the rocket has fuel and the shift key is pressed
-        if (this.contraption.keysPressed['Shift'] && this.fuel > 0) {
+        // check if the rocket has fuel and the activation key is pressed
+        if (this.contraption.keysPressed[this.activationKey] && this.fuel > 0) {
             // decrease the fuel
             this.fuel--;
             // apply a force to the rocket nozzle

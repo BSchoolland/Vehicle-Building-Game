@@ -29,6 +29,33 @@ class RightClickMenu {
             this.building.buildMenu.updateButtonLimits();
             this.hide();
         }
+        // create a button to change the block's activation key
+        this.keybindButton = document.createElement('button');
+        this.keybindButton.classList.add('menu-button');
+        this.keybindButton.innerText = 'activate: ';
+        this.menu.appendChild(this.keybindButton);
+        this.keybindButton.onclick = () => {
+            // set the button's text to 'Press a key'
+            this.keybindButton.innerText = 'Press a key';
+            // Add the event listener
+            document.addEventListener('keydown', this.keydownHandler);
+        }
+        // by default, the keybind button is hidden
+        this.keybindButton.style.display = 'none';
+        // add a reverse keybind button
+        this.reverseKeybindButton = document.createElement('button');
+        this.reverseKeybindButton.classList.add('menu-button');
+        this.reverseKeybindButton.innerText = 'reverse: ';
+        this.menu.appendChild(this.reverseKeybindButton);
+        this.reverseKeybindButton.onclick = () => {
+            // set the button's text to 'Press a key'
+            this.reverseKeybindButton.innerText = 'Press a key';
+            // Add the event listener
+            document.addEventListener('keydown', this.reverseKeydownHandler);
+        }
+        // by default, the reverse keybind button is hidden
+        this.reverseKeybindButton.style.display = 'none';
+
         // create a button to cancel
         this.cancelButton = document.createElement('button');
         this.cancelButton.classList.add('menu-button');
@@ -39,7 +66,7 @@ class RightClickMenu {
         }
         // if the user clicks outside the menu, hide it
         document.body.addEventListener('click', (event) => {
-            if (event.target != this.menu) {
+            if (event.target != this.menu && event.target != this.keybindButton && event.target != this.reverseKeybindButton) {
                 this.hide();
             }
         });
@@ -49,17 +76,58 @@ class RightClickMenu {
         this.flipButton.classList.add('right-click-menu-button');
         this.removeButton.classList.add('right-click-menu-button');
         this.cancelButton.classList.add('right-click-menu-button');
+        this.keybindButton.classList.add('right-click-menu-button');
+        this.reverseKeybindButton.classList.add('right-click-menu-button');
         // hide the menu
         this.hide();
         // Add the menu to the game container
         let gameContainer = document.getElementById('game-container');
         gameContainer.appendChild(this.menu);
     }
+    keydownHandler = (event) => {
+        // set the block's activation key to the key that was pressed
+        this.block.activationKey = event.key;
+        // set the button's text to 'Change Keybind'
+        this.keybindButton.innerText = `activate: ${this.block.activationKey}`;
+        // remove the event listener
+        document.removeEventListener('keydown', this.keydownHandler);
+        // after a short delay, hide the menu
+        setTimeout(() => {
+            this.hide();
+        }, 500);
+    };
+    reverseKeydownHandler = (event) => {
+        // set the block's reverse activation key to the key that was pressed
+        this.block.reverseActivationKey = event.key;
+        // set the button's text to 'Change Keybind'
+        this.reverseKeybindButton.innerText = `reverse: ${this.block.reverseActivationKey}`;
+        // remove the event listener
+        document.removeEventListener('keydown', this.reverseKeydownHandler);
+        // after a short delay, hide the menu
+        setTimeout(() => {
+            this.hide();
+        }, 500);
+    }
+
     startLevel() {
         // bound by the level manager, DO NOT CHANGE
     }
     setSelectBlock(block) {
         this.block = block;
+        // if the block has an activation key, show the custom keybind button, otherwise hide it
+        if (this.block.activationKey) {
+            this.keybindButton.style.display = 'block';
+            this.keybindButton.innerText = `activate: ${this.block.activationKey}`;
+        } else {
+            this.keybindButton.style.display = 'none';
+        }
+        // if the block has a reverse activation key, show the custom keybind button, otherwise hide it
+        if (this.block.reverseActivationKey) {
+            this.reverseKeybindButton.style.display = 'block';
+            this.reverseKeybindButton.innerText = `reverse: ${this.block.reverseActivationKey}`;
+        } else {
+            this.reverseKeybindButton.style.display = 'none';
+        }
     }
 
     show(x, y) {
@@ -73,7 +141,9 @@ class RightClickMenu {
     hide() {
         // hide the menu
         this.menu.style.display = 'none';
-        
+        // remove the event listener if it exists
+        document.removeEventListener('keydown', this.keydownHandler);
+        document.removeEventListener('keydown', this.reverseKeydownHandler);
     }
 }
 // a build menu class, for the bottom of the screen.

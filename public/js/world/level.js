@@ -357,15 +357,14 @@ class LevelManager {
         levelSelector.id = "level-selector";
         levelSelector.className = "level-select-menu";
         document.body.appendChild(levelSelector);
-        // add a title
-        let title = document.createElement('h1');
-        title.innerHTML = "Select a level";
-        levelSelector.appendChild(title);
         // log the length of the levels array
         console.log(this.levels);
         console.log(this.levels.length);
         // add a button for each level
         this.levels.forEach((level, index) => {
+            let box = document.createElement('div');
+            box.className = "level-select-box";
+            
             console.log(index);
             let button = document.createElement('button');
             button.className = "level-select-button";
@@ -375,7 +374,17 @@ class LevelManager {
                 levelSelector.remove();
             });
             console.log(button);
-            levelSelector.appendChild(button);
+            // add an image for the level (it is also clickable)
+            let image = document.createElement('img');
+            image.className = "level-select-image";
+            image.src = `../../img/level${index + 1}.png`;
+            image.addEventListener('click', () => {
+                this.load(index);
+                levelSelector.remove();
+            });
+            box.appendChild(image);
+            box.appendChild(button);
+            levelSelector.appendChild(box);
         });
     }
 }

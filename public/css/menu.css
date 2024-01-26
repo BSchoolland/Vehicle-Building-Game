@@ -89,14 +89,39 @@
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 1); 
     font-family: 'Courier New', monospace; /* Font that gives a typewritten or technical feel */
-    display: flex; /* Use flexbox for horizontal layout */
-    justify-content: center; /* Center items horizontally */
-    /* display items vertically rather than horizontally */
-    flex-direction: column;
+    /* organize items into rows of 3 */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 80%;
+    overflow: auto;
+}
+
+.level-select-image {
+    width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 15px;
+}
+
+.level-select-box {
+    width: 20%;
+    margin: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.level-select-box:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
 }
 
 /* Style for each button in the level select menu */
 .level-select-button {
+    position: absolute;
     background-color: #2b5572; /* Slightly lighter blue for buttons */
     color: #e4e8ec; /* Light text color for contrast */
     border: none;

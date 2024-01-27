@@ -353,10 +353,14 @@ class LevelManager {
     loadLevelSelector() {
         console.log("load level selector");
         // a screen to select the level to play
+        // 
         let levelSelector = document.createElement('div');
         levelSelector.id = "level-selector";
         levelSelector.className = "level-select-menu";
-        document.body.appendChild(levelSelector);
+        // get the game object
+        let game = document.getElementById('game-container');
+        // add the level selector to the game
+        game.appendChild(levelSelector);
         // log the length of the levels array
         console.log(this.levels);
         console.log(this.levels.length);

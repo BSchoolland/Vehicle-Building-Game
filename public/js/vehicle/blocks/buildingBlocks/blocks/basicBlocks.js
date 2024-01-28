@@ -3,8 +3,8 @@ import Block from '../../baseBlockClass.js';
 
 // a basic square block
 class BasicBlock extends Block {
-    constructor (x, y, contaption) {
-        super(x, y, contaption, 10, 'A basic block', 100, '#4d2902', [], []);
+    constructor (x, y, contaption, health = 100, color = '#4d2902') {
+        super(x, y, contaption, 10, 'A basic block', health, color, [], []);
         this.makeBodies();
         this.makeConstraints(); 
         this.weldableFaces = ['top', 'bottom', 'left', 'right'];
@@ -19,6 +19,26 @@ class BasicBlock extends Block {
     }    
 }
 
+class BasicWoodenBlock extends BasicBlock {
+    constructor (x, y, contaption) {
+        super(x, y, contaption, 100, '#4d2902');
+    }
+}
+
+class BasicIronBlock extends BasicBlock {
+    constructor (x, y, contaption) { 
+        super(x, y, contaption, 200, "#984A3C");
+    }
+}
+
+class BasicDiamondBlock extends BasicBlock {
+    constructor (x, y, contaption) {
+        super(x, y, contaption, 300, "#00FFFF");
+    }
+}
+
 export {
-    BasicBlock
+    BasicWoodenBlock,
+    BasicIronBlock,
+    BasicDiamondBlock
 }

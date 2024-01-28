@@ -1,6 +1,33 @@
 import Building from './building.js';
 import { Camera } from './camera.js';
 import { LevelManager } from '../world/level.js';
+import { playSound } from '../sounds/playSound.js';
+
+let gameStarted = false;
+function clickHandler() {
+    if (gameStarted) {
+        return;
+    }
+    gameStarted = true;
+    // play the sound
+    playSound('mainTheme', true);
+    // remove the event listener
+    document.removeEventListener('click', clickHandler);
+    // start the game
+    startGame();
+}
+
+function createHTML() {
+    const container = document.getElementById('container');
+    // clear the container
+    container.innerHTML = '';
+}
+
+
+
+document.addEventListener('click', clickHandler);
+function startGame() {
+createHTML();
 // Create an engine
 var engine = Matter.Engine.create();
 
@@ -16,6 +43,8 @@ var render = Matter.Render.create({
 var mouse = Matter.Mouse.create(render.canvas);
 // create the camera
 var camera = new Camera(render, mouse, render.canvas);
+// play the background music
+playSound('mainTheme', true);
 
 // allow the player to build blocks
 let building = new Building(engine, camera);
@@ -54,3 +83,4 @@ levelObject.init();
 setTimeout(() => {
     levelObject.loadLevelSelector();
 }, 1000);
+}

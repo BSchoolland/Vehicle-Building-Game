@@ -1,5 +1,6 @@
 import { LocalToWorld, WorldToLocal } from '../utils.js';
 
+const constraintsVisible = true; // whether or not the constraints are visible
 // the base class for all blocks, may be made of multiple bodies and constraints depending on subclass
 class Block { 
     constructor(x, y, contaption, cost, description, hitPoints, color, bodies, constraints, weldableFaces = []) {
@@ -137,12 +138,19 @@ class Block {
                 if (block.welds.length > 0) {
                     // check if the weld is attached to this block
                     block.welds.forEach(weld => {
-                        if (weld.bodyA === this.bodies[0] || weld.bodyB === this.bodies[0]) {
-                            // remove the weld
-                            Matter.World.remove(this.contraption.engine.world, weld);
-                            // remove the weld from the welds array
-                            block.welds.splice(block.welds.indexOf(weld), 1);
+                    // since welds can now be attached to any body in the block, check if the weld is attached to any of this block's bodies
+                    let attachedThisBlock = false;
+                    this.bodies.forEach(body => {
+                        if (weld.bodyA === body || weld.bodyB === body) {
+                            attachedThisBlock = true;
                         }
+                    });
+                    if (attachedThisBlock) {
+                        // remove the weld
+                        Matter.World.remove(this.contraption.engine.world, weld);
+                        // remove the weld from the welds array
+                        block.welds.splice(block.welds.indexOf(weld), 1);
+                    }
                     });
                 }
             });
@@ -246,8 +254,8 @@ class Block {
                 // check if the weldable faces match
                 if (this.weldableFaces.includes('right') && this.contraption.blocks[i].weldableFaces.includes('left')) {
                     // weld the blocks together
-                    const bodyA = this.bodies[0];
-                    const bodyB = this.contraption.blocks[i].bodies[0];
+                    const bodyA = this.getWeldBody('right');
+                    const bodyB = this.contraption.blocks[i].getWeldBody('left');
                     // find the pointA and pointB for the weld constraint
                     let localPointA = { x: -(bodyA.bounds.max.x - bodyA.bounds.min.x) / 2, y: 10 };
                     // turn the points into world coordinates
@@ -262,7 +270,7 @@ class Block {
                         pointB: localPointB,
                         stiffness: 1,
                         render: { 
-                            visible: false
+                            visible: constraintsVisible
                         }
                     });
                     Matter.World.add(this.contraption.engine.world, weld);
@@ -275,8 +283,8 @@ class Block {
                 // check if the weldable faces match
                 if (this.weldableFaces.includes('left') && this.contraption.blocks[i].weldableFaces.includes('right')) {
                     // weld the blocks together
-                    const bodyA = this.bodies[0];
-                    const bodyB = this.contraption.blocks[i].bodies[0];
+                    const bodyA = this.getWeldBody('left');
+                    const bodyB = this.contraption.blocks[i].getWeldBody('right');
                     // find the pointA and pointB for the weld constraint
                     let localPointA = { x: (bodyA.bounds.max.x - bodyA.bounds.min.x) / 2, y: -10 };
                     // turn the points into world coordinates
@@ -291,7 +299,7 @@ class Block {
                         pointB: localPointB,
                         stiffness: 1,
                         render: {
-                            visible: false
+                            visible: constraintsVisible
                         }
                     });
                     Matter.World.add(this.contraption.engine.world, weld);
@@ -304,8 +312,8 @@ class Block {
                 // check if the weldable faces match
                 if (this.weldableFaces.includes('top') && this.contraption.blocks[i].weldableFaces.includes('bottom')) {
                     // weld the blocks together
-                    const bodyA = this.bodies[0];
-                    const bodyB = this.contraption.blocks[i].bodies[0];
+                    const bodyA = this.getWeldBody('top');
+                    const bodyB = this.contraption.blocks[i].getWeldBody('bottom');
                     // find the pointA and pointB for the weld constraint
                     let localPointA = { x: 10, y: -(bodyA.bounds.max.y - bodyA.bounds.min.y) / 2 };
                     // turn the points into world coordinates
@@ -320,7 +328,7 @@ class Block {
                         pointB: localPointB,
                         stiffness: 1,
                         render: {
-                            visible: false
+                            visible: constraintsVisible
                         }
                     });
                     Matter.World.add(this.contraption.engine.world, weld);
@@ -333,8 +341,8 @@ class Block {
                 // check if the weldable faces match
                 if (this.weldableFaces.includes('bottom') && this.contraption.blocks[i].weldableFaces.includes('top')) {
                     // weld the blocks together
-                    const bodyA = this.bodies[0];
-                    const bodyB = this.contraption.blocks[i].bodies[0];
+                    const bodyA = this.getWeldBody('bottom');
+                    const bodyB = this.contraption.blocks[i].getWeldBody('top');
                     // find the pointA and pointB for the weld constraint
                     let localPointA = { x: -10, y: (bodyA.bounds.max.y - bodyA.bounds.min.y) / 2 };
                     // turn the points into world coordinates
@@ -349,7 +357,7 @@ class Block {
                         pointB: localPointB,
                         stiffness: 1,
                         render: {
-                            visible: false
+                            visible: constraintsVisible
                         }
                     });
                     Matter.World.add(this.contraption.engine.world, weld);
@@ -358,6 +366,10 @@ class Block {
                 }
             }
         }
+    }
+
+    getWeldBody(direction = 'unimportant') { // this function can be overwritten in subclasses
+        return this.bodies[0];
     }
     // function for making sure the block is connected to the seat
     checkConnected() {
@@ -375,7 +387,14 @@ class Block {
             if (block.welds.length > 0) {
                 // Check if the weld is attached to the target block
                 block.welds.forEach(weld => {
-                    if (weld.bodyA === this.bodies[0] || weld.bodyB === this.bodies[0]) {
+                    // since welds can now be attached to any body in the block, check if the weld is attached to any of this block's bodies
+                    let attachedThisBlock = false;
+                    this.bodies.forEach(body => {
+                        if (weld.bodyA === body || weld.bodyB === body) {
+                            attachedThisBlock = true;
+                        }
+                    });
+                    if (attachedThisBlock) {
                         // Add the block to the connected blocks array
                         connectedBlocks.push(block);
                     }

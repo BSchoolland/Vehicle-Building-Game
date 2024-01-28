@@ -9,7 +9,7 @@ function WorldToLocal(body, worldPoint) {
     let localPoint = Matter.Vector.rotate(Matter.Vector.sub(worldPoint, body.position), -body.angle);
     return localPoint;
 }
-function constrainBodyToBody(bodyA, bodyB, stiffness = 1) {
+function constrainBodyToBody(bodyA, bodyB, stiffness = 1, visible = false) {
     // this function constrains bodyA to bodyB using two constraints
     // the result is that the bodies are rigidly connected as if they were welded together
     // get the center of bodyA in world coordinates
@@ -27,7 +27,7 @@ function constrainBodyToBody(bodyA, bodyB, stiffness = 1) {
         length: 0,
         // invisible
         render: {
-            visible: false
+            visible: visible
         }
     });
     // for the next constraint, we need the center of bodyB in world coordinates
@@ -45,7 +45,7 @@ function constrainBodyToBody(bodyA, bodyB, stiffness = 1) {
         length: 0,
         // invisible
         render: {
-            visible: false
+            visible: visible
         }
     });
     // return the constraints

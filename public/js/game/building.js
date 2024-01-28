@@ -1,5 +1,5 @@
 // Import necessary classes from your block definitions
-import {BasicBlock, SeatBlock, WheelBlock, rocketBoosterBlock, SpikeBlock, GrappleBlock, TNTBlock } from '../vehicle/blocks.js';
+import {RemoteBlock , BasicBlock, SeatBlock, WheelBlock, rocketBoosterBlock, SpikeBlock, GrappleBlock, PoweredHingeBlock, TNTBlock } from '../vehicle/blocks.js';
 import {Contraption} from '../vehicle/contraption.js';
 
 class RightClickMenu {
@@ -175,6 +175,18 @@ class BuildMenu {
           { name: "Spike Block", key: "5", type: SpikeBlock, limit: 100 },
           { name: "Grapple Block", key: "6", type: GrappleBlock, limit: 100 },
           { name: "Seat Block", key: "7", type: SeatBlock, limit: 100 },
+            {
+                name: "Powered Hinge Block",
+                key: "8",
+                type: PoweredHingeBlock,
+                limit: 100,
+            },
+            {
+                name: "Remote Block",
+                key: "9",
+                type: RemoteBlock,
+                limit: 100,
+            },
         ];
       }
       this.createBlockButtons();

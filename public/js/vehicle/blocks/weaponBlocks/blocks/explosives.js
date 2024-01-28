@@ -1,5 +1,5 @@
 import Block from '../../baseBlockClass.js';
-
+import { playSound } from '../../../../sounds/playSound.js';
 
 class TNTBlock extends Block {
     constructor (x, y, contaption) {
@@ -36,6 +36,7 @@ class TNTBlock extends Block {
         }
     }
     damage(amount) {
+        playSound('blockTakesDamage');
         console.log('damage: ' + amount);
         // subtract the amount from the hitpoints
         this.hitPoints -= amount;
@@ -99,6 +100,8 @@ class TNTBlock extends Block {
         // if the block has already exploded, don't explode again
         if (this.exploded) return;
         this.exploded = true;
+        // play the explosion sound
+        playSound('explosion');
         // remove the body from the world
         const world = this.contraption.engine.world;
         let x = this.bodies[0].position.x;

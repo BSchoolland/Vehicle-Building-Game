@@ -2,53 +2,121 @@
 let audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 // music
-let mainTheme, buildTheme, levelTheme
+const music = {
+  mainTheme: "./js/sounds/music/mainTheme.mp3",
+  buildTheme: "./js/sounds/music/buildTheme.mp3",
+  levelTheme: "./js/sounds/music/mainTheme.mp3", // FIXME: make a level theme
+};
+// sound effects
+const effects = {
+  explosion1: "./js/sounds/effects/explosion1.mp3",
+  explosion2: "./js/sounds/effects/explosion2.mp3",
+  explosion3: "./js/sounds/effects/explosion3.mp3",
+  blockTakesDamage1: "./js/sounds/effects/blockTakesDamage1.mp3",
+  blockTakesDamage2: "./js/sounds/effects/blockTakesDamage2.mp3",
+  blockTakesDamage3: "./js/sounds/effects/blockTakesDamage3.mp3",
+  rocketFlame: "./js/sounds/effects/rocketFlame.mp3",
+  disconnect: "./js/sounds/effects/disconnect.mp3",
+  electricMotor: "./js/sounds/effects/electricMotor.mp3",
+  grappleFire1: "./js/sounds/effects/grappleFire1.mp3",
+  grappleFire2: "./js/sounds/effects/grappleFire2.mp3",
+  grappleFire3: "./js/sounds/effects/grappleFire3.mp3",
+  grappleReel: "./js/sounds/effects/grappleReel.mp3",
+};
 
 async function loadSound(url) {
-    try {
-        const response = await fetch('./js/sounds/music/mainTheme.mp3');
-        const arrayBuffer = await response.arrayBuffer();
-        return await audioContext.decodeAudioData(arrayBuffer);
-    } catch (error) {
-        console.error('Error loading sound:', error);
+  try {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    return await audioContext.decodeAudioData(arrayBuffer);
+  } catch (error) {
+    console.error("Error loading sound:", error);
+  }
+}
+// pre-load the music
+let loadedSongs = {};
+Promise.all(
+  Object.entries(music).map(async ([name, url]) => {
+    loadedSongs[name] = await loadSound(url);
+  })
+).then(() => {
+  console.log("Music loaded");
+});
+// pre-load the sound effects
+let loadedSounds = {};
+Promise.all(
+  Object.entries(effects).map(async ([name, url]) => {
+    loadedSounds[name] = await loadSound(url);
+  })
+).then(() => {
+  console.log("Effects loaded");
+});
+let playingSounds = {}; // track the sounds that are currently playing, so that the same sound can't be played twice at the same time
+
+function playSound(name) {
+    // if the sound is already playing x times, don't play it again
+    if (playingSounds[name] >= 2) {
+        return;
     }
+    // add the sound to the playingSounds object
+    playingSounds[name] = (playingSounds[name] || 0) + 1;
+      // if the name is 'explosion', play a random explosion sound
+    if (name === 'explosion') {
+        let random = Math.floor(Math.random() * 3) + 1;
+        name = `explosion${random}`;
+    }
+    // if the name is 'blockTakesDamage', play a random blockTakesDamage sound
+    if (name === 'blockTakesDamage') {
+        let random = Math.floor(Math.random() * 3) + 1;
+        name = `blockTakesDamage${random}`;
+    }
+    // if the name is 'grappleFire', play a random grappleFire sound
+    if (name === 'grappleFire') {
+        let random = Math.floor(Math.random() * 3) + 1;
+        name = `grappleFire${random}`;
+    }
+  let buffer = loadedSounds[name];
+  let source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  source.connect(audioContext.destination);
+  source.start();
+  // get the duration of the sound
+    let duration = buffer.duration;
+    console.log('duration', duration);
+    // remove the sound from the playingSounds object after the sound has finished playing
+    setTimeout(() => {
+        //if the name ends with a number, remove the number
+        if (name.match(/\d+$/)) {
+            name = name.replace(/\d+$/, '');
+        }
+        console.log('removing', name);
+        playingSounds[name] -= 1;
+        if (playingSounds[name] <= 0) {
+            delete playingSounds[name];
+        }
+    }, duration * 1000);
 }
 
-// Load the sounds
-Promise.all([
-    loadSound('./public/js/sounds/music/mainTheme.mp3'
-    ).then(buffer => mainTheme = buffer),
-    loadSound('./music/buildTheme.mp3').then(buffer => buildTheme = buffer),
-    loadSound('./music/mainTheme.mp3').then(buffer => levelTheme = buffer)
-  ]).then(() => {
-    console.log("All sounds loaded");
-    // Now you can play these sounds whenever you need
-  });
+let currentSong = null;
 
+function setSong(songName) {
+  // If there is already a song playing, stop it
+  if (currentSong) {
+    currentSong.stop();
+    currentSong = null;
+  }
+  // Get the buffer for the song
+  let songBuffer = loadedSongs[songName];
 
-
-
-function playSound(SoundName, looped = false) {
-    // get the buffer
-    let audioBuffer;
-    if (SoundName === 'mainTheme') {
-        audioBuffer = mainTheme;
-    } else if (SoundName === 'buildTheme') {
-        audioBuffer = buildTheme;
-    } else if (SoundName === 'levelTheme') {
-        audioBuffer = levelTheme;
-    }
-
-    let source = audioContext.createBufferSource();
-    source.buffer = audioBuffer;
-    source.connect(audioContext.destination);
-    source.start(0);
-    if (looped) {
-        source.loop = true;
-    }
+  // If a valid song name was provided, play the song
+  if (songBuffer) {
+    currentSong = audioContext.createBufferSource();
+    currentSong.buffer = songBuffer;
+    currentSong.connect(audioContext.destination);
+    currentSong.start();
+    // loop the song
+    currentSong.loop = true;
+  }
 }
 
-
-export {
-    playSound
-}
+export { setSong, playSound };

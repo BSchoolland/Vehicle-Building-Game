@@ -1,6 +1,6 @@
 import Block from '../../baseBlockClass.js';
 import { LocalToWorld, WorldToLocal} from '../../../utils.js';
-
+import { playSound } from '../../../../sounds/playSound.js';
 
 // a rocket booster block that can propel the contraption
 class rocketBoosterBlock extends Block {
@@ -107,10 +107,16 @@ class rocketBoosterBlock extends Block {
     }
     update() {
         super.update();
+        // make sure the rocket has more than 0 hp
+        if (this.hitPoints <= 0) {
+            return;
+        }
         // check if the rocket has fuel and the activation key is pressed
         if (this.contraption.keysPressed[this.activationKey] && this.fuel > 0) {
             // decrease the fuel
             this.fuel--;
+            // play the rocket sound
+            playSound('rocketFlame');
             // apply a force to the rocket nozzle
 
             Matter.Body.applyForce(this.bodies[1], this.bodies[1].position, Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.bodies[0].position, this.bodies[1].position)), this.thrust));

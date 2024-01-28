@@ -13,6 +13,7 @@ import {
   TNTBlock,
 } from "../vehicle/blocks.js";
 import { Contraption } from "../vehicle/contraption.js";
+import { setSong } from "../sounds/playSound.js";
 
 class RightClickMenu {
   constructor(building) {
@@ -348,6 +349,8 @@ class BuildMenu {
     this.buildModeButton.onclick = () => {
       building.buildInProgress = !building.buildInProgress;
       if (building.buildInProgress) {
+        // set the song to the build theme
+        setSong("buildTheme");
         // set this button's class to active
         this.buildModeButton.classList.add("active");
         // activate the first block type button
@@ -384,6 +387,8 @@ class BuildMenu {
         building.contraption.spawn();
         // start the level
         building.startLevel();
+        // set the song to the level theme
+        setSong("levelTheme");
         // set the camera viewport to the size of the canvas
         const canvas = document.querySelector("canvas");
         building.camera.setViewport(canvas.width, canvas.height);

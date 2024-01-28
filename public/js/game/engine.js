@@ -1,7 +1,7 @@
 import Building from './building.js';
 import { Camera } from './camera.js';
 import { LevelManager } from '../world/level.js';
-import { playSound } from '../sounds/playSound.js';
+import { setSong } from '../sounds/playSound.js';
 
 let gameStarted = false;
 function clickHandler() {
@@ -10,7 +10,7 @@ function clickHandler() {
     }
     gameStarted = true;
     // play the sound
-    playSound('mainTheme', true);
+    setSong('mainTheme');
     // remove the event listener
     document.removeEventListener('click', clickHandler);
     // start the game
@@ -44,7 +44,7 @@ var mouse = Matter.Mouse.create(render.canvas);
 // create the camera
 var camera = new Camera(render, mouse, render.canvas);
 // play the background music
-playSound('mainTheme', true);
+setSong('mainTheme');
 
 // allow the player to build blocks
 let building = new Building(engine, camera);

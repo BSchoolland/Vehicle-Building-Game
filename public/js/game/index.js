@@ -1,7 +1,7 @@
 import Building from './building.js';
 import { Camera } from './camera.js';
 import { LevelManager } from '../world/level.js';
-import { playSound } from '../sounds/playSound.js';
+import { setSong } from '../sounds/playSound.js';
 // wait to do everything until the user clicks
 let gameStarted = false;
 function clickHandler() {
@@ -10,7 +10,7 @@ function clickHandler() {
     }
     gameStarted = true;
     // play the sound
-    playSound('mainTheme', true);
+    setSong('mainTheme');
     // remove the event listener
     document.removeEventListener('click', clickHandler);
     // start the game
@@ -130,5 +130,5 @@ async function startGame() {
             camera.setViewport(1650, 1000);
             camera.setPosition(300, -100)
         }, 1000);
-    }, 60000);
+    }, 53000);
 }

@@ -1,6 +1,16 @@
-import {BasicBlock, SeatBlock} from './blocks/buildingBlocks.js';
-import {WheelBlock, rocketBoosterBlock} from './blocks/movementBlocks.js';
-import {SpikeBlock, TNTBlock} from './blocks/weaponBlocks.js';
-import {GrappleBlock, PoweredHingeBlock, RemoteBlock} from './blocks/utilityBlocks.js';
+import {BasicBlock, SeatBlock} from './blocks/buildingBlocks/contents.js';
+import {WheelBlock, rocketBoosterBlock} from './blocks/movementBlocks/contents.js';
+import {SpikeBlock, TNTBlock} from './blocks/weaponBlocks/contents.js';
+import {GrappleBlock, PoweredHingeBlock, RemoteBlock} from './blocks/utilityBlocks/contents.js';
     
-export { BasicBlock, SeatBlock, WheelBlock, rocketBoosterBlock, SpikeBlock, GrappleBlock, PoweredHingeBlock, TNTBlock, RemoteBlock };
+export {
+  BasicBlock,
+  SeatBlock,
+  WheelBlock,
+  rocketBoosterBlock,
+  SpikeBlock,
+  GrappleBlock,
+  PoweredHingeBlock,
+  TNTBlock,
+  RemoteBlock,
+};

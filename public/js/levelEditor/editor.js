@@ -12,6 +12,8 @@ var render = Matter.Render.create({
         wireframes: false // Set wireframes to false to show styles
     }
 });
+// set the background to a gradient
+render.options.background = 'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0, 0.5) 50%, rgba(135, 206, 235) 100%)';
 var mouse = Matter.Mouse.create(render.canvas);
 // create the camera
 var camera = new Camera(render, mouse, render.canvas);
@@ -46,4 +48,3 @@ Matter.Render.run(render);
 Matter.Events.on(engine, 'beforeUpdate', () => {
     camera.smoothUpdate();
 });
-

@@ -14,6 +14,6 @@
   ],
   "commands": [
     { "key": "Shift", "start": 26.0, "end": 35.0},
-    { "key": "d", "start": 26.0, "end": 35.0}
+    { "key": "d", "start": 26.0, "end": 60.0}
   ]
 }

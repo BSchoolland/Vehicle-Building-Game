@@ -224,6 +224,8 @@ class Building {
         document.addEventListener('keydown', (event) => this.handleKeyDown(event));
         // Add event listener for block editing
         canvas.addEventListener('contextmenu', (event) => this.handleRightClick(event));
+        // ckick the build mode button to enable build mode
+        this.buildMenu.buildModeButton.click();
     }
 
     handleCanvasClick(_event) {

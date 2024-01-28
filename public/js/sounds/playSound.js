@@ -18,9 +18,7 @@ const effects = {
   rocketFlame: "./js/sounds/effects/rocketFlame.mp3",
   disconnect: "./js/sounds/effects/disconnect.mp3",
   electricMotor: "./js/sounds/effects/electricMotor.mp3",
-  grappleFire1: "./js/sounds/effects/grappleFire1.mp3",
-  grappleFire2: "./js/sounds/effects/grappleFire2.mp3",
-  grappleFire3: "./js/sounds/effects/grappleFire3.mp3",
+  grappleFire: "./js/sounds/effects/grappleFire.mp3",
   grappleReel: "./js/sounds/effects/grappleReel.mp3",
 };
 
@@ -69,11 +67,6 @@ function playSound(name) {
     if (name === 'blockTakesDamage') {
         let random = Math.floor(Math.random() * 3) + 1;
         name = `blockTakesDamage${random}`;
-    }
-    // if the name is 'grappleFire', play a random grappleFire sound
-    if (name === 'grappleFire') {
-        let random = Math.floor(Math.random() * 3) + 1;
-        name = `grappleFire${random}`;
     }
   let buffer = loadedSounds[name];
   let source = audioContext.createBufferSource();

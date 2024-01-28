@@ -1,5 +1,6 @@
 import Block from '../../baseBlockClass.js';
 import { constrainBodyToBody } from '../../../utils.js';
+import { playSound } from '../../../../sounds/playSound.js';
 
 // a grappling hook block that can grab onto other blocks, and reel them in
 class GrappleBlock extends Block {
@@ -99,6 +100,8 @@ class GrappleBlock extends Block {
             return;
         }
         this.readyToShoot = false;
+        // play the grappling hook sound
+        playSound('grappleFire');
         // shoot the grappling hook forward
 
         // make the grappling constraints weak
@@ -137,6 +140,7 @@ class GrappleBlock extends Block {
         if (this.rope === null) {
             return;
         }
+        
         // decrease the rope length
         let sqrDistance = (this.bodies[2].position.x - this.bodies[3].position.x) ** 2 +
                           (this.bodies[2].position.y - this.bodies[3].position.y) ** 2;
@@ -152,6 +156,10 @@ class GrappleBlock extends Block {
         if (this.rope.length <= 0) {
             // reset the values (destroying the rope)
             this.resetValues();
+        }
+        else{
+            // play the reel sound
+            playSound('grappleReel');
         }
     }
     hit(thisBody, otherBody) {

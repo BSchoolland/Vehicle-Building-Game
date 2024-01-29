@@ -1,6 +1,118 @@
 // Import the block classes from public/js/world/mapBlocks.js
 import { GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock } from '../world/mapBlocks.js';
 import { LevelManager } from '../world/level.js';
+// contraption blocks
+import {
+    RemoteBlock,
+    BasicWoodenBlock,
+    BasicIronBlock,
+    BasicDiamondBlock,
+    SeatBlock,
+    WheelBlock,
+    rocketBoosterBlock,
+    SpikeBlock,
+    TNTBlock,
+    GrappleBlock,
+    PoweredHingeBlock,
+  } from "../vehicle/blocks.js";
+// the level builder
+
+class allowedBlockMenu {
+    constructor(building) {
+        this.building = building;
+        // create the build menu
+        this.menu = document.createElement('div');
+        this.menu.classList.add('menu');
+        // create a selector for each block type
+        this.blockTypes = [
+            { name: 'Basic Block', type: BasicWoodenBlock, allowed: 0 },
+            { name: 'Wheel Block', type: WheelBlock, allowed: 0 },
+            { name: 'TNT Block', type: TNTBlock, allowed: 0  },
+            { name: 'remote Block', type: RemoteBlock, allowed: 0  },
+            { name: 'seat', type: SeatBlock, allowed: 1  },
+            { name: 'wheel', type: WheelBlock, allowed: 0  },
+            { name: 'rocket booster',  type: rocketBoosterBlock , allowed: 0 },
+            { name: 'spike',   type: SpikeBlock, allowed: 0  },
+            { name: 'tnt',   type: TNTBlock, allowed: 0  },
+            { name: 'grapple',  type: GrappleBlock, allowed: 0  },
+            { name: 'powered hinge',  type: PoweredHingeBlock, allowed: 0  },
+        ];
+        this.createBlockSelectors();
+    }
+    createBlockSelectors() {
+        this.blockSelectors = {};
+        this.blockTypes.forEach(blockType => {
+            // add a label for the block type
+            let label = document.createElement('label');
+            // in uppercase
+            label.innerText = blockType.name.toUpperCase();
+            this.menu.appendChild(label);
+            // selectors that allow for the numbers 0-15
+            let selector = document.createElement('select');
+            selector.classList.add('menu-button', 'build-menu-button');
+            // add the options
+            for (let i = 0; i < 16; i++) {
+                // add the option
+                let option = document.createElement('option');
+                option.value = i;
+                option.innerText = i;
+                selector.appendChild(option);
+                // set the default value
+                if (i === blockType.allowed) {
+                    selector.value = i;
+                }
+            }
+            // when the selector changes, update the allowed number of blocks
+            selector.onchange = () => {
+                blockType.allowed = selector.value;
+                this.building.level.updateAllowedBlocks();
+            }
+            this.menu.appendChild(selector);
+            this.blockSelectors[blockType.type.name] = selector;
+        });
+        // get the container
+        let gameContainer = document.getElementById('container');
+        //add the menu to the container
+        gameContainer.appendChild(this.menu);
+        console.log(this.menu);
+    }
+    setBuildingBlockTypes(buildingBlockTypes) {
+        // set the block types
+        this.blockTypes = [];
+        console.log(buildingBlockTypes)
+        let length = buildingBlockTypes.length;
+        console.log(length); // logs 3
+        for (let i = 0; i < length; i++) {
+            console.log(i)
+            let blockType = {};
+            // set the name
+            buildingBlockTypes[i].name = buildingBlockTypes[i].name;
+            // get the block type
+            try {
+                blockType.type = eval(buildingBlockTypes[i].type);
+            } catch (error) {
+                console.error(`Unknown block type: ${buildingBlockTypes[i].name} using BasicWoodenBlock instead`);
+                blockType.type = BasicWoodenBlock;
+            }
+            // set the allowed number of blocks
+            blockType.allowed = buildingBlockTypes[i].limit;
+            // set the name
+            blockType.name = buildingBlockTypes[i].name;
+            this.blockTypes.push(blockType);
+            console.log(blockType);
+        }
+        console.log(this.blockTypes)
+        // clear the menu
+        this.menu.innerHTML = '';
+        // create the block selectors
+        this.createBlockSelectors();
+    }
+}
+
+
+
+
+
 
 // a build menu class, for the bottom of the screen.
 // the build menu will contain buttons for each block type, a button to save the level, a button to load a level, a button to clear the level, and a button to toggle build mode.
@@ -88,20 +200,17 @@ class BuildMenu {
             }
             // save the level to a JSON object
             let LevelManagerJson = building.level.save();
-            const buildingBlockTypes = [
-                { name: "Basic Block", key: "1", type: "BasicBlock", limit: 100 },
-                { name: "Wheel Block", key: "2", type: "WheelBlock", limit: 100 },
-                { name: "TNT Block", key: "3", type: "TNTBlock", limit: 100 },
-                {
-                  name: "Rocket Booster Block",
-                  key: "4",
-                  type: "rocketBoosterBlock",
-                  limit: 100,
-                },
-                { name: "Spike Block", key: "5", type: "SpikeBlock", limit: 100 },
-                { name: "Grapple Block", key: "6", type: "GrappleBlock", limit: 100 },
-                { name: "Seat Block", key: "7", type: "SeatBlock", limit: 1 },
-              ];
+            let key = 0;
+            const buildingBlockTypes = this.building.blockSelectors.blockTypes.map(blockType => {
+                key ++;
+                console.log(blockType)
+                return {
+                    name: blockType.name,
+                    key: key.toString(),
+                    type: blockType.type.name,
+                    limit: blockType.allowed
+                };
+            });
             // save the block types to the JSON object
             LevelManagerJson.buildingBlockTypes = buildingBlockTypes;
             // download the JSON object as a file
@@ -130,6 +239,9 @@ class BuildMenu {
                     building.level.clear();
                     // load the level from the JSON object
                     building.level.loadForEditing(LevelManagerJson);
+                    // get the block types from the JSON object
+                    let buildingBlockTypes = LevelManagerJson.buildingBlockTypes;
+                    this.building.blockSelectors.setBuildingBlockTypes(buildingBlockTypes);
                 };
             };
         };
@@ -190,7 +302,7 @@ class BuildMenu {
 
         
 
-// a refactored version of the building class
+// a refactored version of the building class for level editing
 class Building {
     constructor(engine, camera) {
         this.engine = engine;
@@ -209,6 +321,7 @@ class Building {
 
         // build menu
         this.buildMenu = new BuildMenu(this);
+        this.blockSelectors = new allowedBlockMenu(this);
     }
 
     setCurrentBlockType(blockType) {
@@ -252,6 +365,14 @@ class Building {
         for (let i = 0; i < this.level.blocks.length; i++) {
             if (this.level.blocks[i].x === x && this.level.blocks[i].y === y) {
                 console.log('Cannot place block here');
+                // log the block that is already here
+                console.log(this.level.blocks[i]);
+                // log the block's class name
+                console.log(this.level.blocks[i].constructor.name);
+                // if the block is an enemy spawn block, show the right click menu
+                if (this.level.blocks[i].constructor.name === 'EnemySpawnBlock') {
+                    this.showRightClickMenu(this.level.blocks[i], _event);
+                }
                 return;
             }
         }
@@ -261,15 +382,32 @@ class Building {
         this.level.addBlock(newBlock);
     }
     showRightClickMenu(block, event) {
-        // set the menu's block
-        this.RightClickMenu.setSelectBlock(block);
-        // get the relative click position using the event
-        let pos = {
-            x: event.clientX,
-            y: event.clientY
+        // create a popup asking the user to submit a string
+        let popup = document.createElement('div');
+        popup.classList.add('popup');
+        let popupText = document.createElement('p');
+        popupText.innerText = 'Enter the enemy type:';
+        popup.appendChild(popupText);
+        let input = document.createElement('input');
+        input.type = 'text';
+        popup.appendChild(input);
+        let submitButton = document.createElement('button');
+        submitButton.innerText = 'Submit';
+        // style the popup 
+        popup.className = 'right-click-menu';
+        popup.style.position = 'absolute';
+        popup.style.top = `${event.clientY}px`;
+        popup.style.left = `${event.clientX}px`;
+        // show the popup
+        popup.appendChild(submitButton);
+        let gameContainer = document.getElementById("game-container");
+        gameContainer.appendChild(popup);
+        // when the submit button is clicked, set the block's enemy type to the input value
+        submitButton.onclick = () => {
+            block.enemyType = input.value;
+            // remove the popup
+            popup.remove();
         };
-        // show the menu
-        this.RightClickMenu.show(pos.x, pos.y);
     }
 
     handleRightClick(event) {

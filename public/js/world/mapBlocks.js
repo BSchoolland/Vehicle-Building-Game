@@ -192,6 +192,7 @@ class EnemySpawnBlock extends Block {
         this.height = 100;  
         this.bodies = [];
         this.makeBodies();
+        this.enemyType = "box"
     }
     makeBodies() {
         // a square that is the color of the block
@@ -207,7 +208,7 @@ class EnemySpawnBlock extends Block {
         blockJson.type = this.constructor.name;
         blockJson.x = this.x;
         blockJson.y = this.y;
-        blockJson.enemyType = 1; // default to enemy type 1
+        blockJson.enemyType = this.enemyType;
         return blockJson;
     }
 }

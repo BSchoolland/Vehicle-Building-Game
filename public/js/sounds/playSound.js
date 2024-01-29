@@ -20,6 +20,8 @@ const effects = {
   electricMotor: "./js/sounds/effects/electricMotor.mp3",
   grappleFire: "./js/sounds/effects/grappleFire.mp3",
   grappleReel: "./js/sounds/effects/grappleReel.mp3",
+  coin: "./js/sounds/level/coin.mp3",
+  win: "./js/sounds/level/win.mp3",
 };
 
 async function loadSound(url) {
@@ -49,6 +51,7 @@ Promise.all(
 ).then(() => {
   console.log("Effects loaded");
 });
+
 let playingSounds = {}; // track the sounds that are currently playing, so that the same sound can't be played twice at the same time
 
 function playSound(name) {
@@ -69,6 +72,10 @@ function playSound(name) {
         name = `blockTakesDamage${random}`;
     }
   let buffer = loadedSounds[name];
+  if (!buffer) {
+    console.error("Sound not found:", name);
+    return;
+  }
   let source = audioContext.createBufferSource();
   source.buffer = buffer;
   source.connect(audioContext.destination);
@@ -100,6 +107,10 @@ function setSong(songName) {
   }
   // Get the buffer for the song
   let songBuffer = loadedSongs[songName];
+  if (!songBuffer) {
+    console.error("Song not found:", songName);
+    return;
+  }
 
   // If a valid song name was provided, play the song
   if (songBuffer) {

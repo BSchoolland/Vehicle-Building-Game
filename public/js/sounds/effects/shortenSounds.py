@@ -16,4 +16,4 @@ def shorten_mp3_files(directory):
                 print('Shortened ' + filepath)
 
 # Replace with your directory path
-shorten_mp3_files('./public/js/sounds/effects')
+shorten_mp3_files('./public/js/sounds/level')

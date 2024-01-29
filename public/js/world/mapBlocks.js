@@ -1,3 +1,5 @@
+import { playSound } from "../sounds/playSound.js";
+
 // holds the block classes, which are used to create the blocks the map is made of
 
 // the base class for all map blocks
@@ -130,38 +132,63 @@ class slightRampBlockR extends Block {
     }
 }
 
-// a goal block
-class GoalBlock extends Block {
+// a block that denotates a coin pickup spot
+class CoinBlock extends Block {
     constructor(x, y, level) { // gold color
         super(x, y, level, "rgb(255, 215, 0)");
         this.width = 100;
         this.height = 100;  
         this.bodies = [];
+        this.coin = null;
         this.makeBodies();
+        this.coinExists = false;
     }
-    makeBodies() {
-        // a square that is the color of the block
-        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, this.width, this.height, { isStatic: true, render: { fillStyle: this.color } }));
-        // make the goal not collide with anything
-        this.bodies[0].collisionFilter =  {
+    makeBodies() { // spawn a coin at the block's location
+        // the coin is a circle
+        this.coin = Matter.Bodies.circle(this.x, this.y - 25, 25, { isStatic: false, render: { fillStyle: this.color } });
+        // make the coin not collide with anything
+        this.coin.collisionFilter =  {
             category: 0x0002,
         },
-        this.bodies[0].block = this;
+        this.bodies.push(this.coin);
+        this.coin.block = this;
+        this.coinExists = true;
     }
-    checkForWin(playerContraption) {
-        // check if the player contraption is touching the goal
+    removeCoin() { // remove the coin from the block
+        // remove the coin from the world
+        if (!this.coinExists) return; // if the coin doesn't exist, don't try to remove it
+        this.coinExists = false;
+        // make the coin invisible
+        this.coin.render.visible = false;
+    }
+    checkCollection(playerContraption) { // check if the player contraption is touching the coin
+        if (!this.coinExists) return false; // if the coin doesn't exist, it can't be collected
+
+        // check if the player contraption is touching the coin
         let bodies = []
         for (let i = 0; i < playerContraption.blocks.length; i++) {
             bodies.push(playerContraption.blocks[i].bodies[0]);
         }
         for (let i = 0; i < bodies.length; i++) {
-            // since the goal cannot collide with anything, check if the block is within 25 pixels of the goal
-            if (bodies[i].position.x > this.bodies[0].position.x - 25 && bodies[i].position.x < this.bodies[0].position.x + 25 && bodies[i].position.y > this.bodies[0].position.y - 25 && bodies[i].position.y < this.bodies[0].position.y + 25) {
+            // since the coin cannot collide with anything, check if the block is within 50 pixels of the coin
+            if (Math.abs(bodies[i].position.x - this.coin.position.x) < 50 && Math.abs(bodies[i].position.y - this.coin.position.y) < 50) {
+                // get rid of the coin
+                this.removeCoin();
+                // play the coin sound
+                playSound("coin");
                 return true;
             }
         }
         return false;
     }
+    reset() { // reset the coin
+        console.log("resetting coin");
+        this.removeCoin();
+        this.coinExists = true;
+        this.coin.render.visible = true;
+        // this.addToWorld(this.level.engine.world);
+    }
+
 }
 
 // a block that denotates the player's building area
@@ -213,4 +240,4 @@ class EnemySpawnBlock extends Block {
     }
 }
 
-export {GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock}; 
+export {GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock}; 

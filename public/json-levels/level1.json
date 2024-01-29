@@ -35,9 +35,9 @@
     { "type": "slightRampBlockL", "x": 1100, "y": 500 },
     { "type": "slightRampBlockR", "x": 1700, "y": 500 },
     { "type": "GrassBlock", "x": 1700, "y": 600 },
-    { "type": "GoalBlock", "x": 500, "y": 400 },
-    { "type": "GoalBlock", "x": 900, "y": 400 },
-    { "type": "GoalBlock", "x": 1400, "y": 500 }
+    { "type": "CoinBlock", "x": 500, "y": 400 },
+    { "type": "CoinBlock", "x": 900, "y": 400 },
+    { "type": "CoinBlock", "x": 1400, "y": 500 }
   ],
   "commands": [],
   "buildingBlockTypes": [

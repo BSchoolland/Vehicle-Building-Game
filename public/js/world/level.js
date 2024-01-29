@@ -1,12 +1,13 @@
-import { GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock } from './mapBlocks.js';
+import { GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock } from './mapBlocks.js';
 import { Contraption } from '../vehicle/contraption.js'
+import { playSound } from '../sounds/playSound.js';
 const blockTypes = {
     GrassBlock,
     RampBlockL,
     slightRampBlockL,
     RampBlockR,
     slightRampBlockR,
-    GoalBlock,
+    CoinBlock,
     BuildingAreaBlock,
     EnemySpawnBlock
 };
@@ -18,25 +19,25 @@ class LevelManager {
         this.building = building;
         this.levels = [];
         this.enemyContraptionsJSON = {};
-        this.enemyContraptions = [];
+
         this.blocks = [];
         this.actionStack = [];
         this.undoStack = [];
         this.frameCount = 0;
-        // check for a win every 30 frames (to save on performance)
-        Matter.Events.on(engine, 'beforeUpdate', () => {
-            this.frameCount++;
-            if (this.frameCount > 30) {
-                this.frameCount = 0;
-                if (this.goal != null) {
-                    if(this.goal.checkForWin(this.playerContraption)){
-                        console.log("You win!");
-                        this.celebrate();
-                        // TODO: add a win screen, and then load the next level
-                    }
-                }
-            }
-        });
+        // keep track of win conditions
+        this.won = false;
+
+        this.coinsCollected = 0;
+        this.mustCollect = 1;
+        this.coins = [];
+
+        this.enemyContraptionsDestroyed = 0;
+        this.mustDestroy = 0;
+        this.enemyContraptions = [];
+
+        this.secondsSurvived = 0;
+        this.mustSurvive = 0;
+        this.startTime = 0;
     }
 
     init() {
@@ -98,35 +99,6 @@ class LevelManager {
         console.log(this.enemyContraptionsJSON);
 
     }
-    celebrate() {
-        // make loads of confetti above the goal
-        for (let i = 0; i < 500; i++) {
-            let confettiColors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5"];
-            let x = this.goal.x + Math.random() * 100 - 50;
-            let y = this.goal.y - Math.random() * 100;
-            let color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-            let confetti = Matter.Bodies.circle(x, y, 5, { render: { fillStyle: color } });
-            Matter.Body.setVelocity(confetti, { x: Math.random() * 20 - 10, y: Math.random() * 20 - 10 });
-            // make the confetti not collide with anything
-            confetti.collisionFilter =  {
-                category: 0x0003,
-            },
-            Matter.World.add(this.engine.world, confetti);
-            // remove the confetti after 5 seconds
-            setTimeout(() => {
-                Matter.World.remove(this.engine.world, confetti);
-            }, 5000);
-        }
-        // after a 1 second delay, load the next level
-        this.playerContraption.clear();
-        setTimeout(() => {
-            // clear the level
-            this.clear();
-            //open the next level
-            this.loadLevelSelector();
-        }, 3000);
-        
-    }
     addBlock(block, addToActionStack = true) {
         block.Level = this;
         this.blocks.push(block);
@@ -168,24 +140,28 @@ class LevelManager {
             const BlockType = blockTypes[blockJson.type];
             if (BlockType) {
                 // Create a new block instance
-                let newBlock = new BlockType(blockJson.x, blockJson.y);
+                let newBlock = new BlockType(blockJson.x, blockJson.y, this);
                 // Add the block to the Level
                 this.addBlock(newBlock); 
 
                 if (blockJson.flippedX) {
                     newBlock.flipX();
                 }
-                if (BlockType === GoalBlock) {
-                    this.goal = newBlock;
-                }
             } else {
                 console.error(`Unknown block type: ${blockJson.type}`);
+
             }
         });
     }
     // load a Level from a JSON object
     load(levelIndex, optionalJson = null) {
-        this.enemyContraptions = []; // clear the enemy contraptions
+        // clear the enemy contraptions
+        this.enemyContraptions.forEach(enemyContraption => {
+            enemyContraption[0].despawn();
+        });
+        this.enemyContraptions = [];
+        // clear the coins
+        this.coins = [];
 
         if (!this.building.buildArea) {
             console.log("level editing mode");
@@ -271,24 +247,39 @@ class LevelManager {
                 }
 
                 // Create a new block instance
-                let newBlock = new BlockType(blockJson.x, blockJson.y);
+                let newBlock = new BlockType(blockJson.x, blockJson.y, this);
                 // Add the block to the Level
                 this.addBlock(newBlock); 
 
                 if (blockJson.flippedX) {
                     newBlock.flipX();
                 }
-                if (BlockType === GoalBlock) {
-                    this.goal = newBlock;
+                if (BlockType === CoinBlock) {
+                    this.coins.push(newBlock);
                 }
             } else {
                 console.error(`Unknown block type: ${blockJson.type}`);
             }
         });
-        // if the leve' has buildingBlockTypes, then set the building's buildingBlockTypes
+        // if the level has buildingBlockTypes, then set the building's buildingBlockTypes
         if (LevelJson.buildingBlockTypes) {
             this.building.makeNewBuildMenu(LevelJson.buildingBlockTypes);
         }
+        // set the win conditions
+        
+        LevelJson.objectives.forEach(objective => {
+            if (objective.name === "Collect") {
+                this.mustCollect = objective.value;
+            }
+            else if (objective.name === "Destroy") {
+                this.mustDestroy = objective.value;
+            }
+            else if (objective.name === "Survive") {
+                this.mustSurvive = objective.value;
+            }
+        });
+        console.log('must collect: ' + this.mustCollect);
+
         // bind the startLevel function to the building
         this.building.startLevel = this.startLevel.bind(this);
         // clear the building's contraption
@@ -299,6 +290,7 @@ class LevelManager {
         }
     }
     startLevel() {
+        this.won = false;
         // despawn all enemy contraptions
         this.enemyContraptions.forEach(enemyContraption => {
             enemyContraption[0].despawn();
@@ -307,6 +299,17 @@ class LevelManager {
         // spawn in the enemy contraptions
         this.enemyContraptions.forEach(enemyContraption => {
             enemyContraption[0].spawn(enemyContraption[1], enemyContraption[2]);
+        });
+
+        // reset the win conditions
+        this.coinsCollected = 0;
+        this.enemyContraptionsDestroyed = 0;
+        this.secondsSurvived = 0;
+        this.startTime = Date.now();
+
+        // reset each coin
+        this.coins.forEach(coin => {
+            coin.reset();
         });
 
     }
@@ -334,6 +337,65 @@ class LevelManager {
             this.undoStack.push(lastAction);
         }
     }
+    update() { // update the level (check coins, survival time, etc.)
+        // check if the player contraption is touching the coin
+        if (this.won){
+            return;
+        }
+        this.coins.forEach(coin => {
+            if (coin.checkCollection(this.playerContraption)) {
+                // play the coin sound
+                this.coinsCollected++;
+                console.log(this.coinsCollected);
+            }
+        });
+        // check if enough coins have been collected
+        if (this.coinsCollected >= this.mustCollect) {
+            // check if the player has survived long enough
+            this.secondsSurvived = Math.floor((Date.now() - this.startTime) / 1000);
+            console.log(this.secondsSurvived);
+            // check if the player has destroyed enough enemy contraptions
+            if (this.enemyContraptionsDestroyed >= this.mustDestroy) {
+                // the player wins!
+                this.won = true;
+                setTimeout(() => {
+                this.completeLevel();
+                }, 1500);
+                
+            }
+
+        }
+    }
+    completeLevel() {
+        // play the level complete sound
+        playSound("win");
+        // make a bunch of confetti above the player
+        for (let i = 0; i < 500; i++) {
+            let confettiColors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5"];
+            let x = this.playerContraption.seat.bodies[0].position.x + Math.random() * 200 - 100;
+            let y = this.playerContraption.seat.bodies[0].position.y - 300;
+            let color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            let confetti = Matter.Bodies.circle(x, y, 5, { render: { fillStyle: color } });
+            Matter.Body.setVelocity(confetti, { x: Math.random() * 20 - 10, y: Math.random() * 20 - 10 });
+            // make the confetti not collide with anything
+            confetti.collisionFilter =  {
+                category: 0x0003,
+            },
+            Matter.World.add(this.engine.world, confetti);
+            // remove the confetti after 5 seconds
+            setTimeout(() => {
+                Matter.World.remove(this.engine.world, confetti);
+            }, 5000);
+        }
+        setTimeout(() => {
+            // clear the level
+            this.clear();
+            //open the next level
+            this.loadLevelSelector();
+            // clear the player contraption
+            this.playerContraption.clear();
+        }, 3000);
+    }
 
     redo() {
         if (this.undoStack.length > 0) {
@@ -353,7 +415,6 @@ class LevelManager {
     loadLevelSelector() {
         console.log("load level selector");
         // a screen to select the level to play
-        // 
         let levelSelector = document.createElement('div');
         levelSelector.id = "level-selector";
         levelSelector.className = "level-select-menu";

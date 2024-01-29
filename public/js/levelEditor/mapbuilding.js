@@ -287,6 +287,8 @@ class BuildMenu {
             LevelManagerJson.buildingBlockTypes = buildingBlockTypes;
             // save the objective types to the JSON object
             LevelManagerJson.objectives = this.building.objectivesSelectors.objectiveTypes;
+            // add tutorial text
+            LevelManagerJson.tutorialText = document.getElementById('tutorial-text').value;
             // download the JSON object as a file
             let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(LevelManagerJson));
             let dlAnchorElem = document.createElement('a');

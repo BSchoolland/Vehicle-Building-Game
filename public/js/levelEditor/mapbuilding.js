@@ -57,7 +57,7 @@ class ObjectivesMenu { // creates objectives for the level
             }
             // when the selector changes, update the objective value
             selector.onchange = () => {
-                objectiveType.value = selector.value;
+                objectiveType.value = Number(selector.value);
             }
             this.menu.appendChild(selector);
             this.objectivesSelectors[objectiveType.name] = selector;
@@ -69,24 +69,7 @@ class ObjectivesMenu { // creates objectives for the level
         console.log(this.menu);
     }
     setObjectiveTypes(objectiveTypes) {
-        // set the objective types
-        this.objectiveTypes = [];
-        console.log(objectiveTypes)
-        let length = objectiveTypes.length;
-        console.log(length); // logs 3
-        for (let i = 0; i < length; i++) {
-            console.log(i)
-            let objectiveType = {};
-            // set the name
-            objectiveTypes[i].name = objectiveTypes[i].name;
-            // set the value
-            objectiveType.value = objectiveTypes[i].value;
-            // add the objective type to the list
-            objectiveType.name = objectiveTypes[i].name;
-            this.objectiveTypes.push(objectiveType);
-            console.log(objectiveType);
-        }
-        console.log(this.objectiveTypes)
+        this.objectiveTypes = objectiveTypes;
         // clear the menu
         this.menu.innerHTML = '';
         // create the objective selectors
@@ -143,7 +126,7 @@ class allowedBlockMenu {
             }
             // when the selector changes, update the allowed number of blocks
             selector.onchange = () => {
-                blockType.allowed = selector.value;
+                blockType.allowed = Number(selector.value);
             }
             this.menu.appendChild(selector);
             this.blockSelectors[blockType.type.name] = selector;
@@ -273,6 +256,8 @@ class BuildMenu {
             // save the level to a JSON object
             let LevelManagerJson = building.level.save();
             let key = 0;
+            // remove the block types that are not allowed
+            this.building.blockSelectors.blockTypes = this.building.blockSelectors.blockTypes.filter(blockType => blockType.allowed > 0);
             const buildingBlockTypes = this.building.blockSelectors.blockTypes.map(blockType => {
                 key ++;
                 console.log(blockType)
@@ -317,7 +302,12 @@ class BuildMenu {
                     building.level.loadForEditing(LevelManagerJson);
                     // get the block types from the JSON object
                     let buildingBlockTypes = LevelManagerJson.buildingBlockTypes;
+                    // set the block types
                     this.building.blockSelectors.setBuildingBlockTypes(buildingBlockTypes);
+                    // set the objective types
+                    this.building.objectivesSelectors.setObjectiveTypes(LevelManagerJson.objectives);
+                    // set the tutorial text
+                    document.getElementById('tutorial-text').value = LevelManagerJson.tutorialText;
                 };
             };
         };
@@ -520,11 +510,6 @@ class Building {
         // If the X key is pressed, redo the last block placed
         if (event.keyCode === 88) {
             this.level.redo();
-        }
-
-        // if the B key is pressed, toggle build mode
-        if (event.keyCode === 66) {
-            this.buildMenu.buildModeButton.click();
         }
     }
     displayGrid() {

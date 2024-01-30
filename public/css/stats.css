@@ -1,0 +1,22 @@
+.stat-container {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    background-color: #1a3a5f;
+    border: 1px solid #557da6;
+    color: #e4e8ec;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font-family: 'Courier New', monospace; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center items horizontally */
+    
+}
+
+.stat-container h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5em;
+}

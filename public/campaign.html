@@ -9,6 +9,7 @@
     </style>
     <!-- import css -->
     <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/stats.css">
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
@@ -16,6 +17,12 @@
     <div id="game-container"></div>
     <div id="container">
         <h1>Click to start!</h1>
+    </div>
+    <!-- a div for keeping track of win conditions -->
+    <div class="stat-container" id="stats" style="display: none;">
+        <h1>Coins: 0/1</h1>
+        <h1>Destroyed: 0/1</h1>
+        <h1>Survived: 0/30</h1>
     </div>
     <!-- runs the matter.js simulation -->
     <script type="module" src = "js/game/engine.js"></script>

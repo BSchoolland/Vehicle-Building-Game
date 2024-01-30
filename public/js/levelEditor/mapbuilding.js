@@ -1,5 +1,5 @@
 // Import the block classes from public/js/world/mapBlocks.js
-import { GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, GoalBlock, BuildingAreaBlock, EnemySpawnBlock } from '../world/mapBlocks.js';
+import { GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock } from '../world/mapBlocks.js';
 import { LevelManager } from '../world/level.js';
 // contraption blocks
 import {
@@ -184,7 +184,7 @@ class BuildMenu {
             { name: 'Ramp Block (R)', key: '3', type: RampBlockR },
             { name: 'Slight Ramp Block (L)', key: '4', type: slightRampBlockL },
             { name: 'Slight Ramp Block (R)', key: '5', type: slightRampBlockR },
-            { name: 'Goal Block', key: '6', type: GoalBlock },
+            { name: 'Coin', key: '6', type: CoinBlock },
             { name: 'Building Area Block', key: '7', type: BuildingAreaBlock },
             { name: 'Enemy Spawn Block', key: '8', type: EnemySpawnBlock }
         ];
@@ -379,8 +379,8 @@ class Building {
         this.buildArea = {
             x: 0,
             y: 0,
-            width: 800*2,
-            height: 600
+            width: 800*4,
+            height: 600*2
         };
         this.grid = 100;
         this.gridLines = [];

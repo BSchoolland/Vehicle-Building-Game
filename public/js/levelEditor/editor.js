@@ -22,7 +22,7 @@ camera.size = { x: 800*3, y: 600 *3 };
 // allow the player to build blocks
 let building = new Building(engine, camera);
 building.init();
-building.buildArea = { x: 0, y: 0, width: 800*3, height: 900 };
+// building.buildArea = { x: 0, y: 0, width: 800*3, height: 900 };
 building.grid = 100;
 // fullscren
 function setFullScreenCanvas() {

@@ -68,7 +68,6 @@ class LevelManager {
                 });
                 document.getElementById('level-selector').appendChild(button);
             }
-
         });        
     }
     populateEnemyContraptions() {
@@ -233,6 +232,10 @@ class LevelManager {
                     // get the enemy contraption's JSON
                     console.log(this.enemyContraptionsJSON);
                     let enemyContraptionJson = this.enemyContraptionsJSON[enemyType]
+                    if (enemyContraptionJson === undefined) {
+                        console.error(`Unknown enemy type: ${enemyType}`);
+                        return;
+                    }
                     console.log(enemyContraptionJson);
                     // load the enemy contraption
                     const EnemyContraption = new Contraption(this.engine, 'AI', this);
@@ -284,8 +287,7 @@ class LevelManager {
         this.mustDestroy = 0;
         this.mustSurvive = 0;
     }
-        console.log('must collect: ' + this.mustCollect);
-
+    this.updateStats();
         // bind the startLevel function to the building
         this.building.startLevel = this.startLevel.bind(this);
         // clear the building's contraption
@@ -295,9 +297,30 @@ class LevelManager {
             this.building.toggleBuildingMode();
         }
     }
+    updateStats(){
+        console.log('update stats')
+        let stats = document.getElementById('stats');
+        stats.innerHTML = '';
+        if (this.mustCollect > 0) {
+            let collect = document.createElement('h1');
+            collect.innerHTML = `Coins ${this.coinsCollected}/${this.mustCollect}`;
+            stats.appendChild(collect);
+        }
+        if (this.mustDestroy > 0) {
+            let destroy = document.createElement('h1');
+            destroy.innerHTML = `Destroyed ${this.enemyContraptionsDestroyed}/${this.mustDestroy}`;
+            stats.appendChild(destroy);
+        }
+        if (this.mustSurvive > 0) {
+            let survive = document.createElement('h1');
+            survive.innerHTML = `Survive ${this.secondsSurvived}/${this.mustSurvive}`;
+            stats.appendChild(survive);
+        }
+        stats.style.display = "block";  
+    }
     incrementEnemyContraptionsDestroyed() {
         this.enemyContraptionsDestroyed++;
-        console.log('destroyed: ' + this.enemyContraptionsDestroyed);
+        this.updateStats();
     }
     startLevel() {
         this.won = false;
@@ -352,28 +375,39 @@ class LevelManager {
         if (this.won){
             return;
         }
+        if (this.startTime === 0) { // if the level hasn't started yet, don't check for win conditions
+            return;
+        }
         this.coins.forEach(coin => {
             if (coin.checkCollection(this.playerContraption)) {
                 // play the coin sound
                 this.coinsCollected++;
-                console.log(this.coinsCollected);
+                // show that coins have been increased
+                this.updateStats();
             }
         });
         // check if enough coins have been collected
         if (this.coinsCollected >= this.mustCollect) {
             // check if the player has survived long enough
+            let pastSecondsSurvived = this.secondsSurvived;
             this.secondsSurvived = Math.floor((Date.now() - this.startTime) / 1000);
-            console.log(this.secondsSurvived);
-            // check if the player has destroyed enough enemy contraptions
-            if (this.enemyContraptionsDestroyed >= this.mustDestroy) {
-                // the player wins!
-                this.won = true;
-                setTimeout(() => {
-                this.completeLevel();
-                }, 1500);
-                
+            // if the seconds survived has increased, and has not reached the win condition, play the time sound
+            if (this.secondsSurvived > pastSecondsSurvived && this.secondsSurvived <= this.mustSurvive) {
+                // playSound("time");
+                this.updateStats();
             }
-
+            console.log(this.secondsSurvived);
+            if (this.secondsSurvived >= this.mustSurvive) {
+                // check if the player has destroyed enough enemy contraptions
+                if (this.enemyContraptionsDestroyed >= this.mustDestroy) {
+                    // the player wins!
+                    this.won = true;
+                    setTimeout(() => {
+                    this.completeLevel();
+                    }, 1500);
+                    
+                }
+            }
         }
     }
     completeLevel() {
@@ -404,6 +438,10 @@ class LevelManager {
             this.loadLevelSelector();
             // clear the player contraption
             this.playerContraption.clear();
+            // set the stats to be invisible
+            document.getElementById('stats').style.display = "none";
+            // set the survival time to 0
+            this.secondsSurvived = 0;
         }, 3000);
     }
 

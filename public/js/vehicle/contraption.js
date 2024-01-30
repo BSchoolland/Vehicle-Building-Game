@@ -110,6 +110,12 @@ class Contraption {
       }
     });
   }
+  destroy() { // remove all traces of this contraption
+    console.log('destroying contraption')
+    this.clear();
+    // delete the object
+    delete this;
+  }
 
   addBlock(block, addToActionStack = true) {
     block.contraption = this;
@@ -226,6 +232,10 @@ class Contraption {
   }
   // spawn the contraption in the world by making all blocks movable
   spawn(x = 0, y = 0) {
+    if (!this.seat) { // contraption must have a seat
+      console.error("contraption must have a seat");
+      return;
+    }
     // set the position of each block to be relative to x and y
     // figure out the center of the contraption
     if (!(x === 0 && y === 0)) {
@@ -265,6 +275,8 @@ class Contraption {
     this.undoStack = [];
     // the contraption has been spawned
     this.spawned = true;
+    // set the seat as not destroyed
+    this.seat.destroyed = false;
     // if this is an AI, start the clock
     if (this.Ai) {
       this.AiClockStarted = Date.now();

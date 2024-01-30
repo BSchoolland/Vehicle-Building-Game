@@ -80,7 +80,7 @@ class SeatBlock extends Block {
         this.makeConstraints();
         this.weldableFaces = ['right', 'bottom']; // seat is L shaped
         this.simetricalX = false;
-        this.destroyed = false;
+        this.destroyed = true;
     }
     makeBodies() {
         // create a flat surface on the left side of the block
@@ -181,16 +181,25 @@ class SeatBlock extends Block {
                 visible: false
             }
         }));
+        
     }
     spawn() {
-        super.spawn();
+        super.spawn(); 
     }
     checkConnected() { // this block is always connected as it is the core of the vehicle
         this.blocksFromSeat = 0;
     }
     resetValues() {
         super.resetValues();
-        this.destroyed = false;
+        this.destroyed = true;
+    }
+    hit(thisBody, otherBody) { 
+        // if the other body is not in this contaption, take damage
+        if (otherBody.block.contaption !== this.contaption) {
+            this.damage(5);
+            // apply an upward force to this body 
+            Matter.Body.setVelocity(thisBody, { x: 0, y: -15 });
+        }
     }
 }
 

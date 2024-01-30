@@ -1,0 +1,14 @@
+{
+  "blocks": [
+    { "type": "BasicWoodenBlock", "x": 225, "y": 375, "flippedX": false },
+    { "type": "BasicWoodenBlock", "x": 275, "y": 375, "flippedX": false },
+    { "type": "BasicWoodenBlock", "x": 325, "y": 375, "flippedX": false },
+    { "type": "SpikeBlock", "x": 175, "y": 375, "flippedX": true },
+    { "type": "WheelBlock", "x": 225, "y": 425, "flippedX": false },
+    { "type": "WheelBlock", "x": 325, "y": 425, "flippedX": false },
+    { "type": "SeatBlock", "x": 275, "y": 325, "flippedX": true }
+  ],
+  "commands": [
+    { "key": "a", "start": 2.5, "end": 12.0}
+  ]
+}

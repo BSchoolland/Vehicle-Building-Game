@@ -74,8 +74,10 @@ class LevelManager {
         console.log("populate enemy contraptions");
         const enemies = {
             box: '../../json-enemies/box.json',
-            smallSpikeCar: '../../json-enemies/small-spike-car.json',
-            terrifyingBombCar: '../../json-enemies/terrifying-bomb-car.json',
+            car: '../../json-enemies/car.json',
+            spikeCar: '../../json-enemies/spikeCar.json',
+            largeSpikeCar: '../../json-enemies/largeSpikeCar.json',
+            movingSpikeWall: '../../json-enemies/movingSpikeWall.json',
             W: '../../json-enemies/W.json',
             R: '../../json-enemies/R.json',
             E: '../../json-enemies/E.json',
@@ -156,7 +158,7 @@ class LevelManager {
     load(levelIndex, optionalJson = null) {
         // clear the enemy contraptions
         this.enemyContraptions.forEach(enemyContraption => {
-            enemyContraption[0].despawn();
+            enemyContraption[0].destroy();
         });
         this.enemyContraptions = [];
         // clear the coins
@@ -226,6 +228,7 @@ class LevelManager {
                     // get the enemyType
                     let enemyType = blockJson.enemyType;
                     if (enemyType === undefined) {
+                        console.error("No enemy type defined for enemy spawn block");
                         enemyType = "box";
                     }
                     console.log(enemyType)
@@ -371,10 +374,7 @@ class LevelManager {
         }
     }
     update() { // update the level (check coins, survival time, etc.)
-        // check if the player contraption is touching the coin
-        if (this.won){
-            return;
-        }
+
         if (this.startTime === 0) { // if the level hasn't started yet, don't check for win conditions
             return;
         }
@@ -388,6 +388,12 @@ class LevelManager {
         });
         // check if enough coins have been collected
         if (this.coinsCollected >= this.mustCollect) {
+            // check that the playercontraption's seat is not destroyed
+            if (this.playerContraption.seat.destroyed) {
+                // the player loses
+                this.startTime = 0;
+                return;
+            }
             // check if the player has survived long enough
             let pastSecondsSurvived = this.secondsSurvived;
             this.secondsSurvived = Math.floor((Date.now() - this.startTime) / 1000);
@@ -401,6 +407,9 @@ class LevelManager {
                 // check if the player has destroyed enough enemy contraptions
                 if (this.enemyContraptionsDestroyed >= this.mustDestroy) {
                     // the player wins!
+                    if (this.won) {
+                        return;
+                    }
                     this.won = true;
                     setTimeout(() => {
                     this.completeLevel();

@@ -11,7 +11,7 @@ class WheelBlock extends Block {
         this.weldableFaces = ['top'];
         this.touchingGround = false;
         this.spinSpeed = 0.5;
-        this.acceleration = 0.15;
+        this.acceleration = 0.3;
         // this block is not simetrical in the x direction
         this.simetricalX = false;
         // by default, the activation key is 'd' and the reverse activation key is 'a'

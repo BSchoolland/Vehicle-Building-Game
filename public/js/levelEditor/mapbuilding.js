@@ -421,12 +421,14 @@ class Building {
         
         // make sure the position is within the build area
         if (x < this.buildArea.x || x > this.buildArea.x + this.buildArea.width) {
-            console.log('Cannot place block here');
-            return;
+            // console.log('Cannot place block here');
+            // return;
+            console.warn('Cannot place block here (temporarily disabled)');
         }
         if (y < this.buildArea.y || y > this.buildArea.y + this.buildArea.height) {
-            console.log('Cannot place block here');
-            return;
+            // console.log('Cannot place block here');
+            // return;
+            console.warn('Cannot place block here (temporarily disabled)');
         }
         // make sure there is not already a block in the level here
         for (let i = 0; i < this.level.blocks.length; i++) {

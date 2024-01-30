@@ -235,8 +235,8 @@ class LevelManager {
                     let enemyContraptionJson = this.enemyContraptionsJSON[enemyType]
                     console.log(enemyContraptionJson);
                     // load the enemy contraption
-                    const EnemyContraption = new Contraption(this.engine);
-                    EnemyContraption.load(enemyContraptionJson, 'AI');
+                    const EnemyContraption = new Contraption(this.engine, 'AI', this);
+                    EnemyContraption.load(enemyContraptionJson);
                     // load the commands
                     EnemyContraption.AiLoadCommands(enemyContraptionJson.commands);
                     // move the enemy contraption to the spawn point
@@ -266,7 +266,7 @@ class LevelManager {
             this.building.makeNewBuildMenu(LevelJson.buildingBlockTypes);
         }
         // set the win conditions
-        
+    if (LevelJson.objectives) {
         LevelJson.objectives.forEach(objective => {
             if (objective.name === "Collect") {
                 this.mustCollect = objective.value;
@@ -278,6 +278,12 @@ class LevelManager {
                 this.mustSurvive = objective.value;
             }
         });
+    }
+    else {
+        this.mustCollect = 1;
+        this.mustDestroy = 0;
+        this.mustSurvive = 0;
+    }
         console.log('must collect: ' + this.mustCollect);
 
         // bind the startLevel function to the building
@@ -288,6 +294,10 @@ class LevelManager {
         if (this.building.buildInProgress) {
             this.building.toggleBuildingMode();
         }
+    }
+    incrementEnemyContraptionsDestroyed() {
+        this.enemyContraptionsDestroyed++;
+        console.log('destroyed: ' + this.enemyContraptionsDestroyed);
     }
     startLevel() {
         this.won = false;

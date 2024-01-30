@@ -1,5 +1,6 @@
 import Block from '../../baseBlockClass.js';
 import { constrainBodyToBody } from '../../../utils.js';
+import { playSound } from '../../../../sounds/playSound.js';
 
 // a function that makes a stickman to sit in the seat
 function makeStickMan(x, y, color='#FFFFFF') {
@@ -79,6 +80,7 @@ class SeatBlock extends Block {
         this.makeConstraints();
         this.weldableFaces = ['right', 'bottom']; // seat is L shaped
         this.simetricalX = false;
+        this.destroyed = false;
     }
     makeBodies() {
         // create a flat surface on the left side of the block
@@ -97,6 +99,20 @@ class SeatBlock extends Block {
         }
         this.bodies.push(...stickMan[0]);
         this.constraints.push(...stickMan[1]); // don't like that this is in makeBodies() but it works
+    }
+    damage(amount) {
+        super.damage(amount);
+        // if the seat is destroyed, play an explosion sound
+        if (this.hitPoints <= 0 && !this.destroyed) {
+            this.destroyed = true;
+            playSound('explosion');
+            // if this is an AI
+            if (this.contaption.Ai) {
+                // increase number of enemy contraptions destroyed
+                this.contaption.level.incrementEnemyContraptionsDestroyed();
+                
+            }
+        }
     }
     makeConstraints() {
         // constrain the two bodies together
@@ -171,6 +187,10 @@ class SeatBlock extends Block {
     }
     checkConnected() { // this block is always connected as it is the core of the vehicle
         this.blocksFromSeat = 0;
+    }
+    resetValues() {
+        super.resetValues();
+        this.destroyed = false;
     }
 }
 

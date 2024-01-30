@@ -90,5 +90,10 @@
       "limit": 100
     },
     { "name": "Seat Block", "key": "7", "type": "SeatBlock", "limit": 1 }
+  ],
+  "objectives": [
+    { "name": "Destroy", "value": 1 },
+    { "name": "Collect", "value": 0 },
+    { "name": "Survive", "value": 0 }
   ]
 }

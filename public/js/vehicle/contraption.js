@@ -27,7 +27,7 @@ const blockTypes = {
 
 // This file contains the Contraption class which is used to represent a contraption in the game.
 class Contraption {
-  constructor(engine, camera = "AI") {
+  constructor(engine, camera = "AI", level = null) {
     this.engine = engine;
     if (camera === "AI") {
       // the camera is an AI
@@ -37,12 +37,13 @@ class Contraption {
         mouseUp: false,
         mousePressed: false,
       };
-      this.Ai = true;
+      this.Ai = true; 
     } else {
       // the mouse is a player
       this.camera = camera;
       this.Ai = false;
     }
+    this.level = level;
     this.AiCommands = [];
     this.AiClockStarted = 0; // will keep track of when the commands started
     this.blocks = [];

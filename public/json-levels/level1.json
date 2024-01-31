@@ -55,5 +55,5 @@
     { "name": "Collect", "value": 3 },
     { "name": "Survive", "value": 0 }
   ],
-  "tutorialText": "sample text"
+  "tutorialText": "Press B to toggle build mode! Build a vehicle to collect the coins. A good vehicle will have wheels and a seat!"
 }

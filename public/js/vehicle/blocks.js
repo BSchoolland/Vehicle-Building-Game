@@ -1,14 +1,24 @@
-import {BasicWoodenBlock,
-    BasicIronBlock,
-    BasicDiamondBlock, SeatBlock} from './blocks/buildingBlocks/contents.js';
-import {WheelBlock, rocketBoosterBlock} from './blocks/movementBlocks/contents.js';
-import {SpikeBlock, TNTBlock} from './blocks/weaponBlocks/contents.js';
-import {GrappleBlock, PoweredHingeBlock, RemoteBlock} from './blocks/utilityBlocks/contents.js';
-    
+import {
+  BasicWoodenBlock,
+  BasicIronBlock,
+  BasicDiamondBlock,
+  SeatBlock,
+} from "./blocks/buildingBlocks/contents.js";
+import {
+  WheelBlock,
+  rocketBoosterBlock,
+} from "./blocks/movementBlocks/contents.js";
+import { SpikeBlock, TNTBlock } from "./blocks/weaponBlocks/contents.js";
+import {
+  GrappleBlock,
+  PoweredHingeBlock,
+  RemoteBlock,
+} from "./blocks/utilityBlocks/contents.js";
+
 export {
-    BasicWoodenBlock,
-    BasicIronBlock,
-    BasicDiamondBlock,
+  BasicWoodenBlock,
+  BasicIronBlock,
+  BasicDiamondBlock,
   SeatBlock,
   WheelBlock,
   rocketBoosterBlock,

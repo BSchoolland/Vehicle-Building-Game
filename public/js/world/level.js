@@ -156,6 +156,7 @@ class LevelManager {
     }
     // load a Level from a JSON object
     load(levelIndex, optionalJson = null) {
+         
         // clear the enemy contraptions
         this.enemyContraptions.forEach(enemyContraption => {
             enemyContraption[0].destroy();
@@ -174,6 +175,11 @@ class LevelManager {
         if (optionalJson) {
             LevelJson = optionalJson;
         }
+        let tutorial = document.getElementById('tutorial-text');
+
+        let string = LevelJson.tutorialText;
+        tutorial.innerHTML = string;
+        tutorial.style.display = "block";
         // Clear existing blocks in the Level
         this.clear(); // remove all blocks from the Level
         // Load new blocks from JSON
@@ -420,6 +426,8 @@ class LevelManager {
         }
     }
     completeLevel() {
+        // hide the tutorial text
+        document.getElementById('tutorial-text').style.display = "none";
         // play the level complete sound
         playSound("win");
         // make a bunch of confetti above the player

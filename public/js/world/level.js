@@ -11,13 +11,13 @@ const blockTypes = {
     BuildingAreaBlock,
     EnemySpawnBlock
 };
+import LevelHandler from '../loaders/levelHandler.js';
 // A Level is a collection of blocks that can be saved and loaded
 class LevelManager {
     constructor(engine, building) {
         this.engine = engine;
         this.playerContraption = building.contraption;
         this.building = building;
-        this.levels = [];
         this.enemyContraptionsJSON = {};
 
         this.blocks = [];
@@ -38,37 +38,12 @@ class LevelManager {
         this.secondsSurvived = 0;
         this.mustSurvive = 0;
         this.startTime = 0;
+
+        this.LevelHandler = new LevelHandler();
     }
 
     init() {
-        this.populateLevels();
         this.populateEnemyContraptions();
-    }
-    // populate the levels array with the JSON data
-    populateLevels() {
-        const paths = [
-            '../../json-levels/level1.json',
-            '../../json-levels/level2.json',
-            '../../json-levels/level3.json',
-            '../../json-levels/level4.json',
-            '../../json-levels/level5.json',
-        ];
-        paths.forEach(async (path) => {
-            var levelJson = await (await fetch(path)).json();
-            this.levels.push(levelJson);
-            // if the levelSelector is open, add a button for the new level
-            if (document.getElementById('level-selector')) {
-                let level = this.levels.length - 1;
-                let button = document.createElement('button');
-                button.className = "level-select-button";
-                button.innerHTML = `Level ${level + 1}`;
-                button.addEventListener('click', () => {
-                    this.load(level);
-                    document.getElementById('level-selector').remove();
-                });
-                document.getElementById('level-selector').appendChild(button);
-            }
-        });        
     }
     populateEnemyContraptions() {
         console.log("populate enemy contraptions");
@@ -170,7 +145,7 @@ class LevelManager {
             this.loadForEditing(levelIndex);
             return;
         }
-        var LevelJson = this.levels[levelIndex];
+        var LevelJson = this.LevelHandler.getLevel(1, levelIndex); // world 1, level levelIndex
 
         if (optionalJson) {
             LevelJson = optionalJson;
@@ -487,35 +462,34 @@ class LevelManager {
         let game = document.getElementById('game-container');
         // add the level selector to the game
         game.appendChild(levelSelector);
-        // log the length of the levels array
-        console.log(this.levels);
-        console.log(this.levels.length);
         // add a button for each level
-        this.levels.forEach((level, index) => {
+        let count = this.LevelHandler.getLevelCount(1);
+        console.log(count);
+        for (let i = 0; i < count; i++) {
             let box = document.createElement('div');
             box.className = "level-select-box";
             
-            console.log(index);
+            console.log(i);
             let button = document.createElement('button');
             button.className = "level-select-button";
-            button.innerHTML = `Level ${index + 1}`;
+            button.innerHTML = `Level ${i+1}`;
             button.addEventListener('click', () => {
-                this.load(index);
+                this.load(i);
                 levelSelector.remove();
             });
             console.log(button);
             // add an image for the level (it is also clickable)
             let image = document.createElement('img');
             image.className = "level-select-image";
-            image.src = `../../img/level${index + 1}.png`;
+            image.src = `../../img/level${i + 1}.png`;
             image.addEventListener('click', () => {
-                this.load(index);
+                this.load(i);
                 levelSelector.remove();
             });
             box.appendChild(image);
             box.appendChild(button);
             levelSelector.appendChild(box);
-        });
+        };
     }
 }
 

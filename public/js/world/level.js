@@ -53,6 +53,7 @@ class LevelManager {
             spikeCar: '../../json-enemies/spikeCar.json',
             largeSpikeCar: '../../json-enemies/largeSpikeCar.json',
             movingSpikeWall: '../../json-enemies/movingSpikeWall.json',
+            barge: '../../json-enemies/barge.json',
             W: '../../json-enemies/W.json',
             R: '../../json-enemies/R.json',
             E: '../../json-enemies/E.json',

@@ -283,11 +283,23 @@ class Contraption {
     }
   }
   // despawn the contraption by making all blocks static
-  despawn(x, y) {
+  despawn(fancy = false) {
     this.spawned = false;
+    if (fancy) {
+      // mreset all blocks one by one
+      let t = 0;
+      this.blocks.forEach((block) => {
+        setTimeout(() => {
+          block.reset();
+        }, t);
+        // t += 50;
+      });
+    }
+    else{
     this.blocks.forEach((block) => {
       block.reset();
     });
+  }
   }
   // undo the last block placed
   undo() {

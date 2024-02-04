@@ -365,8 +365,6 @@ class BuildMenu {
         // activate the first block type button
         Object.values(this.blockButtons)[0].click();
         console.log("Build mode enabled");
-        // despawn the contraption
-        building.contraption.despawn();
         // display a grid over the build area
         building.displayGrid();
         // get rid of the camera target
@@ -382,6 +380,10 @@ class BuildMenu {
           building.buildArea.x + building.buildArea.width / 2,
           building.buildArea.y + building.buildArea.height / 2
         );
+        setTimeout(() => {
+          // despawn the contraption
+          building.contraption.despawn(true);
+        }, 500);
       } else {
         // remove the active class from all the block type buttons
         Object.values(this.blockButtons).forEach((button) =>
@@ -403,8 +405,9 @@ class BuildMenu {
         building.camera.setViewport(canvas.width, canvas.height);
 
         // set the camera target to the seat
-
         building.camera.setTarget(building.contraption.seat);
+        // despawn the contraption after a short delay
+        
       }
     };
     this.fullscreenButton.onclick = () => {

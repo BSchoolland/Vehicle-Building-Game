@@ -54,20 +54,8 @@ class LevelManager {
             largeSpikeCar: '../../json-enemies/largeSpikeCar.json',
             movingSpikeWall: '../../json-enemies/movingSpikeWall.json',
             barge: '../../json-enemies/barge.json',
-            W: '../../json-enemies/W.json',
-            R: '../../json-enemies/R.json',
-            E: '../../json-enemies/E.json',
-            C: '../../json-enemies/C.json',
-            K: '../../json-enemies/K.json',
-            I: '../../json-enemies/I.json',
-            N: '../../json-enemies/N.json',
-            G: '../../json-enemies/G.json',
-            // W
-            H: '../../json-enemies/H.json',
-            // E
-            // E
-            L: '../../json-enemies/L.json',
-            S: '../../json-enemies/S.json',
+            world1Boss: '../../json-enemies/world1Boss.json',
+            
         }
         Object.keys(enemies).forEach(async (key) => {
             var enemyJson = await (await fetch(enemies[key])).json();
@@ -286,10 +274,10 @@ class LevelManager {
     this.building.startBuildModeForLevel = this.setBuildMode.bind(this);
     // clear the building's contraption
     this.building.contraption.clear();
-    // activate building mode by clicking the building button if it is active
-    if (!this.building.buildInProgress) {
-        this.building.toggleBuildingMode();
-    }
+    // activate building mode by clicking the building button if it is not already active
+        if (!this.building.buildInProgress) {
+            this.building.toggleBuildingMode();
+        }
     }
     updateStats(){
         console.log('update stats')

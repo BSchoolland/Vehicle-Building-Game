@@ -113,7 +113,7 @@ class allowedBlockMenu {
             let selector = document.createElement('select');
             selector.classList.add('menu-button', 'build-menu-button');
             // add the options
-            for (let i = 0; i < 16; i++) {
+            for (let i = 0; i < 31; i++) {
                 // add the option
                 let option = document.createElement('option');
                 option.value = i;

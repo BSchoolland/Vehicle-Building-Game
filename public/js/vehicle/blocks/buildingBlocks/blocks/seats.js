@@ -183,6 +183,16 @@ class SeatBlock extends Block {
         }));
         
     }
+    getWeldBody(direction = 'right') { // this is redefining the function from the base class
+        if (direction === 'right') {
+            return this.bodies[0];
+        } else if (direction === 'left') {
+            return this.bodies[0];
+        }
+        else if (direction === 'bottom') {
+            return this.bodies[1];
+        }
+    }
     spawn() {
         super.spawn(); 
     }

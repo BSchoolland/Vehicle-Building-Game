@@ -273,14 +273,16 @@ class LevelManager {
         this.mustSurvive = 0;
     }
     this.updateStats();
-        // bind the startLevel function to the building
-        this.building.startLevel = this.startLevel.bind(this);
-        // clear the building's contraption
-        this.building.contraption.clear();
-        // deactivate building mode by clicking the building button if it is active
-        if (this.building.buildInProgress) {
-            this.building.toggleBuildingMode();
-        }
+    // bind the startLevel function to the building
+    this.building.startLevel = this.startLevel.bind(this);
+    // bind the setBuildMode function to the building
+    this.building.startBuildModeForLevel = this.setBuildMode.bind(this);
+    // clear the building's contraption
+    this.building.contraption.clear();
+    // deactivate building mode by clicking the building button if it is active
+    if (this.building.buildInProgress) {
+        this.building.toggleBuildingMode();
+    }
     }
     updateStats(){
         console.log('update stats')
@@ -307,13 +309,17 @@ class LevelManager {
         this.enemyContraptionsDestroyed++;
         this.updateStats();
     }
+    despawnEnemyContraptions() {
+        // kill all enemy contraptions
+        this.enemyContraptions.forEach(enemyContraption => {
+            enemyContraption[0].despawn();
+            enemyContraption[0].moveTo(enemyContraption[1], enemyContraption[2]);
+        });
+    }
     startLevel() {
         this.won = false;
         // despawn all enemy contraptions
-        this.enemyContraptions.forEach(enemyContraption => {
-            enemyContraption[0].despawn();
-        });
-
+        
         // spawn in the enemy contraptions
         this.enemyContraptions.forEach(enemyContraption => {
             enemyContraption[0].spawn(enemyContraption[1], enemyContraption[2]);
@@ -330,6 +336,17 @@ class LevelManager {
             coin.reset();
         });
 
+    }
+    setBuildMode() {
+        // despawn all enemy contraptions
+        this.despawnEnemyContraptions();
+        // reset the win conditions
+        this.coinsCollected = 0;
+        this.enemyContraptionsDestroyed = 0;
+        this.secondsSurvived = 0;
+        this.startTime = 0;
+        // update the stats
+        this.updateStats();
     }
     clear() {
         // Make a copy of the blocks array and iterate over it

@@ -283,7 +283,7 @@ class Contraption {
     }
   }
   // despawn the contraption by making all blocks static
-  despawn() {
+  despawn(x, y) {
     this.spawned = false;
     this.blocks.forEach((block) => {
       block.reset();

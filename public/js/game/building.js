@@ -129,6 +129,9 @@ class RightClickMenu {
   startLevel() {
     // bound by the level manager, DO NOT CHANGE
   }
+  startBuildModeForLevel() {
+    // bound by the level manager, DO NOT CHANGE
+  }
   setSelectBlock(block) {
     this.block = block;
     // if the block has an activation key, show the custom keybind button, otherwise hide it
@@ -351,6 +354,8 @@ class BuildMenu {
       if (building.buildInProgress) {
         // set the song to the build theme
         setSong("buildTheme");
+        // alert the level that we have entered build mode
+        building.startBuildModeForLevel();
         // set this button's class to active
         this.buildModeButton.classList.add("active");
         // activate the first block type button

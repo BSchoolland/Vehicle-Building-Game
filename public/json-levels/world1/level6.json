@@ -55,17 +55,7 @@
       { "type": "GrassBlock", "x": 2700, "y": 500 }
     ],
     "commands": [],
-    "buildingBlockTypes": [
-      {
-        "name": "Basic Block",
-        "key": "1",
-        "type": "BasicWoodenBlock",
-        "limit": 15
-      },
-      { "name": "Wheel Block", "key": "2", "type": "WheelBlock", "limit": 7 },
-      { "name": "seat", "key": "3", "type": "SeatBlock", "limit": 1 },
-      { "name": "spike", "key": "4", "type": "SpikeBlock", "limit": 6 }
-    ],
+
     "objectives": [
       { "name": "Destroy", "value": 5 },
       { "name": "Collect", "value": 0 },

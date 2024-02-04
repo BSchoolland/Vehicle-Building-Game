@@ -139,6 +139,12 @@ class Contraption {
       this.seat = null;
     }
   }
+  checkConnected(){ // check each block to make sure it is connected
+    console.log('check connected')
+    this.blocks.forEach((block)=> {
+      block.checkConnected();
+    })
+  }
   flipX(block, addToActionStack = true) {
     block.flipX();
     // add the action to the action stack
@@ -284,6 +290,8 @@ class Contraption {
     if (this.Ai) {
       this.AiClockStarted = Date.now();
     }
+    // check connected
+    this.checkConnected();
   }
   // despawn the contraption by making all blocks static
   despawn(fancy = false) {
@@ -341,6 +349,8 @@ class Contraption {
     this.blocks.forEach((block) => {
       block.update();
     });
+    // check connected
+    // this.checkConnected();
     // if this is an AI, update the AI
     if (this.Ai) {
       this.AiUpdate();

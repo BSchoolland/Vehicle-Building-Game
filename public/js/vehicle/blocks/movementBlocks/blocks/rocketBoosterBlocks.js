@@ -4,8 +4,8 @@ import { playSound } from '../../../../sounds/playSound.js';
 
 // a rocket booster block that can propel the contraption
 class rocketBoosterBlock extends Block {
-    constructor (x, y, contaption) {
-        super(x, y, contaption, 20, 'A rocket booster block', 100, '#3b2004', [], []);
+    constructor (x, y, contraption) {
+        super(x, y, contraption, 20, 'A rocket booster block', 100, '#3b2004', [], []);
         this.secondaryColor = '#3d3d3d';
         this.makeBodies();
         this.makeConstraints();
@@ -151,8 +151,8 @@ class rocketBoosterBlock extends Block {
                             if (pair.bodyA.block.flameDuration > this.attackFlameDuration ) {
                                 return;
                             }
-                            pair.bodyB.block.flameDuration = this.attackFlameDuration ; // the block will be on fire for 5 seconds
-                            pair.bodyB.block.flameDamage = this.attackFlameDamage; // the block will take 5 damage per second
+                            pair.bodyA.block.flameDuration = this.attackFlameDuration ; // the block will be on fire for 5 seconds
+                            pair.bodyA.block.flameDamage = this.attackFlameDamage; // the block will take 5 damage per second
                         }
                         if (pair.bodyB.block) {
                             // set the block on fire (unless it's already on fire for longer than this flame lasts)

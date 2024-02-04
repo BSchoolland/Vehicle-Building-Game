@@ -72,9 +72,9 @@ function makeStickMan(x, y, color='#FFFFFF') {
 
 // a seat block, the core of the vehicle
 class SeatBlock extends Block {
-    constructor (x, y, contaption) {
-        super(x, y, contaption, 20, 'A seat block', 100, '#3b2004', [], []);
-        this.contaption.seat = this;
+    constructor (x, y, contraption) {
+        super(x, y, contraption, 20, 'A seat block', 100, '#3b2004', [], []);
+        this.contraption.seat = this;
         this.secondaryColor = '#3d3d3d';
         this.makeBodies();
         this.makeConstraints();
@@ -91,7 +91,7 @@ class SeatBlock extends Block {
         this.bodies[1].block = this;
         // make a stickman to sit in the seat
         let stickMan = null;
-        if (!this.contaption.Ai) { 
+        if (!this.contraption.Ai) { 
             stickMan = makeStickMan(this.x, this.y);
         }
         else { // a red stickman for the AI
@@ -107,9 +107,9 @@ class SeatBlock extends Block {
             this.destroyed = true;
             playSound('explosion');
             // if this is an AI
-            if (this.contaption.Ai) {
+            if (this.contraption.Ai) {
                 // increase number of enemy contraptions destroyed
-                this.contaption.level.incrementEnemyContraptionsDestroyed();
+                this.contraption.level.incrementEnemyContraptionsDestroyed();
                 
             }
         }
@@ -204,8 +204,8 @@ class SeatBlock extends Block {
         this.destroyed = true;
     }
     hit(thisBody, otherBody) { 
-        // if the other body is not in this contaption, take damage
-        if (otherBody.block.contaption !== this.contaption) {
+        // if the other body is not in this contraption, take damage
+        if (otherBody.block.contraption !== this.contraption) {
             this.damage(5);
             // apply an upward force to this body 
             Matter.Body.setVelocity(thisBody, { x: 0, y: -15 });

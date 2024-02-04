@@ -4,8 +4,8 @@ import { playSound } from '../../../../sounds/playSound.js';
 
 // a grappling hook block that can grab onto other blocks, and reel them in
 class GrappleBlock extends Block {
-    constructor (x, y, contaption) {
-        super(x, y, contaption, 20, 'A grappling hook block', 100, '#3b2004', [], []);
+    constructor (x, y, contraption) {
+        super(x, y, contraption, 20, 'A grappling hook block', 100, '#3b2004', [], []);
         this.secondaryColor = '#3d3d3d';
         this.makeBodies();
         this.makeConstraints();
@@ -171,7 +171,7 @@ class GrappleBlock extends Block {
             // if the other body is not in this contraption
             // check if the other body is a block
             if (otherBody.block !== undefined) {
-                if (otherBody.block.contaption !== this.contraption) { 
+                if (otherBody.block.contraption !== this.contraption) { 
                     // create a weld constraint between the grappling hook and the other body
                     const weld = Matter.Constraint.create({
                         bodyA: this.bodies[2],

@@ -4,8 +4,8 @@ import { constrainBodyToBody } from '../../../utils.js';
 
 // a powered hinge block that can rotate.
 class PoweredHingeBlock extends Block {
-    constructor (x, y, contaption) {
-        super(x, y, contaption, 20, 'A powered hinge block', 100, '#3b2004', [], []);
+    constructor (x, y, contraption) {
+        super(x, y, contraption, 20, 'A powered hinge block', 100, '#3b2004', [], []);
         this.secondaryColor = '#3d3d3d';
         this.makeBodies();
         this.makeConstraints();

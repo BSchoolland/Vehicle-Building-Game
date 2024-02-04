@@ -2,8 +2,8 @@ import Block from '../../baseBlockClass.js';
 
 // a spike block that can damage other blocks
 class SpikeBlock extends Block {
-    constructor (x, y, contaption) {
-        super(x, y, contaption, 20, 'A spike block', 100, '#3b2004', [], []);
+    constructor (x, y, contraption) {
+        super(x, y, contraption, 20, 'A spike block', 100, '#3b2004', [], []);
         this.makeBodies();
         this.makeConstraints();
         this.weldableFaces = ['right'];

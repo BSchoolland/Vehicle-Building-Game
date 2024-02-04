@@ -4,10 +4,10 @@ import { playSound } from '../../sounds/playSound.js';
 const constraintsVisible = false; // whether or not the constraints are visible
 // the base class for all blocks, may be made of multiple bodies and constraints depending on subclass
 class Block { 
-    constructor(x, y, contaption, cost, description, hitPoints, color, bodies, constraints, weldableFaces = []) {
+    constructor(x, y, contraption, cost, description, hitPoints, color, bodies, constraints, weldableFaces = []) {
         this.x = x; 
         this.y = y;
-        this.contaption = contaption;
+        this.contraption = contraption;
         this.originalX = x;
         this.originalY = y;
         this.cost = cost;
@@ -26,6 +26,7 @@ class Block {
         this.maxSparks = 50; // max number of sparks
 
         this.blocksFromSeat = 0; // used to determine if the block is connected to the seat
+        this.previousBlocksFromSeat = 0;
         this.timing = 0; // used to keep track of how often the block is updated
         this.activationKey = null; // the key that activates the block
         this.reverseActivationKey = null; // the key that activates the block in the opposite direction (if applicable)
@@ -70,13 +71,7 @@ class Block {
         this.flameDuration = 0;
     }
     update() {
-        // check distance from seat
-        // to save resources, only check every 10 frames
-        this.timing++;
-        if (this.timing <= 10) {
-            this.checkConnected();
-            this.timing = 0;
-        }
+        // to be set by subclass
     }
 
     addToWorld(world) {
@@ -164,9 +159,12 @@ class Block {
             });
             // give a bit of upward velocity to the block
             Matter.Body.setVelocity(this.bodies[0], { x: 0, y: -5 });
+            
             // after 1 second, remove the block from the world
             setTimeout(() => {
+                // since a block has been removed, the structure has changed and we need to check connected blocks again
                 this.removeFromWorld(this.contraption.engine.world);
+                this.contraption.checkConnected();
             }, 200);
         } else {
             // flash the block red
@@ -422,6 +420,7 @@ class Block {
                 closestDistance = distance;
             }
         });
+        this.previousBlocksFromSeat = this.blocksFromSeat;
         // set the blocksFromSeat to 1 more than the closest block
         if (closestBlock) {
             this.blocksFromSeat = closestBlock.blocksFromSeat + 1;
@@ -432,6 +431,10 @@ class Block {
         // if this is too far from the seat, destroy it
         if (this.blocksFromSeat > 25) {
             this.damage(this.maxHitPoints);
+        }
+        // if the block has gotten further away, we aren't done here and need to check connected on the contraption again
+        if (this.previousBlocksFromSeat < this.blocksFromSeat){
+            this.contraption.checkConnected();
         }
     }
 }

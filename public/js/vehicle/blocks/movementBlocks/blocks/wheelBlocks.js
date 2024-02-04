@@ -2,8 +2,8 @@ import Block from '../../baseBlockClass.js';
 
 // a wheel block with suspension
 class WheelBlock extends Block {
-    constructor (x, y, contaption) {
-        super(x, y, contaption, 20, 'A wheel block', 100, '#3b2004', [], []);
+    constructor (x, y, contraption) {
+        super(x, y, contraption, 20, 'A wheel block', 100, '#3b2004', [], []);
         this.secondaryColor = '#3d3d3d';
         this.stiffness = 0.3;
         this.makeBodies();

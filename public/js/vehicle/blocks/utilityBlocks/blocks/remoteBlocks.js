@@ -3,8 +3,8 @@ import { constrainBodyToBody } from '../../../utils.js';
 
 // a remote block that can be used to allow disconnected blocks to remain connected
 class RemoteBlock extends Block {
-    constructor (x, y, contaption) {
-        super(x, y, contaption, 20, 'A remote block', 100, '#3b2004', [], []);
+    constructor (x, y, contraption) {
+        super(x, y, contraption, 20, 'A remote block', 100, '#3b2004', [], []);
         this.secondaryColor = '#3d3d3d';
         this.makeBodies();
         this.makeConstraints();

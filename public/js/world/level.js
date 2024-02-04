@@ -141,7 +141,7 @@ class LevelManager {
             // }
         }
         
-        var LevelJson = this.LevelHandler.getLevel(2, levelIndex); // world 1, level levelIndex
+        var LevelJson = this.LevelHandler.getLevel(1, levelIndex); // world 1, level levelIndex
 
         if (optionalJson) {
             LevelJson = optionalJson;
@@ -476,7 +476,7 @@ class LevelManager {
         // add the level selector to the game
         game.appendChild(levelSelector);
         // add a button for each level
-        let count = this.LevelHandler.getLevelCount(2);
+        let count = this.LevelHandler.getLevelCount(1);
         console.log(count);
         for (let i = 0; i < count; i++) {
             let box = document.createElement('div');

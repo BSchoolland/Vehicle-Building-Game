@@ -2,8 +2,8 @@ import Block from '../../baseBlockClass.js';
 import { playSound } from '../../../../sounds/playSound.js';
 
 class TNTBlock extends Block {
-    constructor (x, y, contaption) {
-        super(x, y, contaption, 20, 'A TNT block', 15, '#780811', [], []);
+    constructor (x, y, contraption) {
+        super(x, y, contraption, 20, 'A TNT block', 15, '#780811', [], []);
         this.makeBodies();
         this.makeConstraints();
         this.weldableFaces = ['left', 'right', 'top', 'bottom'];
@@ -137,7 +137,6 @@ class TNTBlock extends Block {
         setTimeout(() => {
             this.removeFromWorld(this.contraption.engine.world);
         }, 1000);
-        
     }
     resetValues() {
         super.resetValues();

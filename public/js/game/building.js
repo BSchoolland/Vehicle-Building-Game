@@ -355,7 +355,11 @@ class BuildMenu {
         // set the song to the build theme
         setSong("buildTheme");
         // alert the level that we have entered build mode
-        building.startBuildModeForLevel();
+        try{
+          building.startBuildModeForLevel();
+        } catch (e) {
+          console.log("No level manager found");
+        }
         // set this button's class to active
         this.buildModeButton.classList.add("active");
         // activate the first block type button

@@ -146,6 +146,13 @@ class LevelManager {
             this.loadForEditing(levelIndex);
             return;
         }
+        else {
+            // set build mode
+            // if (!this.building.buildInProgress){
+                
+            // }
+        }
+        
         var LevelJson = this.LevelHandler.getLevel(1, levelIndex); // world 1, level levelIndex
 
         if (optionalJson) {
@@ -279,8 +286,8 @@ class LevelManager {
     this.building.startBuildModeForLevel = this.setBuildMode.bind(this);
     // clear the building's contraption
     this.building.contraption.clear();
-    // deactivate building mode by clicking the building button if it is active
-    if (this.building.buildInProgress) {
+    // activate building mode by clicking the building button if it is active
+    if (!this.building.buildInProgress) {
         this.building.toggleBuildingMode();
     }
     }

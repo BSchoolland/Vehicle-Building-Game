@@ -18,6 +18,13 @@ class rocketBoosterBlock extends Block {
         this.simetricalX = false;
         // by default, the activation key is 'Shift'
         this.activationKey = 'Shift';
+        // explosions
+        this.exploded = false;
+        this.explosionRadius = 100;
+        this.explosionDamage = 100;
+        // fire damage
+        this.attackFlameDuration = 5; // the duration of fire this gives to other blocks
+        this.attackFlameDamage = 5; // the damage per second this block's flame does to other blocks
     }
     makeBodies() {
         // create a flat surface on the right side of the block
@@ -118,7 +125,6 @@ class rocketBoosterBlock extends Block {
             // play the rocket sound
             playSound('rocketFlame');
             // apply a force to the rocket nozzle
-
             Matter.Body.applyForce(this.bodies[1], this.bodies[1].position, Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.bodies[0].position, this.bodies[1].position)), this.thrust));
 
             // make a flame
@@ -126,15 +132,87 @@ class rocketBoosterBlock extends Block {
             // change the color by a random amount
             flame.render.fillStyle = '#ff' + Math.floor(Math.random() * 100).toString(16) + '00';
             // make the flame unable to collide with other blocks
-            flame.collisionFilter = { mask: 0x0002 };
+            // flame.collisionFilter = { mask: 0x0002 };
 
             // add the flame to the world
             Matter.World.add(this.contraption.engine.world, flame);
-            // remove the flame after 0.1 seconds 
+            // shoot the flame in the opposite direction of the rocket (with less force because it looks better while being slightly unrealistic)
+            Matter.Body.applyForce(flame, this.bodies[1].position, Matter.Vector.mult(Matter.Vector.normalise(Matter.Vector.sub(this.bodies[0].position, this.bodies[1].position)), -this.thrust/3)); 
+            flame.hit = false; // the flame has not hit anything yet
+            // if the flame hits another block, damage it over time
+            Matter.Events.on(this.contraption.engine, 'collisionStart', (event) => {
+                let pairs = event.pairs;
+                pairs.forEach(pair => {
+                    if (flame.hit) return;
+                    if (pair.bodyA === flame || pair.bodyB === flame) {
+                        flame.hit = true;
+                        if (pair.bodyA.block) {
+                            // set the block on fire (unless it's already on fire for longer than this flame lasts)
+                            if (pair.bodyA.block.flameDuration > this.attackFlameDuration ) {
+                                return;
+                            }
+                            pair.bodyB.block.flameDuration = this.attackFlameDuration ; // the block will be on fire for 5 seconds
+                            pair.bodyB.block.flameDamage = this.attackFlameDamage; // the block will take 5 damage per second
+                        }
+                        if (pair.bodyB.block) {
+                            // set the block on fire (unless it's already on fire for longer than this flame lasts)
+                            if (pair.bodyB.block.flameDuration > this.attackFlameDuration ) {
+                                return;
+                            }
+                            pair.bodyB.block.flameDuration = this.attackFlameDuration ; // the block will be on fire for 5 seconds
+                            pair.bodyB.block.flameDamage = this.attackFlameDamage; // the block will take 5 damage per second
+                        }
+                    }
+                });
+            });
+            // remove the flame after 0.2 seconds 
             setTimeout(() => {
                 Matter.World.remove(this.contraption.engine.world, flame);
-            }, 100);      
+            }, 200);      
         }
+    }
+    // rocket boosters can explode
+    explode() {
+        // if the block has already exploded, don't explode again
+        if (this.exploded) return;
+        this.exploded = true;
+        // play the explosion sound
+        playSound('explosion');
+        // remove the body from the world
+        const world = this.contraption.engine.world;
+        let x = this.bodies[0].position.x;
+        let y = this.bodies[0].position.y;
+        Matter.World.remove(world, this.bodies[0]);
+        // create a circle explosion
+        // find all the bodies in the explosion
+        let bodies = Matter.Query.region(world.bodies, Matter.Bounds.create([{ x: x - 100, y: y - 100 }, { x: x + 100, y: y + 100 }]));
+        // damage all the bodies in the explosion
+        bodies.forEach(body => {
+            // check if the body is a block
+            if (body.block) {
+                // damage the block
+                body.block.damage(100);
+            }
+        });
+        // add a cluster of explosions randomly around the block
+        for (var i = 0; i < 30; i++) {
+            // create a circle explosion
+            let explosion = Matter.Bodies.circle(x + Math.random() * 100 - 50, y + Math.random() * 100 - 50, 30 + Math.random() * 50, { render: { fillStyle: '#ff0000' }});
+            // change the color by a random amount
+            explosion.render.fillStyle = '#ff' + Math.floor(Math.random() * 100).toString(16) + '00';
+            // make it static
+            explosion.isStatic = true;
+            // add the explosion to the world
+            Matter.World.add(world, explosion);
+            // remove the explosion after a random amount of time
+            setTimeout(() => {
+                Matter.World.remove(world, explosion);
+            }, Math.random() * 1000);
+
+        }
+        setTimeout(() => {
+            this.removeFromWorld(this.contraption.engine.world);
+        }, 1000);
     }
 }
 

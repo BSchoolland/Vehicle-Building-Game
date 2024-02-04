@@ -29,6 +29,9 @@ class Block {
         this.timing = 0; // used to keep track of how often the block is updated
         this.activationKey = null; // the key that activates the block
         this.reverseActivationKey = null; // the key that activates the block in the opposite direction (if applicable)
+        
+        this.flameDuration = 0; // the time the block will be on fire for
+        this.flameDamage = 0; // the damage the block will take per second while on fire
     }
     reset(atOriginalPosition = true) {
         // deletes all bodies and constraints then recreates them at the original position
@@ -62,6 +65,9 @@ class Block {
         // called when the block is reset
         this.hitPoints = this.maxHitPoints;
         this.blocksFromSeat = 0;
+        // put out the fire
+        this.flameDamage = 0;
+        this.flameDuration = 0;
     }
     update() {
         // check distance from seat
@@ -165,8 +171,10 @@ class Block {
         } else {
             // flash the block red
             this.bodies.forEach(body => {
-                // record the original fill style
-                body.render.originalFillStyle = body.render.fillStyle;
+                // record the original fill style (if it hasn't been recorded yet)
+                if (!body.render.originalFillStyle){
+                    body.render.originalFillStyle = body.render.fillStyle; 
+                }
                 // set the fill style to red
                 body.render.fillStyle = 'red';
             }

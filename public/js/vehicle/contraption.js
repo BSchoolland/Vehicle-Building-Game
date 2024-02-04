@@ -135,6 +135,9 @@ class Contraption {
     if (addToActionStack) {
       this.actionStack.push({ action: "remove", block: block });
     }
+    if (block === this.seat) {
+      this.seat = null;
+    }
   }
   flipX(block, addToActionStack = true) {
     block.flipX();

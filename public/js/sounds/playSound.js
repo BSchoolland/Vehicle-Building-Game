@@ -21,7 +21,11 @@ const effects = {
   grappleFire: "./js/sounds/effects/grappleFire.mp3",
   grappleReel: "./js/sounds/effects/grappleReel.mp3",
   coin: "./js/sounds/level/coin.mp3",
-  win: "./js/sounds/level/win.mp3",
+  win: "./js/sounds/longEffects/win.mp3",
+  error: "./js/sounds/level/error.mp3",
+  placeBlock: "./js/sounds/level/placeBlock.mp3",
+  removeBlock: "./js/sounds/level/removeBlock.mp3",
+  selectLevel: "./js/sounds/level/selectLevel.mp3",
 };
 
 async function loadSound(url) {

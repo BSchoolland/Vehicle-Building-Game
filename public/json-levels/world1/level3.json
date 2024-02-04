@@ -99,7 +99,6 @@
     { "type": "GrassBlock", "x": 1600, "y": 900 },
     { "type": "CoinBlock", "x": 1800, "y": 600 },
     { "type": "CoinBlock", "x": 1000, "y": 400 },
-    { "type": "EnemySpawnBlock", "x": 900, "y": 400, "enemyType": "spikeCar" },
     { "type": "BuildingAreaBlock", "x": 100, "y": 300 },
     { "type": "BuildingAreaBlock", "x": 200, "y": 300 },
     { "type": "BuildingAreaBlock", "x": 200, "y": 400 },
@@ -140,9 +139,7 @@
     { "type": "GrassBlock", "x": 2500, "y": 1000 },
     { "type": "GrassBlock", "x": 2900, "y": 1000 },
     { "type": "CoinBlock", "x": 2400, "y": 800 },
-    { "type": "CoinBlock", "x": 2400, "y": 700 },
-    { "type": "CoinBlock", "x": 2400, "y": 600 },
-    { "type": "CoinBlock", "x": 2900, "y": 900 }
+    {"type": "EnemySpawnBlock", "x": 900, "y": 400, "enemyType": "spikeCar" }
   ],
   "commands": [],
   "buildingBlockTypes": [
@@ -161,5 +158,5 @@
     { "name": "Collect", "value": 3 },
     { "name": "Survive", "value": 0 }
   ],
-  "tutorialText": "You don't have to get all the coins, just enough."
+  "tutorialText": "The bad guys have spikes now! Watch out!"
 }

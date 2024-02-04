@@ -13,7 +13,7 @@ import {
   TNTBlock,
 } from "../vehicle/blocks.js";
 import { Contraption } from "../vehicle/contraption.js";
-import { setSong } from "../sounds/playSound.js";
+import { playSound, setSong } from "../sounds/playSound.js";
 
 class RightClickMenu {
   constructor(building) {
@@ -38,6 +38,8 @@ class RightClickMenu {
     this.menu.appendChild(this.removeButton);
     this.removeButton.onclick = () => {
       this.block.contraption.removeBlock(this.block);
+      // play the remove block sound
+      // playSound("removeBlock");
       // update the button limits
       this.building.buildMenu.updateButtonLimits();
       this.hide();
@@ -381,10 +383,18 @@ class BuildMenu {
           building.buildArea.y + building.buildArea.height / 2
         );
         setTimeout(() => {
-          // despawn the contraption
-          building.contraption.despawn(true);
+          if (building.buildInProgress) {
+            // despawn the contraption
+            building.contraption.despawn(true);
+          }
         }, 500);
       } else {
+        // if the contraption has no seat, don't disable build mode
+        if (!building.contraption.seat) {
+          playSound("error");
+          building.buildInProgress = true;
+          return;
+        }
         // remove the active class from all the block type buttons
         Object.values(this.blockButtons).forEach((button) =>
           button.classList.remove("active")
@@ -521,6 +531,8 @@ class Building {
     let newBlock = new this.currentBlockType(x, y, this.contraption);
     // Add the block to the contraption
     this.contraption.addBlock(newBlock);
+    // play the place block sound
+    // playSound("placeBlock");
     // update the button limits
     this.buildMenu.updateButtonLimits();
   }

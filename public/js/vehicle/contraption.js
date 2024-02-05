@@ -90,6 +90,8 @@ class Contraption {
     });
     // set the seat
     this.seat = null;
+    // variables for calculating delta time
+    this.lastTime = 0;
   }
   AiLoadCommands(commands) {
     this.AiCommands = commands;
@@ -311,6 +313,8 @@ class Contraption {
       block.reset();
     });
   }
+  // set time to now
+  this.lastTime = Date.now();
   }
   // undo the last block placed
   undo() {
@@ -345,9 +349,11 @@ class Contraption {
 
   // update the contraption
   update() {
+    let deltaTime = Date.now() - this.lastTime;
+    this.lastTime = Date.now();
     // update all blocks
     this.blocks.forEach((block) => {
-      block.update();
+      block.update(deltaTime);
     });
     // check connected
     // this.checkConnected();

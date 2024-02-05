@@ -11,7 +11,7 @@ class WheelBlock extends Block {
         this.weldableFaces = ['top'];
         this.touchingGround = false;
         this.spinSpeed = 0.5;
-        this.acceleration = 0.3;
+        this.acceleration = 20;
         // this block is not simetrical in the x direction
         this.simetricalX = false;
         // by default, the activation key is 'd' and the reverse activation key is 'a'
@@ -52,8 +52,9 @@ class WheelBlock extends Block {
             }
         }));
     }   
-    update() {
-        super.update();
+    update(deltaTime) { // deltaTime is in milliseconds
+        console.log('deltaTime', deltaTime)
+        super.update(deltaTime);
         // drive
         let targetVelocity = this.spinSpeed;
         if (this.flippedX) {
@@ -62,13 +63,13 @@ class WheelBlock extends Block {
         if (this.contraption.keysPressed[this.reverseActivationKey]) {
             targetVelocity = -targetVelocity;
             let currentVelocity = this.bodies[1].angularVelocity;
-            let velocityChange = (targetVelocity - currentVelocity) * this.acceleration;
+            let velocityChange = (targetVelocity - currentVelocity) * this.acceleration * deltaTime / 1000;
             let spin = velocityChange + currentVelocity;
             Matter.Body.setAngularVelocity(this.bodies[1], spin);
         } else if (this.contraption.keysPressed[this.activationKey]) {
             // apply a force to the right
             let currentVelocity = this.bodies[1].angularVelocity;
-            let velocityChange = (targetVelocity - currentVelocity) * this.acceleration;
+            let velocityChange = (targetVelocity - currentVelocity) * this.acceleration * deltaTime / 1000;
             let spin = velocityChange + currentVelocity;
             Matter.Body.setAngularVelocity(this.bodies[1], spin);
         }

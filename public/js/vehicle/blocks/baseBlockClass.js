@@ -70,7 +70,7 @@ class Block {
         this.flameDamage = 0;
         this.flameDuration = 0;
     }
-    update() {
+    update(deltaTime) {
         // to be set by subclass
     }
 

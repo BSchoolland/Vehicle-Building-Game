@@ -1,12 +1,12 @@
 function LocalToWorld(body, localPoint) {
     // convert local coordinates to world coordinates
-    let worldPoint = Matter.Vector.add(body.position, Matter.Vector.rotate(localPoint, body.angle));
+    let worldPoint = Matter.Vector.add(body.position, Matter.Vector.rotate(localPoint, 0));
     return worldPoint;
 }
 
 function WorldToLocal(body, worldPoint) {
     // convert world coordinates to local coordinates
-    let localPoint = Matter.Vector.rotate(Matter.Vector.sub(worldPoint, body.position), -body.angle);
+    let localPoint = Matter.Vector.rotate(Matter.Vector.sub(worldPoint, body.position), 0);
     return localPoint;
 }
 function constrainBodyToBody(bodyA, bodyB, stiffness = 1, visible = false) {
@@ -52,8 +52,42 @@ function constrainBodyToBody(bodyA, bodyB, stiffness = 1, visible = false) {
     return [constraint1, constraint2];
 }
 
+// Function to rotate a Matter.js body around a given point
+function rotateBodyAroundPoint(body, point, angle) {
+    // Convert angle from degrees to radians
+    const angleRadians = angle * (Math.PI / 180);
+
+    // Get the current position of the body's center of mass
+    const bodyPosX = body.position.x;
+    const bodyPosY = body.position.y;
+
+    // Calculate the vector from the point of rotation to the body's center
+    const dx = bodyPosX - point.x;
+    const dy = bodyPosY - point.y;
+
+    // Calculate the rotated vector
+    const rotatedDx = dx * Math.cos(angleRadians) - dy * Math.sin(angleRadians);
+    const rotatedDy = dx * Math.sin(angleRadians) + dy * Math.cos(angleRadians);
+
+    // Calculate the new position of the body's center
+    const newPosX = point.x + rotatedDx;
+    const newPosY = point.y + rotatedDy;
+
+    // Move the body to the new position
+    Matter.Body.setPosition(body, { x: newPosX, y: newPosY });
+
+    // Rotate the body to the new angle
+    Matter.Body.rotate(body, angleRadians);
+}
+
+function rotateConstraintAroundPoint(constraint, point, angle) {
+    // no need to do anything
+}
+
 export {
     LocalToWorld,
     WorldToLocal,
-    constrainBodyToBody
+    constrainBodyToBody,
+    rotateBodyAroundPoint,
+    rotateConstraintAroundPoint
 }

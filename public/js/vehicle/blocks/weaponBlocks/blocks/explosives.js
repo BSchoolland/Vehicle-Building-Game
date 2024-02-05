@@ -3,10 +3,10 @@ import { playSound } from '../../../../sounds/playSound.js';
 
 class TNTBlock extends Block {
     constructor (x, y, contraption) {
-        super(x, y, contraption, 20, 'A TNT block', 15, '#780811', [], []);
+        super(x, y, contraption, 20, 'A TNT block', 15, '#780811', [], [], ['left', 'right', 'top', 'bottom']);
         this.makeBodies();
         this.makeConstraints();
-        this.weldableFaces = ['left', 'right', 'top', 'bottom'];
+
         
         // this block is not simetrical in the x direction
         this.simetricalX = false;

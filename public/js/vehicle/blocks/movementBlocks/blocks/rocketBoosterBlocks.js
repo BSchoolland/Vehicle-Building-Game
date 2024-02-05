@@ -14,12 +14,12 @@ class rocketBoosterBlock extends Block {
       100,
       "#3b2004",
       [],
-      []
+      [],
+      ["left"]
     );
     this.secondaryColor = "#3d3d3d";
     this.makeBodies();
     this.makeConstraints();
-    this.weldableFaces = ["left"];
     this.thrust = 0.65;
     // this block is not simetrical in the x direction
     this.simetricalX = false;

@@ -73,12 +73,11 @@ function makeStickMan(x, y, color='#FFFFFF') {
 // a seat block, the core of the vehicle
 class SeatBlock extends Block {
     constructor (x, y, contraption) {
-        super(x, y, contraption, 20, 'A seat block', 100, '#3b2004', [], []);
+        super(x, y, contraption, 20, 'A seat block', 100, '#3b2004', [], [], ['right', 'bottom']);
         this.contraption.seat = this;
         this.secondaryColor = '#3d3d3d';
         this.makeBodies();
         this.makeConstraints();
-        this.weldableFaces = ['right', 'bottom']; // seat is L shaped
         this.simetricalX = false;
         this.destroyed = true;
     }
@@ -184,14 +183,7 @@ class SeatBlock extends Block {
         
     }
     getWeldBody(direction = 'right') { // this is redefining the function from the base class
-        if (direction === 'right') {
-            return this.bodies[0];
-        } else if (direction === 'left') {
-            return this.bodies[0];
-        }
-        else if (direction === 'bottom') {
-            return this.bodies[1];
-        }
+        return this.bodies[0];
     }
     spawn() {
         super.spawn(); 

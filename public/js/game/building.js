@@ -27,7 +27,7 @@ class RightClickMenu {
     this.flipButton.classList.add("menu-button");
     this.flipButton.innerText = "Flip";
     this.flipButton.onclick = () => {
-      this.block.flipX();
+      this.block.rotate90();
       this.hide();
     };
     this.menu.appendChild(this.flipButton);

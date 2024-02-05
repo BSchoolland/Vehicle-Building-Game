@@ -295,7 +295,7 @@ class Contraption {
       this.AiClockStarted = Date.now();
     }
     // check connected
-    this.checkConnected();
+    // this.checkConnected();
   }
   // despawn the contraption by making all blocks static
   despawn(fancy = false) {

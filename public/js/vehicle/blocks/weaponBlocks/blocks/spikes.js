@@ -3,10 +3,10 @@ import Block from '../../baseBlockClass.js';
 // a spike block that can damage other blocks
 class SpikeBlock extends Block {
     constructor (x, y, contraption) {
-        super(x, y, contraption, 20, 'A spike block', 100, '#3b2004', [], []);
+        super(x, y, contraption, 20, 'A spike block', 100, '#3b2004', [], [], ['right']);
         this.makeBodies();
         this.makeConstraints();
-        this.weldableFaces = ['right'];
+
         this.damageMultiplier = 10;
         this.damageCooldown = 0.05; // seconds
         this.lastHit = 0; // the last time the block hit something

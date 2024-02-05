@@ -5,11 +5,10 @@ import { playSound } from '../../../../sounds/playSound.js';
 // a grappling hook block that can grab onto other blocks, and reel them in
 class GrappleBlock extends Block {
     constructor (x, y, contraption) {
-        super(x, y, contraption, 20, 'A grappling hook block', 100, '#3b2004', [], []);
+        super(x, y, contraption, 20, 'A grappling hook block', 100, '#3b2004', [], [], ['right', 'bottom']);
         this.secondaryColor = '#3d3d3d';
         this.makeBodies();
         this.makeConstraints();
-        this.weldableFaces = ['right', 'bottom'];
         this.maxRopeLength = 500;  // Maximum length of the rope
         this.currentRopeLength = 0;  // Current length of the rope
         this.ropeStiffness = 0.000001;  // Initial low stiffness

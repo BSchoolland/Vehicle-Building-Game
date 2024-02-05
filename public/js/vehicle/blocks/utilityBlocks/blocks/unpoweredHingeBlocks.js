@@ -4,11 +4,11 @@ import { constrainBodyToBody } from '../../../utils.js';
 // an unpowered hinge block that can rotate freely.
 class UnpoweredHingeBlock extends Block {
     constructor (x, y, contraption) {
-        super(x, y, contraption, 20, 'A powered hinge block', 100, '#3b2004', [], []);
+        super(x, y, contraption, 20, 'A powered hinge block', 100, '#3b2004', [], [], ['right', 'left']);
         this.secondaryColor = '#3d3d3d';
         this.makeBodies();
         this.makeConstraints();
-        this.weldableFaces = ['right', 'left'];
+
         // by default, the activation key is 'e' and the reverse activation key is 'q'
     }
     makeBodies(){

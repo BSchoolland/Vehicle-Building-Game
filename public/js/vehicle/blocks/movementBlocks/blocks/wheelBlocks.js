@@ -3,12 +3,11 @@ import Block from '../../baseBlockClass.js';
 // a wheel block with suspension
 class WheelBlock extends Block {
     constructor (x, y, contraption) {
-        super(x, y, contraption, 20, 'A wheel block', 100, '#3b2004', [], []);
+        super(x, y, contraption, 20, 'A wheel block', 100, '#3b2004', [], [],['top']);
         this.secondaryColor = '#3d3d3d';
         this.stiffness = 0.3;
         this.makeBodies();
         this.makeConstraints();
-        this.weldableFaces = ['top'];
         this.touchingGround = false;
         this.spinSpeed = 0.5;
         this.acceleration = 20;

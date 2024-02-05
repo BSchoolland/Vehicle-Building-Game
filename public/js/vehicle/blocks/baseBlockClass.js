@@ -12,8 +12,10 @@ class Block {
         this.originalY = y;
         this.cost = cost;
         this.description = description;
+        // health
         this.hitPoints = hitPoints;
         this.maxHitPoints = hitPoints;
+        this.invincibleParts = []; // parts that can't be damaged (for example flames from a rocket booster or the grappling hook from a grappling hook block)
         this.color = color;
         this.bodies = bodies;
         this.constraints = constraints;
@@ -22,7 +24,6 @@ class Block {
         // orientation
         this.flippedX = false;
         this.simetricalX = true; // most blocks are simetrical in the x direction
-
 
         this.blocksFromSeat = 0; // used to determine if the block is connected to the seat
         this.previousBlocksFromSeat = 0;

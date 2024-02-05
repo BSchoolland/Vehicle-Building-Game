@@ -189,12 +189,13 @@ class rocketBoosterBlock extends Block {
           Matter.Vector.normalise(
             Matter.Vector.sub(this.bodies[0].position, this.bodies[1].position)
           ),
-          (-this.thrust * deltaTime) / 1000 / 3
+          (-this.thrust * deltaTime) / 1000 / 2
         )
       );
       flame.hit = false; // the flame has not hit anything yet
       flame.block = this; // the flame is from this block
       this.flames.push(flame); // add the flame to the list of flames
+      this.invincibleParts.push(flame); // make the flame invincible so the rocket won't be destroyed when the flame is hit by a spike or another weapon
       // remove the flame after 0.2 seconds
       setTimeout(() => {
         Matter.World.remove(this.contraption.engine.world, flame);
@@ -266,10 +267,13 @@ class rocketBoosterBlock extends Block {
     if (flame.hit) return; // if the flame has already hit something, don't hit it again
     if (!otherBody.block) return; // if the other body is not a block, don't hit it
     if (otherBody.block.contraption === this.contraption) return; // if the other block is part of the same contraption, don't hit it
+    if (otherBody.block.invincibleParts && otherBody.block.invincibleParts.includes(otherBody)) return; // if the other block is invincible, don't hit it
     if (otherBody.block.flameDuration > this.attackFlameDuration) return; // if the other block is already on fire for longer than this flame, don't hit it
 
     otherBody.block.flameDuration = this.attackFlameDuration; // the block will be on fire for 5 seconds
     otherBody.block.flameDamage = this.attackFlameDamage; // the block will take 5 damage per second
+    // record that the flame has hit something
+    flame.hit = true;
   }
 }
 

@@ -24,6 +24,8 @@ class SpikeBlock extends Block {
         // no constraints
     }
     hit(thisBody, otherBody) {
+        // if we hit an invincible part of another block, don't do anything
+        if (otherBody.block.invincibleParts && otherBody.block.invincibleParts.includes(otherBody)) return;
         // check if this spike block is on cooldown
         if (Date.now() - this.lastHit >= this.damageCooldown * 1000) {
             // make sure the other block is in a contraption

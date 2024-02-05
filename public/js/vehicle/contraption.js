@@ -362,6 +362,14 @@ class Contraption {
     if (this.Ai) {
       this.AiUpdate();
     }
+    // calculate fire damage for each block
+    this.blocks.forEach((block) => {
+      if (block.flameDuration > 0) {
+        block.damage(block.flameDamage * deltaTime / 1000);
+        block.flameDuration -= deltaTime / 1000;
+      }
+    });
+
   }
   // press a key
   pressKey(key) {

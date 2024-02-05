@@ -142,7 +142,12 @@
       "x": 2000,
       "y": 700,
       "enemyType": "world1Boss"
-    }
+    },
+    { "type": "BuildingAreaBlock", "x": 1200, "y": 500 },
+    { "type": "BuildingAreaBlock", "x": 1100, "y": 500 },
+    { "type": "BuildingAreaBlock", "x": 1000, "y": 500 },
+    { "type": "BuildingAreaBlock", "x": 800, "y": 500 },
+    { "type": "BuildingAreaBlock", "x": 900, "y": 500 }
   ],
   "commands": [],
   "buildingBlockTypes": [

@@ -22,8 +22,7 @@ class Block {
         // orientation
         this.flippedX = false;
         this.simetricalX = true; // most blocks are simetrical in the x direction
-        this.sparks = 0; // number of sparks here right now
-        this.maxSparks = 50; // max number of sparks
+
 
         this.blocksFromSeat = 0; // used to determine if the block is connected to the seat
         this.previousBlocksFromSeat = 0;
@@ -70,6 +69,7 @@ class Block {
         this.flameDamage = 0;
         this.flameDuration = 0;
     }
+
     update(deltaTime) {
         // to be set by subclass
     }
@@ -106,11 +106,11 @@ class Block {
         let numSparks = amount;
         // add a shower of sparks
         for (var i = 0; i < numSparks; i++) {
-            if (this.sparks >= this.maxSparks) {
+            if (this.contraption.currentSparks >= this.contraption.maxSparks) {
                 // don't add any more sparks
                 break;
             }
-            this.sparks++;
+            this.contraption.currentSparks ++;
             // create a spark with a random position and velocity
             let spark = Matter.Bodies.circle(this.bodies[0].position.x + Math.random() * 10 - 5, this.bodies[0].position.y + Math.random() * 10 - 5, 2, { render: { fillStyle: '#ff0000' }});
             Matter.Body.setVelocity(spark, { x: Math.random() * 10 - 5, y: Math.random() * 10 - 10});
@@ -123,7 +123,7 @@ class Block {
             // remove the spark after 1 second
             setTimeout(() => {
                 Matter.World.remove(this.contraption.engine.world, spark);
-                this.sparks--;
+                this.contraption.currentSparks--;
             }, 1000);
         }
         // check if the block is destroyed
@@ -159,7 +159,10 @@ class Block {
             });
             // give a bit of upward velocity to the block
             Matter.Body.setVelocity(this.bodies[0], { x: 0, y: -5 });
-            
+            // make all bodies unable to collide with other blocks
+            this.bodies.forEach(body => {
+                body.collisionFilter = { mask: 0x0002 };
+            });
             // after 1 second, remove the block from the world
             setTimeout(() => {
                 // since a block has been removed, the structure has changed and we need to check connected blocks again

@@ -368,7 +368,7 @@ class LevelManager {
         }
     }
     update() { // update the level (check coins, survival time, etc.)
-
+        if (!this.playerContraption.seat) return;
         if (this.startTime === 0) { // if the level hasn't started yet, don't check for win conditions
             return;
         }
@@ -396,7 +396,6 @@ class LevelManager {
                 // playSound("time");
                 this.updateStats();
             }
-            console.log(this.secondsSurvived);
             if (this.secondsSurvived >= this.mustSurvive) {
                 // check if the player has destroyed enough enemy contraptions
                 if (this.enemyContraptionsDestroyed >= this.mustDestroy) {

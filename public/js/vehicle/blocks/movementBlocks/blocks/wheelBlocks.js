@@ -53,7 +53,6 @@ class WheelBlock extends Block {
         }));
     }   
     update(deltaTime) { // deltaTime is in milliseconds
-        console.log('deltaTime', deltaTime)
         super.update(deltaTime);
         // drive
         let targetVelocity = this.spinSpeed;

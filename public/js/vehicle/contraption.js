@@ -92,6 +92,8 @@ class Contraption {
     this.seat = null;
     // variables for calculating delta time
     this.lastTime = 0;
+    this.maxSparks = 100;
+    this.currentSparks = 0;
   }
   AiLoadCommands(commands) {
     this.AiCommands = commands;
@@ -349,14 +351,13 @@ class Contraption {
 
   // update the contraption
   update() {
+    if (!this.seat) return;
     let deltaTime = Date.now() - this.lastTime;
     this.lastTime = Date.now();
     // update all blocks
     this.blocks.forEach((block) => {
       block.update(deltaTime);
     });
-    // check connected
-    // this.checkConnected();
     // if this is an AI, update the AI
     if (this.Ai) {
       this.AiUpdate();

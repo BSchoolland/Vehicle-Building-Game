@@ -86,14 +86,12 @@ function playSound(name) {
   source.start();
   // get the duration of the sound
     let duration = buffer.duration;
-    console.log('duration', duration);
     // remove the sound from the playingSounds object after the sound has finished playing
     setTimeout(() => {
         //if the name ends with a number, remove the number
         if (name.match(/\d+$/)) {
             name = name.replace(/\d+$/, '');
         }
-        console.log('removing', name);
         playingSounds[name] -= 1;
         if (playingSounds[name] <= 0) {
             delete playingSounds[name];

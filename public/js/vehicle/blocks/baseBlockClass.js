@@ -347,7 +347,6 @@ class Block {
   }
   // weld all bodies together
   makeWelds() {
-    console.log("making welds", this.weldableFaces, this.rotatedWeldableFaces);
     if (this.rotatedWeldableFaces.length === 0) {
       this.rotatedWeldableFaces = this.weldableFaces;
     }

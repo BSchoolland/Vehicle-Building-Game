@@ -97,7 +97,6 @@ class Contraption {
   }
   AiLoadCommands(commands) {
     this.AiCommands = commands;
-    console.log("loaded commands");
   }
   AiUpdate() {
     this.keysPressed = {};
@@ -144,7 +143,6 @@ class Contraption {
     }
   }
   checkConnected(){ // check each block to make sure it is connected
-    console.log('check connected')
     this.blocks.forEach((block)=> {
       block.checkConnected();
     })
@@ -217,7 +215,6 @@ class Contraption {
     this.blocks.forEach((block) => {
       block.reset(false);
     });
-    console.log("moved contraption to " + x + ", " + y);
   }
   clear() {
     // Make a copy of the blocks array and iterate over it
@@ -294,8 +291,10 @@ class Contraption {
     if (this.Ai) {
       this.AiClockStarted = Date.now();
     }
+    // set time to now
+    this.lastTime = Date.now();
     // check connected
-    // this.checkConnected();
+    this.checkConnected();
   }
   // despawn the contraption by making all blocks static
   despawn(fancy = false) {

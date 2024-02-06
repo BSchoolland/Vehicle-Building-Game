@@ -66,7 +66,6 @@ class ObjectivesMenu { // creates objectives for the level
         let gameContainer = document.getElementById('container');
         //add the menu to the container
         gameContainer.appendChild(this.menu);
-        console.log(this.menu);
     }
     setObjectiveTypes(objectiveTypes) {
         this.objectiveTypes = objectiveTypes;

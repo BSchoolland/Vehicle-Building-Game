@@ -43,8 +43,6 @@ class World {
         }
     }
     getLevel(levelNum) {
-        console.log(this.levels);
-        console.log(levelNum);
         return this.levels[levelNum].getJson();
     }
 }

@@ -69,7 +69,6 @@ class PoweredHingeBlock extends Block {
             this.rotationDirection = 1;
         }
         this.currentAngle += this.rotationSpeed * this.rotationDirection;
-        console.log(this.currentAngle);
         // make sure the angle is within the bounds
         if (this.currentAngle > this.maxAngle) {
             this.currentAngle = this.maxAngle;

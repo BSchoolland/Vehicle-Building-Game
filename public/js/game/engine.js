@@ -84,8 +84,6 @@ function startGame() {
     camera.smoothUpdate();
   });
 
-  console.log(building.contraption);
-
   // update the level object every 10 frames
   Matter.Events.on(engine, "afterUpdate", () => {
     levelObject.update();

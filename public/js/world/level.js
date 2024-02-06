@@ -63,8 +63,6 @@ class LevelManager {
             var enemyJson = await (await fetch(enemies[key])).json();
             this.enemyContraptionsJSON[key] = enemyJson;
         });
-        console.log(this.enemyContraptionsJSON);
-
     }
     addBlock(block, addToActionStack = true) {
         block.Level = this;
@@ -100,7 +98,6 @@ class LevelManager {
     loadForEditing(LevelJson) {
         // Clear existing blocks in the Level
         this.clear(); // remove all blocks from the Level
-        console.log(LevelJson);
         // Load new blocks from JSON
         LevelJson.blocks.forEach(blockJson => {
             // Get the block type constructor
@@ -143,7 +140,7 @@ class LevelManager {
             // }
         }
         
-        var LevelJson = this.LevelHandler.getLevel(2, levelIndex); // world 1, level levelIndex
+        var LevelJson = this.LevelHandler.getLevel(1, levelIndex); // world 1, level levelIndex
 
         if (optionalJson) {
             LevelJson = optionalJson;
@@ -165,7 +162,6 @@ class LevelManager {
             height: 0
         }
         )
-        console.log(this.building.buildArea)
         LevelJson.blocks.forEach(blockJson => {
             // Get the block type constructor
             const BlockType = blockTypes[blockJson.type];
@@ -210,15 +206,12 @@ class LevelManager {
                         console.error("No enemy type defined for enemy spawn block");
                         enemyType = "box";
                     }
-                    console.log(enemyType)
                     // get the enemy contraption's JSON
-                    console.log(this.enemyContraptionsJSON);
                     let enemyContraptionJson = this.enemyContraptionsJSON[enemyType]
                     if (enemyContraptionJson === undefined) {
                         console.error(`Unknown enemy type: ${enemyType}`);
                         return;
                     }
-                    console.log(enemyContraptionJson);
                     // load the enemy contraption
                     const EnemyContraption = new Contraption(this.engine, 'AI', this);
                     EnemyContraption.load(enemyContraptionJson);
@@ -288,7 +281,6 @@ class LevelManager {
         }
     }
     updateStats(){
-        console.log('update stats')
         let stats = document.getElementById('stats');
         stats.innerHTML = '';
         if (this.mustCollect > 0) {
@@ -507,7 +499,6 @@ class LevelManager {
         }
     }
     loadLevelSelector() {
-        console.log("load level selector");
         // a screen to select the level to play
         let levelSelector = document.createElement('div');
         levelSelector.id = "level-selector";
@@ -517,13 +508,10 @@ class LevelManager {
         // add the level selector to the game
         game.appendChild(levelSelector);
         // add a button for each level
-        let count = this.LevelHandler.getLevelCount(2);
-        console.log(count);
+        let count = this.LevelHandler.getLevelCount(1);
         for (let i = 0; i < count; i++) {
             let box = document.createElement('div');
             box.className = "level-select-box";
-            
-            console.log(i);
             let button = document.createElement('button');
             button.className = "level-select-button";
             button.innerHTML = `Level ${i+1}`;
@@ -531,7 +519,6 @@ class LevelManager {
                 this.load(i);
                 levelSelector.remove();
             });
-            console.log(button);
             // add an image for the level (it is also clickable)
             let image = document.createElement('img');
             image.className = "level-select-image";

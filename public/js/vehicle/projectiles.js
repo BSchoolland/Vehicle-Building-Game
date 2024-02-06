@@ -74,13 +74,10 @@ class Cannonball extends Projectile {
     }
     
     hit(body) {
-        console.log('hit');
         // check if the body is in a block
         if (body.block) {
             // make sure the body.block.contraption is not the same as the owner
-            console.log(body.block.contraption, this.owner)
             if (body.block.contraption === this.owner) {
-                console.log('friendly fire')
                 // wait then remove the projectile
                 setTimeout(() => {
                     this.remove();

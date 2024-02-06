@@ -182,7 +182,6 @@ class CoinBlock extends Block {
         return false;
     }
     reset() { // reset the coin
-        console.log("resetting coin");
         this.removeCoin();
         this.coinExists = true;
         this.coin.render.visible = true;

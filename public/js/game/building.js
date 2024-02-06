@@ -601,7 +601,6 @@ class Building {
   }
   displayGrid() {
     let buildArea = this.buildArea;
-    console.log(this.buildArea);
     const gridSpacing = this.grid;
 
     // Vertical lines

@@ -35,6 +35,8 @@ class LevelManager {
         this.mustDestroy = 0;
         this.enemyContraptions = [];
 
+        this.mustCompleteBefore = 0; // no limit
+        this.remainingTime = 0;
         this.secondsSurvived = 0;
         this.mustSurvive = 0;
         this.startTime = 0;
@@ -55,7 +57,7 @@ class LevelManager {
             movingSpikeWall: '../../json-enemies/movingSpikeWall.json',
             barge: '../../json-enemies/barge.json',
             world1Boss: '../../json-enemies/world1Boss.json',
-            
+            flameTank: '../../json-enemies/flameTank.json',
         }
         Object.keys(enemies).forEach(async (key) => {
             var enemyJson = await (await fetch(enemies[key])).json();
@@ -249,6 +251,7 @@ class LevelManager {
             this.building.makeNewBuildMenu(LevelJson.buildingBlockTypes);
         }
         // set the win conditions
+    this.mustCompleteBefore = 0;
     if (LevelJson.objectives) {
         LevelJson.objectives.forEach(objective => {
             if (objective.name === "Collect") {
@@ -260,12 +263,17 @@ class LevelManager {
             else if (objective.name === "Survive") {
                 this.mustSurvive = objective.value;
             }
+            else if (objective.name === "BeforeTime") {
+                this.mustCompleteBefore = objective.value;
+                this.remainingTime = objective.value;
+            }
         });
     }
     else {
         this.mustCollect = 1;
         this.mustDestroy = 0;
         this.mustSurvive = 0;
+        this.mustCompleteBefore = 0; // 0 means there is no time limit
     }
     this.updateStats();
     // bind the startLevel function to the building
@@ -297,6 +305,16 @@ class LevelManager {
             let survive = document.createElement('h1');
             survive.innerHTML = `Survive ${this.secondsSurvived}/${this.mustSurvive}`;
             stats.appendChild(survive);
+        }
+        if (this.mustCompleteBefore > 0) {
+            let before = document.createElement('h1');
+            if (this.remainingTime <= 0) {
+                before.innerHTML = `Complete before FAILED!`;
+            }
+            else {
+            before.innerHTML = `Complete before ${this.remainingTime}`;
+            }
+            stats.appendChild(before);
         }
         stats.style.display = "block";  
     }
@@ -396,9 +414,20 @@ class LevelManager {
                 // playSound("time");
                 this.updateStats();
             }
+            // check if the time limit has been reached
+            if (this.mustCompleteBefore > 0) {
+                this.remainingTime = this.mustCompleteBefore - this.secondsSurvived;
+                if (this.remainingTime <= 0) {
+                    // the player can no longer win
+                    return;
+                }
+            }
+                    
             if (this.secondsSurvived >= this.mustSurvive) {
                 // check if the player has destroyed enough enemy contraptions
                 if (this.enemyContraptionsDestroyed >= this.mustDestroy) {
+                    // check if the player has completed the level before the time limit
+                    
                     // the player wins!
                     if (this.won) {
                         return;
@@ -410,6 +439,19 @@ class LevelManager {
                     
                 }
             }
+        }
+        else { // update tbhe stats but don't allow a win
+            let pastSecondsSurvived = this.secondsSurvived;
+            this.secondsSurvived = Math.floor((Date.now() - this.startTime) / 1000);
+            // if the seconds survived has increased, and has not reached the win condition, play the time sound
+            if (this.secondsSurvived > pastSecondsSurvived && this.secondsSurvived <= this.mustSurvive) {
+                // playSound("time");
+                this.updateStats();
+            };
+            if (this.mustCompleteBefore > 0) {
+                this.remainingTime = this.mustCompleteBefore - this.secondsSurvived;
+                this.updateStats();
+            };
         }
     }
     completeLevel() {

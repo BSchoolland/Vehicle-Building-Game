@@ -188,6 +188,12 @@ class SeatBlock extends Block {
     spawn() {
         super.spawn(); 
     }
+    update(deltaTime) {
+        // if this too far down, destroy it
+        if (this.bodies[0].position.y > 2000) {
+            this.damage(this.maxHitPoints);
+        }
+      }
     checkConnected() { // this block is always connected as it is the core of the vehicle
         this.blocksFromSeat = 0;
     }

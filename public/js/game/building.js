@@ -453,6 +453,10 @@ class Building {
     this.RightClickMenu = new RightClickMenu(this);
     // build menu
     this.buildMenu = new BuildMenu(this);
+    this.buildMenu.hide();
+  }
+  setCamera(camera) {
+    this.camera = camera;
   }
   toggleBuildingMode() {
     // click the build mode button

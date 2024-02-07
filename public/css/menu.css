@@ -77,9 +77,38 @@
     color: #1a3a5f; /* Dark text color for contrast */
 }
 
+.world-select-menu {
+    background-color: #1a3a5f; /* Dark blue background */
+    border: 1px solid #557da6; /* Lighter blue border */
+    color: #e4e8ec; /* Light text color */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1); 
+    font-family: 'Courier New', monospace; /* Font that gives a typewritten or technical feel */
+    /* organize items into rows of 3 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 5%;
+}
+
+.world-select-button {
+    background-color: #2b5572; /* Slightly lighter blue for buttons */
+    color: #e4e8ec; /* Light text color for contrast */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 25px;
+    margin-right: 25px;
+    transition: background-color 0.3s;
+    text-transform: uppercase; /* Makes text uppercase for a more formal look */
+    font-weight: bold;
+
+}
+
 .level-select-menu {
     position: absolute;
-    top: 20%; 
+    top: 5%; 
     left: 50%;
     transform: translateX(-50%); /* Center the div horizontally */
     background-color: #1a3a5f; /* Dark blue background */

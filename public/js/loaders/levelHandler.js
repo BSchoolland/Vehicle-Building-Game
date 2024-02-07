@@ -71,6 +71,9 @@ class LevelHandler {
     getLevelCount(worldNum) {
         return this.worlds[worldNum - 1].levels.length;
     }
+    getWorldCount() {
+        return this.worlds.length;
+    }
 }
 
 export default LevelHandler;

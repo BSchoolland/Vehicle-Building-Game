@@ -42,6 +42,7 @@ class LevelManager {
         this.startTime = 0;
 
         this.LevelHandler = new LevelHandler();
+        this.worldSelected = 1;
     }
 
     init() {
@@ -140,7 +141,7 @@ class LevelManager {
             // }
         }
         
-        var LevelJson = this.LevelHandler.getLevel(1, levelIndex); // world 1, level levelIndex
+        var LevelJson = this.LevelHandler.getLevel(this.worldSelected, levelIndex); // world 1, level levelIndex
 
         if (optionalJson) {
             LevelJson = optionalJson;
@@ -501,14 +502,36 @@ class LevelManager {
     loadLevelSelector() {
         // a screen to select the level to play
         let levelSelector = document.createElement('div');
+        // a list of buttons at the top to select the world
+        let worldSelector = document.createElement('div');
+        worldSelector.id = "world-selector";
+        worldSelector.className = "world-select-menu";
+        // get the game object
+        let game = document.getElementById('game-container');
+        // add the world selector to the game
+        game.appendChild(worldSelector);
+        // add a button for each world
+        let worldCount = this.LevelHandler.getWorldCount();
+        for (let i = 0; i < worldCount; i++) {
+            let button = document.createElement('button');
+            button.className = "world-select-button";
+            button.innerHTML = `World ${i+1}`;
+            button.addEventListener('click', () => {
+                levelSelector.remove();
+                this.worldSelected = i + 1;
+                this.loadLevelSelector();
+                return;
+            });
+            worldSelector.appendChild(button);
+        }
+        levelSelector.appendChild(worldSelector);
         levelSelector.id = "level-selector";
         levelSelector.className = "level-select-menu";
         // get the game object
-        let game = document.getElementById('game-container');
         // add the level selector to the game
         game.appendChild(levelSelector);
         // add a button for each level
-        let count = this.LevelHandler.getLevelCount(1);
+        let count = this.LevelHandler.getLevelCount(this.worldSelected);
         for (let i = 0; i < count; i++) {
             let box = document.createElement('div');
             box.className = "level-select-box";

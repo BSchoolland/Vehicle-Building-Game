@@ -1,4 +1,4 @@
-import { GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock } from './mapBlocks.js';
+import { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock } from './mapBlocks.js';
 import { Contraption } from '../vehicle/contraption.js'
 import { playSound } from '../sounds/playSound.js';
 const blockTypes = {
@@ -9,7 +9,9 @@ const blockTypes = {
     slightRampBlockR,
     CoinBlock,
     BuildingAreaBlock,
-    EnemySpawnBlock
+    EnemySpawnBlock,
+    slightRampBlockRUpsideDown, 
+    slightRampBlockLUpsideDown,
 };
 import LevelHandler from '../loaders/levelHandler.js';
 // A Level is a collection of blocks that can be saved and loaded

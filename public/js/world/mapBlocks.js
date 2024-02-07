@@ -96,6 +96,42 @@ class slightRampBlockL extends Block {
     }
 }
 
+// slight upside down ramp block L
+class slightRampBlockLUpsideDown extends Block {
+    constructor(x, y, level) {
+        // random green color
+        let color = grassColors[Math.floor(Math.random() * grassColors.length)];
+        super(x, y, level, color);
+        this.width = 100;
+        this.height = 100;
+        this.bodies = [];
+        this.makeBodies();
+    }
+    makeBodies() {
+        // a right triangle that is the color of the block
+        let vertices = '0 0 200 0 0 100';
+        this.bodies.push(Matter.Bodies.fromVertices(this.x + (50-33.3333), this.y + (-50+33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+    }
+}
+
+// slight upside down ramp block R
+class slightRampBlockRUpsideDown extends Block {
+    constructor(x, y, level) {
+        // random green color
+        let color = grassColors[Math.floor(Math.random() * grassColors.length)];
+        super(x, y, level, color);
+        this.width = 100;
+        this.height = 100;
+        this.bodies = [];
+        this.makeBodies();
+    }
+    makeBodies() {
+        // a right triangle that is the color of the block
+        let vertices = '200 0 0 0 200 100';
+        this.bodies.push(Matter.Bodies.fromVertices(this.x + (-50+33.3333), this.y + (-50+33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+    }
+}
+
 // a right ramp block
 class RampBlockR extends Block {
     constructor(x, y, level) {
@@ -239,4 +275,4 @@ class EnemySpawnBlock extends Block {
     }
 }
 
-export {GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock}; 
+export { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock}; 

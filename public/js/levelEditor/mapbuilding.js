@@ -1,5 +1,5 @@
 // Import the block classes from public/js/world/mapBlocks.js
-import { GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock } from '../world/mapBlocks.js';
+import { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock } from '../world/mapBlocks.js';
 import { LevelManager } from '../world/level.js';
 // contraption blocks
 import {
@@ -185,7 +185,9 @@ class BuildMenu {
             { name: 'Slight Ramp Block (R)', key: '5', type: slightRampBlockR },
             { name: 'Coin', key: '6', type: CoinBlock },
             { name: 'Building Area Block', key: '7', type: BuildingAreaBlock },
-            { name: 'Enemy Spawn Block', key: '8', type: EnemySpawnBlock }
+            { name: 'Enemy Spawn Block', key: '8', type: EnemySpawnBlock },
+            { name: 'upsidedown slight ramp', key: '9', type: slightRampBlockLUpsideDown},
+            { name: 'upsidedown slight ramp R', key: '0', type: slightRampBlockRUpsideDown},
         ];
         this.createBlockButtons();
         // create a button to save the level

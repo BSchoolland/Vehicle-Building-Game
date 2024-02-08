@@ -45,10 +45,30 @@ class RemoteBlock extends Block {
         }
     }
     getWeldBody(direction = 'top') { // this is redefining the function from the base class
-        if (direction === 'top') {
-            return this.bodies[1];
-        } else if (direction === 'bottom') {
-            return this.bodies[0];
+        if (this.rotatedTimes === 0) {
+            if (direction === 'top') {
+                return this.bodies[1];
+            } else if (direction === 'bottom') {
+                return this.bodies[0];
+            }
+        } else if (this.rotatedTimes === 1) {
+            if (direction === 'right') {
+                return this.bodies[0];
+            } else if (direction === 'left') {
+                return this.bodies[1];
+            }
+        } else if (this.rotatedTimes === 2) {
+            if (direction === 'bottom') {
+                return this.bodies[1];
+            } else if (direction === 'top') {
+                return this.bodies[0];
+            }
+        } else if (this.rotatedTimes === 3) {
+            if (direction === 'left') {
+                return this.bodies[0];
+            } else if (direction === 'right') {
+                return this.bodies[1];
+            }
         }
     }
     activate() {

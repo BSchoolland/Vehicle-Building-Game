@@ -114,6 +114,10 @@ class TNTBlock extends Block {
         bodies.forEach(body => {
             // check if the body is a block
             if (body.block) {
+                // make sure the body is not an invincible part of the block
+                if (body.block.invincipleParts && body.block.invincipleParts.includes(body)) {
+                    return;
+                }
                 // damage the block
                 body.block.damage(100);
             }

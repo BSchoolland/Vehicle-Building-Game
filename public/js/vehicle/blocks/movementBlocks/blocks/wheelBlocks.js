@@ -1,11 +1,11 @@
 import Block from '../../baseBlockClass.js';
-
+import { LocalToWorld, WorldToLocal } from '../../../utils.js';
 // a wheel block with suspension
 class WheelBlock extends Block {
     constructor (x, y, contraption) {
         super(x, y, contraption, 20, 'A wheel block', 100, '#3b2004', [], [],['top']);
         this.secondaryColor = '#3d3d3d';
-        this.stiffness = 0.6;
+        this.stiffness = 0.3;
         this.makeBodies();
         this.makeConstraints();
         this.touchingGround = false;
@@ -50,6 +50,19 @@ class WheelBlock extends Block {
                 strokeStyle: this.secondaryColor
             }
         }));
+
+        // a backup constraint to keep the circle in place
+        this.constraints.push(Matter.Constraint.create({
+            bodyA: this.bodies[0], // the rectangle
+            bodyB: this.bodies[1], // the circle
+            pointA: { x: 0, y: 25 },
+            pointB: { x: 0, y: 0 },
+            stiffness: this.stiffness,
+            length: 0,
+            render: {
+                strokeStyle: this.secondaryColor
+            }
+        }));
     }   
     update(deltaTime) { // deltaTime is in milliseconds
         if (this.hitPoints <= 0) return; // if the block is destroyed, don't update
@@ -59,22 +72,6 @@ class WheelBlock extends Block {
             deltaTime = 100;
         }
         super.update(deltaTime);
-        // if the wheel has glitched past body[0], move it back
-        let angleBody0 = this.bodies[0].angle + Math.PI/2;
-        // get the angle of the vector from the center of the wheel to the center of the rectangle
-        let angleVector = Math.atan2(this.bodies[1].position.y - this.bodies[0].position.y, this.bodies[1].position.x - this.bodies[0].position.x);
-        // get the angle difference
-        let angleDifference = angleVector - angleBody0;
-        if (angleDifference > 3 || angleDifference < -3) {
-            console.log('angleDifference too high: ' + angleDifference);
-            // move the wheel back
-            let distance = 30;
-            let x = this.bodies[0].position.x + distance * Math.cos(angleBody0);
-            let y = this.bodies[0].position.y + distance * Math.sin(angleBody0);
-            Matter.Body.setPosition(this.bodies[1], { x: x, y: y });
-        }
-        
-        
         // drive
         let targetVelocity = this.spinSpeed;
         if (this.flippedX) {

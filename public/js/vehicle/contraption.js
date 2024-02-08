@@ -372,10 +372,12 @@ class Contraption {
   }
   // press a key
   pressKey(key) {
+    key = key.toLowerCase();
     this.keysPressed[key] = true;
   }
   // release a key
   releaseKey(key) {
+    key = key.toLowerCase();
     this.keysPressed[key] = false;
   }
 }

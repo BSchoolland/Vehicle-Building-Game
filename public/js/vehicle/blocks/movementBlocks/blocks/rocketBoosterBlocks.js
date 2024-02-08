@@ -23,8 +23,8 @@ class rocketBoosterBlock extends Block {
     this.thrust = 0.65;
     // this block is not simetrical in the x direction
     this.simetricalX = false;
-    // by default, the activation key is 'Shift'
-    this.activationKey = "Shift";
+    // by default, the activation key is 'shift'
+    this.activationKey = "shift";
     // explosions
     this.exploded = false;
     this.explosionRadius = 100;

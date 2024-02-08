@@ -5,7 +5,7 @@ class WheelBlock extends Block {
     constructor (x, y, contraption) {
         super(x, y, contraption, 20, 'A wheel block', 100, '#3b2004', [], [],['top']);
         this.secondaryColor = '#3d3d3d';
-        this.stiffness = 0.3;
+        this.stiffness = 0.6;
         this.makeBodies();
         this.makeConstraints();
         this.touchingGround = false;

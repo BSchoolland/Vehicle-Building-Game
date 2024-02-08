@@ -11,6 +11,8 @@ class TNTBlock extends Block {
         // this block is not simetrical in the x direction
         this.simetricalX = false;
         this.exploded = false;
+        this.blastRadius = 200; // the radius of the explosion
+        this.blastDamage = 100; // the damage of the explosion
         // damage cooldown
         this.damageCooldown = 0.5; // seconds
         this.lastHit = 0; // the last time the block hit something
@@ -109,7 +111,7 @@ class TNTBlock extends Block {
         Matter.World.remove(world, this.bodies[0]);
         // create a circle explosion
         // find all the bodies in the explosion
-        let bodies = Matter.Query.region(world.bodies, Matter.Bounds.create([{ x: x - 100, y: y - 100 }, { x: x + 100, y: y + 100 }]));
+        let bodies = Matter.Query.region(world.bodies, Matter.Bounds.create([{ x: x - this.blastRadius, y: y - this.blastRadius }, { x: x + this.blastRadius, y: y + this.blastRadius }]));
         // damage all the bodies in the explosion
         bodies.forEach(body => {
             // check if the body is a block
@@ -119,13 +121,13 @@ class TNTBlock extends Block {
                     return;
                 }
                 // damage the block
-                body.block.damage(100);
+                body.block.damage(this.blastDamage);
             }
         });
         // add a cluster of explosions randomly around the block
         for (var i = 0; i < 30; i++) {
             // create a circle explosion
-            let explosion = Matter.Bodies.circle(x + Math.random() * 100 - 50, y + Math.random() * 100 - 50, 30 + Math.random() * 50, { render: { fillStyle: '#ff0000' }});
+            let explosion = Matter.Bodies.circle(x + Math.random() * this.blastRadius - this.blastRadius/2, y + Math.random() * this.blastRadius - this.blastRadius/2, 30 + Math.random() * this.blastRadius/2, { render: { fillStyle: '#ff0000' }});
             // change the color by a random amount
             explosion.render.fillStyle = '#ff' + Math.floor(Math.random() * 100).toString(16) + '00';
             // make it static

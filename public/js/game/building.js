@@ -235,7 +235,7 @@ class BuildMenu {
     // create a button to toggle build mode
     this.buildModeButton = document.createElement("button");
     this.buildModeButton.classList.add("menu-button");
-    this.buildModeButton.innerText = "Build Mode (b)";
+    this.buildModeButton.innerText = "Start Level (b)";
     this.menu.appendChild(this.buildModeButton);
     // button to toggle fullscreen
     this.fullscreenButton = document.createElement("button");
@@ -260,6 +260,36 @@ class BuildMenu {
     this.menu.style.display = "none";
     this.menu.style.pointerEvents = "none";
   }
+  levelMode() {
+    // hide the menu
+    this.hide();
+    // add text that says "press B to enter build mode"
+    let text = document.createElement("div");
+    text.innerText = "Press B to return to builder";
+    text.classList.add("build-mode-text");
+    text.style.position = "absolute";
+    text.style.bottom = "10px";
+    text.style.left = "50%";
+    text.style.transform = "translateX(-50%)";
+    text.style.color = "white";
+    text.style.fontSize = "20px";
+    text.style.fontFamily = "Arial, sans-serif";
+    let gameContainer = document.getElementById("game-container");
+    gameContainer.appendChild(text);
+  }
+  show() {
+    // remove the text that says "press B to enter build mode"
+    let text = document.querySelector(".build-mode-text");
+    if (text) {
+      text.remove();
+    }
+    // make the menu visible and clickable
+    this.menu.style.display = "flex";
+    this.menu.style.pointerEvents = "auto";
+    
+  }
+    
+
   createBlockButtons() {
     this.blockButtons = {};
     this.blockTypes.forEach((blockType) => {
@@ -354,8 +384,14 @@ class BuildMenu {
     this.buildModeButton.onclick = () => {
       building.buildInProgress = !building.buildInProgress;
       if (building.buildInProgress) {
+        if (!building.canEnterBuildMode){
+          building.buildInProgress = false;
+          return;
+        }
         // set the song to the build theme
         setSong("buildTheme");
+        // show the build menu
+        this.show();
         // alert the level that we have entered build mode
         try{
           building.startBuildModeForLevel();
@@ -395,6 +431,8 @@ class BuildMenu {
           building.buildInProgress = true;
           return;
         }
+        // call levelMode to hide the menu
+        this.levelMode();
         // remove the active class from all the block type buttons
         Object.values(this.blockButtons).forEach((button) =>
           button.classList.remove("active")
@@ -454,6 +492,7 @@ class Building {
     // build menu
     this.buildMenu = new BuildMenu(this);
     this.buildMenu.hide();
+    this.canEnterBuildMode = false;
   }
   setCamera(camera) {
     this.camera = camera;

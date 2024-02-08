@@ -62,6 +62,7 @@ class LevelManager {
             world1Boss: '../../json-enemies/world1Boss.json',
             flameTank: '../../json-enemies/flameTank.json',
             tntTank: '../../json-enemies/tntTank.json',
+            delayedRocketCar: '../../json-enemies/delayedRocketCar.json',
         }
         Object.keys(enemies).forEach(async (key) => {
             var enemyJson = await (await fetch(enemies[key])).json();
@@ -279,6 +280,8 @@ class LevelManager {
     this.building.startBuildModeForLevel = this.setBuildMode.bind(this);
     // clear the building's contraption
     this.building.contraption.clear();
+    // allow the building to enter build mode
+    this.building.canEnterBuildMode = true;
     // activate building mode by clicking the building button if it is not already active
         if (!this.building.buildInProgress) {
             this.building.toggleBuildingMode();
@@ -326,6 +329,8 @@ class LevelManager {
         });
     }
     startLevel() {
+        // set time to normal speed
+        this.engine.timing.timeScale = 1;
         this.won = false;
         // despawn all enemy contraptions
         
@@ -429,10 +434,17 @@ class LevelManager {
                         return;
                     }
                     this.won = true;
+                    // slow down time
+                    this.engine.timing.timeScale = 0.2;
+                    // deactivate build mode if it is somehow active
+                    if (this.building.buildInProgress){
+                        this.building.toggleBuildingMode();
+                    }
+                    // prevent build mode
+                    this.building.canEnterBuildMode = false;
                     setTimeout(() => {
                     this.completeLevel();
-                    }, 1500);
-                    
+                    }, 500);
                 }
             }
         }
@@ -451,6 +463,7 @@ class LevelManager {
         }
     }
     completeLevel() {
+        
         // hide the tutorial text
         document.getElementById('tutorial-text').style.display = "none";
         // play the level complete sound
@@ -503,6 +516,12 @@ class LevelManager {
         }
     }
     loadLevelSelector() {
+        // if build mode is active, deactivate it
+        if (this.building.buildInProgress){
+            this.building.toggleBuildingMode();
+        }
+        // prevent build mode
+        this.building.canEnterBuildMode = false;
         // a screen to select the level to play
         let levelSelector = document.createElement('div');
         // a list of buttons at the top to select the world

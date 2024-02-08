@@ -159,7 +159,7 @@
     },
     { "name": "Wheel Block", "key": "2", "type": "WheelBlock", "limit": 8 },
     { "name": "seat", "key": "3", "type": "SeatBlock", "limit": 1 },
-    { "name": "spike", "key": "4", "type": "SpikeBlock", "limit": 3 }
+    { "name": "spike", "key": "4", "type": "SpikeBlock", "limit": 4 }
   ],
   "objectives": [
     { "name": "Destroy", "value": 1 },

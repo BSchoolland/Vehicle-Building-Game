@@ -76,6 +76,14 @@ class RemoteBlock extends Block {
         console.log('activated');
         Matter.World.remove(this.contraption.engine.world, this.constraints[0]);
         Matter.World.remove(this.contraption.engine.world, this.constraints[1]);
+        // break the constraints between the bottom side and the center of the block
+        Matter.World.remove(this.contraption.engine.world, this.constraints[2]);
+        Matter.World.remove(this.contraption.engine.world, this.constraints[3]);
+        // delete the center body
+        setTimeout(() => {
+            Matter.World.remove(this.contraption.engine.world, this.bodies[2]);
+        }, 500);
+        
     }
     resetValues() {
         super.resetValues();

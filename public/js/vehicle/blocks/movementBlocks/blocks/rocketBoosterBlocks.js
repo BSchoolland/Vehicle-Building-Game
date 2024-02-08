@@ -30,6 +30,11 @@ class rocketBoosterBlock extends Block {
     this.explosionRadius = 100;
     this.explosionDamage = 100;
     // fire damage
+    // the number of flames this block can create per second
+    this.flameRate = 10;
+    this.secondsSinceLastFlame = 0;
+    this.flameSize = 20; // the size of the flame
+    this.flameRange = 200; // the range of the flame
     this.attackFlameDuration = 3; // the duration of fire this gives to other blocks
     this.attackFlameDamage = 20; // the damage per second this block's flame does to other blocks
     this.flames = [];
@@ -164,48 +169,55 @@ class rocketBoosterBlock extends Block {
           (this.thrust * deltaTime) / 1000
         )
       );
-
-      // make a flame
-      let flame = Matter.Bodies.rectangle(
-        this.bodies[1].position.x,
-        this.bodies[1].position.y,
-        10,
-        10,
-        { render: { fillStyle: "#ff0000" } }
-      );
-      // change the color by a random amount
-      flame.render.fillStyle =
-        "#ff" + Math.floor(Math.random() * 100).toString(16) + "00";
-      // make the flame unable to collide with other blocks
-      // flame.collisionFilter = { mask: 0x0002 };
-
-      // add the flame to the world
-      Matter.World.add(this.contraption.engine.world, flame);
-      // shoot the flame in the opposite direction of the rocket (with less force because it looks better while being slightly unrealistic)
-      Matter.Body.applyForce(
-        flame,
-        this.bodies[1].position,
-        Matter.Vector.mult(
-          Matter.Vector.normalise(
-            Matter.Vector.sub(this.bodies[0].position, this.bodies[1].position)
-          ),
-          (-this.thrust * deltaTime) / 1000 / 2
-        )
-      );
-      flame.hit = false; // the flame has not hit anything yet
-      flame.block = this; // the flame is from this block
-      this.flames.push(flame); // add the flame to the list of flames
-      this.invincibleParts.push(flame); // make the flame invincible so the rocket won't be destroyed when the flame is hit by a spike or another weapon
-      // remove the flame after 0.2 seconds
-      setTimeout(() => {
-        Matter.World.remove(this.contraption.engine.world, flame);
-        // remove the flame from the list of flames
-        let index = this.flames.indexOf(flame);
-        if (index > -1) {
-          this.flames.splice(index, 1);
-        }
-      }, 200);
+      // figure out if we should create a flame
+      this.secondsSinceLastFlame += deltaTime;
+      if (this.secondsSinceLastFlame > 1000 / this.flameRate) {
+        this.createFlame(deltaTime);
+        this.secondsSinceLastFlame -= 1000 / this.flameRate;
+      }
     }
+  }
+  createFlame(deltaTime) {
+    // make a flame
+    let flame = Matter.Bodies.rectangle(
+      this.bodies[1].position.x,
+      this.bodies[1].position.y,
+      this.flameSize,
+      this.flameSize,
+      { render: { fillStyle: "#ff0000" } }
+    );
+    // change the color by a random amount
+    flame.render.fillStyle =
+      "#ff" + Math.floor(Math.random() * 100).toString(16) + "00";
+    
+    // record when the flame was created
+    flame.created = Date.now();
+    // add the flame to the world
+    Matter.World.add(this.contraption.engine.world, flame);
+    // shoot the flame in the opposite direction of the rocket
+    Matter.Body.applyForce(
+      flame,
+      this.bodies[1].position,
+      Matter.Vector.mult(
+        Matter.Vector.normalise(
+          Matter.Vector.sub(this.bodies[0].position, this.bodies[1].position)
+        ),
+        (-this.thrust * deltaTime) / 1000
+      )
+    );
+    flame.hit = false; // the flame has not hit anything yet
+    flame.block = this; // the flame is from this block
+    this.flames.push(flame); // add the flame to the list of flames
+    this.invincibleParts.push(flame); // make the flame invincible so the rocket won't be destroyed when the flame is hit by a spike or another weapon
+    // remove the flame after 0.2 seconds
+    setTimeout(() => {
+      Matter.World.remove(this.contraption.engine.world, flame);
+      // remove the flame from the list of flames
+      let index = this.flames.indexOf(flame);
+      if (index > -1) {
+        this.flames.splice(index, 1);
+      }
+    }, this.flameRange); // the flame will be removed after flameRange milliseconds
   }
   // rocket boosters can explode
   explode() {
@@ -269,7 +281,7 @@ class rocketBoosterBlock extends Block {
     if (otherBody.block.contraption === this.contraption) return; // if the other block is part of the same contraption, don't hit it
     if (otherBody.block.invincibleParts && otherBody.block.invincibleParts.includes(otherBody)) return; // if the other block is invincible, don't hit it
     if (otherBody.block.flameDuration > this.attackFlameDuration) return; // if the other block is already on fire for longer than this flame, don't hit it
-
+    if (flame.created + this.flameRange < Date.now()) return; // if the flame is older than flameRange, don't hit the block
     otherBody.block.flameDuration = this.attackFlameDuration; // the block will be on fire for 5 seconds
     otherBody.block.flameDamage = this.attackFlameDamage; // the block will take 5 damage per second
     // record that the flame has hit something

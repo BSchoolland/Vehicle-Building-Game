@@ -55,5 +55,17 @@
       { "type": "GrassBlock", "x": 2700, "y": 500 }
     ],
     "commands": [],
+      "buildingBlockTypes": [
+        { "name": "Basic Block", "key": "1", "type": "BasicWoodenBlock", "limit": 100 },
+        { "name": "Wheel Block", "key": "2", "type": "WheelBlock", "limit": 100 },
+        { "name": "TNT Block", "key": "3", "type": "TNTBlock", "limit": 100 },
+        { "name": "Rocket Booster Block", "key": "4", "type": "rocketBoosterBlock", "limit": 100 },
+        { "name": "Spike Block", "key": "5", "type": "SpikeBlock", "limit": 100 },
+        { "name": "Grapple Block", "key": "6", "type": "GrappleBlock", "limit": 100 },
+        { "name": "Seat Block", "key": "7", "type": "SeatBlock", "limit": 100 },
+        { "name": "Powered Hinge Block", "key": "8", "type": "PoweredHingeBlock", "limit": 100 },
+        { "name": "Remote Block", "key": "9", "type": "RemoteBlock", "limit": 100 }
+      ],
     "tutorialText": ""
   }
+  

@@ -61,6 +61,7 @@ class LevelManager {
             barge: '../../json-enemies/barge.json',
             world1Boss: '../../json-enemies/world1Boss.json',
             flameTank: '../../json-enemies/flameTank.json',
+            tntTank: '../../json-enemies/tntTank.json',
         }
         Object.keys(enemies).forEach(async (key) => {
             var enemyJson = await (await fetch(enemies[key])).json();

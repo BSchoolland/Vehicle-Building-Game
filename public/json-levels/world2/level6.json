@@ -91,7 +91,7 @@
     { "type": "GrassBlock", "x": 2200, "y": 1200 },
     { "type": "GrassBlock", "x": 2000, "y": 1200 },
     { "type": "GrassBlock", "x": 1800, "y": 1200 },
-    { "type": "EnemySpawnBlock", "x": 2300, "y": 1100, "enemyType": "tntTank" }
+    { "type": "EnemySpawnBlock", "x": 2300, "y": 1000, "enemyType": "tntTank" }
   ],
   "commands": [],
   "buildingBlockTypes": [

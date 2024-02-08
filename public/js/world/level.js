@@ -519,12 +519,19 @@ class LevelManager {
             let button = document.createElement('button');
             button.className = "world-select-button";
             button.innerHTML = `World ${i+1}`;
-            button.addEventListener('click', () => {
-                levelSelector.remove();
-                this.worldSelected = i + 1;
-                this.loadLevelSelector();
-                return;
-            });
+            // if this world is already selected, make the button look selected
+            if (i + 1 === this.worldSelected) {
+                button.className = "world-select-button selected";
+            }
+            else {
+                button.addEventListener('click', () => {
+                    levelSelector.remove();
+                    this.worldSelected = i + 1;
+                    this.loadLevelSelector();
+                    return;
+                    
+                });
+            }
             worldSelector.appendChild(button);
         }
         levelSelector.appendChild(worldSelector);
@@ -548,7 +555,7 @@ class LevelManager {
             // add an image for the level (it is also clickable)
             let image = document.createElement('img');
             image.className = "level-select-image";
-            image.src = `../../img/level${i + 1}.png`;
+            image.src = `../../img/world${this.worldSelected}.png`;
             image.addEventListener('click', () => {
                 this.load(i);
                 levelSelector.remove();

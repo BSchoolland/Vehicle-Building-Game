@@ -37,7 +37,7 @@ class World {
             }
         }
         console.log(`World ${worldNum} loaded with ${this.levels.length} levels`);
-        // if there are no levels throw an error upwards to stop the world from being added
+        // if there are no levels, throw an error
         if (this.levels.length === 0) {
             throw new Error(`Failed to load world ${worldNum}`);
         }
@@ -64,6 +64,14 @@ class LevelHandler {
                 break;
             }
         }
+        // after all the worlds have been loaded, load one final world
+        // this world has one level, loaded from local storage (custom level built by the player)
+        let customWorld = new World();
+        // load the custom level from local storage
+        let customLevel = new Level(i + 2, 1);
+        customLevel.levelData = JSON.parse(localStorage.getItem('level'));
+        customWorld.levels.push(customLevel);
+        this.worlds.push(customWorld);
     }
     getLevel(worldNum, levelNum) {
         return this.worlds[worldNum - 1].getLevel(levelNum);

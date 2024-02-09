@@ -15,10 +15,6 @@ import {
     GrappleBlock,
     PoweredHingeBlock,
   } from "../vehicle/blocks.js";
-// local storage
-
-
-// the level builder
 
 class ObjectivesMenu { // creates objectives for the level
     constructor(building) {

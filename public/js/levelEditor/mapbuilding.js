@@ -15,6 +15,9 @@ import {
     GrappleBlock,
     PoweredHingeBlock,
   } from "../vehicle/blocks.js";
+// local storage
+
+
 // the level builder
 
 class ObjectivesMenu { // creates objectives for the level
@@ -22,13 +25,14 @@ class ObjectivesMenu { // creates objectives for the level
         this.building = building;
         // create the menu
         this.menu = document.createElement('div');
-        this.menu.classList.add('menu');
+        this.menu.classList.add('objectives-menu');
         this.menu.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
         // create a selector for each objective 
         this.objectiveTypes = [ // different types of levels have different objectives
             { name: 'Destroy', value: 0 }, // destroy x enemies
             { name: 'Collect', value: 0 }, // collect x coins
             { name: 'Survive', value: 0 }, // survive for x seconds
+            { name: 'Before', value: 0 }, // reach the end before x seconds
         ];
         this.createObjectivesSelectors();
     }
@@ -83,20 +87,16 @@ class allowedBlockMenu {
         this.building = building;
         // create the menu
         this.menu = document.createElement('div');
-        this.menu.classList.add('menu');
+        this.menu.classList.add('allowed-block-menu');
         // create a selector for each block type
         this.blockTypes = [
             { name: 'Basic Block', type: BasicWoodenBlock, allowed: 0 },
             { name: 'Wheel Block', type: WheelBlock, allowed: 0 },
-            { name: 'TNT Block', type: TNTBlock, allowed: 0  },
-            { name: 'remote Block', type: RemoteBlock, allowed: 0  },
-            { name: 'seat', type: SeatBlock, allowed: 1  },
-            { name: 'wheel', type: WheelBlock, allowed: 0  },
-            { name: 'rocket booster',  type: rocketBoosterBlock , allowed: 0 },
-            { name: 'spike',   type: SpikeBlock, allowed: 0  },
-            { name: 'tnt',   type: TNTBlock, allowed: 0  },
-            { name: 'grapple',  type: GrappleBlock, allowed: 0  },
-            { name: 'powered hinge',  type: PoweredHingeBlock, allowed: 0  },
+            { name: 'Seat Block', type: SeatBlock, allowed: 1 }, // only one seat block is allowed
+            { name: 'Spike Block', type: SpikeBlock, allowed: 0 },
+            { name: 'TNT Block', type: TNTBlock, allowed: 0 },
+            { name: 'Rocket Booster', type: rocketBoosterBlock, allowed: 0 },
+            { name: 'Remote Block', type: RemoteBlock, allowed: 0 },
         ];
         this.createBlockSelectors();
     }
@@ -209,12 +209,9 @@ class BuildMenu {
         this.buildModeButton = document.createElement('button');
         this.buildModeButton.classList.add('menu-button');
         this.buildModeButton.innerText = 'Build Mode (b)';
+        // make the button invisible since we are in level editor mode
+        this.buildModeButton.style.display = 'none';
         this.menu.appendChild(this.buildModeButton);
-        // button to toggle fullscreen
-        this.fullscreenButton = document.createElement('button');
-        this.fullscreenButton.classList.add('menu-button');
-        this.fullscreenButton.innerText = 'Fullscreen';
-        this.menu.appendChild(this.fullscreenButton);
         // style the menu
         this.menu.classList.add('build-menu');
         // set the button class
@@ -281,6 +278,8 @@ class BuildMenu {
             dlAnchorElem.setAttribute("href", dataStr);
             dlAnchorElem.setAttribute("download", "level.json");
             dlAnchorElem.click();
+            // also save the level to the local storage
+            localStorage.setItem('level', JSON.stringify(LevelManagerJson));
         };
         this.loadButton.onclick = () => {
             if (!building.buildInProgress) {
@@ -355,19 +354,12 @@ class BuildMenu {
                 building.camera.setTarget(building.level.blocks[0]);
             }
         };
-        this.fullscreenButton.onclick = () => {
-            this.building.camera.toggleFullScreen();
-        };
         // Assuming this is inside a method where 'this' refers to an object that has 'building' property
         const menu = document.querySelector('.build-menu'); // Adjust the selector as needed
-
         menu.style.bottom = '0px'; // Distance from the bottom of the canvas
         menu.style.left = 500; //`${rect.left + (rect.width / 2) - (menu.offsetWidth / 2)}px`; // Center horizontally
-        
     }
-}
-
-        
+}       
 
 // a refactored version of the building class for level editing
 class Building {
@@ -448,36 +440,59 @@ class Building {
         }
         // Create a new block at the click position
         let newBlock = new this.currentBlockType(x, y, this.level);
+        if (newBlock.constructor.name === 'EnemySpawnBlock') {
+            this.showRightClickMenu(newBlock, _event);
+        }
         // Add the block to the level
         this.level.addBlock(newBlock);
     }
-    showRightClickMenu(block, event) {
-        // create a popup asking the user to submit a string
+    showRightClickMenu(block, event) { // for when the user places an enemy spawn block
+        const enemies = {
+            box: '../../json-enemies/box.json',
+            car: '../../json-enemies/car.json',
+            spikeCar: '../../json-enemies/spikeCar.json',
+            largeSpikeCar: '../../json-enemies/largeSpikeCar.json',
+            movingSpikeWall: '../../json-enemies/movingSpikeWall.json',
+            barge: '../../json-enemies/barge.json',
+            world1Boss: '../../json-enemies/world1Boss.json',
+            flameTank: '../../json-enemies/flameTank.json', 
+            tntTank: '../../json-enemies/tntTank.json',
+            delayedRocketCar: '../../json-enemies/delayedRocketCar.json',
+        };
+        // create a popup with each enemy type
         let popup = document.createElement('div');
         popup.classList.add('popup');
-        let popupText = document.createElement('p');
-        popupText.innerText = 'Enter the enemy type:';
-        popup.appendChild(popupText);
-        let input = document.createElement('input');
-        input.type = 'text';
-        popup.appendChild(input);
-        let submitButton = document.createElement('button');
-        submitButton.innerText = 'Submit';
-        // style the popup 
+        // position the popup
         popup.className = 'right-click-menu';
         popup.style.position = 'absolute';
         popup.style.top = `${event.clientY}px`;
         popup.style.left = `${event.clientX}px`;
+        // add a button for each enemy type
+        Object.keys(enemies).forEach(enemy => {
+            let button = document.createElement('button');
+            button.innerText = enemy;
+            button.classList.add('menu-button');
+            if (block.enemyType === enemy) {
+                button.classList.add('selected');
+            }
+            button.onclick = () => {
+                // set the block's enemy type
+                block.enemyType = enemy;
+                // set the block's enemy json
+                block.enemyJson = enemies[enemy];
+                // destroy the current enemy contraption
+                if (block.enemyContraption) {
+                    block.enemyContraption.destroy();
+                };
+                // create a new enemy contraption
+                block.enemyContraption = this.level.loadEnemyContraption({enemyType: enemy, x: block.x, y: block.y});
+                // remove the popup
+                popup.remove();
+            };
+            popup.appendChild(button);
+        });
         // show the popup
-        popup.appendChild(submitButton);
-        let gameContainer = document.getElementById("game-container");
-        gameContainer.appendChild(popup);
-        // when the submit button is clicked, set the block's enemy type to the input value
-        submitButton.onclick = () => {
-            block.enemyType = input.value;
-            // remove the popup
-            popup.remove();
-        };
+        document.body.appendChild(popup);
     }
 
     handleRightClick(event) {
@@ -539,7 +554,6 @@ class Building {
         }
         this.gridLines = [];
     }
-        
 }
 
 export default Building;

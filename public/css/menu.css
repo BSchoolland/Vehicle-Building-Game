@@ -171,6 +171,46 @@
     transition: background-color 0.3s;
     text-transform: uppercase; /* Makes text uppercase for a more formal look */
     font-weight: bold;
-
 }
 
+.allowed-block-menu {
+    position: absolute;
+    top: 5%; 
+    left: 5%;
+    background-color: #1a3a5f; /* Dark blue background */
+    border: 1px solid #557da6; /* Lighter blue border */
+    color: #e4e8ec; /* Light text color */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1); 
+    font-family: 'Courier New', monospace; /* Font that gives a typewritten or technical feel */
+    /* organize items into rows of 3 */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 70%;
+    overflow: auto;
+}
+
+.objectives-menu {
+    position: absolute;
+    top: 5%; 
+    right: 5%;
+    background-color: #1a3a5f; /* Dark blue background */
+    border: 1px solid #557da6; /* Lighter blue border */
+    color: #e4e8ec; /* Light text color */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1); 
+    font-family: 'Courier New', monospace; /* Font that gives a typewritten or technical feel */
+    /* organize items into rows of 3 */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 70%;
+    overflow: auto;
+}

@@ -14,6 +14,7 @@ const blockTypes = {
     slightRampBlockLUpsideDown,
 };
 import LevelHandler from '../loaders/levelHandler.js';
+import EnemyHandler from '../loaders/enemyHandler.js';
 // A Level is a collection of blocks that can be saved and loaded
 class LevelManager {
     constructor(engine, building) {
@@ -44,6 +45,7 @@ class LevelManager {
         this.startTime = 0;
 
         this.LevelHandler = new LevelHandler();
+        this.EnemyHandler = new EnemyHandler();
         this.worldSelected = 1;
     }
 
@@ -60,7 +62,7 @@ class LevelManager {
             movingSpikeWall: '../../json-enemies/movingSpikeWall.json',
             barge: '../../json-enemies/barge.json',
             world1Boss: '../../json-enemies/world1Boss.json',
-            flameTank: '../../json-enemies/flameTank.json',
+            flameTank: '../../json-enemies/flameTank.json', 
             tntTank: '../../json-enemies/tntTank.json',
             delayedRocketCar: '../../json-enemies/delayedRocketCar.json',
         }
@@ -87,6 +89,12 @@ class LevelManager {
         if (addToActionStack){
             this.actionStack.push({ action: 'remove', block: block });
         }
+        // if it is an enemy spawn block, remove the enemy contraption
+        
+        if (block.enemyContraption) {
+            block.enemyContraption.destroy();
+        }
+        
     }
     // save the Level to a JSON object
     save() {
@@ -110,17 +118,46 @@ class LevelManager {
             if (BlockType) {
                 // Create a new block instance
                 let newBlock = new BlockType(blockJson.x, blockJson.y, this);
+                if (BlockType === EnemySpawnBlock) {
+                    newBlock.enemyType = blockJson.enemyType;
+                    // spawn in an enemy contraption
+                    const EnemyContraption = this.loadEnemyContraption(blockJson);
+                    // add the enemy contraption to the newBlock
+                    newBlock.enemyContraption = EnemyContraption;
+                    // make the newBlock invisible
+                    newBlock.bodies.forEach(body => {
+                        body.render.visible = false;
+                    });
+                }
                 // Add the block to the Level
                 this.addBlock(newBlock); 
-
-                if (blockJson.flippedX) {
-                    newBlock.flipX();
-                }
             } else {
                 console.error(`Unknown block type: ${blockJson.type}`);
-
             }
         });
+    }
+    loadEnemyContraption(blockJson) {
+        let enemyType = blockJson.enemyType;
+        if (enemyType === undefined) {
+            console.error("No enemy type defined for enemy spawn block");
+            enemyType = "box";
+        }
+        // get the enemy contraption's JSON
+        let enemyContraptionJson = this.EnemyHandler.getEnemyJSON(enemyType);
+        if (enemyContraptionJson === undefined) {
+            console.error(`Unknown enemy type: ${enemyType}`);
+            return;
+        }
+        // load the enemy contraption
+        const EnemyContraption = new Contraption(this.engine, 'AI', this);
+        EnemyContraption.load(enemyContraptionJson);
+        // load the commands
+        EnemyContraption.AiLoadCommands(enemyContraptionJson.commands);
+        // move the enemy contraption to the spawn point
+        EnemyContraption.moveTo(blockJson.x, blockJson.y);
+        // add the enemy contraption to the enemy contraptions array
+        this.enemyContraptions.push([EnemyContraption, blockJson.x, blockJson.y]);
+        return EnemyContraption;
     }
     // load a Level from a JSON object
     load(levelIndex, optionalJson = null) {
@@ -211,21 +248,8 @@ class LevelManager {
                         console.error("No enemy type defined for enemy spawn block");
                         enemyType = "box";
                     }
-                    // get the enemy contraption's JSON
-                    let enemyContraptionJson = this.enemyContraptionsJSON[enemyType]
-                    if (enemyContraptionJson === undefined) {
-                        console.error(`Unknown enemy type: ${enemyType}`);
-                        return;
-                    }
                     // load the enemy contraption
-                    const EnemyContraption = new Contraption(this.engine, 'AI', this);
-                    EnemyContraption.load(enemyContraptionJson);
-                    // load the commands
-                    EnemyContraption.AiLoadCommands(enemyContraptionJson.commands);
-                    // move the enemy contraption to the spawn point
-                    EnemyContraption.moveTo(blockJson.x, blockJson.y);
-                    // add the enemy contraption to the enemy contraptions array
-                    this.enemyContraptions.push([EnemyContraption, blockJson.x, blockJson.y]);
+                    const EnemyContraption = this.loadEnemyContraption(blockJson);
                     return;
                 }
 

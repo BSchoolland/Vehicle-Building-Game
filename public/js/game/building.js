@@ -374,6 +374,8 @@ class BuildMenu {
       };
     };
     this.clearButton.onclick = () => {
+      // clear the ghost blocks
+      building.removeGhostBlocks();
       if (!building.buildInProgress) {
         return;
       }
@@ -382,6 +384,8 @@ class BuildMenu {
       this.updateButtonLimits();
     };
     this.buildModeButton.onclick = () => {
+      // remove the ghost blocks
+      building.removeGhostBlocks();
       building.buildInProgress = !building.buildInProgress;
       if (building.buildInProgress) {
         if (!building.canEnterBuildMode){
@@ -493,6 +497,8 @@ class Building {
     this.buildMenu = new BuildMenu(this);
     this.buildMenu.hide();
     this.canEnterBuildMode = false;
+    this.ghostBlocks = [];
+    this.selectedBlock = null;
   }
   setCamera(camera) {
     this.camera = camera;
@@ -523,7 +529,15 @@ class Building {
       this.handleRightClick(event)
     );
   }
-
+  removeGhostBlocks() {
+    this.ghostBlocks.forEach((block) => {
+      Matter.World.remove(this.engine.world, block);
+    });
+    // clear the ghost blocks array
+    this.ghostBlocks = [];
+    // clear the selected block
+    this.selectedBlock = null;
+  }
   handleCanvasClick(_event) {
     // make sure build mode is enabled
     if (!this.buildInProgress) {
@@ -538,10 +552,12 @@ class Building {
     // make sure the position is within the build area
     if (x < this.buildArea.x || x > this.buildArea.x + this.buildArea.width) {
       console.log("Cannot place block here");
+      this.removeGhostBlocks();
       return;
     }
     if (y < this.buildArea.y || y > this.buildArea.y + this.buildArea.height) {
       console.log("Cannot place block here");
+      this.removeGhostBlocks();
       return;
     }
     // make sure there is not already a block in the contraption here
@@ -550,8 +566,10 @@ class Building {
         this.contraption.blocks[i].x === x &&
         this.contraption.blocks[i].y === y
       ) {
-        console.log("Cannot place block here");
-        return;
+        console.log("Block already here");
+        // instead, select this block
+        this.selectBlock(this.contraption.blocks[i]);
+        return
       }
     }
     // find how many of each block are already in the contraption, and make sure the limit has not been reached
@@ -567,6 +585,7 @@ class Building {
       blockTypeCount[this.currentBlockType.name] >= this.currentBlockTypeLimit
     ) {
       console.log("Limit reached for this block type");
+      this.removeGhostBlocks();
       return;
     }
 
@@ -577,7 +596,43 @@ class Building {
     // play the place block sound
     // playSound("placeBlock");
     // update the button limits
+    // make the new block selected
+    this.selectBlock(newBlock);
     this.buildMenu.updateButtonLimits();
+  }
+  selectBlock(block) {
+    // if the block is already selected, deselect it
+    if (this.selectedBlock === block) {
+      this.removeGhostBlocks();
+      return;
+    }
+    // remove the ghost blocks
+    this.removeGhostBlocks();
+    // add a ghost block, a large blue square, to show that the block is selected
+    let ghostBlock = Matter.Bodies.rectangle(
+      block.x,
+      block.y,
+      this.grid * 1.1,
+      this.grid * 1.1,
+      {
+        isStatic: true,
+        render: {
+          fillStyle: "rgba(0, 0, 255, 0.5)",
+          strokeStyle: "rgba(0, 0, 255, 0.5)",
+          lineWidth: 0,
+        },
+      }
+    );
+    this.ghostBlocks.push(ghostBlock);
+    Matter.World.add(this.engine.world, ghostBlock);
+    // refresh the block, so it displays over the new blocks
+    block.bodies.forEach((body) => {
+      Matter.World.remove(this.engine.world, body);
+      Matter.World.add(this.engine.world, body);
+    });
+    // make the selected block the block that was clicked
+    this.selectedBlock = block;
+    return;
   }
   showRightClickMenu(block, event) {
     // set the menu's block
@@ -585,7 +640,7 @@ class Building {
     // get the relative click position using the event
     let pos = {
       x: event.clientX,
-      y: event.clientY,
+      y: event.clientY + this.grid,
     };
     // show the menu
     this.RightClickMenu.show(pos.x, pos.y);
@@ -622,17 +677,34 @@ class Building {
       return;
     }
     // If the Z key is pressed, undo the last block placed
-    if (event.keyCode === 90) {
-      this.contraption.undo();
-    }
-    // If the X key is pressed, redo the last block placed
-    if (event.keyCode === 88) {
-      this.contraption.redo();
-    }
+    // if (event.keyCode === 90) {
+    //   this.contraption.undo();
+    //   // unselect the block
+    //   this.removeGhostBlocks();
+    // }
+    // // If the X key is pressed, redo the last block placed
+    // if (event.keyCode === 88) {
+    //   this.contraption.redo();
+    //   // select the final block
+    //   this.selectBlock(this.contraption.blocks[this.contraption.blocks.length - 1]);
+    // }
 
     // if the B key is pressed, toggle build mode
     if (event.keyCode === 66) {
       this.buildMenu.buildModeButton.click();
+    }
+    // if there is a block selected, allow rotation and deletion keybinds
+    if (this.selectedBlock && this.buildInProgress) {
+      // if R is pressed, rotate
+      if (event.keyCode === 82) {
+        this.selectedBlock.rotate90();
+      }
+      // if backspace, remove the block
+      if (event.keyCode === 8) {
+        this.contraption.removeBlock(this.selectedBlock);
+        this.buildMenu.updateButtonLimits();
+        this.removeGhostBlocks();
+      }
     }
   }
   setBuildArea(buildArea) {

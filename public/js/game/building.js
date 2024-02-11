@@ -455,7 +455,7 @@ class BuildMenu {
         // set the camera viewport to the size of the canvas
         const canvas = document.querySelector("canvas");
         building.camera.setViewport(canvas.width*2, canvas.height*2);
-
+        
         // set the camera target to the seat
         building.camera.setTarget(building.contraption.seat);
         // despawn the contraption after a short delay

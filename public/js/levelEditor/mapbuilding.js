@@ -133,12 +133,19 @@ class allowedBlockMenu {
     }
     setBuildingBlockTypes(buildingBlockTypes) {
         // set the block types
-        this.blockTypes = [];
+        this.blockTypes = [
+            { name: 'Basic Block', type: BasicWoodenBlock, allowed: 0 },
+            { name: 'Wheel Block', type: WheelBlock, allowed: 0 },
+            { name: 'Seat Block', type: SeatBlock, allowed: 1 }, // only one seat block is allowed
+            { name: 'Spike Block', type: SpikeBlock, allowed: 0 },
+            { name: 'TNT Block', type: TNTBlock, allowed: 0 },
+            { name: 'Rocket Booster', type: rocketBoosterBlock, allowed: 0 },
+            { name: 'Remote Block', type: RemoteBlock, allowed: 0 },
+        ];
         let length = buildingBlockTypes.length;
         for (let i = 0; i < length; i++) {
             let blockType = {};
-            // set the name
-            buildingBlockTypes[i].name = buildingBlockTypes[i].name;
+
             // get the block type
             try {
                 blockType.type = eval(buildingBlockTypes[i].type);
@@ -148,9 +155,17 @@ class allowedBlockMenu {
             }
             // set the allowed number of blocks
             blockType.allowed = buildingBlockTypes[i].limit;
-            // add the block type to the list
-            blockType.name = buildingBlockTypes[i].name;
-            this.blockTypes.push(blockType);
+            // check if the block type is already in the list
+            let index = this.blockTypes.findIndex(block => block.type.name === blockType.type.name);
+            if (index > -1) {
+                // update the allowed number of blocks
+                this.blockTypes[index].allowed = blockType.allowed;
+            }
+            else {
+                // add the block type to the list
+                blockType.name = buildingBlockTypes[i].name;
+                this.blockTypes.push(blockType);
+            }
         }
         // clear the menu
         this.menu.innerHTML = '';
@@ -201,6 +216,11 @@ class BuildMenu {
         this.clearButton.classList.add('menu-button');
         this.clearButton.innerText = 'Clear';
         this.menu.appendChild(this.clearButton);
+        // create a button to test the level
+        this.testButton = document.createElement('button');
+        this.testButton.classList.add('menu-button');
+        this.testButton.innerText = 'Test Level';
+        this.menu.appendChild(this.testButton);
         // create a button to toggle build mode
         this.buildModeButton = document.createElement('button');
         this.buildModeButton.classList.add('menu-button');
@@ -214,12 +234,14 @@ class BuildMenu {
         this.saveButton.classList.add('build-menu-button');
         this.loadButton.classList.add('build-menu-button');
         this.clearButton.classList.add('build-menu-button');
+        this.testButton.classList.add('build-menu-button');
         this.buildModeButton.classList.add('build-menu-button');
         // Add the menu to the game container
         let gameContainer = document.getElementById('game-container');
         gameContainer.appendChild(this.menu);
         // initialize the menu
         this.init(building);
+        
     }
     createBlockButtons() {
         this.blockButtons = {};
@@ -254,7 +276,6 @@ class BuildMenu {
             this.building.blockSelectors.blockTypes = this.building.blockSelectors.blockTypes.filter(blockType => blockType.allowed > 0);
             const buildingBlockTypes = this.building.blockSelectors.blockTypes.map(blockType => {
                 key ++;
-                console.log(blockType)
                 return {
                     name: blockType.name,
                     key: key.toString(),
@@ -292,26 +313,44 @@ class BuildMenu {
                 reader.readAsText(file);
                 reader.onload = () => {
                     let LevelManagerJson = JSON.parse(reader.result);
-                    // clear the existing level
-                    building.level.clear();
-                    // load the level from the JSON object
-                    building.level.loadForEditing(LevelManagerJson);
-                    // get the block types from the JSON object
-                    let buildingBlockTypes = LevelManagerJson.buildingBlockTypes;
-                    // set the block types
-                    this.building.blockSelectors.setBuildingBlockTypes(buildingBlockTypes);
-                    // set the objective types
-                    this.building.objectivesSelectors.setObjectiveTypes(LevelManagerJson.objectives);
-                    // set the tutorial text
-                    document.getElementById('tutorial-text').value = LevelManagerJson.tutorialText;
+
+                    this.loadLevel(LevelManagerJson);
                 };
             };
         };
+        
         this.clearButton.onclick = () => {
             if (!building.buildInProgress) {
                 return;
             }
             building.level.clear();
+        };
+        this.testButton.onclick = () => {
+            // save the level to the local storage
+            let LevelManagerJson = building.level.save();
+            let key = 0;
+            // remove the block types that are not allowed
+            this.building.blockSelectors.blockTypes = this.building.blockSelectors.blockTypes.filter(blockType => blockType.allowed > 0);
+            const buildingBlockTypes = this.building.blockSelectors.blockTypes.map(blockType => {
+                key ++;
+
+                return {
+                    name: blockType.name,
+                    key: key.toString(),
+                    type: blockType.type.name,
+                    limit: blockType.allowed
+                };
+            });
+            // save the block types to the JSON object
+            LevelManagerJson.buildingBlockTypes = buildingBlockTypes;
+            // save the objective types to the JSON object
+            LevelManagerJson.objectives = this.building.objectivesSelectors.objectiveTypes;
+            // add tutorial text
+            LevelManagerJson.tutorialText = document.getElementById('tutorial-text').value;
+            // save the level to the local storage
+            localStorage.setItem('level', JSON.stringify(LevelManagerJson));
+            // set the href of the page to the mylevel.html
+            window.location.href = 'mylevel.html';
         };
         this.buildModeButton.onclick = () => {
             building.buildInProgress = !building.buildInProgress;
@@ -355,6 +394,20 @@ class BuildMenu {
         menu.style.bottom = '0px'; // Distance from the bottom of the canvas
         menu.style.left = 500; //`${rect.left + (rect.width / 2) - (menu.offsetWidth / 2)}px`; // Center horizontally
     }
+    loadLevel(LevelManagerJson) {
+        // clear the existing level
+        this.building.level.clear();
+        // load the level from the JSON object
+        this.building.level.loadForEditing(LevelManagerJson);
+        // get the block types from the JSON object
+        let buildingBlockTypes = LevelManagerJson.buildingBlockTypes;
+        // set the block types
+        this.building.blockSelectors.setBuildingBlockTypes(buildingBlockTypes);
+        // set the objective types
+        this.building.objectivesSelectors.setObjectiveTypes(LevelManagerJson.objectives);
+        // set the tutorial text
+        document.getElementById('tutorial-text').value = LevelManagerJson.tutorialText;
+    }
 }       
 
 // a refactored version of the building class for level editing
@@ -378,6 +431,19 @@ class Building {
         this.buildMenu = new BuildMenu(this);
         this.blockSelectors = new allowedBlockMenu(this);
         this.objectivesSelectors = new ObjectivesMenu(this);
+        // if level is in local storage, load it
+        if (localStorage.getItem('level')) {
+            try {
+                let LevelManagerJson = JSON.parse(localStorage.getItem('level'));
+                setTimeout(() => { // FIXME: This is a workaround for a bug where the level is not loaded properly due to vehicle contraptions not being loaded
+                    this.buildMenu.loadLevel(LevelManagerJson);
+                },1000);
+
+                
+            } catch (error) {
+                console.error('Failed to load level from local storage');
+            }
+        }
     }
 
     setCurrentBlockType(blockType) {
@@ -423,10 +489,6 @@ class Building {
         for (let i = 0; i < this.level.blocks.length; i++) {
             if (this.level.blocks[i].x === x && this.level.blocks[i].y === y) {
                 console.log('Cannot place block here');
-                // log the block that is already here
-                console.log(this.level.blocks[i]);
-                // log the block's class name
-                console.log(this.level.blocks[i].constructor.name);
                 // if the block is an enemy spawn block, show the right click menu
                 if (this.level.blocks[i].constructor.name === 'EnemySpawnBlock') {
                     this.showRightClickMenu(this.level.blocks[i], _event);

@@ -9,6 +9,6 @@
     { "type": "SeatBlock", "x": 275, "y": 325, "flippedX": true }
   ],
   "commands": [
-    { "key": "a", "start": 2.5, "end": 12.0}
+    { "key": "a", "start": 2.5, "end": 60}
   ]
 }

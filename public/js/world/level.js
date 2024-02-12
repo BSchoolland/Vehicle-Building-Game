@@ -58,9 +58,14 @@ class LevelManager {
     this.LevelHandler = new LevelHandler();
     this.EnemyHandler = new EnemyHandler();
     this.worldSelected = 1;
+
+    this.test = false;
   }
 
-  init() {
+  init(string='normal') {
+    if (string === 'testLevel') {
+      this.test = true;
+    }
     this.populateEnemyContraptions();
   }
   populateEnemyContraptions() {
@@ -189,11 +194,15 @@ class LevelManager {
       // }
     }
 
-    var LevelJson = this.LevelHandler.getLevel(this.worldSelected, levelIndex); // world 1, level levelIndex
-
-    if (optionalJson) {
-      LevelJson = optionalJson;
+    let LevelJson;
+    
+    if (optionalJson) { // if optionalJson is provided, use that instead of loading from the LevelHandler
+      LevelJson = JSON.parse(optionalJson);
     }
+    else { // if optionalJson is not provided, load from the LevelHandler
+      LevelJson = this.LevelHandler.getLevel(this.worldSelected, levelIndex); // world 1, level levelIndex
+    }
+    console.log('LevelJson:', LevelJson);
     let tutorial = document.getElementById("tutorial-text");
 
     let string = LevelJson.tutorialText;
@@ -557,8 +566,14 @@ class LevelManager {
     setTimeout(() => {
       // clear the level
       this.clear();
-      //open the next level
-      this.loadLevelSelector();
+      if (this.test) {
+        // if this is a test level, return to the level editor by setting href to /editor
+        window.location.href = "/editor.html";
+      }
+      else {
+        //open the level selector
+        this.loadLevelSelector();
+      }
       // clear the player contraption
       this.playerContraption.clear();
       // set the stats to be invisible

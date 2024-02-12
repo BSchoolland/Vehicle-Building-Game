@@ -612,14 +612,14 @@ class Building {
     let ghostBlock = Matter.Bodies.rectangle(
       block.x,
       block.y,
-      this.grid * 1.1,
-      this.grid * 1.1,
+      this.grid + 2,
+      this.grid + 2,
       {
         isStatic: true,
         render: {
-          fillStyle: "rgba(0, 0, 255, 0.5)",
-          strokeStyle: "rgba(0, 0, 255, 0.5)",
-          lineWidth: 0,
+          fillStyle: "rgba(0, 0, 255, 0)",
+          strokeStyle: "rgba(17, 90, 209, 0.7)",
+          lineWidth: 2,
         },
       }
     );
@@ -663,7 +663,8 @@ class Building {
       (block) => block.x === x && block.y === y
     );
     if (block) {
-      this.showRightClickMenu(block, event);
+      // select the block
+      this.selectBlock(block);
     }
   }
 

@@ -25,10 +25,10 @@
     "commands": [
       { "key": "d", "start": 3.0, "end": 12.0},
       { "key": "a", "start": 14, "end": 23},
-      { "key": "d", "start": 25, "end": 34},
-      { "key": "a", "start": 36, "end": 45},
-      { "key": "d", "start": 47, "end": 56},
-      { "key": "a", "start": 60, "end": 9999}
+      { "key": "d", "start": 30, "end": 39},
+      { "key": "a", "start": 45, "end": 54},
+      { "key": "d", "start": 60, "end": 69},
+      { "key": "a", "start": 72, "end": 9999}
     ]
   }
   

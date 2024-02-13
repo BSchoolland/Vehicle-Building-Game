@@ -1,3 +1,50 @@
+body {
+    overflow: hidden;
+    /* set the background as a single image covering the entire screen */
+    background-image: url(../img/background.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
+}
+
+/* Parent container for the progress bar */
+.progress-bar-parent {
+    width: 50%;
+    margin: 40vh auto; /* center the progress bar */
+    
+}
+
+.progress-bar {
+    background-color: #0300c5; /* background color of the progress bar */
+    border-radius: 5px; /* rounded corners */
+    width: 0; /* initial width, will be updated by JavaScript */
+    height: 20px; /* height of the progress bar */
+    color: white; /* color of the text */
+    text-align: center; /* center the text */
+    line-height: 20px; /* align the text vertically */
+    
+}
+
+.progress-bar-container {
+    width: 100%; /* full width */
+    background-color: #ddd; /* background color of the container */
+    color: black; /* color of the text */
+    padding: 3px;
+    border-radius: 5px; /* rounded corners */
+}
+.progress-bar-text-container {
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center; /* center vertically */
+    height: 100%; /* take full height of the parent */
+}
+.progress-bar-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+    /* display in the center */
+}
+
 /* Style for the right-click menu container */
 .right-click-menu {
     background-color: #1a3a5f; /* Dark blue background */

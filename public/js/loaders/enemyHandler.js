@@ -1,7 +1,7 @@
 // EnemyHandler.js
 
 class EnemyHandler {
-    constructor() {
+    constructor(progressBar) {
         this.enemies = { // a list of all the enemies in the game and the path to their json file
             box: '../../json-enemies/box.json',
             car: '../../json-enemies/car.json',
@@ -15,6 +15,7 @@ class EnemyHandler {
             delayedRocketCar: '../../json-enemies/delayedRocketCar.json'
         }
         this.enemyContraptionsJSON = {};
+        this.progressBar = progressBar;
         this.preLoadEnemies();
     }
     preLoadEnemies() {
@@ -24,6 +25,7 @@ class EnemyHandler {
             this.enemyContraptionsJSON[key] = enemyJson;
         });
         console.log("all enemies preloaded");
+        if (this.progressBar !== undefined) this.progressBar.update();
     }
     getEnemyJSON(enemyName) {
         if (this.enemyContraptionsJSON[enemyName] === undefined) {

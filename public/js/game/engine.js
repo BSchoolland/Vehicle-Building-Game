@@ -2,6 +2,7 @@ import Building from "./building.js";
 import { Camera } from "./camera.js";
 import { LevelManager } from "../world/level.js";
 import { setSong } from "../sounds/playSound.js";
+import ProgressBar from "../loaders/progressBar.js";
 
 let gameStarted = false;
 function clickHandler() {
@@ -9,8 +10,6 @@ function clickHandler() {
     return;
   }
   gameStarted = true;
-  // play the sound
-  setSong("mainTheme");
   // remove the event listener
   document.removeEventListener("click", clickHandler);
   // start the game
@@ -22,6 +21,12 @@ function createHTML() {
   // clear the container
   container.innerHTML = "";
 }
+
+// create a progress bar
+let barContainer = document.getElementById("progress-bar-container");
+const steps = ["Loading Contraptions", "Loading Music", "Loading World 1", "Loading World 2"];
+let progressBar = new ProgressBar(steps, barContainer );
+
 // Create an engine
 var engine = Matter.Engine.create();
 
@@ -43,11 +48,41 @@ var camera = new Camera(render, mouse, render.canvas);
 // allow the player to build blocks
 let building = new Building(engine, camera);
 building.init();
-const levelObject = new LevelManager(engine, building);
+const levelObject = new LevelManager(engine, building, progressBar);
 levelObject.init();
 document.addEventListener("click", clickHandler);
 
+function checkMusicLoaded() {
+  // try to play the music
+  let success = setSong("mainTheme");
+  if (success) {
+    musicLoaded = true;
+  }
+  if (musicLoaded) {
+    progressBar.update();
+  } else {
+    setTimeout(checkMusicLoaded, 100);
+  }
+}
+
+
+// create a loop to update the progress bar
+let musicLoaded = false;
+checkMusicLoaded();
+
+
 function startGame() {
+  // wait until loading is done
+  if (!progressBar.loaded) {
+    setTimeout(startGame, 100);
+    return;
+  }
+  // play the sound
+  setSong("mainTheme");
+  // remove the background from body
+  document.body.style.background = "none";
+  // make the body white
+  document.body.style.backgroundColor = "white";
   createHTML();
   // show the container
   container.style.display = "block";

@@ -28,11 +28,10 @@ import LevelHandler from "../loaders/levelHandler.js";
 import EnemyHandler from "../loaders/enemyHandler.js";
 // A Level is a collection of blocks that can be saved and loaded
 class LevelManager {
-  constructor(engine, building) {
+  constructor(engine, building, progressBar) {
     this.engine = engine;
     this.playerContraption = building.contraption;
     this.building = building;
-    this.enemyContraptionsJSON = {};
 
     this.blocks = [];
     this.actionStack = [];
@@ -55,37 +54,25 @@ class LevelManager {
     this.mustSurvive = 0;
     this.startTime = 0;
 
-    this.LevelHandler = new LevelHandler();
-    this.EnemyHandler = new EnemyHandler();
+    this.LevelHandler = new LevelHandler(progressBar);
+    this.EnemyHandler = new EnemyHandler(progressBar);
     this.worldSelected = 1;
 
     this.test = false;
+
+    this.loaded = false;
   }
 
   init(string='normal') {
     if (string === 'testLevel') {
       this.test = true;
     }
-    this.populateEnemyContraptions();
-  }
-  populateEnemyContraptions() {
-    console.log("populate enemy contraptions");
-    const enemies = {
-      box: "../../json-enemies/box.json",
-      car: "../../json-enemies/car.json",
-      spikeCar: "../../json-enemies/spikeCar.json",
-      largeSpikeCar: "../../json-enemies/largeSpikeCar.json",
-      movingSpikeWall: "../../json-enemies/movingSpikeWall.json",
-      barge: "../../json-enemies/barge.json",
-      world1Boss: "../../json-enemies/world1Boss.json",
-      flameTank: "../../json-enemies/flameTank.json",
-      tntTank: "../../json-enemies/tntTank.json",
-      delayedRocketCar: "../../json-enemies/delayedRocketCar.json",
-    };
-    Object.keys(enemies).forEach(async (key) => {
-      var enemyJson = await (await fetch(enemies[key])).json();
-      this.enemyContraptionsJSON[key] = enemyJson;
-    });
+    // wait for the contraptions to load
+    // while (!this.EnemyHandler.loaded) {
+    //   console.log("waiting for contraptions to load");
+    //   // wait
+    // }
+    this.loaded = true;
   }
   addBlock(block, addToActionStack = true) {
     block.Level = this;

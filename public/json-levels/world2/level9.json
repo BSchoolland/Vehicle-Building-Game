@@ -145,8 +145,7 @@
       "type": "rocketBoosterBlock",
       "limit": 2
     },
-    { "name": "spike", "key": "6", "type": "SpikeBlock", "limit": 4 },
-    { "name": "tnt", "key": "7", "type": "TNTBlock", "limit": 1 }
+    { "name": "spike", "key": "6", "type": "SpikeBlock", "limit": 4 }
   ],
   "objectives": [
     { "name": "Destroy", "value": 2 },

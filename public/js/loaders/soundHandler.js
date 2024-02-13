@@ -1,8 +1,5 @@
 // this file is responsible for loading sounds, and letting the game know when they are loaded
-
-
-
-class SoundHandler {
+export default class SoundHandler {
     constructor() {
         this.audioContext = new AudioContext();
         this.music = {

@@ -1,7 +1,7 @@
 .stat-container {
     position: absolute;
     top: 5%;
-    left: 5%;
+    right: 5%;
     background-color: #1a3a5f;
     border: 1px solid #557da6;
     color: #e4e8ec;
@@ -23,8 +23,9 @@
 
 .tutorial {
     position: absolute;
-    top: 5%;
-    left: 30%;
+    top: 2%;
+    left: 20%;
+    right: 30%;
 }
 
 p {

@@ -431,7 +431,7 @@ class BuildMenu {
         }, 500);
       } else {
         // if the contraption has no seat, don't disable build mode
-        if (!building.contraption.seat) {
+        if (!building.contraption.seat && building.canEnterBuildMode) {
           playSound("error");
           building.buildInProgress = true;
           return;
@@ -504,7 +504,7 @@ class Building {
   setCamera(camera) {
     this.camera = camera;
   }
-  toggleBuildingMode() {
+  toggleBuildingMode(force = false) { // force is used to force the build mode to be enabled or disabled
     // click the build mode button
     this.buildMenu.buildModeButton.click();
   }

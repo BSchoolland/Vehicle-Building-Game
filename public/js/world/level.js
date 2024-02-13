@@ -61,6 +61,53 @@ class LevelManager {
     this.test = false;
 
     this.loaded = false;
+    // create a back arrow for leaving levels or returning to the main menu
+    let backArrow = document.createElement("img");
+    backArrow.src = "../../img/back-arrow.png";
+    backArrow.id = "back-arrow";
+    backArrow.className = "back-arrow";
+    backArrow.addEventListener("click", () => {
+      if (this.test) {
+        window.location.href = "/editor.html";
+      } else {
+        // if the level selector is open, retrun to the main menu
+        if (document.getElementById("level-selector")) {
+          window.location.href = "/index.html";
+        }
+        // if the level selector is not open, quit the level, and return to the level selector
+        else {
+          let wait = 0;
+          if (this.building.camera.doingTour) { // if the camera is doing a tour, stop it
+            this.building.camera.doingTour = false;
+            wait = 1000; // wait for the camera to stop
+          }
+          setTimeout(() => {
+          // prevent build mode
+          this.building.canEnterBuildMode = false;
+          // clear the level
+          this.clear();
+          // remove the tutorial text
+          document.getElementById("tutorial-text").style.display = "none";
+          // clear the player contraption
+          this.playerContraption.clear();
+          // deactivate build mode if it is active
+          if (this.building.buildInProgress) {
+            this.building.toggleBuildingMode(true);
+          }
+          // set the stats to be invisible
+          document.getElementById("stats").style.display = "none";
+          // set the survival time to 0
+          this.secondsSurvived = 0;
+          //open the level selector
+          this.loadLevelSelector();
+        }, wait);
+
+        }
+      }
+    }); // Add closing parenthesis and semicolon
+    // append to the body
+    document.body.appendChild(backArrow);
+
   }
 
   init(string='normal') {
@@ -329,6 +376,7 @@ class LevelManager {
             // allow the building to enter build mode
             this.building.canEnterBuildMode = true;
             // activate building mode by clicking the building button if it is not already active
+            this.building.toggleBuildingMode();
             if (!this.building.buildInProgress) {
             this.building.toggleBuildingMode();
             }

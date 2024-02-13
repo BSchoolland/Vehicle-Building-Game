@@ -94,12 +94,17 @@ Version 1.5
 Version 2.0
 - Basic level editing
 - Enemy contraption editing
+
 Version 2.1
 - Basic level sharing
+
 Version 2.2
 - Improvements to level sharing
 - Ranking of levels
 - World 6, the best of the workshop!  Players can get their levels into the campaign!
+
 ### If I actually make any money off of the game
+
 Version 3.0
 - PVP contraptions battles in the arena!
+- More to be decided

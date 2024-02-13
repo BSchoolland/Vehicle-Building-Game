@@ -392,6 +392,7 @@ class BuildMenu {
           building.buildInProgress = false;
           return;
         }
+        building.contraption.despawn(true);
         // set the song to the build theme
         setSong("buildTheme");
         // show the build menu

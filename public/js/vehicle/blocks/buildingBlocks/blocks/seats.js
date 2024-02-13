@@ -183,7 +183,22 @@ class SeatBlock extends Block {
         
     }
     getWeldBody(direction = 'right') { // this is redefining the function from the base class
-        return this.bodies[0];
+        if (this.rotatedTimes % 2 === 0) {
+            if (direction === 'right' || direction === 'left') {
+                return this.bodies[0];
+            }
+            else{
+                return this.bodies[1];
+            }
+        }
+        else {
+            if (direction === 'right' || direction === 'left') {
+                return this.bodies[1];
+            }
+            else{
+                return this.bodies[0];
+            }
+        }
     }
     spawn() {
         super.spawn(); 

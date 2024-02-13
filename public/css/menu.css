@@ -45,6 +45,21 @@ body {
     /* display in the center */
 }
 
+.back-arrow { 
+    /* an image */
+    position: absolute;
+    top: 5%;
+    left: 3%;
+    width: 50px;
+    height: 50px;
+}
+
+.back-arrow:hover {
+    /* change the color on hover */
+    filter: invert(100%);
+    cursor: pointer;
+}
+
 /* Style for the right-click menu container */
 .right-click-menu {
     background-color: #1a3a5f; /* Dark blue background */

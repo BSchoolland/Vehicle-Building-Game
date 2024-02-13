@@ -173,6 +173,8 @@ class Block {
     }
     // check if the block is destroyed
     if (this.hitPoints <= 0) {
+      this.flameDamage = 0;
+      this.flameDuration = 0;
       // flash the block red
       this.bodies.forEach((body) => {
         // record the original fill style

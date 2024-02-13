@@ -780,9 +780,9 @@ class Building {
     // left arrow
     let leftArrowTop = Matter.Bodies.rectangle(
       buildArea.x - 25,
-      buildArea.y + buildArea.height / 2 - 14.25,
-      10,
-      50,
+      buildArea.y + buildArea.height / 2 - 7.1,
+      5,
+      25,
       { isStatic: true, render: { fillStyle: arrowColor } }
     );
     // rotate the arrow 45 degrees
@@ -790,9 +790,9 @@ class Building {
     // bottom half
     let leftArrowBottom = Matter.Bodies.rectangle(
       buildArea.x - 25,
-      buildArea.y + buildArea.height / 2 + 14.25,
-      10,
-      50,
+      buildArea.y + buildArea.height / 2 + 7.1,
+      5,
+      25,
       { isStatic: true, render: { fillStyle: arrowColor } }
     );
     // rotate the arrow 45 degrees
@@ -805,9 +805,9 @@ class Building {
     // right arrow
     let rightArrowTop = Matter.Bodies.rectangle(
       buildArea.x + buildArea.width + 25,
-      buildArea.y + buildArea.height / 2 - 14.25,
-      10,
-      50,
+      buildArea.y + buildArea.height / 2 - 7.1,
+      5,
+      25,
       { isStatic: true, render: { fillStyle: arrowColor } }
     );
     // rotate the arrow 45 degrees
@@ -815,9 +815,9 @@ class Building {
     // bottom half
     let rightArrowBottom = Matter.Bodies.rectangle(
       buildArea.x + buildArea.width + 25,
-      buildArea.y + buildArea.height / 2 + 14.25,
-      10,
-      50,
+      buildArea.y + buildArea.height / 2 + 7.1,
+      5,
+      25,
       { isStatic: true, render: { fillStyle: arrowColor } }
     );
     // rotate the arrow 45 degrees
@@ -829,20 +829,20 @@ class Building {
     this.gridLines.push(rightArrowBottom);
     // top arrow
     let topArrowLeft = Matter.Bodies.rectangle(
-      buildArea.x + buildArea.width / 2 - 14.25,
+      buildArea.x + buildArea.width / 2 - 7.1,
       buildArea.y - 25,
-      50,
-      10,
+      25,
+      5,
       { isStatic: true, render: { fillStyle: arrowColor } }
     );
     // rotate the arrow 45 degrees
     Matter.Body.rotate(topArrowLeft, -Math.PI / 4);
     // bottom half
     let topArrowRight = Matter.Bodies.rectangle(
-      buildArea.x + buildArea.width / 2 + 14.25,
+      buildArea.x + buildArea.width / 2 + 7.1,
       buildArea.y - 25,
-      50,
-      10,
+      25,
+      5,
       { isStatic: true, render: { fillStyle: arrowColor } }
     );
     // rotate the arrow 45 degrees
@@ -854,20 +854,20 @@ class Building {
     this.gridLines.push(topArrowRight);
     // bottom arrow
     let bottomArrowLeft = Matter.Bodies.rectangle(
-      buildArea.x + buildArea.width / 2 - 14.25,
+      buildArea.x + buildArea.width / 2 - 7.1,
       buildArea.y + buildArea.height + 25,
-      50,
-      10,
+      25,
+      5,
       { isStatic: true, render: { fillStyle: arrowColor } }
     );
     // rotate the arrow 45 degrees
     Matter.Body.rotate(bottomArrowLeft, Math.PI / 4);
     // bottom half
     let bottomArrowRight = Matter.Bodies.rectangle(
-      buildArea.x + buildArea.width / 2 + 14.25,
+      buildArea.x + buildArea.width / 2 + 7.1,
       buildArea.y + buildArea.height + 25,
-      50,
-      10,
+      25,
+      5,
       { isStatic: true, render: { fillStyle: arrowColor } }
     );
     // rotate the arrow 45 degrees

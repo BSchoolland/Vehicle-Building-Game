@@ -690,8 +690,10 @@ class Building {
       (block) => block.x === x && block.y === y
     );
     if (block) {
-      // select the block
-      this.selectBlock(block);
+      // delete the block
+      this.contraption.removeBlock(block);
+      this.buildMenu.updateButtonLimits();
+      this.removeGhostBlocks();
     }
   }
 

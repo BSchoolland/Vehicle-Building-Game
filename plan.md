@@ -66,9 +66,11 @@ Version 0.9 (completed)
 
 Version 1.0:
 - Save Level progress
-- Web hosting
+- Free web hosting
 - Get rid of level editing for users
 - Fix all known bugs
+- Quality of life changes
+
 Version 1.1:
 - Create World 3
 - Sandbox mode

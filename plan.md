@@ -36,38 +36,33 @@ Version 0.4: (completed)
 - very basic AI 
 - More enemies
 
-Version 0.5
+Version 0.5 (completed)
 - Seat block, anything detached from it is destroyed
 - Prevent glitches that allow for blocks outside of build area
 - limit which blocks can be used in which levels
 - Limit contraption loading, so that it only works if enough build space and parts are avalable
 
-Version 0.6
+Version 0.6 (completed)
 - Main Menu
-- Keybinding
 - Level Select Improvements
 
-Version 0.6.1
+Version 0.6.1 (completed)
 - Add powered hinge block
 - Add a remote block, for keeping pieces of the contraption going without direct connection
 - Add block variants (wood, metal, diamond)
 
-Version 0.7
+Version 0.7 (completed)
 - Sound design
 - Add a visual backdrop
 - Improve sparks
 - Add tutorial text to certain levels
 
-Version 0.8
+Version 0.8 (completed)
 - Add tutorial
 - Create World 1 Levels
 
-Version 0.9
+Version 0.9 (completed)
 - Create world 2 Levels
-
-Version 0.10
-- Create World 3 Levels
-- Create extra hard levels
 
 Version 1.0:
 - Save Level progress

@@ -421,8 +421,8 @@ class Building {
         this.buildArea = {
             x: 0,
             y: 0,
-            width: 800*4,
-            height: 600*2
+            width: 800*6,
+            height: 600*3
         };
         this.grid = 100;
         this.gridLines = [];

@@ -158,5 +158,5 @@
     { "name": "Collect", "value": 3 },
     { "name": "Survive", "value": 0 }
   ],
-  "tutorialText": "The bad guys have spikes now! Watch out!"
+  "tutorialText": "The bad guys have spikes now, watch out!"
 }

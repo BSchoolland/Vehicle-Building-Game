@@ -60,5 +60,5 @@
     { "name": "Collect", "value": 0 },
     { "name": "Survive", "value": 10 }
   ],
-  "tutorialText": "The rocket booster can also be flipped for toasting marshmallows and/or enemies!"
+  "tutorialText": "The rocket booster can also be rotated for toasting marshmallows and/or enemies!"
 }

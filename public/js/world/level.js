@@ -193,7 +193,13 @@ class LevelManager {
     let tutorial = document.getElementById("tutorial-text");
 
     let string = LevelJson.tutorialText;
-    tutorial.innerHTML = string;
+    let sentences = string.split(/(?<=[\.!])/).map(sentence => {
+      let trimmedSentence = sentence.trim();
+      if (trimmedSentence) {
+        return `<p>${trimmedSentence}</p>`;
+      }
+    }).join('');
+    tutorial.innerHTML = sentences;
     tutorial.style.display = "block";
     // Clear existing blocks in the Level
     this.clear(); // remove all blocks from the Level

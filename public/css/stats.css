@@ -26,3 +26,9 @@
     top: 5%;
     left: 30%;
 }
+
+p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.75em;
+}

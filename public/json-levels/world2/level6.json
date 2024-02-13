@@ -112,5 +112,5 @@
     { "name": "Collect", "value": 1 },
     { "name": "Survive", "value": 0 }
   ],
-  "tutorialText": "Press X to release the disconnection block.  Bombs away!"
+  "tutorialText": "Press X to disconnect the remote block. Spikes are dangerous enough on the front of your vehicle, but they're even more dangerous falling from the sky."
 }

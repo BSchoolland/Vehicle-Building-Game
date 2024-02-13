@@ -55,5 +55,5 @@
     { "name": "Collect", "value": 3 },
     { "name": "Survive", "value": 0 }
   ],
-  "tutorialText": "Press B to toggle between drive and build mode! Build a vehicle to collect the coins. A good vehicle will have wheels and a seat!"
+  "tutorialText": "Build a car with wheels and a seat, then press 'b' to begin. Use 'a' and 'd' to collect the coins!"
 }

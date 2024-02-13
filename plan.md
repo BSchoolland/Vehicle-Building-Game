@@ -106,5 +106,5 @@ Version 2.2
 ### If I actually make any money off of the game
 
 Version 3.0
-- PVP contraptions battles in the arena!
+- PVP contraption battles in the arena!
 - More to be decided

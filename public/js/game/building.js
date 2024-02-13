@@ -554,11 +554,37 @@ class Building {
     if (x < this.buildArea.x || x > this.buildArea.x + this.buildArea.width) {
       console.log("Cannot place block here");
       this.removeGhostBlocks();
+      // if it is just outside the build area, shift the contraption in that direction
+      if (x < this.buildArea.x) {
+        this.contraption.shift(-this.grid, 0, this.buildArea);
+      }
+      if (x > this.buildArea.x + this.buildArea.width) {
+        this.contraption.shift(this.grid, 0, this.buildArea);
+      }
+      if (y < this.buildArea.y) {
+        this.contraption.shift(0, -this.grid, this.buildArea);
+      }
+      if (y > this.buildArea.y + this.buildArea.height) {
+        this.contraption.shift(0, this.grid, this.buildArea);
+      }
       return;
     }
     if (y < this.buildArea.y || y > this.buildArea.y + this.buildArea.height) {
       console.log("Cannot place block here");
       this.removeGhostBlocks();
+      // if it is just outside the build area, shift the contraption in that direction
+      if (x < this.buildArea.x) {
+        this.contraption.shift(-this.grid, 0, this.buildArea);
+      }
+      if (x > this.buildArea.x + this.buildArea.width) {
+        this.contraption.shift(this.grid, 0, this.buildArea);
+      }
+      if (y < this.buildArea.y) {
+        this.contraption.shift(0, -this.grid, this.buildArea);
+      }
+      if (y > this.buildArea.y + this.buildArea.height) {
+        this.contraption.shift(0, this.grid, this.buildArea);
+      }
       return;
     }
     // make sure there is not already a block in the contraption here
@@ -749,6 +775,111 @@ class Building {
       Matter.World.add(this.engine.world, line);
       this.gridLines.push(line);
     }
+    let arrowColor = "#272729";
+    // add arrows on each side of the build area which shift the contraption in that direction
+    // left arrow
+    let leftArrowTop = Matter.Bodies.rectangle(
+      buildArea.x - 25,
+      buildArea.y + buildArea.height / 2 - 14.25,
+      10,
+      50,
+      { isStatic: true, render: { fillStyle: arrowColor } }
+    );
+    // rotate the arrow 45 degrees
+    Matter.Body.rotate(leftArrowTop, Math.PI / 4);
+    // bottom half
+    let leftArrowBottom = Matter.Bodies.rectangle(
+      buildArea.x - 25,
+      buildArea.y + buildArea.height / 2 + 14.25,
+      10,
+      50,
+      { isStatic: true, render: { fillStyle: arrowColor } }
+    );
+    // rotate the arrow 45 degrees
+    Matter.Body.rotate(leftArrowBottom, -Math.PI / 4);
+    // add it to the world
+    Matter.World.add(this.engine.world, leftArrowTop);
+    Matter.World.add(this.engine.world, leftArrowBottom);
+    this.gridLines.push(leftArrowTop);
+    this.gridLines.push(leftArrowBottom);
+    // right arrow
+    let rightArrowTop = Matter.Bodies.rectangle(
+      buildArea.x + buildArea.width + 25,
+      buildArea.y + buildArea.height / 2 - 14.25,
+      10,
+      50,
+      { isStatic: true, render: { fillStyle: arrowColor } }
+    );
+    // rotate the arrow 45 degrees
+    Matter.Body.rotate(rightArrowTop, -Math.PI / 4);
+    // bottom half
+    let rightArrowBottom = Matter.Bodies.rectangle(
+      buildArea.x + buildArea.width + 25,
+      buildArea.y + buildArea.height / 2 + 14.25,
+      10,
+      50,
+      { isStatic: true, render: { fillStyle: arrowColor } }
+    );
+    // rotate the arrow 45 degrees
+    Matter.Body.rotate(rightArrowBottom, Math.PI / 4);
+    // add it to the world
+    Matter.World.add(this.engine.world, rightArrowTop);
+    Matter.World.add(this.engine.world, rightArrowBottom);
+    this.gridLines.push(rightArrowTop);
+    this.gridLines.push(rightArrowBottom);
+    // top arrow
+    let topArrowLeft = Matter.Bodies.rectangle(
+      buildArea.x + buildArea.width / 2 - 14.25,
+      buildArea.y - 25,
+      50,
+      10,
+      { isStatic: true, render: { fillStyle: arrowColor } }
+    );
+    // rotate the arrow 45 degrees
+    Matter.Body.rotate(topArrowLeft, -Math.PI / 4);
+    // bottom half
+    let topArrowRight = Matter.Bodies.rectangle(
+      buildArea.x + buildArea.width / 2 + 14.25,
+      buildArea.y - 25,
+      50,
+      10,
+      { isStatic: true, render: { fillStyle: arrowColor } }
+    );
+    // rotate the arrow 45 degrees
+    Matter.Body.rotate(topArrowRight, Math.PI / 4);
+    // add it to the world
+    Matter.World.add(this.engine.world, topArrowLeft);
+    Matter.World.add(this.engine.world, topArrowRight);
+    this.gridLines.push(topArrowLeft);
+    this.gridLines.push(topArrowRight);
+    // bottom arrow
+    let bottomArrowLeft = Matter.Bodies.rectangle(
+      buildArea.x + buildArea.width / 2 - 14.25,
+      buildArea.y + buildArea.height + 25,
+      50,
+      10,
+      { isStatic: true, render: { fillStyle: arrowColor } }
+    );
+    // rotate the arrow 45 degrees
+    Matter.Body.rotate(bottomArrowLeft, Math.PI / 4);
+    // bottom half
+    let bottomArrowRight = Matter.Bodies.rectangle(
+      buildArea.x + buildArea.width / 2 + 14.25,
+      buildArea.y + buildArea.height + 25,
+      50,
+      10,
+      { isStatic: true, render: { fillStyle: arrowColor } }
+    );
+    // rotate the arrow 45 degrees
+    Matter.Body.rotate(bottomArrowRight, -Math.PI / 4);
+    // add it to the world
+    Matter.World.add(this.engine.world, bottomArrowLeft);
+    Matter.World.add(this.engine.world, bottomArrowRight);
+    this.gridLines.push(bottomArrowLeft);
+    this.gridLines.push(bottomArrowRight);
+
+
+
   }
   removeGrid() {
     for (let i = 0; i < this.gridLines.length; i++) {

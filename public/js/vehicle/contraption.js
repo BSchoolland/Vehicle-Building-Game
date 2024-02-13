@@ -95,6 +95,33 @@ class Contraption {
     this.maxSparks = 100;
     this.currentSparks = 0;
   }
+  shift(x, y, buildArea) {
+      console.log('shifting contraption')
+      // make sure no blocks would be outside the build area
+      const canShift = this.blocks.every((block) => {
+        if (block.originalX + x < buildArea.x) {
+          return false;
+        }
+        if (block.originalX + x > buildArea.x + buildArea.width) {
+          return false;
+        }
+        if (block.originalY + y < buildArea.y) {
+          return false;
+        }
+        if (block.originalY + y > buildArea.y + buildArea.height) {
+          return false;
+        }
+        return true;
+      });
+
+      if (canShift) {
+          this.blocks.forEach((block) => {
+            block.originalX += x;
+            block.originalY += y;
+            block.reset(true);
+          });
+      }
+  }
   AiLoadCommands(commands) {
     this.AiCommands = commands;
   }

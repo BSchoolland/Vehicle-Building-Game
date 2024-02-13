@@ -1,4 +1,4 @@
-#Version Plan
+# Version Plan
 Version 0.1: (completed)
 - 3 Block types
 - Basic block actions

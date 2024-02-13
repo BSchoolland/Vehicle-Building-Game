@@ -8,7 +8,7 @@ and then
 `node server.js`
 finally, go to localhost:3000 and you should see the game!
 ### Try the game
-(web hosting not yet set up)
+[temporary link](https://wrecking-wheels-9ba6f76e005a.herokuapp.com/)
 ### Planned updates
 See the [plan](plan.md) file for details.
 ### Licence

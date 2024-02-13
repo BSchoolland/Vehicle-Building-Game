@@ -455,7 +455,7 @@ class BuildMenu {
         setSong("levelTheme");
         // set the camera viewport to the size of the canvas
         const canvas = document.querySelector("canvas");
-        building.camera.setViewport(canvas.width*3, canvas.height*3);
+        building.camera.setViewport(canvas.width*2.5, canvas.height*2.5);
         
         // set the camera target to the seat
         building.camera.setTarget(building.contraption.seat);

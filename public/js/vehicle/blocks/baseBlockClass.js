@@ -1,7 +1,7 @@
 import { LocalToWorld, WorldToLocal, rotateBodyAroundPoint, rotateConstraintAroundPoint } from "../utils.js";
 import { playSound } from "../../sounds/playSound.js";
 
-const constraintsVisible = false; // whether or not the constraints are visible
+const constraintsVisible = true; // whether or not the constraints are visible
 // the base class for all blocks, may be made of multiple bodies and constraints depending on subclass
 class Block {
   constructor(
@@ -173,6 +173,8 @@ class Block {
     }
     // check if the block is destroyed
     if (this.hitPoints <= 0) {
+      this.flameDamage = 0;
+      this.flameDuration = 0;
       // flash the block red
       this.bodies.forEach((body) => {
         // record the original fill style

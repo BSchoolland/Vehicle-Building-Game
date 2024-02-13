@@ -1,9 +1,9 @@
 @keyframes drop {
     0% { 
-        transform: translateY(0%);
+        transform: translateY(-97%);
     }
     100% {
-        transform: translateY(-97%);
+        transform: translateY(0%);
     }
 }
 
@@ -21,8 +21,15 @@
     animation-fill-mode: forwards;
 }
 
+
+
 body {
     overflow: hidden;
+    /* set the background as a single image covering the entire screen */
+    background-image: url(../img/background.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
 }
 
 h1 {

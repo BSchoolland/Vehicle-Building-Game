@@ -78,5 +78,5 @@
     { "name": "Survive", "value": 0 },
     { "name": "BeforeTime", "value": 15 }
   ],
-  "tutorialText": "TNT explodes when it hits the ground or an enemy."
+  "tutorialText": "TNT is dangerous if you're too close.  Use the remote and rocket to make it close to the enemy instead!"
 }

@@ -217,16 +217,16 @@ class BuildMenu {
       ];
     }
     this.createBlockButtons();
-    // create a button to save the contraption
-    this.saveButton = document.createElement("button");
-    this.saveButton.classList.add("menu-button");
-    this.saveButton.innerText = "Save";
-    this.menu.appendChild(this.saveButton);
-    // create a button to load a contraption
-    this.loadButton = document.createElement("button");
-    this.loadButton.classList.add("menu-button");
-    this.loadButton.innerText = "Load";
-    this.menu.appendChild(this.loadButton);
+    // // create a button to save the contraption
+    // this.saveButton = document.createElement("button");
+    // this.saveButton.classList.add("menu-button");
+    // this.saveButton.innerText = "Save";
+    // this.menu.appendChild(this.saveButton);
+    // // create a button to load a contraption
+    // this.loadButton = document.createElement("button");
+    // this.loadButton.classList.add("menu-button");
+    // this.loadButton.innerText = "Load";
+    // this.menu.appendChild(this.loadButton);
     // create a button to clear the contraption
     this.clearButton = document.createElement("button");
     this.clearButton.classList.add("menu-button");
@@ -244,9 +244,9 @@ class BuildMenu {
     this.menu.appendChild(this.fullscreenButton);
     // style the menu
     this.menu.classList.add("build-menu");
-    // set the button class
-    this.saveButton.classList.add("build-menu-button");
-    this.loadButton.classList.add("build-menu-button");
+    // // set the button class
+    // this.saveButton.classList.add("build-menu-button");
+    // this.loadButton.classList.add("build-menu-button");
     this.clearButton.classList.add("build-menu-button");
     this.buildModeButton.classList.add("build-menu-button");
     // Add the menu to the game container
@@ -335,44 +335,44 @@ class BuildMenu {
   }
   init(building) {
     // set the button functions
-    this.saveButton.onclick = () => {
-      // make sure build mode is enabled
-      if (!building.buildInProgress) {
-        return;
-      }
-      // save the contraption to a JSON object
-      let contraptionJson = building.contraption.save();
-      // download the JSON object as a file
-      let dataStr =
-        "data:text/json;charset=utf-8," +
-        encodeURIComponent(JSON.stringify(contraptionJson));
-      let dlAnchorElem = document.createElement("a");
-      dlAnchorElem.setAttribute("href", dataStr);
-      dlAnchorElem.setAttribute("download", "contraption.json");
-      dlAnchorElem.click();
-    };
-    this.loadButton.onclick = () => {
-      if (!building.buildInProgress) {
-        return;
-      }
-      // bring up a file input dialog
-      let fileInput = document.createElement("input");
-      fileInput.type = "file";
-      fileInput.click();
-      // when a file is selected, load the contraption
-      fileInput.onchange = (event) => {
-        let file = event.target.files[0];
-        let reader = new FileReader();
-        reader.readAsText(file);
-        reader.onload = () => {
-          let contraptionJson = JSON.parse(reader.result);
-          // clear the existing contraption
-          building.contraption.clear();
-          // load the contraption from the JSON object
-          building.contraption.load(contraptionJson);
-        };
-      };
-    };
+    // this.saveButton.onclick = () => {
+    //   // make sure build mode is enabled
+    //   if (!building.buildInProgress) {
+    //     return;
+    //   }
+    //   // save the contraption to a JSON object
+    //   let contraptionJson = building.contraption.save();
+    //   // download the JSON object as a file
+    //   let dataStr =
+    //     "data:text/json;charset=utf-8," +
+    //     encodeURIComponent(JSON.stringify(contraptionJson));
+    //   let dlAnchorElem = document.createElement("a");
+    //   dlAnchorElem.setAttribute("href", dataStr);
+    //   dlAnchorElem.setAttribute("download", "contraption.json");
+    //   dlAnchorElem.click();
+    // };
+    // this.loadButton.onclick = () => {
+    //   if (!building.buildInProgress) {
+    //     return;
+    //   }
+    //   // bring up a file input dialog
+    //   let fileInput = document.createElement("input");
+    //   fileInput.type = "file";
+    //   fileInput.click();
+    //   // when a file is selected, load the contraption
+    //   fileInput.onchange = (event) => {
+    //     let file = event.target.files[0];
+    //     let reader = new FileReader();
+    //     reader.readAsText(file);
+    //     reader.onload = () => {
+    //       let contraptionJson = JSON.parse(reader.result);
+    //       // clear the existing contraption
+    //       building.contraption.clear();
+    //       // load the contraption from the JSON object
+    //       building.contraption.load(contraptionJson);
+    //     };
+    //   };
+    // };
     this.clearButton.onclick = () => {
       // clear the ghost blocks
       building.removeGhostBlocks();
@@ -454,7 +454,7 @@ class BuildMenu {
         setSong("levelTheme");
         // set the camera viewport to the size of the canvas
         const canvas = document.querySelector("canvas");
-        building.camera.setViewport(canvas.width*2, canvas.height*2);
+        building.camera.setViewport(canvas.width*3, canvas.height*3);
         
         // set the camera target to the seat
         building.camera.setTarget(building.contraption.seat);

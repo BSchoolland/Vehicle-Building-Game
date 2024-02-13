@@ -15,6 +15,8 @@ function clickHandler() {
   document.removeEventListener("click", clickHandler);
   // start the game
   startGame();
+  // get rid of the body background
+document.body.style.background = 'none';
 }
 
 function createHTML() {

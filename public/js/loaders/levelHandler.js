@@ -48,9 +48,10 @@ class World {
 }
 
 class LevelHandler {
-    constructor() {
+    constructor(progressBar) {
         this.worlds = [];
         this.loadWorlds();
+        this.progressBar = progressBar;
     }
     async loadWorlds() {
         let i = 0;
@@ -60,6 +61,7 @@ class LevelHandler {
                 await world.loadLevels(i + 1);
                 this.worlds.push(world);
                 i++;
+                this.progressBar.update();
             } catch (error) {
                 break;
             }

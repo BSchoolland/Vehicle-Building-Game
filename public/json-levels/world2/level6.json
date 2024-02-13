@@ -51,11 +51,6 @@
     { "type": "BuildingAreaBlock", "x": 100, "y": 500 },
     { "type": "BuildingAreaBlock", "x": 0, "y": 500 },
     { "type": "BuildingAreaBlock", "x": 0, "y": 600 },
-    { "type": "BuildingAreaBlock", "x": 0, "y": 700 },
-    { "type": "BuildingAreaBlock", "x": 100, "y": 700 },
-    { "type": "BuildingAreaBlock", "x": 300, "y": 700 },
-    { "type": "BuildingAreaBlock", "x": 400, "y": 700 },
-    { "type": "BuildingAreaBlock", "x": 200, "y": 700 },
     { "type": "BuildingAreaBlock", "x": 200, "y": 600 },
     { "type": "BuildingAreaBlock", "x": 300, "y": 600 },
     { "type": "BuildingAreaBlock", "x": 100, "y": 600 },
@@ -117,5 +112,5 @@
     { "name": "Collect", "value": 1 },
     { "name": "Survive", "value": 0 }
   ],
-  "tutorialText": "Press X to release the disconnection block.  Bombs away!"
+  "tutorialText": "Press X to disconnect the remote block. Spikes are dangerous enough on the front of your vehicle, but they're even more dangerous falling from the sky."
 }

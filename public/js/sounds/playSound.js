@@ -78,7 +78,7 @@ function playSound(name) {
   let buffer = loadedSounds[name];
   if (!buffer) {
     console.error("Sound not found:", name);
-    return;
+    return false;
   }
   let source = audioContext.createBufferSource();
   source.buffer = buffer;
@@ -111,7 +111,7 @@ function setSong(songName) {
   let songBuffer = loadedSongs[songName];
   if (!songBuffer) {
     console.error("Song not found:", songName);
-    return;
+    return false;
   }
 
   // If a valid song name was provided, play the song
@@ -123,6 +123,7 @@ function setSong(songName) {
     // loop the song
     currentSong.loop = true;
   }
+  return true;
 }
 
 export { setSong, playSound };

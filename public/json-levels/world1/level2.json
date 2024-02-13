@@ -107,5 +107,5 @@
     { "name": "Collect", "value": 2 },
     { "name": "Survive", "value": 0 }
   ],
-  "tutorialText": "Spikes can damage and destroy enemy contraptions"
+  "tutorialText": "Spikes can damage and destroy enemy contraptions, removing their blocks.  If you ever need to remove your own blocks, you can use the backspace key, it's less painful than spikes!"
 }

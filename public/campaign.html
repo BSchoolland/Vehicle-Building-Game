@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Campaign</title>
     <style>
@@ -11,12 +12,22 @@
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="css/stats.css">
 </head>
+
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
     <!-- game container object -->
     <div id="game-container"></div>
     <div id="container">
-        <h1>Click to start!</h1>
+        <div class ="progress-bar-parent">
+            <div id="progress-bar-container">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 1%;"></div>
+                </div>
+                <div class="progress-bar-text-container">
+                    <div class="progress-bar-text">Loading Game Code</div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- a div for keeping track of win conditions -->
     <div class="stat-container" id="stats" style="display: none;">
@@ -26,6 +37,7 @@
     </div>
     <h1 id="tutorial-text" class="tutorial" style="display: none;">Press B to toggle build mode!</h1>
     <!-- runs the matter.js simulation -->
-    <script type="module" src = "js/game/engine.js"></script>
+    <script type="module" src="js/game/engine.js"></script>
 </body>
+
 </html>

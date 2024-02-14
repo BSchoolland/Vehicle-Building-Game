@@ -18,15 +18,15 @@ function createHTML() {
     h1.textContent = 'Welcome to Wrecking Wheels!';
     editorLink.href = 'editor.html';
     editorLink.className = 'button';
-    editorLink.textContent = 'Level Editor';
+    editorLink.textContent = 'Editor';
     campaignLink.href = 'campaign.html';
     campaignLink.className = 'button';
     campaignLink.textContent = 'Campaign';
 
     // Append elements
     container.appendChild(h1);
-    container.appendChild(editorLink);
     container.appendChild(campaignLink);
+    container.appendChild(editorLink);
 
     // Append the container to the body (or another parent element)
     document.body.appendChild(container);

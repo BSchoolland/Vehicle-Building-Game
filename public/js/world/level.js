@@ -69,11 +69,16 @@ class LevelManager {
     backArrow.addEventListener("click", () => {
       if (this.test) {
         window.location.href = "/editor.html";
-      } else {
+      }
+      else if (window.location.href = "/editor"){
+        window.location.href = "/";
+      }
+       else {
         // if the level selector is open, retrun to the main menu
         if (document.getElementById("level-selector")) {
           window.location.href = "/index.html";
         }
+        
         // if the level selector is not open, quit the level, and return to the level selector
         else {
           let wait = 0;

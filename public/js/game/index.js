@@ -2,7 +2,7 @@ import Building from './building.js';
 import { Camera } from './camera.js';
 import { LevelManager } from '../world/level.js';
 
-
+const noEditor = true; // since the editor is not implemented yet, use a greyed out button that says "coming soon"
 
 function createHTML() {
     const container = document.getElementById('container');
@@ -16,9 +16,15 @@ function createHTML() {
     // Set attributes and content
     container.className = 'container';
     h1.textContent = 'Welcome to Wrecking Wheels!';
-    editorLink.href = 'editor.html';
-    editorLink.className = 'button';
-    editorLink.textContent = 'Editor';
+    if (noEditor) {
+        editorLink.className = 'button disabled';
+        editorLink.textContent = 'Editor (coming soon)';
+    }
+    else {
+        editorLink.href = 'editor.html';
+        editorLink.className = 'button';
+        editorLink.textContent = 'Editor';
+    }
     campaignLink.href = 'campaign.html';
     campaignLink.className = 'button';
     campaignLink.textContent = 'Campaign';
@@ -27,6 +33,7 @@ function createHTML() {
     container.appendChild(h1);
     container.appendChild(campaignLink);
     container.appendChild(editorLink);
+    
 
     // Append the container to the body (or another parent element)
     document.body.appendChild(container);

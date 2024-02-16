@@ -41,7 +41,7 @@ h1 {
     margin-bottom: 50px;
 }
    
-a {
+.button {
     font-size: 60px;
     /* style the link to look like a button */
     display: inline-block;
@@ -55,3 +55,8 @@ a {
     margin-bottom: 20px;
 }
 
+.disabled {
+    /* grey in color, no hover effect */
+    background-color: #6c757d;
+    cursor: not-allowed;
+}

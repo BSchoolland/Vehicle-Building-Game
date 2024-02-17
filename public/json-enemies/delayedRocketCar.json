@@ -107,7 +107,7 @@
     }
   ],
   "commands": [
-    { "key": "a", "start": 10, "end": 60},
-    { "key": "Shift", "start": 10, "end": 60}
+    { "key": "a", "start": 25, "end": 60},
+    { "key": "Shift", "start": 30, "end": 60}
   ]
 }

@@ -31,7 +31,7 @@ class TNTBlock extends Block {
         if (Date.now() - this.lastHit >= this.damageCooldown * 1000) {
             // damage this block by the relative velocity of the other block
             let velocityDifference = Matter.Vector.sub(otherBody.velocity, this.bodies[0].velocity);
-            this.damage(Math.abs(velocityDifference.x + velocityDifference.y) ** 2 ); // damage is proportional to the velocity squared
+            this.damage(Math.abs(velocityDifference.x + velocityDifference.y) ** 2 + 3 ); // damage is proportional to the velocity squared
             console.log('damage: ' + Math.abs(velocityDifference.x + velocityDifference.y) ** 2);
             // record the time of the hit
             this.lastHit = Date.now();

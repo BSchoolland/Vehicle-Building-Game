@@ -70,15 +70,15 @@ class LevelManager {
       if (this.test) {
         window.location.href = "/editor.html";
       }
-      else if (window.location.href = "/editor"){
+      else if (window.location.href.includes("editor")){
         window.location.href = "/";
       }
        else {
         // if the level selector is open, retrun to the main menu
         if (document.getElementById("level-selector")) {
-          window.location.href = "/index.html";
-        }
-        
+          console.log(document.getElementById("level-selector"));
+          window.location.href = "/";
+        } 
         // if the level selector is not open, quit the level, and return to the level selector
         else {
           let wait = 0;

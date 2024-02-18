@@ -235,7 +235,9 @@ class Camera {
         let container = document.getElementById('game-container');
     
         if (!document.fullscreenElement) {
-            // If not in fullscreen mode, enter fullscreen mode
+            // If not in fullscreen mode, enter fullscreen mode with a white background
+            container.style.backgroundColor = "white"; // Set the background color to white
+
             if (container.requestFullscreen) {
                 container.requestFullscreen();
             } else if (container.mozRequestFullScreen) { /* Firefox */

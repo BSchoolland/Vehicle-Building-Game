@@ -25,9 +25,9 @@ function createHTML() {
         editorLink.className = 'button';
         editorLink.textContent = 'Editor';
     }
-    campaignLink.href = 'campaign.html';
+    campaignLink.href = 'levels.html';
     campaignLink.className = 'button';
-    campaignLink.textContent = 'Campaign';
+    campaignLink.textContent = 'Levels';
 
     // Append elements
     container.appendChild(h1);

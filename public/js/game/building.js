@@ -171,7 +171,7 @@ class RightClickMenu {
 // a build menu class, for the bottom of the screen.
 // the build menu will contain buttons for each block type, a button to save the contraption, a button to load a contraption, a button to clear the contraption, and a button to toggle build mode.
 class BuildMenu {
-  constructor(building, blockTypes = false) {
+  constructor(building, blockTypes = false, enemyEditor = false) {
     this.building = building;
     // create the build menu
     this.menu = document.createElement("div");
@@ -216,42 +216,11 @@ class BuildMenu {
         },
       ];
     }
+    this.enemyEditor = enemyEditor; // a boolean that determines if the build menu is for the enemy editor
+
     this.createBlockButtons();
-    // // create a button to save the contraption
-    // this.saveButton = document.createElement("button");
-    // this.saveButton.classList.add("menu-button");
-    // this.saveButton.innerText = "Save";
-    // this.menu.appendChild(this.saveButton);
-    // // create a button to load a contraption
-    // this.loadButton = document.createElement("button");
-    // this.loadButton.classList.add("menu-button");
-    // this.loadButton.innerText = "Load";
-    // this.menu.appendChild(this.loadButton);
-    // create a button to clear the contraption
-    this.clearButton = document.createElement("button");
-    this.clearButton.classList.add("menu-button");
-    this.clearButton.innerText = "Clear";
-    this.menu.appendChild(this.clearButton);
-    // create a button to toggle build mode
-    this.buildModeButton = document.createElement("button");
-    this.buildModeButton.classList.add("menu-button");
-    this.buildModeButton.innerText = "Start Level (b)";
-    this.menu.appendChild(this.buildModeButton);
-    // button to toggle fullscreen
-    this.fullscreenButton = document.createElement("button");
-    this.fullscreenButton.classList.add("menu-button");
-    this.fullscreenButton.innerText = "Fullscreen";
-    this.menu.appendChild(this.fullscreenButton);
-    // style the menu
-    this.menu.classList.add("build-menu");
-    // // set the button class
-    // this.saveButton.classList.add("build-menu-button");
-    // this.loadButton.classList.add("build-menu-button");
-    this.clearButton.classList.add("build-menu-button");
-    this.buildModeButton.classList.add("build-menu-button");
-    // Add the menu to the game container
-    let gameContainer = document.getElementById("game-container");
-    gameContainer.appendChild(this.menu);
+
+    this.createMenuButtons();
     // initialize the menu
     this.init(building);
   }
@@ -286,9 +255,7 @@ class BuildMenu {
     // make the menu visible and clickable
     this.menu.style.display = "flex";
     this.menu.style.pointerEvents = "auto";
-    
   }
-    
 
   createBlockButtons() {
     this.blockButtons = {};
@@ -310,6 +277,49 @@ class BuildMenu {
       this.blockButtons[blockType.type.name] = button;
     });
   }
+  createMenuButtons() {
+    // if this is the enemy editor, show the save and load buttons
+    if (this.enemyEditor) {
+      // create a button to save the contraption
+      this.saveButton = document.createElement("button");
+      this.saveButton.classList.add("menu-button");
+      this.saveButton.innerText = "Save";
+      this.menu.appendChild(this.saveButton);
+      // create a button to load a contraption
+      this.loadButton = document.createElement("button");
+      this.loadButton.classList.add("menu-button");
+      this.loadButton.innerText = "Load";
+      this.menu.appendChild(this.loadButton);
+    }
+    // create a button to clear the contraption
+    this.clearButton = document.createElement("button");
+    this.clearButton.classList.add("menu-button");
+    this.clearButton.innerText = "Clear";
+    this.menu.appendChild(this.clearButton);
+    // create a button to toggle build mode
+    this.buildModeButton = document.createElement("button");
+    this.buildModeButton.classList.add("menu-button");
+    this.buildModeButton.innerText = "Start Level (b)";
+    this.menu.appendChild(this.buildModeButton);
+    // button to toggle fullscreen
+    this.fullscreenButton = document.createElement("button");
+    this.fullscreenButton.classList.add("menu-button");
+    this.fullscreenButton.innerText = "Fullscreen";
+    this.menu.appendChild(this.fullscreenButton);
+    // style the menu
+    this.menu.classList.add("build-menu");
+    // // set the button class
+    if (this.enemyEditor) {
+      this.saveButton.classList.add("build-menu-button");
+      this.loadButton.classList.add("build-menu-button");
+    }
+    this.clearButton.classList.add("build-menu-button");
+    this.buildModeButton.classList.add("build-menu-button");
+    // Add the menu to the game container
+    let gameContainer = document.getElementById("game-container");
+    gameContainer.appendChild(this.menu);
+  }
+
   updateButtonLimits() {
     // get the number of each block in the contraption
     let blockTypeCount = {};
@@ -388,7 +398,7 @@ class BuildMenu {
       building.removeGhostBlocks();
       building.buildInProgress = !building.buildInProgress;
       if (building.buildInProgress) {
-        if (!building.canEnterBuildMode){
+        if (!building.canEnterBuildMode) {
           building.buildInProgress = false;
           return;
         }
@@ -398,7 +408,7 @@ class BuildMenu {
         // show the build menu
         this.show();
         // alert the level that we have entered build mode
-        try{
+        try {
           building.startBuildModeForLevel();
         } catch (e) {
           console.log("No level manager found");
@@ -456,13 +466,10 @@ class BuildMenu {
         // set the camera viewport to the size of the canvas
         const canvas = document.querySelector("canvas");
         // building.camera.setViewport(canvas.width*2.5, canvas.height*2.5);
-        building.camera.setViewport(canvas.width*2, canvas.height*2);
-
-        
+        building.camera.setViewport(canvas.width * 2, canvas.height * 2);
         // set the camera target to the seat
         building.camera.setTarget(building.contraption.seat);
         // despawn the contraption after a short delay
-        
       }
     };
     this.fullscreenButton.onclick = () => {
@@ -506,7 +513,8 @@ class Building {
   setCamera(camera) {
     this.camera = camera;
   }
-  toggleBuildingMode(force = false) { // force is used to force the build mode to be enabled or disabled
+  toggleBuildingMode(force = false) {
+    // force is used to force the build mode to be enabled or disabled
     // click the build mode button
     this.buildMenu.buildModeButton.click();
   }
@@ -598,7 +606,7 @@ class Building {
         console.log("Block already here");
         // instead, select this block
         this.selectBlock(this.contraption.blocks[i]);
-        return
+        return;
       }
     }
     // find how many of each block are already in the contraption, and make sure the limit has not been reached
@@ -881,9 +889,6 @@ class Building {
     Matter.World.add(this.engine.world, bottomArrowRight);
     this.gridLines.push(bottomArrowLeft);
     this.gridLines.push(bottomArrowRight);
-
-
-
   }
   removeGrid() {
     for (let i = 0; i < this.gridLines.length; i++) {

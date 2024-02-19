@@ -722,7 +722,6 @@ class LevelManager {
         else { // make the box and button dark gold
           box.style.backgroundColor = "darkgoldenrod";
           button.style.backgroundColor = "darkgoldenrod";
-        
         }
 
         box.appendChild(image);

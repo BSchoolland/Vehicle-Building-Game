@@ -231,6 +231,12 @@ class Contraption {
     });
     centerX /= this.blocks.length;
     centerY /= this.blocks.length;
+    const num = 100;
+    // round the center to the nearest num
+    centerX = Math.round(centerX / num) * num;
+    centerY = Math.round(centerY / num) * num;
+    // move the centerY up slightly
+    centerY -= 5;
     // move the contraption so that the center is at x and y
     x -= centerX;
     y -= centerY;

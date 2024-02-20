@@ -1,0 +1,83 @@
+{
+  "blocks": [
+    { "type": "GrassBlock", "x": 1400, "y": 1300 },
+    { "type": "GrassBlock", "x": 1500, "y": 1300 },
+    { "type": "GrassBlock", "x": 1700, "y": 1300 },
+    { "type": "GrassBlock", "x": 2100, "y": 1300 },
+    { "type": "GrassBlock", "x": 2300, "y": 1300 },
+    { "type": "GrassBlock", "x": 2700, "y": 1300 },
+    { "type": "GrassBlock", "x": 2800, "y": 1300 },
+    { "type": "GrassBlock", "x": 2500, "y": 1300 },
+    { "type": "GrassBlock", "x": 2400, "y": 1300 },
+    { "type": "GrassBlock", "x": 2600, "y": 1300 },
+    { "type": "GrassBlock", "x": 2000, "y": 1300 },
+    { "type": "GrassBlock", "x": 1900, "y": 1300 },
+    { "type": "GrassBlock", "x": 1800, "y": 1300 },
+    { "type": "GrassBlock", "x": 1600, "y": 1300 },
+    { "type": "GrassBlock", "x": 2200, "y": 1300 },
+    { "type": "GrassBlock", "x": 2900, "y": 1300 },
+    { "type": "GrassBlock", "x": 3100, "y": 1300 },
+    { "type": "GrassBlock", "x": 3200, "y": 1300 },
+    { "type": "GrassBlock", "x": 3000, "y": 1300 },
+    { "type": "GrassBlock", "x": 3400, "y": 1300 },
+    { "type": "GrassBlock", "x": 3300, "y": 1300 },
+    { "type": "BuildingAreaBlock", "x": 1500, "y": 1000 },
+    { "type": "BuildingAreaBlock", "x": 1500, "y": 900 },
+    { "type": "BuildingAreaBlock", "x": 1600, "y": 900 },
+    { "type": "BuildingAreaBlock", "x": 1700, "y": 900 },
+    { "type": "BuildingAreaBlock", "x": 1700, "y": 1000 },
+    { "type": "BuildingAreaBlock", "x": 1600, "y": 1000 },
+    { "type": "CoinBlock", "x": 2000, "y": 1000 },
+    { "type": "CoinBlock", "x": 2400, "y": 1000 },
+    { "type": "CoinBlock", "x": 2800, "y": 1000 },
+    { "type": "GrassBlock", "x": 2400, "y": 800 },
+    { "type": "GrassBlock", "x": 2500, "y": 800 },
+    { "type": "GrassBlock", "x": 2600, "y": 800 },
+    { "type": "GrassBlock", "x": 2700, "y": 800 },
+    {
+      "type": "EnemySpawnBlock",
+      "x": 2500,
+      "y": 700,
+      "enemyType": "missileCar"
+    },
+    { "type": "GrassBlock", "x": 1300, "y": 1300 },
+    { "type": "GrassBlock", "x": 1200, "y": 1300 },
+    { "type": "GrassBlock", "x": 2300, "y": 800 },
+    { "type": "GrassBlock", "x": 3500, "y": 1300 },
+    { "type": "GrassBlock", "x": 3700, "y": 1300 },
+    { "type": "GrassBlock", "x": 3800, "y": 1300 },
+    { "type": "GrassBlock", "x": 4000, "y": 1300 },
+    { "type": "GrassBlock", "x": 4200, "y": 1300 },
+    { "type": "GrassBlock", "x": 4300, "y": 1300 },
+    { "type": "GrassBlock", "x": 4400, "y": 1300 },
+    { "type": "GrassBlock", "x": 4100, "y": 1300 },
+    { "type": "GrassBlock", "x": 3600, "y": 1300 },
+    { "type": "GrassBlock", "x": 3900, "y": 1300 },
+    { "type": "EnemySpawnBlock", "x": 1600, "y": 1200, "enemyType": "base" }
+  ],
+  "commands": [],
+  "buildingBlockTypes": [
+    {
+      "name": "Basic Block",
+      "key": "1",
+      "type": "BasicWoodenBlock",
+      "limit": 12
+    },
+    { "name": "Seat Block", "key": "2", "type": "SeatBlock", "limit": 1 },
+    { "name": "Spike Block", "key": "3", "type": "SpikeBlock", "limit": 3 },
+    {
+      "name": "Rocket Booster",
+      "key": "4",
+      "type": "rocketBoosterBlock",
+      "limit": 3
+    },
+    { "name": "Remote Block", "key": "5", "type": "RemoteBlock", "limit": 2 }
+  ],
+  "objectives": [
+    { "name": "Destroy", "value": 0 },
+    { "name": "Collect", "value": 3 },
+    { "name": "Survive", "value": 10 },
+    { "name": "Before", "value": 0 }
+  ],
+  "tutorialText": ""
+}

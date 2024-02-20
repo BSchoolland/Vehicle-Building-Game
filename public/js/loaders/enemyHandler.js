@@ -12,7 +12,9 @@ class EnemyHandler {
             world1Boss: '../../json-enemies/world1Boss.json',
             flameTank: '../../json-enemies/flameTank.json', 
             tntTank: '../../json-enemies/tntTank.json',
-            delayedRocketCar: '../../json-enemies/delayedRocketCar.json'
+            delayedRocketCar: '../../json-enemies/delayedRocketCar.json',
+            missileCar: '../../json-enemies/missileCar.json',
+            base: '../../json-enemies/base.json',
         }
         this.enemyContraptionsJSON = {};
         this.progressBar = progressBar;

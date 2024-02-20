@@ -7,9 +7,7 @@ class TNTBlock extends Block {
         this.makeBodies();
         this.makeConstraints();
 
-        
-        // this block is not simetrical in the x direction
-        this.simetricalX = false;
+        this.simetricalX = true;
         this.exploded = false;
         this.blastRadius = 200; // the radius of the explosion
         this.blastDamage = 100; // the damage of the explosion

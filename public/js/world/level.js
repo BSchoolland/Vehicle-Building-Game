@@ -28,10 +28,13 @@ import LevelHandler from "../loaders/levelHandler.js";
 import EnemyHandler from "../loaders/enemyHandler.js";
 // A Level is a collection of blocks that can be saved and loaded
 class LevelManager {
-  constructor(engine, building, progressBar) {
+  constructor(engine, building, progressBar, isEnemyEditor = false) {
     this.engine = engine;
     this.playerContraption = building.contraption;
     this.building = building;
+    this.isEnemyEditor = isEnemyEditor;
+    // log isEnemyEditor
+    console.log("isEnemyEditor: ", isEnemyEditor);
 
     this.blocks = [];
     this.actionStack = [];
@@ -346,7 +349,7 @@ class LevelManager {
 
             // if the level has buildingBlockTypes, then set the building's buildingBlockTypes
             if (LevelJson.buildingBlockTypes) {
-            this.building.makeNewBuildMenu(LevelJson.buildingBlockTypes);
+            this.building.makeNewBuildMenu(LevelJson.buildingBlockTypes, this.isEnemyEditor);
             }
             
             // set the win conditions

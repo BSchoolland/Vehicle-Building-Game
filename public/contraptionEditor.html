@@ -12,13 +12,19 @@
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
-    
+    <!-- game container object -->
     <div id="game-container"></div>
-    <div id="container"></div>
-    <!-- an input for tutorial text -->
-    <input type="text" id="tutorial-text" placeholder="Tutorial Text">
-
+    <div id="container">
+        <h1>Click to start!</h1>
+    </div>
+    <!-- a div for keeping track of win conditions -->
+    <div class="stat-container" id="stats" style="display: none;">
+        <h1>Coins: 0/1</h1>
+        <h1>Destroyed: 0/1</h1>
+        <h1>Survived: 0/30</h1>
+    </div>
+    <h1 id="tutorial-text" class="tutorial" style="display: none;">Press B to toggle build mode!</h1>
     <!-- runs the matter.js simulation -->
-    <script type="module" src = "js/levelEditor/editor.js"></script>
+    <script type="module" src = "js/levelEditor/contraptionEditor.js"></script>
 </body>
 </html>

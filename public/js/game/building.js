@@ -176,6 +176,7 @@ class BuildMenu {
     // create the build menu
     this.menu = document.createElement("div");
     this.menu.classList.add("menu");
+    this.enemyEditor = enemyEditor;
     // create a button for each block type
     if (blockTypes) {
       this.blockTypes = blockTypes;
@@ -201,7 +202,7 @@ class BuildMenu {
         },
         { name: "Spike Block", key: "5", type: SpikeBlock, limit: 100 },
         { name: "Grapple Block", key: "6", type: GrappleBlock, limit: 100 },
-        { name: "Seat Block", key: "7", type: SeatBlock, limit: 100 },
+        { name: "Seat Block", key: "7", type: SeatBlock, limit: 1 },
         {
           name: "Powered Hinge Block",
           key: "8",
@@ -345,44 +346,46 @@ class BuildMenu {
   }
   init(building) {
     // set the button functions
-    // this.saveButton.onclick = () => {
-    //   // make sure build mode is enabled
-    //   if (!building.buildInProgress) {
-    //     return;
-    //   }
-    //   // save the contraption to a JSON object
-    //   let contraptionJson = building.contraption.save();
-    //   // download the JSON object as a file
-    //   let dataStr =
-    //     "data:text/json;charset=utf-8," +
-    //     encodeURIComponent(JSON.stringify(contraptionJson));
-    //   let dlAnchorElem = document.createElement("a");
-    //   dlAnchorElem.setAttribute("href", dataStr);
-    //   dlAnchorElem.setAttribute("download", "contraption.json");
-    //   dlAnchorElem.click();
-    // };
-    // this.loadButton.onclick = () => {
-    //   if (!building.buildInProgress) {
-    //     return;
-    //   }
-    //   // bring up a file input dialog
-    //   let fileInput = document.createElement("input");
-    //   fileInput.type = "file";
-    //   fileInput.click();
-    //   // when a file is selected, load the contraption
-    //   fileInput.onchange = (event) => {
-    //     let file = event.target.files[0];
-    //     let reader = new FileReader();
-    //     reader.readAsText(file);
-    //     reader.onload = () => {
-    //       let contraptionJson = JSON.parse(reader.result);
-    //       // clear the existing contraption
-    //       building.contraption.clear();
-    //       // load the contraption from the JSON object
-    //       building.contraption.load(contraptionJson);
-    //     };
-    //   };
-    // };
+    if (this.enemyEditor) {
+      this.saveButton.onclick = () => {
+        // make sure build mode is enabled
+        if (!building.buildInProgress) {
+          return;
+        }
+        // save the contraption to a JSON object
+        let contraptionJson = building.contraption.save();
+        // download the JSON object as a file
+        let dataStr =
+          "data:text/json;charset=utf-8," +
+          encodeURIComponent(JSON.stringify(contraptionJson));
+        let dlAnchorElem = document.createElement("a");
+        dlAnchorElem.setAttribute("href", dataStr);
+        dlAnchorElem.setAttribute("download", "contraption.json");
+        dlAnchorElem.click();
+      };
+      this.loadButton.onclick = () => {
+        if (!building.buildInProgress) {
+          return;
+        }
+        // bring up a file input dialog
+        let fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.click();
+        // when a file is selected, load the contraption
+        fileInput.onchange = (event) => {
+          let file = event.target.files[0];
+          let reader = new FileReader();
+          reader.readAsText(file);
+          reader.onload = () => {
+            let contraptionJson = JSON.parse(reader.result);
+            // clear the existing contraption
+            building.contraption.clear();
+            // load the contraption from the JSON object
+            building.contraption.load(contraptionJson);
+          };
+        };
+      };
+    }
     this.clearButton.onclick = () => {
       // clear the ghost blocks
       building.removeGhostBlocks();
@@ -485,10 +488,11 @@ class BuildMenu {
 
 // a refactored version of the building class
 class Building {
-  constructor(engine, camera, keybinds = true) {
+  constructor(engine, camera, keybinds = true, isEnemyEditor = false) {
     this.engine = engine;
     this.camera = camera;
     this.keybinds = keybinds;
+
     this.currentBlockType = BasicWoodenBlock; // Default block type
     this.currentBlockTypeLimit = 100; // Default limit for each block type
     this.buildInProgress = false;
@@ -504,7 +508,7 @@ class Building {
     // right click menu
     this.RightClickMenu = new RightClickMenu(this);
     // build menu
-    this.buildMenu = new BuildMenu(this);
+    this.buildMenu = new BuildMenu(this, false, isEnemyEditor);
     this.buildMenu.hide();
     this.canEnterBuildMode = false;
     this.ghostBlocks = [];
@@ -522,11 +526,12 @@ class Building {
     this.currentBlockType = blockType;
     this.currentBlockTypeLimit = limit;
   }
-  makeNewBuildMenu(blockTypes) {
+  makeNewBuildMenu(blockTypes, isEnemyEditor = false) {
+    console.log(isEnemyEditor)
     // makes a new build menu with the given block types (for levels that limit the blocks that can be used)
     // remove the old build menu
     this.buildMenu.menu.remove();
-    this.buildMenu = new BuildMenu(this, blockTypes);
+    this.buildMenu = new BuildMenu(this, blockTypes, isEnemyEditor);
   }
   init() {
     // Add event listener for canvas click
@@ -628,6 +633,9 @@ class Building {
 
     // Create a new block at the click position
     let newBlock = new this.currentBlockType(x, y, this.contraption);
+    // if this is an enemy editor, flip the block
+    console.log(this.buildMenu.enemyEditor)
+    
     // Add the block to the contraption
     this.contraption.addBlock(newBlock);
     // play the place block sound
@@ -636,6 +644,9 @@ class Building {
     // make the new block selected
     this.selectBlock(newBlock);
     this.buildMenu.updateButtonLimits();
+    if (this.buildMenu.enemyEditor) {
+      newBlock.flipX();
+    }
   }
   selectBlock(block) {
     // if the block is already selected, deselect it

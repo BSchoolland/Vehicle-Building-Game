@@ -1,5 +1,5 @@
-import Building from "./building.js";
-import { Camera } from "./camera.js";
+import Building from "../game/building.js";
+import { Camera } from "../game/camera.js";
 import { LevelManager } from "../world/level.js";
 import { setSong } from "../sounds/playSound.js";
 
@@ -43,13 +43,13 @@ var mouse = Matter.Mouse.create(render.canvas);
 // create the camera
 var camera = new Camera(render, mouse, render.canvas);
 // allow the player to build blocks
-let building = new Building(engine, camera);
+let building = new Building(engine, camera, true, true);
 building.init();
-const levelObject = new LevelManager(engine, building);
+const levelObject = new LevelManager(engine, building, false, true);
 levelObject.init('testLevel');
 document.addEventListener("click", clickHandler);
 
-function startGame() {
+async function startGame() {
   createHTML();
   // show the container
   container.style.display = "block";
@@ -90,9 +90,13 @@ function startGame() {
   Matter.Events.on(engine, "afterUpdate", () => {
     levelObject.update();
   });
-  // load the level selector screen
-  // after a short delay to allow the levels to load
-  const localJSON = localStorage.getItem("level");
-  console.log(localJSON);
-  levelObject.load(-1, localJSON);
+  // load the level from sandbox/enemyEditor
+  const response = await fetch('../../json-levels/sandbox/contraptionEditor.json');
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  } else {
+    const editorJSON = await response.json();
+    console.log(JSON.stringify(editorJSON)  + " is the editorJSON");
+    levelObject.load(-1, JSON.stringify(editorJSON));
+  }
 }

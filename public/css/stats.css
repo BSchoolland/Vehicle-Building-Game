@@ -26,6 +26,9 @@
     top: 2%;
     left: 20%;
     right: 30%;
+    @media (max-width: 768px) {
+        font-size: 0.5em;
+    }
 }
 
 p {

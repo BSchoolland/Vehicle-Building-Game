@@ -718,6 +718,10 @@ class LevelManager {
         crown.style.position = "absolute";
         crown.style.top = "0px";
         crown.style.right = "0px";
+        crown.addEventListener("click", () => {
+          this.load(i);
+          levelSelector.remove();
+        });
         // if the level has not been completed, make the crowns slightly transparent
         if (!this.LevelHandler.isLevelCompleted(this.worldSelected, i)) {
           crown.style.opacity = "0.2";

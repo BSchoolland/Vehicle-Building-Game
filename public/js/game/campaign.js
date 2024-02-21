@@ -4,6 +4,11 @@ import { LevelManager } from "../world/level.js";
 import { setSong } from "../sounds/playSound.js";
 import ProgressBar from "../loaders/progressBar.js";
 
+// if the user is on mobile, warn them that the game may not work well
+if (window.innerWidth < 800 || window.innerHeight < 600) {
+  alert("WAIT! This game is not optomized for mobile! PLEASE play on a computer.  I can't stop you though, any more than I can stop you from just using a seat and a rocket booster to beat my most complicated levels. *Cries in game developer*");
+}
+
 let gameStarted = false;
 function clickHandler() {
   if (gameStarted) {

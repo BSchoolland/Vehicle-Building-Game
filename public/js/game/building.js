@@ -162,28 +162,9 @@ class BuildMenu {
       text.style.fontFamily = "Arial, sans-serif";
       let gameContainer = document.getElementById("game-container");
       gameContainer.appendChild(text);
-    } // otherwise, show a button
+    } 
     else {
-      let button = document.createElement("button");
-      button.innerText = "click to return to builder";
-      button.classList.add("build-mode-text");
-      button.style.position = "absolute";
-      button.style.bottom = "10px";
-      button.style.left = "50%";
-      button.style.transform = "translateX(-50%)";
-      button.style.color = "white";
-      button.style.fontSize = "20px";
-      button.style.fontFamily = "Arial, sans-serif";
-      button.style.padding = "10px";
-      button.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-      button.style.border = "none";
-      button.style.borderRadius = "10px";
-      button.style.cursor = "pointer";
-      button.onclick = () => {
-        this.buildModeButton.click();
-      };
-      let gameContainer = document.getElementById("game-container");
-      gameContainer.appendChild(button);
+      
     }
   }
   show() {
@@ -427,6 +408,16 @@ class BuildMenu {
             controlMenu.appendChild(button);
             controlButtons[control.name] = button;
           });
+          // add a button to return to build mode
+          let returnButton = document.createElement("button");
+          returnButton.classList.add("menu-button", "build-menu-button");
+          returnButton.innerHTML = "Return to Build Mode";
+          returnButton.onclick = () => {
+            controlMenu.remove();
+            // click the build mode button
+            this.buildModeButton.click();
+          };
+          controlMenu.appendChild(returnButton);
           // add the control menu to the game container
           let gameContainer = document.getElementById("game-container");
           gameContainer.appendChild(controlMenu);

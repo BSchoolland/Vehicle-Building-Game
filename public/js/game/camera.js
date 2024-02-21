@@ -250,6 +250,7 @@ class Camera {
         const correctedY = viewBounds.min.y + canvasTouchY * scaleY;
 
         // Return the corrected touch position
+        console.log(correctedX, correctedY);
         return new Vector2(correctedX, correctedY);
     }
 

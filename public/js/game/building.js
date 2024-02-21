@@ -25,10 +25,9 @@ class RightClickMenu {
     // create a button to flip the block
     this.flipButton = document.createElement("button");
     this.flipButton.classList.add("menu-button");
-    this.flipButton.innerText = "Flip";
+    this.flipButton.innerText = "Rotate";
     this.flipButton.onclick = () => {
       this.block.rotate90();
-      this.hide();
     };
     this.menu.appendChild(this.flipButton);
     // create a button to remove the block
@@ -38,95 +37,23 @@ class RightClickMenu {
     this.menu.appendChild(this.removeButton);
     this.removeButton.onclick = () => {
       this.block.contraption.removeBlock(this.block);
-      // play the remove block sound
-      // playSound("removeBlock");
+      // unselect the block
+      this.building.removeGhostBlocks();
       // update the button limits
       this.building.buildMenu.updateButtonLimits();
       this.hide();
     };
-    // create a button to change the block's activation key
-    this.keybindButton = document.createElement("button");
-    this.keybindButton.classList.add("menu-button");
-    this.keybindButton.innerText = "activate: ";
-    this.menu.appendChild(this.keybindButton);
-    this.keybindButton.onclick = () => {
-      // set the button's text to 'Press a key'
-      this.keybindButton.innerText = "Press a key";
-      // Add the event listener
-      document.addEventListener("keydown", this.keydownHandler);
-    };
-    // by default, the keybind button is hidden
-    this.keybindButton.style.display = "none";
-    // add a reverse keybind button
-    this.reverseKeybindButton = document.createElement("button");
-    this.reverseKeybindButton.classList.add("menu-button");
-    this.reverseKeybindButton.innerText = "reverse: ";
-    this.menu.appendChild(this.reverseKeybindButton);
-    this.reverseKeybindButton.onclick = () => {
-      // set the button's text to 'Press a key'
-      this.reverseKeybindButton.innerText = "Press a key";
-      // Add the event listener
-      document.addEventListener("keydown", this.reverseKeydownHandler);
-    };
-    // by default, the reverse keybind button is hidden
-    this.reverseKeybindButton.style.display = "none";
-
-    // create a button to cancel
-    this.cancelButton = document.createElement("button");
-    this.cancelButton.classList.add("menu-button");
-    this.cancelButton.innerText = "Cancel";
-    this.menu.appendChild(this.cancelButton);
-    this.cancelButton.onclick = () => {
-      this.hide();
-    };
-    // if the user clicks outside the menu, hide it
-    document.body.addEventListener("click", (event) => {
-      if (
-        event.target != this.menu &&
-        event.target != this.keybindButton &&
-        event.target != this.reverseKeybindButton
-      ) {
-        this.hide();
-      }
-    });
     // style the menu
     this.menu.classList.add("right-click-menu");
     // set the button class
     this.flipButton.classList.add("right-click-menu-button");
     this.removeButton.classList.add("right-click-menu-button");
-    this.cancelButton.classList.add("right-click-menu-button");
-    this.keybindButton.classList.add("right-click-menu-button");
-    this.reverseKeybindButton.classList.add("right-click-menu-button");
     // hide the menu
     this.hide();
     // Add the menu to the game container
     let gameContainer = document.getElementById("game-container");
     gameContainer.appendChild(this.menu);
   }
-  keydownHandler = (event) => {
-    // set the block's activation key to the key that was pressed
-    this.block.activationKey = event.key;
-    // set the button's text to 'Change Keybind'
-    this.keybindButton.innerText = `activate: ${this.block.activationKey}`;
-    // remove the event listener
-    document.removeEventListener("keydown", this.keydownHandler);
-    // after a short delay, hide the menu
-    setTimeout(() => {
-      this.hide();
-    }, 500);
-  };
-  reverseKeydownHandler = (event) => {
-    // set the block's reverse activation key to the key that was pressed
-    this.block.reverseActivationKey = event.key;
-    // set the button's text to 'Change Keybind'
-    this.reverseKeybindButton.innerText = `reverse: ${this.block.reverseActivationKey}`;
-    // remove the event listener
-    document.removeEventListener("keydown", this.reverseKeydownHandler);
-    // after a short delay, hide the menu
-    setTimeout(() => {
-      this.hide();
-    }, 500);
-  };
 
   startLevel() {
     // bound by the level manager, DO NOT CHANGE
@@ -136,27 +63,15 @@ class RightClickMenu {
   }
   setSelectBlock(block) {
     this.block = block;
-    // if the block has an activation key, show the custom keybind button, otherwise hide it
-    if (this.block.activationKey) {
-      this.keybindButton.style.display = "block";
-      this.keybindButton.innerText = `activate: ${this.block.activationKey}`;
-    } else {
-      this.keybindButton.style.display = "none";
-    }
-    // if the block has a reverse activation key, show the custom keybind button, otherwise hide it
-    if (this.block.reverseActivationKey) {
-      this.reverseKeybindButton.style.display = "block";
-      this.reverseKeybindButton.innerText = `reverse: ${this.block.reverseActivationKey}`;
-    } else {
-      this.reverseKeybindButton.style.display = "none";
-    }
   }
 
-  show(x, y) {
+  show() {
     // Position the menu
     this.menu.style.position = "absolute";
-    this.menu.style.left = `${x}px`;
-    this.menu.style.top = `${y}px`;
+    this.menu.style.left = '50%'
+    this.menu.style.top = '20%'
+    // center the menu horizontally
+    this.menu.style.transform = "translateX(-50%)";
     // display the menu
     this.menu.style.display = "block";
   }
@@ -233,19 +148,43 @@ class BuildMenu {
   levelMode() {
     // hide the menu
     this.hide();
-    // add text that says "press B to enter build mode"
-    let text = document.createElement("div");
-    text.innerText = "Press B to return to builder";
-    text.classList.add("build-mode-text");
-    text.style.position = "absolute";
-    text.style.bottom = "10px";
-    text.style.left = "50%";
-    text.style.transform = "translateX(-50%)";
-    text.style.color = "white";
-    text.style.fontSize = "20px";
-    text.style.fontFamily = "Arial, sans-serif";
-    let gameContainer = document.getElementById("game-container");
-    gameContainer.appendChild(text);
+    // add text if not on mobile
+    if (!this.building.mobile) {
+      let text = document.createElement("div");
+      text.innerText = "Press B to return to builder";
+      text.classList.add("build-mode-text");
+      text.style.position = "absolute";
+      text.style.bottom = "10px";
+      text.style.left = "50%";
+      text.style.transform = "translateX(-50%)";
+      text.style.color = "white";
+      text.style.fontSize = "20px";
+      text.style.fontFamily = "Arial, sans-serif";
+      let gameContainer = document.getElementById("game-container");
+      gameContainer.appendChild(text);
+    } // otherwise, show a button
+    else {
+      let button = document.createElement("button");
+      button.innerText = "click to return to builder";
+      button.classList.add("build-mode-text");
+      button.style.position = "absolute";
+      button.style.bottom = "10px";
+      button.style.left = "50%";
+      button.style.transform = "translateX(-50%)";
+      button.style.color = "white";
+      button.style.fontSize = "20px";
+      button.style.fontFamily = "Arial, sans-serif";
+      button.style.padding = "10px";
+      button.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+      button.style.border = "none";
+      button.style.borderRadius = "10px";
+      button.style.cursor = "pointer";
+      button.onclick = () => {
+        this.buildModeButton.click();
+      };
+      let gameContainer = document.getElementById("game-container");
+      gameContainer.appendChild(button);
+    }
   }
   show() {
     // remove the text that says "press B to enter build mode"
@@ -513,6 +452,7 @@ class Building {
     this.canEnterBuildMode = false;
     this.ghostBlocks = [];
     this.selectedBlock = null;
+    this.mobile = screen.width < 600;
   }
   setCamera(camera) {
     this.camera = camera;
@@ -547,6 +487,9 @@ class Building {
     );
   }
   removeGhostBlocks() {
+    // hide the right click menu
+    this.RightClickMenu.hide();
+    // remove the ghost blocks
     this.ghostBlocks.forEach((block) => {
       Matter.World.remove(this.engine.world, block);
     });
@@ -563,6 +506,10 @@ class Building {
     // prevent the default action for the event
     if (event.type === "touchend") {
       event.preventDefault();
+      this.mobile = true;
+    }
+    else {
+      this.mobile = false;
     }
     // get the click or touch end position
     let pos;
@@ -691,18 +638,17 @@ class Building {
     });
     // make the selected block the block that was clicked
     this.selectedBlock = block;
+    // if the user is on a mobile device, show the right click menu
+    if (this.mobile) {
+      this.showRightClickMenu(block);
+    }
     return;
   }
   showRightClickMenu(block, event) {
     // set the menu's block
     this.RightClickMenu.setSelectBlock(block);
-    // get the relative click position using the event
-    let pos = {
-      x: event.clientX,
-      y: event.clientY + this.grid,
-    };
     // show the menu
-    this.RightClickMenu.show(pos.x, pos.y);
+    this.RightClickMenu.show();
   }
 
   handleRightClick(event) {

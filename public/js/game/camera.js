@@ -231,6 +231,28 @@ class Camera {
         return new Vector2(correctedX, correctedY);
     }
 
+    getTouchPosition(touch) {
+        // Get the touch position relative to the canvas
+        const canvasTouchX = touch.clientX - this.Renderer.canvas.offsetLeft;
+        const canvasTouchY = touch.clientY - this.Renderer.canvas.offsetTop;
+
+        // Get the bounds of the current view from the renderer
+        const viewBounds = this.Renderer.bounds;
+
+        // Calculate the scale factor between the canvas and the view
+        const viewWidth = viewBounds.max.x - viewBounds.min.x;
+        const viewHeight = viewBounds.max.y - viewBounds.min.y;
+        const scaleX = viewWidth / this.Renderer.canvas.width;
+        const scaleY = viewHeight / this.Renderer.canvas.height;
+
+        // Translate the touch position to world coordinates
+        const correctedX = viewBounds.min.x + canvasTouchX * scaleX;
+        const correctedY = viewBounds.min.y + canvasTouchY * scaleY;
+
+        // Return the corrected touch position
+        return new Vector2(correctedX, correctedY);
+    }
+
     toggleFullScreen() {
         let container = document.getElementById('game-container');
     

@@ -538,6 +538,7 @@ class Building {
     const canvas = document.querySelector("canvas");
     // Add event listener for placing blocks
     canvas.addEventListener("click", (event) => this.handleCanvasClick(event));
+    canvas.addEventListener("touchend", (event) => this.handleCanvasClick(event)); // for mobile
     // Add event listener for keys
     document.addEventListener("keydown", (event) => this.handleKeyDown(event));
     // Add event listener for block editing
@@ -554,13 +555,23 @@ class Building {
     // clear the selected block
     this.selectedBlock = null;
   }
-  handleCanvasClick(_event) {
+  handleCanvasClick(event) {
     // make sure build mode is enabled
     if (!this.buildInProgress) {
       return;
     }
-    // get the click position
-    let pos = this.camera.getMousePosition();
+    // prevent the default action for the event
+    if (event.type === "touchend") {
+      event.preventDefault();
+    }
+    // get the click or touch end position
+    let pos;
+    if (event.type === 'click') {
+      pos = this.camera.getMousePosition();
+    } else if (event.type === 'touchend') {
+      let touch = event.changedTouches[0];
+      pos = this.camera.getTouchPosition(touch);
+    }
     // Round the position to the nearest grid line
     let x = Math.round((pos.x - 25) / this.grid) * this.grid + 25;
     let y = Math.round((pos.y - 25) / this.grid) * this.grid + 25;

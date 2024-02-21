@@ -125,6 +125,8 @@ body {
     transition: background-color 0.3s;
     text-transform: uppercase; /* Makes text uppercase for a more formal look */
     font-weight: bold;
+    /* prevent user from highlighting text */
+    user-select: none;
 }
 
 .build-menu-button:hover {

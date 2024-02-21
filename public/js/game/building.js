@@ -345,6 +345,11 @@ class BuildMenu {
           return;
         }
         building.contraption.despawn(true);
+        // remove the control menu if it exists
+        if (this.controlMenu) {
+          this.controlMenu.remove();
+          this.controlMenu = null;
+        }
         // set the song to the build theme
         setSong("buildTheme");
         // show the build menu
@@ -401,6 +406,33 @@ class BuildMenu {
 
         // Spawn the contraption
         building.contraption.spawn();
+        // if the user is on mobile, button controls will be shown
+        if (building.mobile) {
+          // get all controls from the contraption
+          let controls = building.contraption.getControls();
+          // create buttons so the user can control the contraption on mobile
+          let controlMenu = document.createElement("div");
+          controlMenu.classList.add("build-menu"); // same class as the build menu
+          let controlButtons = {};
+          controls.forEach((control) => {
+            let button = document.createElement("button");
+            button.classList.add("menu-button", "build-menu-button");
+            button.innerHTML = control.name;
+            button.onmousedown = button.ontouchstart = () => {
+              building.contraption.pressKey(control.key); // press the key
+            };
+            button.onmouseup = button.ontouchend = () => {
+              building.contraption.releaseKey(control.key); // release the key
+            };
+            controlMenu.appendChild(button);
+            controlButtons[control.name] = button;
+          });
+          // add the control menu to the game container
+          let gameContainer = document.getElementById("game-container");
+          gameContainer.appendChild(controlMenu);
+          this.controlMenu = controlMenu;
+        }
+        
         // start the level
         building.startLevel();
         // set the song to the level theme
@@ -411,7 +443,6 @@ class BuildMenu {
         building.camera.setViewport(canvas.width * 2, canvas.height * 2);
         // set the camera target to the seat
         building.camera.setTarget(building.contraption.seat);
-        // despawn the contraption after a short delay
       }
     };
     this.fullscreenButton.onclick = () => {
@@ -453,6 +484,7 @@ class Building {
     this.ghostBlocks = [];
     this.selectedBlock = null;
     this.mobile = screen.width < 600;
+    this.controlMenu = null;
   }
   setCamera(camera) {
     this.camera = camera;

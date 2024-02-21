@@ -95,6 +95,17 @@ class Contraption {
     this.maxSparks = 100;
     this.currentSparks = 0;
   }
+  getControls() {
+    // Use flatMap to get all controls from all blocks
+    const allControls = this.blocks.flatMap(block => block.getControls());
+    console.log(allControls);
+    // Filter out duplicate controls
+    const uniqueControls = allControls.filter((control, index, self) =>
+      index === self.findIndex((c) => c.name === control.name)
+    );
+
+    return uniqueControls;
+  }
   shift(x, y, buildArea) {
       console.log('shifting contraption')
       // make sure no blocks would be outside the build area

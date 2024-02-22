@@ -2,6 +2,11 @@ import Building from './building.js';
 import { Camera } from './camera.js';
 import { LevelManager } from '../world/level.js';
 
+// if the user is on mobile, warn them that the game may not work well
+if (window.innerWidth < 800 || window.innerHeight < 600) {
+    alert("WAIT! This game is not optomized for mobile! PLEASE play on a computer.  I can't stop you though, any more than I can stop you from just using a seat and a rocket booster to beat my most complicated levels. :(");
+}
+
 const noEditor = true; // since the editor is not implemented yet, use a greyed out button that says "coming soon"
 
 function createHTML() {
@@ -25,9 +30,9 @@ function createHTML() {
         editorLink.className = 'button';
         editorLink.textContent = 'Editor';
     }
-    campaignLink.href = 'campaign.html';
+    campaignLink.href = 'levels.html';
     campaignLink.className = 'button';
-    campaignLink.textContent = 'Campaign';
+    campaignLink.textContent = 'Levels';
 
     // Append elements
     container.appendChild(h1);

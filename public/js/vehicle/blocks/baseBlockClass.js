@@ -47,6 +47,11 @@ class Block {
     this.flameDuration = 0; // the time the block will be on fire for
     this.flameDamage = 0; // the damage the block will take per second while on fire
   }
+  getControls() {
+    // to be defined in subclasses
+    // returns the controls for the block (if applicable)
+    return [];
+  }
   reset(atOriginalPosition = true) {
     // deletes all bodies and constraints then recreates them at the original position
     this.removeFromWorld(this.contraption.engine.world);

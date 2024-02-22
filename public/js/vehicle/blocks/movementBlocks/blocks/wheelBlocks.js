@@ -17,6 +17,18 @@ class WheelBlock extends Block {
         this.activationKey = 'd';
         this.reverseActivationKey = 'a';
     }
+    getControls() {
+        return [
+            {
+                name: 'forward',
+                key: this.activationKey
+            },
+            {
+                name: 'reverse',
+                key: this.reverseActivationKey
+            }
+        ]
+    }
     makeBodies() {
         this.bodies.push(Matter.Bodies.rectangle(this.x, this.y-20, 50, 10, { render: { fillStyle: this.color }}));
         this.bodies[0].block = this;

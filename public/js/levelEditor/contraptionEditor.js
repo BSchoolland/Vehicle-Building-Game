@@ -1,8 +1,7 @@
-import Building from "./building.js";
-import { Camera } from "./camera.js";
+import Building from "../game/building.js";
+import { Camera } from "../game/camera.js";
 import { LevelManager } from "../world/level.js";
 import { setSong } from "../sounds/playSound.js";
-import ProgressBar from "../loaders/progressBar.js";
 
 let gameStarted = false;
 function clickHandler() {
@@ -10,10 +9,14 @@ function clickHandler() {
     return;
   }
   gameStarted = true;
+  // play the sound
+  setSong("mainTheme");
   // remove the event listener
   document.removeEventListener("click", clickHandler);
   // start the game
   startGame();
+  // get rid of the body background
+document.body.style.background = 'none';
 }
 
 function createHTML() {
@@ -21,12 +24,6 @@ function createHTML() {
   // clear the container
   container.innerHTML = "";
 }
-
-// create a progress bar
-let barContainer = document.getElementById("progress-bar-container");
-const steps = ["Loading Contraptions", "Loading Music", "Loading World 1", "Loading World 2"];
-let progressBar = new ProgressBar(steps, barContainer );
-
 // Create an engine
 var engine = Matter.Engine.create();
 
@@ -46,43 +43,13 @@ var mouse = Matter.Mouse.create(render.canvas);
 // create the camera
 var camera = new Camera(render, mouse, render.canvas);
 // allow the player to build blocks
-let building = new Building(engine, camera);
+let building = new Building(engine, camera, true, true);
 building.init();
-const levelObject = new LevelManager(engine, building, progressBar);
-levelObject.init();
+const levelObject = new LevelManager(engine, building, false, true);
+levelObject.init('testLevel');
 document.addEventListener("click", clickHandler);
 
-function checkMusicLoaded() {
-  // try to play the music
-  let success = setSong("mainTheme");
-  if (success) {
-    musicLoaded = true;
-  }
-  if (musicLoaded) {
-    progressBar.update();
-  } else {
-    setTimeout(checkMusicLoaded, 100);
-  }
-}
-
-
-// create a loop to update the progress bar
-let musicLoaded = false;
-checkMusicLoaded();
-
-
-function startGame() {
-  // wait until loading is done
-  if (!progressBar.loaded) {
-    setTimeout(startGame, 100);
-    return;
-  }
-  // play the sound
-  setSong("mainTheme");
-  // remove the background from body
-  document.body.style.background = "none";
-  // make the body white
-  document.body.style.backgroundColor = "white";
+async function startGame() {
   createHTML();
   // show the container
   container.style.display = "block";
@@ -123,8 +90,13 @@ function startGame() {
   Matter.Events.on(engine, "afterUpdate", () => {
     levelObject.update();
   });
-  // load the level selector screen
-  // after a short delay to allow the levels to load
-
-  levelObject.loadLevelSelector();
+  // load the level from sandbox/enemyEditor
+  const response = await fetch('../../json-levels/sandbox/contraptionEditor.json');
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  } else {
+    const editorJSON = await response.json();
+    console.log(JSON.stringify(editorJSON)  + " is the editorJSON");
+    levelObject.load(-1, JSON.stringify(editorJSON));
+  }
 }

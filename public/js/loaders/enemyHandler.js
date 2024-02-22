@@ -12,20 +12,22 @@ class EnemyHandler {
             world1Boss: '../../json-enemies/world1Boss.json',
             flameTank: '../../json-enemies/flameTank.json', 
             tntTank: '../../json-enemies/tntTank.json',
-            delayedRocketCar: '../../json-enemies/delayedRocketCar.json'
+            delayedRocketCar: '../../json-enemies/delayedRocketCar.json',
+            missileCar: '../../json-enemies/missileCar.json',
+            base: '../../json-enemies/base.json',
         }
         this.enemyContraptionsJSON = {};
         this.progressBar = progressBar;
         this.preLoadEnemies();
     }
-    preLoadEnemies() {
+    preLoadEnemies() {1
         const enemies = this.enemies;
         Object.keys(enemies).forEach(async (key) => {
             var enemyJson = await (await fetch(enemies[key])).json();
             this.enemyContraptionsJSON[key] = enemyJson;
         });
         console.log("all enemies preloaded");
-        if (this.progressBar !== undefined) this.progressBar.update();
+        if (this.progressBar) this.progressBar.update();
     }
     getEnemyJSON(enemyName) {
         if (this.enemyContraptionsJSON[enemyName] === undefined) {

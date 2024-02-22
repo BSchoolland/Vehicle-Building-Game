@@ -25,10 +25,9 @@ class RightClickMenu {
     // create a button to flip the block
     this.flipButton = document.createElement("button");
     this.flipButton.classList.add("menu-button");
-    this.flipButton.innerText = "Flip";
+    this.flipButton.innerText = "Rotate";
     this.flipButton.onclick = () => {
       this.block.rotate90();
-      this.hide();
     };
     this.menu.appendChild(this.flipButton);
     // create a button to remove the block
@@ -38,95 +37,23 @@ class RightClickMenu {
     this.menu.appendChild(this.removeButton);
     this.removeButton.onclick = () => {
       this.block.contraption.removeBlock(this.block);
-      // play the remove block sound
-      // playSound("removeBlock");
+      // unselect the block
+      this.building.removeGhostBlocks();
       // update the button limits
       this.building.buildMenu.updateButtonLimits();
       this.hide();
     };
-    // create a button to change the block's activation key
-    this.keybindButton = document.createElement("button");
-    this.keybindButton.classList.add("menu-button");
-    this.keybindButton.innerText = "activate: ";
-    this.menu.appendChild(this.keybindButton);
-    this.keybindButton.onclick = () => {
-      // set the button's text to 'Press a key'
-      this.keybindButton.innerText = "Press a key";
-      // Add the event listener
-      document.addEventListener("keydown", this.keydownHandler);
-    };
-    // by default, the keybind button is hidden
-    this.keybindButton.style.display = "none";
-    // add a reverse keybind button
-    this.reverseKeybindButton = document.createElement("button");
-    this.reverseKeybindButton.classList.add("menu-button");
-    this.reverseKeybindButton.innerText = "reverse: ";
-    this.menu.appendChild(this.reverseKeybindButton);
-    this.reverseKeybindButton.onclick = () => {
-      // set the button's text to 'Press a key'
-      this.reverseKeybindButton.innerText = "Press a key";
-      // Add the event listener
-      document.addEventListener("keydown", this.reverseKeydownHandler);
-    };
-    // by default, the reverse keybind button is hidden
-    this.reverseKeybindButton.style.display = "none";
-
-    // create a button to cancel
-    this.cancelButton = document.createElement("button");
-    this.cancelButton.classList.add("menu-button");
-    this.cancelButton.innerText = "Cancel";
-    this.menu.appendChild(this.cancelButton);
-    this.cancelButton.onclick = () => {
-      this.hide();
-    };
-    // if the user clicks outside the menu, hide it
-    document.body.addEventListener("click", (event) => {
-      if (
-        event.target != this.menu &&
-        event.target != this.keybindButton &&
-        event.target != this.reverseKeybindButton
-      ) {
-        this.hide();
-      }
-    });
     // style the menu
     this.menu.classList.add("right-click-menu");
     // set the button class
     this.flipButton.classList.add("right-click-menu-button");
     this.removeButton.classList.add("right-click-menu-button");
-    this.cancelButton.classList.add("right-click-menu-button");
-    this.keybindButton.classList.add("right-click-menu-button");
-    this.reverseKeybindButton.classList.add("right-click-menu-button");
     // hide the menu
     this.hide();
     // Add the menu to the game container
     let gameContainer = document.getElementById("game-container");
     gameContainer.appendChild(this.menu);
   }
-  keydownHandler = (event) => {
-    // set the block's activation key to the key that was pressed
-    this.block.activationKey = event.key;
-    // set the button's text to 'Change Keybind'
-    this.keybindButton.innerText = `activate: ${this.block.activationKey}`;
-    // remove the event listener
-    document.removeEventListener("keydown", this.keydownHandler);
-    // after a short delay, hide the menu
-    setTimeout(() => {
-      this.hide();
-    }, 500);
-  };
-  reverseKeydownHandler = (event) => {
-    // set the block's reverse activation key to the key that was pressed
-    this.block.reverseActivationKey = event.key;
-    // set the button's text to 'Change Keybind'
-    this.reverseKeybindButton.innerText = `reverse: ${this.block.reverseActivationKey}`;
-    // remove the event listener
-    document.removeEventListener("keydown", this.reverseKeydownHandler);
-    // after a short delay, hide the menu
-    setTimeout(() => {
-      this.hide();
-    }, 500);
-  };
 
   startLevel() {
     // bound by the level manager, DO NOT CHANGE
@@ -136,27 +63,15 @@ class RightClickMenu {
   }
   setSelectBlock(block) {
     this.block = block;
-    // if the block has an activation key, show the custom keybind button, otherwise hide it
-    if (this.block.activationKey) {
-      this.keybindButton.style.display = "block";
-      this.keybindButton.innerText = `activate: ${this.block.activationKey}`;
-    } else {
-      this.keybindButton.style.display = "none";
-    }
-    // if the block has a reverse activation key, show the custom keybind button, otherwise hide it
-    if (this.block.reverseActivationKey) {
-      this.reverseKeybindButton.style.display = "block";
-      this.reverseKeybindButton.innerText = `reverse: ${this.block.reverseActivationKey}`;
-    } else {
-      this.reverseKeybindButton.style.display = "none";
-    }
   }
 
-  show(x, y) {
+  show() {
     // Position the menu
     this.menu.style.position = "absolute";
-    this.menu.style.left = `${x}px`;
-    this.menu.style.top = `${y}px`;
+    this.menu.style.left = '50%'
+    this.menu.style.top = '20%'
+    // center the menu horizontally
+    this.menu.style.transform = "translateX(-50%)";
     // display the menu
     this.menu.style.display = "block";
   }
@@ -171,11 +86,12 @@ class RightClickMenu {
 // a build menu class, for the bottom of the screen.
 // the build menu will contain buttons for each block type, a button to save the contraption, a button to load a contraption, a button to clear the contraption, and a button to toggle build mode.
 class BuildMenu {
-  constructor(building, blockTypes = false) {
+  constructor(building, blockTypes = false, enemyEditor = false) {
     this.building = building;
     // create the build menu
     this.menu = document.createElement("div");
     this.menu.classList.add("menu");
+    this.enemyEditor = enemyEditor;
     // create a button for each block type
     if (blockTypes) {
       this.blockTypes = blockTypes;
@@ -201,7 +117,7 @@ class BuildMenu {
         },
         { name: "Spike Block", key: "5", type: SpikeBlock, limit: 100 },
         { name: "Grapple Block", key: "6", type: GrappleBlock, limit: 100 },
-        { name: "Seat Block", key: "7", type: SeatBlock, limit: 100 },
+        { name: "Seat Block", key: "7", type: SeatBlock, limit: 1 },
         {
           name: "Powered Hinge Block",
           key: "8",
@@ -216,42 +132,11 @@ class BuildMenu {
         },
       ];
     }
+    this.enemyEditor = enemyEditor; // a boolean that determines if the build menu is for the enemy editor
+
     this.createBlockButtons();
-    // // create a button to save the contraption
-    // this.saveButton = document.createElement("button");
-    // this.saveButton.classList.add("menu-button");
-    // this.saveButton.innerText = "Save";
-    // this.menu.appendChild(this.saveButton);
-    // // create a button to load a contraption
-    // this.loadButton = document.createElement("button");
-    // this.loadButton.classList.add("menu-button");
-    // this.loadButton.innerText = "Load";
-    // this.menu.appendChild(this.loadButton);
-    // create a button to clear the contraption
-    this.clearButton = document.createElement("button");
-    this.clearButton.classList.add("menu-button");
-    this.clearButton.innerText = "Clear";
-    this.menu.appendChild(this.clearButton);
-    // create a button to toggle build mode
-    this.buildModeButton = document.createElement("button");
-    this.buildModeButton.classList.add("menu-button");
-    this.buildModeButton.innerText = "Start Level (b)";
-    this.menu.appendChild(this.buildModeButton);
-    // button to toggle fullscreen
-    this.fullscreenButton = document.createElement("button");
-    this.fullscreenButton.classList.add("menu-button");
-    this.fullscreenButton.innerText = "Fullscreen";
-    this.menu.appendChild(this.fullscreenButton);
-    // style the menu
-    this.menu.classList.add("build-menu");
-    // // set the button class
-    // this.saveButton.classList.add("build-menu-button");
-    // this.loadButton.classList.add("build-menu-button");
-    this.clearButton.classList.add("build-menu-button");
-    this.buildModeButton.classList.add("build-menu-button");
-    // Add the menu to the game container
-    let gameContainer = document.getElementById("game-container");
-    gameContainer.appendChild(this.menu);
+
+    this.createMenuButtons();
     // initialize the menu
     this.init(building);
   }
@@ -263,19 +148,24 @@ class BuildMenu {
   levelMode() {
     // hide the menu
     this.hide();
-    // add text that says "press B to enter build mode"
-    let text = document.createElement("div");
-    text.innerText = "Press B to return to builder";
-    text.classList.add("build-mode-text");
-    text.style.position = "absolute";
-    text.style.bottom = "10px";
-    text.style.left = "50%";
-    text.style.transform = "translateX(-50%)";
-    text.style.color = "white";
-    text.style.fontSize = "20px";
-    text.style.fontFamily = "Arial, sans-serif";
-    let gameContainer = document.getElementById("game-container");
-    gameContainer.appendChild(text);
+    // add text if not on mobile
+    if (!this.building.mobile) {
+      let text = document.createElement("div");
+      text.innerText = "Press B to return to builder";
+      text.classList.add("build-mode-text");
+      text.style.position = "absolute";
+      text.style.bottom = "10px";
+      text.style.left = "50%";
+      text.style.transform = "translateX(-50%)";
+      text.style.color = "white";
+      text.style.fontSize = "20px";
+      text.style.fontFamily = "Arial, sans-serif";
+      let gameContainer = document.getElementById("game-container");
+      gameContainer.appendChild(text);
+    } 
+    else {
+      
+    }
   }
   show() {
     // remove the text that says "press B to enter build mode"
@@ -286,9 +176,7 @@ class BuildMenu {
     // make the menu visible and clickable
     this.menu.style.display = "flex";
     this.menu.style.pointerEvents = "auto";
-    
   }
-    
 
   createBlockButtons() {
     this.blockButtons = {};
@@ -310,6 +198,49 @@ class BuildMenu {
       this.blockButtons[blockType.type.name] = button;
     });
   }
+  createMenuButtons() {
+    // if this is the enemy editor, show the save and load buttons
+    if (this.enemyEditor) {
+      // create a button to save the contraption
+      this.saveButton = document.createElement("button");
+      this.saveButton.classList.add("menu-button");
+      this.saveButton.innerText = "Save";
+      this.menu.appendChild(this.saveButton);
+      // create a button to load a contraption
+      this.loadButton = document.createElement("button");
+      this.loadButton.classList.add("menu-button");
+      this.loadButton.innerText = "Load";
+      this.menu.appendChild(this.loadButton);
+    }
+    // create a button to clear the contraption
+    this.clearButton = document.createElement("button");
+    this.clearButton.classList.add("menu-button");
+    this.clearButton.innerText = "Clear";
+    this.menu.appendChild(this.clearButton);
+    // create a button to toggle build mode
+    this.buildModeButton = document.createElement("button");
+    this.buildModeButton.classList.add("menu-button");
+    this.buildModeButton.innerText = "Start Level (b)";
+    this.menu.appendChild(this.buildModeButton);
+    // button to toggle fullscreen
+    this.fullscreenButton = document.createElement("button");
+    this.fullscreenButton.classList.add("menu-button");
+    this.fullscreenButton.innerText = "Fullscreen";
+    this.menu.appendChild(this.fullscreenButton);
+    // style the menu
+    this.menu.classList.add("build-menu");
+    // // set the button class
+    if (this.enemyEditor) {
+      this.saveButton.classList.add("build-menu-button");
+      this.loadButton.classList.add("build-menu-button");
+    }
+    this.clearButton.classList.add("build-menu-button");
+    this.buildModeButton.classList.add("build-menu-button");
+    // Add the menu to the game container
+    let gameContainer = document.getElementById("game-container");
+    gameContainer.appendChild(this.menu);
+  }
+
   updateButtonLimits() {
     // get the number of each block in the contraption
     let blockTypeCount = {};
@@ -335,44 +266,46 @@ class BuildMenu {
   }
   init(building) {
     // set the button functions
-    // this.saveButton.onclick = () => {
-    //   // make sure build mode is enabled
-    //   if (!building.buildInProgress) {
-    //     return;
-    //   }
-    //   // save the contraption to a JSON object
-    //   let contraptionJson = building.contraption.save();
-    //   // download the JSON object as a file
-    //   let dataStr =
-    //     "data:text/json;charset=utf-8," +
-    //     encodeURIComponent(JSON.stringify(contraptionJson));
-    //   let dlAnchorElem = document.createElement("a");
-    //   dlAnchorElem.setAttribute("href", dataStr);
-    //   dlAnchorElem.setAttribute("download", "contraption.json");
-    //   dlAnchorElem.click();
-    // };
-    // this.loadButton.onclick = () => {
-    //   if (!building.buildInProgress) {
-    //     return;
-    //   }
-    //   // bring up a file input dialog
-    //   let fileInput = document.createElement("input");
-    //   fileInput.type = "file";
-    //   fileInput.click();
-    //   // when a file is selected, load the contraption
-    //   fileInput.onchange = (event) => {
-    //     let file = event.target.files[0];
-    //     let reader = new FileReader();
-    //     reader.readAsText(file);
-    //     reader.onload = () => {
-    //       let contraptionJson = JSON.parse(reader.result);
-    //       // clear the existing contraption
-    //       building.contraption.clear();
-    //       // load the contraption from the JSON object
-    //       building.contraption.load(contraptionJson);
-    //     };
-    //   };
-    // };
+    if (this.enemyEditor) {
+      this.saveButton.onclick = () => {
+        // make sure build mode is enabled
+        if (!building.buildInProgress) {
+          return;
+        }
+        // save the contraption to a JSON object
+        let contraptionJson = building.contraption.save();
+        // download the JSON object as a file
+        let dataStr =
+          "data:text/json;charset=utf-8," +
+          encodeURIComponent(JSON.stringify(contraptionJson));
+        let dlAnchorElem = document.createElement("a");
+        dlAnchorElem.setAttribute("href", dataStr);
+        dlAnchorElem.setAttribute("download", "contraption.json");
+        dlAnchorElem.click();
+      };
+      this.loadButton.onclick = () => {
+        if (!building.buildInProgress) {
+          return;
+        }
+        // bring up a file input dialog
+        let fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.click();
+        // when a file is selected, load the contraption
+        fileInput.onchange = (event) => {
+          let file = event.target.files[0];
+          let reader = new FileReader();
+          reader.readAsText(file);
+          reader.onload = () => {
+            let contraptionJson = JSON.parse(reader.result);
+            // clear the existing contraption
+            building.contraption.clear();
+            // load the contraption from the JSON object
+            building.contraption.load(contraptionJson);
+          };
+        };
+      };
+    }
     this.clearButton.onclick = () => {
       // clear the ghost blocks
       building.removeGhostBlocks();
@@ -388,17 +321,22 @@ class BuildMenu {
       building.removeGhostBlocks();
       building.buildInProgress = !building.buildInProgress;
       if (building.buildInProgress) {
-        if (!building.canEnterBuildMode){
+        if (!building.canEnterBuildMode) {
           building.buildInProgress = false;
           return;
         }
         building.contraption.despawn(true);
+        // remove the control menu if it exists
+        if (this.controlMenu) {
+          this.controlMenu.remove();
+          this.controlMenu = null;
+        }
         // set the song to the build theme
         setSong("buildTheme");
         // show the build menu
         this.show();
         // alert the level that we have entered build mode
-        try{
+        try {
           building.startBuildModeForLevel();
         } catch (e) {
           console.log("No level manager found");
@@ -449,18 +387,53 @@ class BuildMenu {
 
         // Spawn the contraption
         building.contraption.spawn();
+        // if the user is on mobile, button controls will be shown
+        if (building.mobile) {
+          // get all controls from the contraption
+          let controls = building.contraption.getControls();
+          // create buttons so the user can control the contraption on mobile
+          let controlMenu = document.createElement("div");
+          controlMenu.classList.add("build-menu"); // same class as the build menu
+          let controlButtons = {};
+          controls.forEach((control) => {
+            let button = document.createElement("button");
+            button.classList.add("menu-button", "build-menu-button");
+            button.innerHTML = control.name;
+            button.onmousedown = button.ontouchstart = () => {
+              building.contraption.pressKey(control.key); // press the key
+            };
+            button.onmouseup = button.ontouchend = () => {
+              building.contraption.releaseKey(control.key); // release the key
+            };
+            controlMenu.appendChild(button);
+            controlButtons[control.name] = button;
+          });
+          // add a button to return to build mode
+          let returnButton = document.createElement("button");
+          returnButton.classList.add("menu-button", "build-menu-button");
+          returnButton.innerHTML = "Return to Build Mode";
+          returnButton.onclick = () => {
+            controlMenu.remove();
+            // click the build mode button
+            this.buildModeButton.click();
+          };
+          controlMenu.appendChild(returnButton);
+          // add the control menu to the game container
+          let gameContainer = document.getElementById("game-container");
+          gameContainer.appendChild(controlMenu);
+          this.controlMenu = controlMenu;
+        }
+        
         // start the level
         building.startLevel();
         // set the song to the level theme
         setSong("levelTheme");
         // set the camera viewport to the size of the canvas
         const canvas = document.querySelector("canvas");
-        building.camera.setViewport(canvas.width*2.5, canvas.height*2.5);
-        
+        // building.camera.setViewport(canvas.width*2.5, canvas.height*2.5);
+        building.camera.setViewport(canvas.width * 2, canvas.height * 2);
         // set the camera target to the seat
         building.camera.setTarget(building.contraption.seat);
-        // despawn the contraption after a short delay
-        
       }
     };
     this.fullscreenButton.onclick = () => {
@@ -476,10 +449,11 @@ class BuildMenu {
 
 // a refactored version of the building class
 class Building {
-  constructor(engine, camera, keybinds = true) {
+  constructor(engine, camera, keybinds = true, isEnemyEditor = false) {
     this.engine = engine;
     this.camera = camera;
     this.keybinds = keybinds;
+
     this.currentBlockType = BasicWoodenBlock; // Default block type
     this.currentBlockTypeLimit = 100; // Default limit for each block type
     this.buildInProgress = false;
@@ -495,16 +469,19 @@ class Building {
     // right click menu
     this.RightClickMenu = new RightClickMenu(this);
     // build menu
-    this.buildMenu = new BuildMenu(this);
+    this.buildMenu = new BuildMenu(this, false, isEnemyEditor);
     this.buildMenu.hide();
     this.canEnterBuildMode = false;
     this.ghostBlocks = [];
     this.selectedBlock = null;
+    this.mobile = screen.width < 600;
+    this.controlMenu = null;
   }
   setCamera(camera) {
     this.camera = camera;
   }
-  toggleBuildingMode(force = false) { // force is used to force the build mode to be enabled or disabled
+  toggleBuildingMode(force = false) {
+    // force is used to force the build mode to be enabled or disabled
     // click the build mode button
     this.buildMenu.buildModeButton.click();
   }
@@ -512,17 +489,19 @@ class Building {
     this.currentBlockType = blockType;
     this.currentBlockTypeLimit = limit;
   }
-  makeNewBuildMenu(blockTypes) {
+  makeNewBuildMenu(blockTypes, isEnemyEditor = false) {
+    console.log(isEnemyEditor)
     // makes a new build menu with the given block types (for levels that limit the blocks that can be used)
     // remove the old build menu
     this.buildMenu.menu.remove();
-    this.buildMenu = new BuildMenu(this, blockTypes);
+    this.buildMenu = new BuildMenu(this, blockTypes, isEnemyEditor);
   }
   init() {
     // Add event listener for canvas click
     const canvas = document.querySelector("canvas");
     // Add event listener for placing blocks
     canvas.addEventListener("click", (event) => this.handleCanvasClick(event));
+    canvas.addEventListener("touchend", (event) => this.handleCanvasClick(event)); // for mobile
     // Add event listener for keys
     document.addEventListener("keydown", (event) => this.handleKeyDown(event));
     // Add event listener for block editing
@@ -531,6 +510,9 @@ class Building {
     );
   }
   removeGhostBlocks() {
+    // hide the right click menu
+    this.RightClickMenu.hide();
+    // remove the ghost blocks
     this.ghostBlocks.forEach((block) => {
       Matter.World.remove(this.engine.world, block);
     });
@@ -539,13 +521,27 @@ class Building {
     // clear the selected block
     this.selectedBlock = null;
   }
-  handleCanvasClick(_event) {
+  handleCanvasClick(event) {
     // make sure build mode is enabled
     if (!this.buildInProgress) {
       return;
     }
-    // get the click position
-    let pos = this.camera.getMousePosition();
+    // prevent the default action for the event
+    if (event.type === "touchend") {
+      event.preventDefault();
+      this.mobile = true;
+    }
+    else {
+      this.mobile = false;
+    }
+    // get the click or touch end position
+    let pos;
+    if (event.type === 'click') {
+      pos = this.camera.getMousePosition();
+    } else if (event.type === 'touchend') {
+      let touch = event.changedTouches[0];
+      pos = this.camera.getTouchPosition(touch);
+    }
     // Round the position to the nearest grid line
     let x = Math.round((pos.x - 25) / this.grid) * this.grid + 25;
     let y = Math.round((pos.y - 25) / this.grid) * this.grid + 25;
@@ -596,7 +592,7 @@ class Building {
         console.log("Block already here");
         // instead, select this block
         this.selectBlock(this.contraption.blocks[i]);
-        return
+        return;
       }
     }
     // find how many of each block are already in the contraption, and make sure the limit has not been reached
@@ -618,6 +614,9 @@ class Building {
 
     // Create a new block at the click position
     let newBlock = new this.currentBlockType(x, y, this.contraption);
+    // if this is an enemy editor, flip the block
+    console.log(this.buildMenu.enemyEditor)
+    
     // Add the block to the contraption
     this.contraption.addBlock(newBlock);
     // play the place block sound
@@ -626,6 +625,9 @@ class Building {
     // make the new block selected
     this.selectBlock(newBlock);
     this.buildMenu.updateButtonLimits();
+    if (this.buildMenu.enemyEditor) {
+      newBlock.flipX();
+    }
   }
   selectBlock(block) {
     // if the block is already selected, deselect it
@@ -659,18 +661,17 @@ class Building {
     });
     // make the selected block the block that was clicked
     this.selectedBlock = block;
+    // if the user is on a mobile device, show the right click menu
+    if (this.mobile) {
+      this.showRightClickMenu(block);
+    }
     return;
   }
   showRightClickMenu(block, event) {
     // set the menu's block
     this.RightClickMenu.setSelectBlock(block);
-    // get the relative click position using the event
-    let pos = {
-      x: event.clientX,
-      y: event.clientY + this.grid,
-    };
     // show the menu
-    this.RightClickMenu.show(pos.x, pos.y);
+    this.RightClickMenu.show();
   }
 
   handleRightClick(event) {
@@ -879,9 +880,6 @@ class Building {
     Matter.World.add(this.engine.world, bottomArrowRight);
     this.gridLines.push(bottomArrowLeft);
     this.gridLines.push(bottomArrowRight);
-
-
-
   }
   removeGrid() {
     for (let i = 0; i < this.gridLines.length; i++) {

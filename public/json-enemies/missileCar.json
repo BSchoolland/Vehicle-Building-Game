@@ -1,0 +1,113 @@
+{
+  "blocks": [
+    {
+      "type": "BasicWoodenBlock",
+      "x": 3075,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 3125,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 3175,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 3225,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "WheelBlock",
+      "x": 3225,
+      "y": 1225,
+      "rotatedTimes": 0,
+      "flippedX": true
+    },
+    {
+      "type": "WheelBlock",
+      "x": 3125,
+      "y": 1225,
+      "rotatedTimes": 0,
+      "flippedX": true
+    },
+    {
+      "type": "WheelBlock",
+      "x": 3075,
+      "y": 1225,
+      "rotatedTimes": 0,
+      "flippedX": true
+    },
+    {
+      "type": "RemoteBlock",
+      "x": 3125,
+      "y": 1125,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "TNTBlock",
+      "x": 3125,
+      "y": 1075,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "rocketBoosterBlock",
+      "x": 3175,
+      "y": 1075,
+      "rotatedTimes": 0,
+      "flippedX": true
+    },
+    {
+      "type": "WheelBlock",
+      "x": 3275,
+      "y": 1225,
+      "rotatedTimes": 0,
+      "flippedX": true
+    },
+    {
+      "type": "SpikeBlock",
+      "x": 3025,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": true
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 3275,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "SeatBlock",
+      "x": 3275,
+      "y": 1125,
+      "rotatedTimes": 0,
+      "flippedX": true
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 3225,
+      "y": 1125,
+      "rotatedTimes": 0,
+      "flippedX": false
+    }
+  ],
+  "commands": [
+    { "key": "x", "start": 1, "end": 2.0},
+    { "key": "SHIFT", "start": 2, "end": 30}
+  ]
+}

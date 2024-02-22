@@ -1,6 +1,8 @@
 // Import the block classes from public/js/world/mapBlocks.js
 import { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock } from '../world/mapBlocks.js';
 import { LevelManager } from '../world/level.js';
+// import the enemyHandler class
+import EnemyHandler from '../loaders/enemyHandler.js';
 // contraption blocks
 import {
     RemoteBlock,
@@ -28,7 +30,7 @@ class ObjectivesMenu { // creates objectives for the level
             { name: 'Destroy', value: 0 }, // destroy x enemies
             { name: 'Collect', value: 0 }, // collect x coins
             { name: 'Survive', value: 0 }, // survive for x seconds
-            { name: 'Before', value: 0 }, // reach the end before x seconds
+            { name: 'BeforeTime', value: 0 }, // reach the end before x seconds
         ];
         this.createObjectivesSelectors();
     }
@@ -418,6 +420,7 @@ class Building {
         this.currentBlockType = GrassBlock;
         this.buildInProgress = false;
         this.level = new LevelManager(this.engine, this.camera);
+        this.enemyHandler = new EnemyHandler();
         this.buildArea = {
             x: 0,
             y: 0,
@@ -505,18 +508,8 @@ class Building {
         this.level.addBlock(newBlock);
     }
     showRightClickMenu(block, event) { // for when the user places an enemy spawn block
-        const enemies = {
-            box: '../../json-enemies/box.json',
-            car: '../../json-enemies/car.json',
-            spikeCar: '../../json-enemies/spikeCar.json',
-            largeSpikeCar: '../../json-enemies/largeSpikeCar.json',
-            movingSpikeWall: '../../json-enemies/movingSpikeWall.json',
-            barge: '../../json-enemies/barge.json',
-            world1Boss: '../../json-enemies/world1Boss.json',
-            flameTank: '../../json-enemies/flameTank.json', 
-            tntTank: '../../json-enemies/tntTank.json',
-            delayedRocketCar: '../../json-enemies/delayedRocketCar.json',
-        };
+
+        const enemies = this.enemyHandler.enemies;
         // create a popup with each enemy type
         let popup = document.createElement('div');
         popup.classList.add('popup');

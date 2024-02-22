@@ -110,7 +110,13 @@ body {
     font-family: 'Courier New', monospace; /* Font that gives a typewritten or technical feel */
     display: flex; /* Use flexbox for horizontal layout */
     justify-content: center; /* Center items horizontally */
-    align-items: center; /* Align items vertically */
+    align-items: center; /* Align items vertically */   
+    /* mobile media query */
+    @media screen and (max-width: 768px){
+        /* allow buttons to flow into a new row */
+        flex-wrap: wrap;
+        width: 90%;
+    }
 }
 
 /* Style for each button in the build menu */
@@ -125,6 +131,11 @@ body {
     transition: background-color 0.3s;
     text-transform: uppercase; /* Makes text uppercase for a more formal look */
     font-weight: bold;
+    /* prevent user from highlighting text */
+    user-select: none;
+    -webkit-user-select: none; /* For older versions of webkit-based browsers */
+    -moz-user-select: none; /* For older versions of Firefox */
+    -ms-user-select: none; /* For Internet Explorer/Edge */
 }
 
 .build-menu-button:hover {

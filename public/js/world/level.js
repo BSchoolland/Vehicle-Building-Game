@@ -28,10 +28,13 @@ import LevelHandler from "../loaders/levelHandler.js";
 import EnemyHandler from "../loaders/enemyHandler.js";
 // A Level is a collection of blocks that can be saved and loaded
 class LevelManager {
-  constructor(engine, building, progressBar) {
+  constructor(engine, building, progressBar, isEnemyEditor = false) {
     this.engine = engine;
     this.playerContraption = building.contraption;
     this.building = building;
+    this.isEnemyEditor = isEnemyEditor;
+    // log isEnemyEditor
+    console.log("isEnemyEditor: ", isEnemyEditor);
 
     this.blocks = [];
     this.actionStack = [];
@@ -241,7 +244,6 @@ class LevelManager {
     else { // if optionalJson is not provided, load from the LevelHandler
       LevelJson = this.LevelHandler.getLevel(this.worldSelected, levelIndex); // world 1, level levelIndex
     }
-    console.log('LevelJson:', LevelJson);
     let tutorial = document.getElementById("tutorial-text");
 
     let string = LevelJson.tutorialText;
@@ -347,7 +349,7 @@ class LevelManager {
 
             // if the level has buildingBlockTypes, then set the building's buildingBlockTypes
             if (LevelJson.buildingBlockTypes) {
-            this.building.makeNewBuildMenu(LevelJson.buildingBlockTypes);
+            this.building.makeNewBuildMenu(LevelJson.buildingBlockTypes, this.isEnemyEditor);
             }
             
             // set the win conditions
@@ -385,9 +387,6 @@ class LevelManager {
             if (!this.building.buildInProgress) {
             this.building.toggleBuildingMode();
             }
-        }
-        else {
-            console.log(this.building.camera.strength);
         }
     });
   }
@@ -572,6 +571,8 @@ class LevelManager {
     }
   }
   completeLevel() {
+    // update the player's local storage to show that the level has been completed
+    this.LevelHandler.completeLevel(this.worldSelected, this.LevelHandler.getLevelIndex());
     // hide the tutorial text
     document.getElementById("tutorial-text").style.display = "none";
     // play the level complete sound
@@ -690,6 +691,7 @@ class LevelManager {
     for (let i = 0; i < count; i++) {
       let box = document.createElement("div");
       box.className = "level-select-box";
+      box.style.position = "relative";
       let button = document.createElement("button");
       button.className = "level-select-button";
       button.innerHTML = `Level ${i + 1}`;
@@ -705,9 +707,36 @@ class LevelManager {
         this.load(i);
         levelSelector.remove();
       });
-      box.appendChild(image);
-      box.appendChild(button);
-      levelSelector.appendChild(box);
+      
+        let crown = document.createElement("img");
+        crown.src = "../../img/crown.png";
+        crown.className = "crown";
+        // make the crown a little smaller
+        crown.style.width = "50px";
+        crown.style.height = "50px";
+        // position the crown in the corner of the image using absolute positioning
+        crown.style.position = "absolute";
+        crown.style.top = "0px";
+        crown.style.right = "0px";
+        crown.addEventListener("click", () => {
+          this.load(i);
+          levelSelector.remove();
+        });
+        // if the level has not been completed, make the crowns slightly transparent
+        if (!this.LevelHandler.isLevelCompleted(this.worldSelected, i)) {
+          crown.style.opacity = "0.2";
+        }
+        else { // make the box and button dark gold
+          box.style.backgroundColor = "darkgoldenrod";
+          button.style.backgroundColor = "darkgoldenrod";
+        }
+
+        box.appendChild(image);
+        // the crown is placed in the corner of the image
+        box.appendChild(crown);
+        box.appendChild(button);
+        levelSelector.appendChild(box);
+
     }
   }
 }

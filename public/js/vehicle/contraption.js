@@ -95,6 +95,17 @@ class Contraption {
     this.maxSparks = 100;
     this.currentSparks = 0;
   }
+  getControls() {
+    // Use flatMap to get all controls from all blocks
+    const allControls = this.blocks.flatMap(block => block.getControls());
+    console.log(allControls);
+    // Filter out duplicate controls
+    const uniqueControls = allControls.filter((control, index, self) =>
+      index === self.findIndex((c) => c.name === control.name)
+    );
+
+    return uniqueControls;
+  }
   shift(x, y, buildArea) {
       console.log('shifting contraption')
       // make sure no blocks would be outside the build area
@@ -231,6 +242,12 @@ class Contraption {
     });
     centerX /= this.blocks.length;
     centerY /= this.blocks.length;
+    const num = 100;
+    // round the center to the nearest num
+    centerX = Math.round(centerX / num) * num;
+    centerY = Math.round(centerY / num) * num;
+    // move the centerY up slightly
+    centerY -= 5;
     // move the contraption so that the center is at x and y
     x -= centerX;
     y -= centerY;

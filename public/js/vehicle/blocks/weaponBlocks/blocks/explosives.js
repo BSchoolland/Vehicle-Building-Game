@@ -7,9 +7,7 @@ class TNTBlock extends Block {
         this.makeBodies();
         this.makeConstraints();
 
-        
-        // this block is not simetrical in the x direction
-        this.simetricalX = false;
+        this.simetricalX = true;
         this.exploded = false;
         this.blastRadius = 200; // the radius of the explosion
         this.blastDamage = 100; // the damage of the explosion
@@ -132,17 +130,15 @@ class TNTBlock extends Block {
             explosion.render.fillStyle = '#ff' + Math.floor(Math.random() * 100).toString(16) + '00';
             // make it static
             explosion.isStatic = true;
+            // make the explosion unable to collide with other blocks
+            explosion.collisionFilter = { mask: 0x0002 };
             // add the explosion to the world
             Matter.World.add(world, explosion);
             // remove the explosion after a random amount of time
             setTimeout(() => {
                 Matter.World.remove(world, explosion);
             }, Math.random() * 1000);
-
         }
-        setTimeout(() => {
-            this.removeFromWorld(this.contraption.engine.world);
-        }, 1000);
     }
     resetValues() {
         super.resetValues();

@@ -7,6 +7,24 @@ import ProgressBar from "../loaders/progressBar.js";
 // if the user is on mobile, warn them that the game may not work well
 if (window.innerWidth < 800 || window.innerHeight < 600) {
   alert("Again, I really do suggest you play on a computer.  The experience is much better.  If you choose to ignore me, be ready for unbeatable levels, and more bugs than a termite farm.  You have been warned.");
+  // if the user is on mobile, disable zooming
+  document.addEventListener("gesturestart", function (e) {
+    e.preventDefault();
+  });
+  // if the user is on mobile, disable zooming
+  document.addEventListener("touchmove", function (e) {
+    e.preventDefault();
+  });
+  // if the user is on mobile, disable zooming
+  var lastTouchEnd = 0;
+  document.addEventListener('touchend', function(event) {
+    var now = (new Date()).getTime();
+    if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+    }
+    lastTouchEnd = now;
+}, false);
+
 }
 // get the orientation of the screen
 let landscape = !window.screen.orientation.type.includes('portrait');

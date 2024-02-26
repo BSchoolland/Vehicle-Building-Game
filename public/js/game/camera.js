@@ -52,6 +52,7 @@ class Camera {
 
         this.strength = 1; // the strength of the camera's pull towards the target (for smooth update)
         this.doingTour = false; // whether the camera is currently doing a level tour
+        this.tourNumber = 0; // the current tour number
     }
     
     update() {
@@ -105,13 +106,22 @@ class Camera {
         const timePerPoint = 10; // milliseconds
         let numPoints = orderedTourPoints.length;
         // use the setTimoout function to go to each point in the orderedTourPoints array
+        // record the current tour number so that the tour can be stopped if the tour number changes
+        let tourNumber = this.tourNumber + 1;
+        this.tourNumber = tourNumber;
         for (let i = 0; i < numPoints; i++) {
             setTimeout(() => {
+                if (this.tourNumber !== tourNumber) {
+                    return; // if the tour number has changed, stop the tour
+                }
                 this.setCenterPosition(orderedTourPoints[i].x, orderedTourPoints[i].y);
             }, i * timePerPoint);
         }
         // after the tour is done, slowly return the strength to 1
         setTimeout(() => {
+            if (this.tourNumber !== tourNumber) {
+                return; // if the tour number has changed, stop the tour
+            }
             // focus the camera on the build area
             this.setViewport(
                 buildArea.width * 2,
@@ -122,18 +132,10 @@ class Camera {
                 buildArea.y + buildArea.height / 2
             );
             console.log('center:', this.position.x, this.position.y);
-            // over 1 second
-            // let t = 0;
-            // let strength = this.strength;
-            // let interval = setInterval(() => {
-            //     t += 0.01;
-            //     this.strength = lerp(strength, 1, t);
-            //     if (t >= 1) {
-            //         clearInterval(interval);
-                    this.strength = 1;
-                    this.doingTour = false;
-            //     }
-            // }, 10);
+
+            this.strength = 1;
+            this.doingTour = false;
+
         }, numPoints * timePerPoint);
     }
 

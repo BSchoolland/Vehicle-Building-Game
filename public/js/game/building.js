@@ -316,8 +316,13 @@ class BuildMenu {
     };
     this.buildModeButton.onclick = () => {
       // prevent the button from being spammed
+      if (this.buildModeForce)  {
+        console.log("Build mode forced");
+      }
       if (this.buildModeDebounce) {
-        return;
+        if (!this.buildModeForce) { // force gets past the debounce
+          return;
+        }
       }
       this.buildModeDebounce = true;
       // allow the button to be clicked again after some time
@@ -330,8 +335,10 @@ class BuildMenu {
       building.buildInProgress = !building.buildInProgress;
       if (building.buildInProgress) {
         if (!building.canEnterBuildMode) {
-          building.buildInProgress = false;
-          return;
+          if (!this.buildModeForce) { // force gets past the no seat check
+            building.buildInProgress = false;
+            return;
+          }
         }
         building.contraption.despawn(true);
         // remove the control menu if it exists
@@ -378,9 +385,13 @@ class BuildMenu {
       } else {
         // if the contraption has no seat, don't disable build mode
         if (!building.contraption.seat && building.canEnterBuildMode) {
-          playSound("error");
-          building.buildInProgress = true;
-          return;
+          
+          
+          if (!this.buildModeForce) { // force gets past the no seat check
+            playSound("error");
+            building.buildInProgress = true;
+            return;
+          }
         }
         // call levelMode to hide the menu
         this.levelMode();
@@ -432,6 +443,7 @@ class BuildMenu {
           let gameContainer = document.getElementById("game-container");
           gameContainer.appendChild(controlMenu);
           this.controlMenu = controlMenu;
+          
         }
         
         // start the level
@@ -445,7 +457,7 @@ class BuildMenu {
         // set the camera target to the seat
         building.camera.setTarget(building.contraption.seat);
       }
-      
+      this.buildModeForce = false; // reset the force
     };
     // Assuming this is inside a method where 'this' refers to an object that has 'building' property
     const menu = document.querySelector(".build-menu"); // Adjust the selector as needed
@@ -491,6 +503,7 @@ class Building {
   toggleBuildingMode(force = false) {
     // force is used to force the build mode to be enabled or disabled
     // click the build mode button
+    this.buildMenu.buildModeForce = force;
     this.buildMenu.buildModeButton.click();
   }
   setCurrentBlockType(blockType, limit) {

@@ -103,6 +103,8 @@ class Contraption {
     const uniqueControls = allControls.filter((control, index, self) =>
       index === self.findIndex((c) => c.name === control.name)
     );
+    // order controls by order
+    uniqueControls.sort((a, b) => a.order - b.order);
 
     return uniqueControls;
   }

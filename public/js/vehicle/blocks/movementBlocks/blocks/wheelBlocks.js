@@ -20,12 +20,17 @@ class WheelBlock extends Block {
     getControls() {
         return [
             {
-                name: 'forward',
-                key: this.activationKey
+                name: '>',
+                key: this.activationKey,
+                type: 'hold',
+                order: 2
             },
             {
-                name: 'reverse',
-                key: this.reverseActivationKey
+                name: '<',
+                key: this.reverseActivationKey,
+                type: 'hold',
+                order: 1 // reverse displays further to the left
+
             }
         ]
     }

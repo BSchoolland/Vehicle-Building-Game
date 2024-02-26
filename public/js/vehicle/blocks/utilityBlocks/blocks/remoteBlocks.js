@@ -89,6 +89,16 @@ class RemoteBlock extends Block {
         super.resetValues();
         this.activated = false;
     }
+    getControls() {
+        return [
+            {
+                name: 'Drop',
+                key: this.activationKey,
+                type: 'hold',
+                order: 4
+            }
+        ]
+      }
 }
 
 export {

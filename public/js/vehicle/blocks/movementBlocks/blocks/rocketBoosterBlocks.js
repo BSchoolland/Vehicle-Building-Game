@@ -287,6 +287,16 @@ class rocketBoosterBlock extends Block {
     // record that the flame has hit something
     flame.hit = true;
   }
+  getControls() {
+    return [
+        {
+            name: 'Boost',
+            key: this.activationKey,
+            type: 'hold',
+            order: 3
+        }
+    ]
+  }
 }
 
 export { rocketBoosterBlock };

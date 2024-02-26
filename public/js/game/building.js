@@ -68,8 +68,8 @@ class RightClickMenu {
   show() {
     // Position the menu
     this.menu.style.position = "absolute";
-    this.menu.style.left = '50%'
-    this.menu.style.top = '20%'
+    this.menu.style.left = '10%'
+    this.menu.style.top = '30%'
     // center the menu horizontally
     this.menu.style.transform = "translateX(-50%)";
     // display the menu
@@ -139,6 +139,8 @@ class BuildMenu {
     this.createMenuButtons();
     // initialize the menu
     this.init(building);
+    // a variable to prevent build mode from being spammed
+    this.buildModeDebounce = false;
   }
   hide() {
     // make the menu invisible and unclickable
@@ -222,11 +224,7 @@ class BuildMenu {
     this.buildModeButton.classList.add("menu-button");
     this.buildModeButton.innerText = "Start Level (b)";
     this.menu.appendChild(this.buildModeButton);
-    // button to toggle fullscreen
-    this.fullscreenButton = document.createElement("button");
-    this.fullscreenButton.classList.add("menu-button");
-    this.fullscreenButton.innerText = "Fullscreen";
-    this.menu.appendChild(this.fullscreenButton);
+
     // style the menu
     this.menu.classList.add("build-menu");
     // // set the button class
@@ -317,6 +315,16 @@ class BuildMenu {
       this.updateButtonLimits();
     };
     this.buildModeButton.onclick = () => {
+      // prevent the button from being spammed
+      if (this.buildModeDebounce) {
+        return;
+      }
+      this.buildModeDebounce = true;
+      // allow the button to be clicked again after some time
+      setTimeout(() => {
+        this.buildModeDebounce = false;
+      }, 1000);
+
       // remove the ghost blocks
       building.removeGhostBlocks();
       building.buildInProgress = !building.buildInProgress;
@@ -405,6 +413,8 @@ class BuildMenu {
             button.onmouseup = button.ontouchend = () => {
               building.contraption.releaseKey(control.key); // release the key
             };
+            // scale the button up compared to the build menu buttons
+            button.style.fontSize = "1.5em";
             controlMenu.appendChild(button);
             controlButtons[control.name] = button;
           });
@@ -435,9 +445,7 @@ class BuildMenu {
         // set the camera target to the seat
         building.camera.setTarget(building.contraption.seat);
       }
-    };
-    this.fullscreenButton.onclick = () => {
-      this.building.camera.toggleFullScreen();
+      
     };
     // Assuming this is inside a method where 'this' refers to an object that has 'building' property
     const menu = document.querySelector(".build-menu"); // Adjust the selector as needed

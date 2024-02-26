@@ -34,6 +34,11 @@ class TNTBlock extends Block {
             // record the time of the hit
             this.lastHit = Date.now();
         }
+        // if the other body is a member of a contraption, and the contraption is not the same as this block's contraption, explode
+        if (otherBody.block.contraption && otherBody.block.contraption !== this.contraption) {
+            // damage the block for it's remaining hitpoints
+            this.damage(this.hitPoints);
+        }
     }
     damage(amount) {
         playSound('blockTakesDamage');

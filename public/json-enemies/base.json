@@ -254,6 +254,6 @@
     }
   ],
   "commands": [
-    { "key": "a", "start": 4, "end": 60}
+    { "key": "a", "start": 2, "end": 60}
   ]
 }

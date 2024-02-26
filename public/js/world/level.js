@@ -87,7 +87,6 @@ class LevelManager {
           let wait = 0;
           if (this.building.camera.doingTour) { // if the camera is doing a tour, stop it
             this.building.camera.doingTour = false;
-            wait = 1000; // wait for the camera to stop
           }
           setTimeout(() => {
           // prevent build mode
@@ -122,11 +121,6 @@ class LevelManager {
     if (string === 'testLevel') {
       this.test = true;
     }
-    // wait for the contraptions to load
-    // while (!this.EnemyHandler.loaded) {
-    //   console.log("waiting for contraptions to load");
-    //   // wait
-    // }
     this.loaded = true;
   }
   addBlock(block, addToActionStack = true) {
@@ -383,10 +377,11 @@ class LevelManager {
             // allow the building to enter build mode
             this.building.canEnterBuildMode = true;
             // activate building mode by clicking the building button if it is not already active
-            this.building.toggleBuildingMode();
+            this.building.toggleBuildingMode(true);
             if (!this.building.buildInProgress) {
-            this.building.toggleBuildingMode();
+              this.building.toggleBuildingMode(true);
             }
+
         }
     });
   }

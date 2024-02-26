@@ -413,6 +413,8 @@ class BuildMenu {
             button.onmouseup = button.ontouchend = () => {
               building.contraption.releaseKey(control.key); // release the key
             };
+            // scale the button up compared to the build menu buttons
+            button.style.fontSize = "1.5em";
             controlMenu.appendChild(button);
             controlButtons[control.name] = button;
           });

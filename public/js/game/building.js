@@ -222,11 +222,7 @@ class BuildMenu {
     this.buildModeButton.classList.add("menu-button");
     this.buildModeButton.innerText = "Start Level (b)";
     this.menu.appendChild(this.buildModeButton);
-    // button to toggle fullscreen
-    this.fullscreenButton = document.createElement("button");
-    this.fullscreenButton.classList.add("menu-button");
-    this.fullscreenButton.innerText = "Fullscreen";
-    this.menu.appendChild(this.fullscreenButton);
+
     // style the menu
     this.menu.classList.add("build-menu");
     // // set the button class
@@ -435,9 +431,6 @@ class BuildMenu {
         // set the camera target to the seat
         building.camera.setTarget(building.contraption.seat);
       }
-    };
-    this.fullscreenButton.onclick = () => {
-      this.building.camera.toggleFullScreen();
     };
     // Assuming this is inside a method where 'this' refers to an object that has 'building' property
     const menu = document.querySelector(".build-menu"); // Adjust the selector as needed

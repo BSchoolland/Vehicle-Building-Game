@@ -8,6 +8,29 @@ import ProgressBar from "../loaders/progressBar.js";
 if (window.innerWidth < 800 || window.innerHeight < 600) {
   alert("Again, I really do suggest you play on a computer.  The experience is much better.  If you choose to ignore me, be ready for unbeatable levels, and more bugs than a termite farm.  You have been warned.");
 }
+// get the orientation of the screen
+let landscape = !window.screen.orientation.type.includes('portrait');
+if (!landscape) {
+  document.getElementById("game-container").style.display = "none";
+  document.getElementById("landscape-warning").style.display = "block";
+}
+else {
+  document.getElementById("game-container").style.display = "block";
+  document.getElementById("landscape-warning").style.display = "none";
+}
+// constantly check the orientation of the screen
+window.screen.orientation.addEventListener("change", () => {
+  if (window.screen.orientation.type.includes('portrait')) {
+    document.getElementById("game-container").style.display = "none";
+    document.getElementById("landscape-warning").style.display = "block";
+    landscape = false;
+  }
+  else {
+    document.getElementById("game-container").style.display = "block";
+    document.getElementById("landscape-warning").style.display = "none";
+    landscape = true;
+  }
+});
 
 let gameStarted = false;
 function clickHandler() {
@@ -90,7 +113,11 @@ function startGame() {
   document.body.style.backgroundColor = "white";
   createHTML();
   // show the container
-  container.style.display = "block";
+  if (landscape) {
+    container.style.display = "block";
+  }
+
+  
 
   // set the background to a gradient
   render.options.background =

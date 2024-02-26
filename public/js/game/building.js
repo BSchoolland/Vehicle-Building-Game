@@ -68,8 +68,8 @@ class RightClickMenu {
   show() {
     // Position the menu
     this.menu.style.position = "absolute";
-    this.menu.style.left = '50%'
-    this.menu.style.top = '20%'
+    this.menu.style.left = '10%'
+    this.menu.style.top = '30%'
     // center the menu horizontally
     this.menu.style.transform = "translateX(-50%)";
     // display the menu

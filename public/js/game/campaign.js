@@ -6,7 +6,7 @@ import ProgressBar from "../loaders/progressBar.js";
 
 // if the user is on mobile, warn them that the game may not work well
 if (window.innerWidth < 800 || window.innerHeight < 600) {
-  alert("Again, I really do suggest you play on a computer.  The experience is much better.  If you choose to ignore me, be ready for unbeatable levels, and more bugs than a termite farm.  You have been warned.");
+  // alert("Again, I really do suggest you play on a computer.  The experience is much better.  If you choose to ignore me, be ready for unbeatable levels, and more bugs than a termite farm.  You have been warned.");
   // if the user is on mobile, disable zooming
   document.addEventListener("gesturestart", function (e) {
     e.preventDefault();

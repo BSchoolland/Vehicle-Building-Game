@@ -21,12 +21,6 @@
     { "type": "GrassBlock", "x": 3000, "y": 1300 },
     { "type": "GrassBlock", "x": 3400, "y": 1300 },
     { "type": "GrassBlock", "x": 3300, "y": 1300 },
-    { "type": "BuildingAreaBlock", "x": 1500, "y": 1000 },
-    { "type": "BuildingAreaBlock", "x": 1500, "y": 900 },
-    { "type": "BuildingAreaBlock", "x": 1600, "y": 900 },
-    { "type": "BuildingAreaBlock", "x": 1700, "y": 900 },
-    { "type": "BuildingAreaBlock", "x": 1700, "y": 1000 },
-    { "type": "BuildingAreaBlock", "x": 1600, "y": 1000 },
     { "type": "CoinBlock", "x": 2000, "y": 1000 },
     { "type": "CoinBlock", "x": 2400, "y": 1000 },
     { "type": "CoinBlock", "x": 2800, "y": 1000 },
@@ -53,7 +47,18 @@
     { "type": "GrassBlock", "x": 4100, "y": 1300 },
     { "type": "GrassBlock", "x": 3600, "y": 1300 },
     { "type": "GrassBlock", "x": 3900, "y": 1300 },
-    { "type": "EnemySpawnBlock", "x": 1600, "y": 1200, "enemyType": "base" }
+    { "type": "GrassBlock", "x": 1100, "y": 1300 },
+    { "type": "GrassBlock", "x": 1000, "y": 1300 },
+    { "type": "GrassBlock", "x": 900, "y": 1300 },
+    { "type": "GrassBlock", "x": 800, "y": 1300 },
+    { "type": "GrassBlock", "x": 700, "y": 1300 },
+    { "type": "BuildingAreaBlock", "x": 1200, "y": 1000 },
+    { "type": "BuildingAreaBlock", "x": 1200, "y": 900 },
+    { "type": "EnemySpawnBlock", "x": 1100, "y": 1200, "enemyType": "base" },
+    { "type": "BuildingAreaBlock", "x": 1100, "y": 1000 },
+    { "type": "BuildingAreaBlock", "x": 1100, "y": 900 },
+    { "type": "BuildingAreaBlock", "x": 1300, "y": 900 },
+    { "type": "BuildingAreaBlock", "x": 1300, "y": 1000 }
   ],
   "commands": [],
   "buildingBlockTypes": [
@@ -79,5 +84,5 @@
     { "name": "Survive", "value": 10 },
     { "name": "Before", "value": 0 }
   ],
-  "tutorialText": ""
+  "tutorialText": "Destory the incomming missile!"
 }

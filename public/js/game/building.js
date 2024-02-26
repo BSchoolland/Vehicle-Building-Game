@@ -139,6 +139,8 @@ class BuildMenu {
     this.createMenuButtons();
     // initialize the menu
     this.init(building);
+    // a variable to prevent build mode from being spammed
+    this.buildModeDebounce = false;
   }
   hide() {
     // make the menu invisible and unclickable
@@ -313,6 +315,16 @@ class BuildMenu {
       this.updateButtonLimits();
     };
     this.buildModeButton.onclick = () => {
+      // prevent the button from being spammed
+      if (this.buildModeDebounce) {
+        return;
+      }
+      this.buildModeDebounce = true;
+      // allow the button to be clicked again after some time
+      setTimeout(() => {
+        this.buildModeDebounce = false;
+      }, 1000);
+
       // remove the ghost blocks
       building.removeGhostBlocks();
       building.buildInProgress = !building.buildInProgress;
@@ -431,6 +443,7 @@ class BuildMenu {
         // set the camera target to the seat
         building.camera.setTarget(building.contraption.seat);
       }
+      
     };
     // Assuming this is inside a method where 'this' refers to an object that has 'building' property
     const menu = document.querySelector(".build-menu"); // Adjust the selector as needed

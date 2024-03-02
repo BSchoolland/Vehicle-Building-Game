@@ -9,6 +9,8 @@ const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 // Parse JSON request bodies
 app.use(express.json());
+// trust the first proxy
+app.set('trust proxy', true);
 // Serve the index.html file when requests are made to the root of the server
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
@@ -18,19 +20,30 @@ const fs = require('fs');
 
 // an api for logging when a user beats a level
 app.post('/api/beat-level', (req, res) => {
-  const level = req.body.level;
-  const world = req.body.world;
-  const userIp = req.ip;
-  const timestamp = new Date().toISOString();
-  const logMessage = `IP: ${userIp} Level: ${level} World: ${world} Time: ${timestamp}\n`;
+  try {
+    const level = req.body.level;
+    const world = req.body.world;
+    // make sure level and world are both numbers
+    if (typeof level !== 'number' || typeof world !== 'number') {
+      res.status(400).send('Invalid level or world');
+      return;
+    }
+    const userIp = req.headers['x-forwarded-for'] || req.ip;
+    const timestamp = new Date().toISOString();
+    const logMessage = `IP: ${userIp} Level: ${level} World: ${world} Time: ${timestamp}\n`;
 
-  console.log(logMessage);
+    console.log(logMessage);
 
-  fs.appendFile('userActivity.log', logMessage, (err) => {
-    if (err) throw err;
-  });
+    fs.appendFile('userActivity.log', logMessage, (err) => {
+      if (err) throw err;
+    });
 
-  res.status(200).send('Logged successfully');
+    res.status(200).send('Logged successfully');
+  }
+  catch (e) {
+    console.error(e);
+    res.status(500).send('Error logging user activity');
+  }
 });
 
 app.listen(port, '0.0.0.0', () => {

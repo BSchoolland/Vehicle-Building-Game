@@ -566,6 +566,21 @@ class LevelManager {
     }
   }
   completeLevel() {
+    let level = this.LevelHandler.getLevelIndex() + 1;
+    let world = this.worldSelected;
+    // send a post request to the server to log that the level has been completed
+    fetch('/api/beat-level', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ level, world }),
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch((error) => {
+      console.error('Error:', error);
+    });
     // update the player's local storage to show that the level has been completed
     this.LevelHandler.completeLevel(this.worldSelected, this.LevelHandler.getLevelIndex());
     // hide the tutorial text

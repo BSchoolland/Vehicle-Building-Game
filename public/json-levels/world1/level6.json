@@ -71,6 +71,13 @@
       { "name": "Collect", "value": 0 },
       { "name": "Survive", "value": 0 }
     ],
+    "bonusChallenges": [
+      {
+        "name": "Not a Scratch",
+        "description": "Complete the level without losing any blocks.",
+        "value": 0
+      }
+    ],
     "tutorialText": ""
   }
   

@@ -34,10 +34,10 @@ app.post('/api/beat-level', (req, res) => {
 
     console.log(logMessage);
 
-    fs.appendFile('userActivity.log', logMessage, (err) => {
+    fs.appendFile('userActivity.log', logMessage, (err) => { // FIXME: use a proper logging library as using the file system directly can slow down the server if there are many requests
       if (err) throw err;
     });
-
+    
     res.status(200).send('Logged successfully');
   }
   catch (e) {

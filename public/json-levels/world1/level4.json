@@ -246,5 +246,12 @@
     { "name": "Collect", "value": 6 },
     { "name": "Survive", "value": 25 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "Complete Overkill",
+      "description": "Destroy all enemies!",
+      "value": 6
+    }
+  ],
   "tutorialText": "Blocks can be rotated with the R key.  You'll need to turn the spike around in order to survive!"
 }

@@ -204,5 +204,18 @@
     { "name": "Survive", "value": 0 },
     { "name": "Before", "value": 0 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "Not a Scratch",
+      "description": "Complete the level without losing more than 3 blocks.",
+      "value": 3
+    },
+    {
+      "name": "No Wheels",
+      "description": "Don't use any wheels",
+      "value": 0
+    }
+
+  ],
   "tutorialText": ""
 }

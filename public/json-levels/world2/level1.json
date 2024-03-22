@@ -184,5 +184,12 @@
     { "name": "Collect", "value": 5 },
     { "name": "Survive", "value": 0 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "Complete Overkill",
+      "description": "Destroy all enemies!",
+      "value": 1
+    }
+  ],
   "tutorialText": "Press SHIFT to activate the rocket booster!"
 }

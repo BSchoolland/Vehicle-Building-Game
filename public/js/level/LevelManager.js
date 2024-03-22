@@ -22,10 +22,11 @@ const blockTypes = {
   slightRampBlockRUpsideDown,
   slightRampBlockLUpsideDown,
 };
-import { Contraption } from "./contraption.js";
+import { Contraption } from "../vehicle/contraption.js";
 import { playSound } from "../sounds/playSound.js";
 import LevelHandler from "../loaders/levelHandler.js";
 import EnemyHandler from "../loaders/enemyHandler.js";
+import LevelUI from "./LevelUI.js";
 // A Level is a collection of blocks that can be saved and loaded
 class LevelManager {
   constructor(engine, building, progressBar, isEnemyEditor = false) {
@@ -60,6 +61,8 @@ class LevelManager {
     this.LevelHandler = new LevelHandler(progressBar);
     this.EnemyHandler = new EnemyHandler(progressBar);
     this.worldSelected = 1;
+
+    this.LevelUI = new LevelUI(this);
 
     this.test = false;
 
@@ -110,7 +113,7 @@ class LevelManager {
 
   loadForEditing(LevelJson) {
     // Clear existing blocks in the Level
-    this.clear(); // remove all blocks from the Level
+    this.parent.clear(); // remove all blocks from the Level
     // Load new blocks from JSON
     LevelJson.blocks.forEach((blockJson) => {
       // Get the block type constructor
@@ -578,7 +581,7 @@ class LevelManager {
       }
       else {
         //open the level selector
-        this.loadLevelSelector();
+        this.LevelUI.loadLevelSelector();
       }
       // clear the player contraption
       this.playerContraption.clear();
@@ -603,101 +606,7 @@ class LevelManager {
       this.actionStack.push(lastUndoAction);
     }
   }
-  loadLevelSelector() {
-    // if build mode is active, deactivate it
-    if (this.building.buildInProgress) {
-      this.building.toggleBuildingMode();
-    }
-    // prevent build mode
-    this.building.canEnterBuildMode = false;
-    // a screen to select the level to play
-    let levelSelector = document.createElement("div");
-    // a list of buttons at the top to select the world
-    let worldSelector = document.createElement("div");
-    worldSelector.id = "world-selector";
-    worldSelector.className = "world-select-menu";
-    // get the game object
-    let game = document.getElementById("game-container");
-    // add the world selector to the game
-    game.appendChild(worldSelector);
-    // add a button for each world
-    let worldCount = this.LevelHandler.getWorldCount();
-    for (let i = 0; i < worldCount; i++) {
-      let button = document.createElement("button");
-      button.className = "world-select-button";
-      button.innerHTML = `World ${i + 1}`;
-      // if this world is already selected, make the button look selected
-      if (i + 1 === this.worldSelected) {
-        button.className = "world-select-button selected";
-      } else {
-        button.addEventListener("click", () => {
-          levelSelector.remove();
-          this.worldSelected = i + 1;
-          this.loadLevelSelector();
-          return;
-        });
-      }
-      worldSelector.appendChild(button);
-    }
-    levelSelector.appendChild(worldSelector);
-    levelSelector.id = "level-selector";
-    levelSelector.className = "level-select-menu";
-    // get the game object
-    // add the level selector to the game
-    game.appendChild(levelSelector);
-    // add a button for each level
-    let count = this.LevelHandler.getLevelCount(this.worldSelected);
-    for (let i = 0; i < count; i++) {
-      let box = document.createElement("div");
-      box.className = "level-select-box";
-      box.style.position = "relative";
-      let button = document.createElement("button");
-      button.className = "level-select-button";
-      button.innerHTML = `Level ${i + 1}`;
-      button.addEventListener("click", () => {
-        this.load(i);
-        levelSelector.remove();
-      });
-      // add an image for the level (it is also clickable)
-      let image = document.createElement("img");
-      image.className = "level-select-image";
-      image.src = `../../img/world${this.worldSelected}.png`;
-      image.addEventListener("click", () => {
-        this.load(i);
-        levelSelector.remove();
-      });
-      
-        let crown = document.createElement("img");
-        crown.src = "../../img/crown.png";
-        crown.className = "crown";
-        // make the crown a little smaller
-        crown.style.width = "50px";
-        crown.style.height = "50px";
-        // position the crown in the corner of the image using absolute positioning
-        crown.style.position = "absolute";
-        crown.style.top = "0px";
-        crown.style.right = "0px";
-        crown.addEventListener("click", () => {
-          this.load(i);
-          levelSelector.remove();
-        });
-        // if the level has not been completed, make the crowns slightly transparent
-        if (!this.LevelHandler.isLevelCompleted(this.worldSelected, i)) {
-          crown.style.opacity = "0.2";
-        }
-        else { // make the box and button dark gold
-          box.style.backgroundColor = "darkgoldenrod";
-          button.style.backgroundColor = "darkgoldenrod";
-        }
 
-        box.appendChild(image);
-        // the crown is placed in the corner of the image
-        box.appendChild(crown);
-        box.appendChild(button);
-        levelSelector.appendChild(box);
-
-    }
-  }
 }
 
-export { LevelManager };
+export default LevelManager;

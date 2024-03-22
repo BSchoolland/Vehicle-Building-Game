@@ -1,6 +1,7 @@
 import Building from "./building.js";
 import { Camera } from "./camera.js";
-import { LevelManager } from "../world/level.js";
+// import { LevelManager } from "../world/level.js";
+import LevelManager from "../level/LevelManager.js";
 import { setSong } from "../sounds/playSound.js";
 import ProgressBar from "../loaders/progressBar.js";
 
@@ -176,5 +177,5 @@ function startGame() {
   // load the level selector screen
   // after a short delay to allow the levels to load
 
-  levelObject.loadLevelSelector();
+  levelObject.LevelUI.loadLevelSelector();
 }

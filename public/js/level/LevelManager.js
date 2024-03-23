@@ -22,12 +22,13 @@ const blockTypes = {
   slightRampBlockRUpsideDown,
   slightRampBlockLUpsideDown,
 };
-import { Contraption } from "../vehicle/contraption.js";
 
+import { Contraption } from "../vehicle/contraption.js";
 import LevelHandler from "../loaders/levelHandler.js";
 import EnemyHandler from "../loaders/enemyHandler.js";
 import LevelUI from "./LevelUI.js";
 import Gameplay from "./Gameplay.js";
+import LevelEditor from "./LevelEditing.js";
 // A Level is a collection of blocks that can be saved and loaded
 class LevelManager {
   constructor(engine, building, progressBar, isEnemyEditor = false) {
@@ -35,25 +36,20 @@ class LevelManager {
     this.playerContraption = building.contraption;
     this.building = building;
     this.isEnemyEditor = isEnemyEditor;
-    // log isEnemyEditor
-    console.log("isEnemyEditor: ", isEnemyEditor);
-
-    this.blocks = [];
-    this.actionStack = [];
-    this.undoStack = [];
-    this.frameCount = 0;
     // handles gameplay mechanics for the level (objectives, level completion, etc.)
     this.GameplayHandler = new Gameplay(this); 
     // handles loading and saving levels
     this.LevelHandler = new LevelHandler(progressBar);
     // handles loading and saving enemies
     this.EnemyHandler = new EnemyHandler(progressBar);
+    // handles level editing
+    this.LevelEditor = new LevelEditor(this, blockTypes);
     // handles the UI for the level (back arrow and level selector)
     this.LevelUI = new LevelUI(this);
     this.worldSelected = 1;
     this.enemyContraptions = [];
+    this.blocks = [];
     this.test = false;
-
     this.loaded = false;
   }
 
@@ -63,70 +59,7 @@ class LevelManager {
     }
     this.loaded = true;
   }
-  addBlock(block, addToActionStack = true) {
-    block.Level = this;
-    this.blocks.push(block);
-    // add the block to the world
-    block.addToWorld(this.engine.world);
-    // add the action to the action stack
-    if (addToActionStack) {
-      this.actionStack.push({ action: "add", block: block });
-    }
-  }
-  removeBlock(block, addToActionStack = true) {
-    this.blocks.splice(this.blocks.indexOf(block), 1);
-    // remove the block from the world
-    block.removeFromWorld(this.engine.world);
-    // add the action to the action stack
-    if (addToActionStack) {
-      this.actionStack.push({ action: "remove", block: block });
-    }
-    // if it is an enemy spawn block, remove the enemy contraption
-
-    if (block.enemyContraption) {
-      block.enemyContraption.destroy();
-    }
-  }
-  // save the Level to a JSON object
-  save() {
-    var LevelJson = {};
-    LevelJson.blocks = [];
-    this.blocks.forEach((block) => {
-      LevelJson.blocks.push(block.save());
-    });
-    // add an empty commands array to the JSON (this will be filled by devs and used by the AI)
-    LevelJson.commands = [];
-    return LevelJson;
-  }
-
-  loadForEditing(LevelJson) {
-    // Clear existing blocks in the Level
-    this.parent.clear(); // remove all blocks from the Level
-    // Load new blocks from JSON
-    LevelJson.blocks.forEach((blockJson) => {
-      // Get the block type constructor
-      const BlockType = blockTypes[blockJson.type];
-      if (BlockType) {
-        // Create a new block instance
-        let newBlock = new BlockType(blockJson.x, blockJson.y, this);
-        if (BlockType === EnemySpawnBlock) {
-          newBlock.enemyType = blockJson.enemyType;
-          // spawn in an enemy contraption
-          const EnemyContraption = this.loadEnemyContraption(blockJson);
-          // add the enemy contraption to the newBlock
-          newBlock.enemyContraption = EnemyContraption;
-          // make the newBlock invisible
-          newBlock.bodies.forEach((body) => {
-            body.render.visible = false;
-          });
-        }
-        // Add the block to the Level
-        this.addBlock(newBlock);
-      } else {
-        console.error(`Unknown block type: ${blockJson.type}`);
-      }
-    });
-  }
+  
   loadEnemyContraption(blockJson) {
     let enemyType = blockJson.enemyType;
     if (enemyType === undefined) {
@@ -343,33 +276,29 @@ class LevelManager {
     this.actionStack = [];
     this.undoStack = [];
   }
-  undo() {
-    if (this.actionStack.length > 0) {
-      var lastAction = this.actionStack.pop();
-      if (lastAction.action === "add") {
-        this.removeBlock(lastAction.block, false);
-      } else if (lastAction.action === "flipX") {
-        this.flipX(lastAction.block, false);
-      } else {
-        this.addBlock(lastAction.block, false);
-      }
-      // Add the reversed action to the undo stack
-      this.undoStack.push(lastAction);
+  addBlock(block, addToActionStack = true) {
+    block.Level = this;
+    this.blocks.push(block);
+    // add the block to the world
+    block.addToWorld(this.engine.world);
+    // add the action to the action stack
+    if (addToActionStack) {
+      this.actionStack.push({ action: "add", block: block });
     }
   }
 
-  redo() {
-    if (this.undoStack.length > 0) {
-      var lastUndoAction = this.undoStack.pop();
-      if (lastUndoAction.action === "add") {
-        this.addBlock(lastUndoAction.block);
-      } else if (lastUndoAction.action === "flipX") {
-        this.flipX(lastUndoAction.block);
-      } else {
-        this.removeBlock(lastUndoAction.block);
-      }
-      // Add the action back to the action stack
-      this.actionStack.push(lastUndoAction);
+  removeBlock(block, addToActionStack = true) {
+    this.blocks.splice(this.blocks.indexOf(block), 1);
+    // remove the block from the world
+    block.removeFromWorld(this.engine.world);
+    // add the action to the action stack
+    if (addToActionStack) {
+      this.actionStack.push({ action: "remove", block: block });
+    }
+    // if it is an enemy spawn block, remove the enemy contraption
+
+    if (block.enemyContraption) {
+      block.enemyContraption.destroy();
     }
   }
 

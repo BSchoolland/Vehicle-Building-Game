@@ -23,10 +23,11 @@ const blockTypes = {
   slightRampBlockLUpsideDown,
 };
 import { Contraption } from "../vehicle/contraption.js";
-import { playSound } from "../sounds/playSound.js";
+
 import LevelHandler from "../loaders/levelHandler.js";
 import EnemyHandler from "../loaders/enemyHandler.js";
 import LevelUI from "./LevelUI.js";
+import Gameplay from "./Gameplay.js";
 // A Level is a collection of blocks that can be saved and loaded
 class LevelManager {
   constructor(engine, building, progressBar, isEnemyEditor = false) {
@@ -41,29 +42,16 @@ class LevelManager {
     this.actionStack = [];
     this.undoStack = [];
     this.frameCount = 0;
-    // keep track of win conditions
-    this.won = false;
-
-    this.coinsCollected = 0;
-    this.mustCollect = 1;
-    this.coins = [];
-
-    this.enemyContraptionsDestroyed = 0;
-    this.mustDestroy = 0;
-    this.enemyContraptions = [];
-
-    this.mustCompleteBefore = 0; // no limit
-    this.remainingTime = 0;
-    this.secondsSurvived = 0;
-    this.mustSurvive = 0;
-    this.startTime = 0;
-
+    // handles gameplay mechanics for the level (objectives, level completion, etc.)
+    this.GameplayHandler = new Gameplay(this); 
+    // handles loading and saving levels
     this.LevelHandler = new LevelHandler(progressBar);
+    // handles loading and saving enemies
     this.EnemyHandler = new EnemyHandler(progressBar);
-    this.worldSelected = 1;
-
+    // handles the UI for the level (back arrow and level selector)
     this.LevelUI = new LevelUI(this);
-
+    this.worldSelected = 1;
+    this.enemyContraptions = [];
     this.test = false;
 
     this.loaded = false;
@@ -303,27 +291,27 @@ class LevelManager {
             if (LevelJson.objectives) {
             LevelJson.objectives.forEach((objective) => {
                 if (objective.name === "Collect") {
-                this.mustCollect = objective.value;
+                this.GameplayHandler.mustCollect = objective.value;
                 } else if (objective.name === "Destroy") {
-                this.mustDestroy = objective.value;
+                this.GameplayHandler.mustDestroy = objective.value;
                 } else if (objective.name === "Survive") {
-                this.mustSurvive = objective.value;
+                this.GameplayHandler.mustSurvive = objective.value;
                 } else if (objective.name === "BeforeTime") {
-                this.mustCompleteBefore = objective.value;
-                this.remainingTime = objective.value;
+                this.GameplayHandler.mustCompleteBefore = objective.value;
+                this.GameplayHandler.remainingTime = objective.value;
                 }
             });
             } else {
-            this.mustCollect = 1;
-            this.mustDestroy = 0;
-            this.mustSurvive = 0;
-            this.mustCompleteBefore = 0; // 0 means there is no time limit
+            this.GameplayHandler.mustCollect = 1;
+            this.GameplayHandler.mustDestroy = 0;
+            this.GameplayHandler.mustSurvive = 0;
+            this.GameplayHandler.mustCompleteBefore = 0; // 0 means there is no time limit
             }
-            this.updateStats();
+            this.GameplayHandler.updateStats();
             // bind the startLevel function to the building
-            this.building.startLevel = this.startLevel.bind(this);
+            this.building.startLevel = this.GameplayHandler.startLevel.bind(this.GameplayHandler);
             // bind the setBuildMode function to the building
-            this.building.startBuildModeForLevel = this.setBuildMode.bind(this);
+            this.building.startBuildModeForLevel = this.GameplayHandler.setBuildMode.bind(this.GameplayHandler);
             // clear the building's contraption
             this.building.contraption.clear();
             // allow the building to enter build mode
@@ -337,39 +325,7 @@ class LevelManager {
         }
     });
   }
-  updateStats() {
-    let stats = document.getElementById("stats");
-    stats.innerHTML = "";
-    if (this.mustCollect > 0) {
-      let collect = document.createElement("h1");
-      collect.innerHTML = `Coins ${this.coinsCollected}/${this.mustCollect}`;
-      stats.appendChild(collect);
-    }
-    if (this.mustDestroy > 0) {
-      let destroy = document.createElement("h1");
-      destroy.innerHTML = `Destroyed ${this.enemyContraptionsDestroyed}/${this.mustDestroy}`;
-      stats.appendChild(destroy);
-    }
-    if (this.mustSurvive > 0) {
-      let survive = document.createElement("h1");
-      survive.innerHTML = `Survive ${this.secondsSurvived}/${this.mustSurvive}`;
-      stats.appendChild(survive);
-    }
-    if (this.mustCompleteBefore > 0) {
-      let before = document.createElement("h1");
-      if (this.remainingTime <= 0) {
-        before.innerHTML = `Complete before FAILED!`;
-      } else {
-        before.innerHTML = `Complete before ${this.remainingTime}`;
-      }
-      stats.appendChild(before);
-    }
-    stats.style.display = "block";
-  }
-  incrementEnemyContraptionsDestroyed() {
-    this.enemyContraptionsDestroyed++;
-    this.updateStats();
-  }
+
   despawnEnemyContraptions() {
     // kill all enemy contraptions
     this.enemyContraptions.forEach((enemyContraption) => {
@@ -377,39 +333,7 @@ class LevelManager {
       enemyContraption[0].moveTo(enemyContraption[1], enemyContraption[2]);
     });
   }
-  startLevel() {
-    // set time to normal speed
-    this.engine.timing.timeScale = 1;
-    this.won = false;
-    // despawn all enemy contraptions
-
-    // spawn in the enemy contraptions
-    this.enemyContraptions.forEach((enemyContraption) => {
-      enemyContraption[0].spawn(enemyContraption[1], enemyContraption[2]);
-    });
-
-    // reset the win conditions
-    this.coinsCollected = 0;
-    this.enemyContraptionsDestroyed = 0;
-    this.secondsSurvived = 0;
-    this.startTime = Date.now();
-
-    // reset each coin
-    this.coins.forEach((coin) => {
-      coin.reset();
-    });
-  }
-  setBuildMode() {
-    // despawn all enemy contraptions
-    this.despawnEnemyContraptions();
-    // reset the win conditions
-    this.coinsCollected = 0;
-    this.enemyContraptionsDestroyed = 0;
-    this.secondsSurvived = 0;
-    this.startTime = 0;
-    // update the stats
-    this.updateStats();
-  }
+  
   clear() {
     // Make a copy of the blocks array and iterate over it
     [...this.blocks].forEach((block) => {
@@ -432,164 +356,6 @@ class LevelManager {
       // Add the reversed action to the undo stack
       this.undoStack.push(lastAction);
     }
-  }
-  update() {
-    // update the level (check coins, survival time, etc.)
-    if (!this.playerContraption.seat) return;
-    if (this.startTime === 0) {
-      // if the level hasn't started yet, don't check for win conditions
-      return;
-    }
-    this.coins.forEach((coin) => {
-      if (coin.checkCollection(this.playerContraption)) {
-        // play the coin sound
-        this.coinsCollected++;
-        // show that coins have been increased
-        this.updateStats();
-      }
-    });
-    // check if enough coins have been collected
-    if (this.coinsCollected >= this.mustCollect) {
-      // check that the playercontraption's seat is not destroyed
-      if (this.playerContraption.seat.destroyed) {
-        // the player loses
-        this.startTime = 0;
-        return;
-      }
-      // check if the player has survived long enough
-      let pastSecondsSurvived = this.secondsSurvived;
-      this.secondsSurvived = Math.floor((Date.now() - this.startTime) / 1000);
-      // if the seconds survived has increased, and has not reached the win condition, play the time sound
-      if (
-        this.secondsSurvived > pastSecondsSurvived &&
-        this.secondsSurvived <= this.mustSurvive
-      ) {
-        // playSound("time");
-        this.updateStats();
-      }
-      // check if the time limit has been reached
-      if (this.mustCompleteBefore > 0) {
-        this.remainingTime = this.mustCompleteBefore - this.secondsSurvived;
-        if (this.remainingTime <= 0) {
-          // the player can no longer win
-          return;
-        }
-      }
-
-      if (this.secondsSurvived >= this.mustSurvive) {
-        // check if the player has destroyed enough enemy contraptions
-        if (this.enemyContraptionsDestroyed >= this.mustDestroy) {
-          // check if the player has completed the level before the time limit
-
-          // the player wins!
-          if (this.won) {
-            return;
-          }
-          this.won = true;
-          // slow down time
-          this.engine.timing.timeScale = 0.2;
-          // deactivate build mode if it is somehow active
-          if (this.building.buildInProgress) {
-            this.building.toggleBuildingMode();
-          }
-          // prevent build mode
-          this.building.canEnterBuildMode = false;
-          setTimeout(() => {
-            this.completeLevel();
-          }, 500);
-        }
-      }
-    } else {
-      // update tbhe stats but don't allow a win
-      let pastSecondsSurvived = this.secondsSurvived;
-      this.secondsSurvived = Math.floor((Date.now() - this.startTime) / 1000);
-      // if the seconds survived has increased, and has not reached the win condition, play the time sound
-      if (
-        this.secondsSurvived > pastSecondsSurvived &&
-        this.secondsSurvived <= this.mustSurvive
-      ) {
-        // playSound("time");
-        this.updateStats();
-      }
-      if (this.mustCompleteBefore > 0) {
-        this.remainingTime = this.mustCompleteBefore - this.secondsSurvived;
-        this.updateStats();
-      }
-    }
-  }
-  completeLevel() {
-    let level = this.LevelHandler.getLevelIndex() + 1;
-    let world = this.worldSelected;
-    // send a post request to the server to log that the level has been completed
-    fetch('/api/beat-level', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ level, world }),
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    // update the player's local storage to show that the level has been completed
-    this.LevelHandler.completeLevel(this.worldSelected, this.LevelHandler.getLevelIndex());
-    // hide the tutorial text
-    document.getElementById("tutorial-text").style.display = "none";
-    // play the level complete sound
-    playSound("win");
-    // make a bunch of confetti above the player
-    for (let i = 0; i < 500; i++) {
-      let confettiColors = [
-        "#f44336",
-        "#e91e63",
-        "#9c27b0",
-        "#673ab7",
-        "#3f51b5",
-      ];
-      let x =
-        this.playerContraption.seat.bodies[0].position.x +
-        Math.random() * 200 -
-        100;
-      let y = this.playerContraption.seat.bodies[0].position.y - 300;
-      let color =
-        confettiColors[Math.floor(Math.random() * confettiColors.length)];
-      let confetti = Matter.Bodies.circle(x, y, 5, {
-        render: { fillStyle: color },
-      });
-      Matter.Body.setVelocity(confetti, {
-        x: Math.random() * 20 - 10,
-        y: Math.random() * 20 - 10,
-      });
-      // make the confetti not collide with anything
-      (confetti.collisionFilter = {
-        category: 0x0003,
-      }),
-        Matter.World.add(this.engine.world, confetti);
-      // remove the confetti after 5 seconds
-      setTimeout(() => {
-        Matter.World.remove(this.engine.world, confetti);
-      }, 5000);
-    }
-    setTimeout(() => {
-      // clear the level
-      this.clear();
-      if (this.test) {
-        // if this is a test level, return to the level editor by setting href to /editor
-        window.location.href = "/editor.html";
-      }
-      else {
-        //open the level selector
-        this.LevelUI.loadLevelSelector();
-      }
-      // clear the player contraption
-      this.playerContraption.clear();
-      // set the stats to be invisible
-      document.getElementById("stats").style.display = "none";
-      // set the survival time to 0
-      this.secondsSurvived = 0;
-    }, 3000);
   }
 
   redo() {

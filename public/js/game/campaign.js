@@ -172,7 +172,7 @@ function startGame() {
 
   // update the level object every 10 frames
   Matter.Events.on(engine, "afterUpdate", () => {
-    levelObject.update();
+    levelObject.GameplayHandler.update();
   });
   // load the level selector screen
   // after a short delay to allow the levels to load

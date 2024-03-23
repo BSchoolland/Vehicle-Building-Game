@@ -10,7 +10,7 @@ class Gameplay {
 
     this.coinsCollected = 0;
     this.mustCollect = 1;
-    this.coins = [];
+    this.parent.coins = [];
 
     this.enemyContraptionsDestroyed = 0;
     this.mustDestroy = 0;
@@ -147,7 +147,7 @@ class Gameplay {
     }
     setTimeout(() => {
       // clear the level
-      this.parent.clear();
+      this.parent.LevelLoader.clear();
       if (this.parent.test) {
         // if this is a test level, return to the level editor by setting href to /editor
         window.location.href = "/editor.html";

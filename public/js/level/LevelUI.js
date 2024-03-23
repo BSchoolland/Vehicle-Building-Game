@@ -93,7 +93,7 @@ class LevelUI {
           image.className = "level-select-image";
           image.src = `../../img/world${this.parent.worldSelected}.png`;
           image.addEventListener("click", () => {
-            this.parent.load(i);
+            this.parent.LevelLoader.load(i);
             levelSelector.remove();
           });
           

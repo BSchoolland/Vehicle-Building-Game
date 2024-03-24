@@ -1,8 +1,3 @@
-import Building from './building.js';
-import { Camera } from './camera.js';
-import { LevelManager } from '../world/level.js';
-
-
 
 // when the button is clicked, start the game
 let button = document.getElementById('start-game');

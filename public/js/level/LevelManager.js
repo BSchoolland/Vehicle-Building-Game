@@ -23,7 +23,6 @@ const blockTypes = {
   slightRampBlockLUpsideDown,
 };
 
-import { Contraption } from "../vehicle/contraption.js";
 import LevelHandler from "../loaders/levelHandler.js";
 import EnemyHandler from "../loaders/enemyHandler.js";
 import LevelUI from "./LevelUI.js";
@@ -63,9 +62,6 @@ class LevelManager {
     }
     this.loaded = true;
   }
-
-  
-
 }
 
 export default LevelManager;

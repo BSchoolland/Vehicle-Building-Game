@@ -1,3 +1,5 @@
+import {Contraption} from "../vehicle/contraption.js";
+
 import {
   CoinBlock,
 } from "../world/mapBlocks.js";
@@ -15,7 +17,7 @@ class LevelLoader {
       enemyType = "box";
     }
     // get the enemy contraption's JSON
-    let enemyContraptionJson = this.EnemyHandler.getEnemyJSON(enemyType);
+    let enemyContraptionJson = this.parent.EnemyHandler.getEnemyJSON(enemyType);
     if (enemyContraptionJson === undefined) {
       console.error(`Unknown enemy type: ${enemyType}`);
       return;

@@ -99,6 +99,19 @@ class LevelHandler {
         let key = `world${worldNum}level${levelNum}`;
         return localStorage.getItem(key);
     }
+    isMedalEarned(worldNum, levelNum, medal) {
+        if (medal === "Beat the Level") {
+            return this.isLevelCompleted(worldNum, levelNum);
+        }
+        let key = `world${worldNum}level${levelNum}${medal}`;
+        return localStorage.getItem(key);
+    }
+    getBonusChallenges(worldNum, levelNum) {
+        // look in level json for bonus challenges
+        let level = this.getLevel(worldNum, levelNum);
+        console.log(level.bonusChallenges);
+        return level.bonusChallenges;
+    }
 }
 
 export default LevelHandler;

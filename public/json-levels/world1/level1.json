@@ -55,5 +55,12 @@
     { "name": "Collect", "value": 3 },
     { "name": "Survive", "value": 0 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "Who needs blocks?",
+      "description": "Complete the level using 3 blocks or less",
+      "value": 3
+    }
+  ],
   "tutorialText": "Build a car with wheels and a seat, then press 'b' to begin. Use 'a' and 'd' to collect the coins!"
 }

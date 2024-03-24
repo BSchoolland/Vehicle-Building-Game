@@ -625,6 +625,9 @@ class Building {
         blockTypeCount[block.constructor.name] = 1;
       }
     });
+    console.log(blockTypeCount);
+    console.log(this.currentBlockType.name);
+    console.log(blockTypeCount[this.currentBlockType.name])
     if (
       blockTypeCount[this.currentBlockType.name] >= this.currentBlockTypeLimit
     ) {
@@ -635,8 +638,6 @@ class Building {
 
     // Create a new block at the click position
     let newBlock = new this.currentBlockType(x, y, this.contraption);
-    // if this is an enemy editor, flip the block
-    console.log(this.buildMenu.enemyEditor)
     
     // Add the block to the contraption
     this.contraption.addBlock(newBlock);

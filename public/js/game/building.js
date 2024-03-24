@@ -354,7 +354,7 @@ class BuildMenu {
         try {
           building.startBuildModeForLevel();
         } catch (e) {
-          console.log("No level manager found");
+          console.error("No level manager found");
         }
         // set this button's class to active
         this.buildModeButton.classList.add("active");
@@ -625,9 +625,6 @@ class Building {
         blockTypeCount[block.constructor.name] = 1;
       }
     });
-    console.log(blockTypeCount);
-    console.log(this.currentBlockType.name);
-    console.log(blockTypeCount[this.currentBlockType.name])
     if (
       blockTypeCount[this.currentBlockType.name] >= this.currentBlockTypeLimit
     ) {

@@ -23,7 +23,7 @@ class LevelLoader {
       return;
     }
     // load the enemy contraption
-    const EnemyContraption = new Contraption(this.parent.engine, "AI", this);
+    const EnemyContraption = new Contraption(this.parent.engine, "AI", this.parent);
     EnemyContraption.load(enemyContraptionJson);
     // load the commands
     EnemyContraption.AiLoadCommands(enemyContraptionJson.commands);

@@ -80,7 +80,7 @@ class Gameplay {
   
   setBuildMode() {
     // despawn all enemy contraptions
-    this.parent.despawnEnemyContraptions();
+    this.parent.LevelLoader.despawnEnemyContraptions();
     // reset the win conditions
     this.coinsCollected = 0;
     this.enemyContraptionsDestroyed = 0;
@@ -107,7 +107,7 @@ class Gameplay {
       console.error('Error:', error);
     });
     // update the player's local storage to show that the level has been completed
-    this.parent.LevelHandler.completeLevel(this.parent.worldSelected, this.parent.LevelHandler.getLevelIndex());
+    this.parent.LevelHandler.completeLevel(this.parent.worldSelected, this.parent.LevelHandler.getLevelIndex() + 1);
     // hide the tutorial text
     document.getElementById("tutorial-text").style.display = "none";
     // play the level complete sound

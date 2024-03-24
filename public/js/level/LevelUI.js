@@ -82,7 +82,7 @@ class LevelUI {
           // prevent build mode
           this.parent.building.canEnterBuildMode = false;
           // clear the level
-          this.parent.clear();
+          this.parent.LevelLoader.clear();
           // remove the tutorial text
           document.getElementById("tutorial-text").style.display = "none";
           // clear the player contraption

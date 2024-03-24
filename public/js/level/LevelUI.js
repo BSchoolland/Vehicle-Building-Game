@@ -7,7 +7,11 @@ let bonusObjectives = {
   "Complete Overkill": "../../img/bonus-objectives/overkill.png",
   "Not a Scratch": "../../img/bonus-objectives/noDamage.png",
   "No Wheels": "../../img/bonus-objectives/noWheels.png",
+  "Disarmament": "../../img/bonus-objectives/noTNT.png",
+  "No Remote Blocks": "../../img/bonus-objectives/noRemote.png",
 };
+
+const medalSize = "30px";
 
 // a class for managing medals players earn for completing levels or bunus challenges
 class Medal {
@@ -22,10 +26,12 @@ class Medal {
   // create the medal
   createHTML(box = null, button = null) {
     let medal = document.createElement("img");
-    medal.src = bonusObjectives[this.name] || "../../img/crown.png";
+    console.log(bonusObjectives[this.name]);  
+    medal.src = bonusObjectives[this.name] // || "../../img/crown.png";
     medal.className = "medal";
-    medal.style.width = "50px";
-    medal.style.height = "50px";
+    medal.style.width = medalSize;
+    medal.style.height = medalSize;
+    medal.style.padding = "10px";
     medal.title = this.description;
     // check if the medal has been earned
     if (this.parent.parent.LevelHandler.isMedalEarned(this.worldNum, this.levelNum, this.name)) {
@@ -36,7 +42,9 @@ class Medal {
         button.style.backgroundColor = "darkgoldenrod";
       }
     } else {
-      medal.style.opacity = "0.2";
+      medal.style.opacity = "0.5";
+      // make the medal slightly grey
+      medal.style.filter = "grayscale(100%)";
     }
     return medal;
   }
@@ -119,16 +127,29 @@ class LevelUI {
     }
     worldSelector.appendChild(button);
   }
+  createBonusObjectives(levelSelector, i, box, button) {
+    let usedBonusObjectives = this.parent.LevelHandler.getBonusChallenges(this.parent.worldSelected, i);
+    if (usedBonusObjectives === undefined) {
+      return;
+    }
+    for (let i = 0; i < usedBonusObjectives.length; i++) {
+      let medal = new Medal(usedBonusObjectives[i].name, 1, usedBonusObjectives[i].description, this, i + 1).createHTML(box, button);
+      box.appendChild(medal);
+    }
+  }
 
-  createMedals(levelSelector, i, box, button) {
+  createMedalIcons(levelSelector, i, box, button) {
     let medalsBox = document.createElement("div");
     medalsBox.style.position = "absolute";
     // top 0 right 0
     medalsBox.style.top = "0px";
     medalsBox.style.right = "0px";
+    // display from right to left
     let crown = new Medal("Beat the Level", 1, "Complete the level", this, i + 1).createHTML(box, button);
-    
-
+    // if the crown is not earned, don't show the other medals
+    if (crown.style.opacity === "1") {
+      this.createBonusObjectives(levelSelector, i, medalsBox, button);
+    }
     // the crown is placed in the corner of the image
     medalsBox.appendChild(crown);
     return medalsBox;
@@ -154,7 +175,7 @@ class LevelUI {
       levelSelector.remove();
     });
     box.appendChild(image);
-    box.appendChild(this.createMedals(levelSelector, i, box, button));
+    box.appendChild(this.createMedalIcons(levelSelector, i, box, button));
     
     box.appendChild(button);
     levelSelector.appendChild(box);

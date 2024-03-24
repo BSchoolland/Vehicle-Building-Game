@@ -91,12 +91,5 @@
     { "name": "Survive", "value": 0 },
     { "name": "BeforeTime", "value": 10 }
   ],
-  "bonusChallenges": [
-    {
-      "name": "Luck isn't a factor",
-      "description": "Complete the level 3 times in a row without failing",
-      "value": 3
-    }
-  ],
   "tutorialText": ""
 }

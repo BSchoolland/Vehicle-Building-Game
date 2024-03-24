@@ -103,7 +103,7 @@ class LevelHandler {
         if (medal === "Beat the Level") {
             return this.isLevelCompleted(worldNum, levelNum);
         }
-        let key = `world${worldNum}level${levelNum}${medal}`;
+        let key = `world${worldNum}level${levelNum}medal${medal}`;
         return localStorage.getItem(key);
     }
     getBonusChallenges(worldNum, levelNum) {

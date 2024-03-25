@@ -5,6 +5,7 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed; 
+    perspective: 1000px; /*  perspective for 3D effect */
 }
 
 /* Parent container for the progress bar */

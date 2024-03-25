@@ -1,5 +1,7 @@
 // handles gameplay mechanics for the level (objectives, level completion, etc.)
 import { playSound } from "../sounds/playSound.js";
+import { checkBonusObjectives, displayObjective } from "./bonusObjectives.js";
+
 class Gameplay {
   // constructor
   constructor(parent) {
@@ -71,6 +73,7 @@ class Gameplay {
       }
       stats.appendChild(before);
     }
+    
     stats.style.display = "block";
   }
   incrementEnemyContraptionsDestroyed() {
@@ -106,8 +109,15 @@ class Gameplay {
     .catch((error) => {
       console.error('Error:', error);
     });
-    // update the player's local storage to show that the level has been completed
-    this.parent.LevelHandler.completeLevel(this.parent.worldSelected, this.parent.LevelHandler.getLevelIndex() + 1);
+    // if the player has completed the level before, they are able to achieve bonus objectives
+    if (this.parent.LevelHandler.isLevelCompleted(world, level)) {
+      checkBonusObjectives(this);
+    }
+    else {
+      displayObjective("Beat the Level")
+      // update the player's local storage to show that the level has been completed
+      this.parent.LevelHandler.completeLevel(this.parent.worldSelected, this.parent.LevelHandler.getLevelIndex() + 1);
+    }
     // hide the tutorial text
     document.getElementById("tutorial-text").style.display = "none";
     // play the level complete sound

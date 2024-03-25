@@ -167,7 +167,7 @@ class LevelLoader {
             }
             
             // set the win conditions
-            this.mustCompleteBefore = 0;
+            this.parent.GameplayHandler.mustCompleteBefore = 0;
             if (LevelJson.objectives) {
             LevelJson.objectives.forEach((objective) => {
                 if (objective.name === "Collect") {

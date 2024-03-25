@@ -78,7 +78,6 @@ class LevelHandler {
     }
     getLevel(worldNum, levelNum) {
         this.levelIndex = levelNum;
-        console.log(`Getting level ${levelNum} in world ${worldNum}`);
         return this.worlds[worldNum - 1].getLevel(levelNum);
     }
     getLevelCount(worldNum) {
@@ -106,10 +105,14 @@ class LevelHandler {
         let key = `world${worldNum}level${levelNum}medal${medal}`;
         return localStorage.getItem(key);
     }
+    completeBonusObjective(worldNum, levelNum, name) {
+        console.log("Objective: ", name, " completed! in world ", worldNum, " level ", levelNum)
+        let key = `world${worldNum}level${levelNum}medal${name}`;
+        localStorage.setItem(key, true);
+    }
     getBonusChallenges(worldNum, levelNum) {
         // look in level json for bonus challenges
         let level = this.getLevel(worldNum, levelNum);
-        console.log(level.bonusChallenges);
         return level.bonusChallenges;
     }
 }

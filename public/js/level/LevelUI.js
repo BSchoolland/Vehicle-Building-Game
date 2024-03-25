@@ -1,15 +1,5 @@
 
-// a dictionary of bonus objectives and their images
-let bonusObjectives = {
-  "Beat the Level": "../../img/crown.png",
-  "Who needs blocks?": "../../img/bonus-objectives/noBlock.png",
-  "Unarmed and Dangerous": "../../img/bonus-objectives/noWeapon.png",
-  "Complete Overkill": "../../img/bonus-objectives/overkill.png",
-  "Not a Scratch": "../../img/bonus-objectives/noDamage.png",
-  "No Wheels": "../../img/bonus-objectives/noWheels.png",
-  "Disarmament": "../../img/bonus-objectives/noTNT.png",
-  "No Remote Blocks": "../../img/bonus-objectives/noRemote.png",
-};
+import { bonusObjectives } from "./bonusObjectives.js";
 
 const medalSize = "30px";
 
@@ -26,7 +16,6 @@ class Medal {
   // create the medal
   createHTML(box = null, button = null) {
     let medal = document.createElement("img");
-    console.log(bonusObjectives[this.name]);  
     medal.src = bonusObjectives[this.name] // || "../../img/crown.png";
     medal.className = "medal";
     medal.style.width = medalSize;
@@ -76,7 +65,6 @@ class LevelUI {
     } else {
       // if the level selector is open, retrun to the main menu
       if (document.getElementById("level-selector")) {
-        console.log(document.getElementById("level-selector"));
         window.location.href = "/";
       }
       // if the level selector is not open, quit the level, and return to the level selector
@@ -127,13 +115,13 @@ class LevelUI {
     }
     worldSelector.appendChild(button);
   }
-  createBonusObjectives(levelSelector, i, box, button) {
-    let usedBonusObjectives = this.parent.LevelHandler.getBonusChallenges(this.parent.worldSelected, i);
+  createBonusObjectives(levelSelector, levelNum, box, button) {
+    let usedBonusObjectives = this.parent.LevelHandler.getBonusChallenges(this.parent.worldSelected, levelNum);
     if (usedBonusObjectives === undefined) {
       return;
     }
     for (let i = 0; i < usedBonusObjectives.length; i++) {
-      let medal = new Medal(usedBonusObjectives[i].name, 1, usedBonusObjectives[i].description, this, i + 1).createHTML(box, button);
+      let medal = new Medal(usedBonusObjectives[i].name, 1, usedBonusObjectives[i].description, this, levelNum).createHTML();
       box.appendChild(medal);
     }
   }

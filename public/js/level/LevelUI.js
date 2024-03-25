@@ -16,7 +16,15 @@ class Medal {
   // create the medal
   createHTML(box = null, button = null) {
     let medal = document.createElement("img");
-    medal.src = bonusObjectives[this.name] // || "../../img/crown.png";
+    let src;
+    // if it's a who needs blocks medal, use the image that relates to the number of blocks
+    if (this.name === "Who needs blocks?") {
+      src = bonusObjectives[this.name][this.value - 1];
+    }
+    else {
+      src = bonusObjectives[this.name];
+    }
+    medal.src = src // || "../../img/crown.png";
     medal.className = "medal";
     medal.style.width = medalSize;
     medal.style.height = medalSize;
@@ -121,7 +129,7 @@ class LevelUI {
       return;
     }
     for (let i = 0; i < usedBonusObjectives.length; i++) {
-      let medal = new Medal(usedBonusObjectives[i].name, 1, usedBonusObjectives[i].description, this, levelNum).createHTML();
+      let medal = new Medal(usedBonusObjectives[i].name, usedBonusObjectives[i].value, usedBonusObjectives[i].description, this, levelNum).createHTML();
       box.appendChild(medal);
     }
   }

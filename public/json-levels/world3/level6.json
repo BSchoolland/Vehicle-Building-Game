@@ -84,5 +84,5 @@
     { "name": "Survive", "value": 10 },
     { "name": "Before", "value": 0 }
   ],
-  "tutorialText": "Destory the incomming missile!"
+  "tutorialText": "Destroy the incomming missile!"
 }

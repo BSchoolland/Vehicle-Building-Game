@@ -2,7 +2,7 @@ import { SpikeBlock, WheelBlock, RemoteBlock, TNTBlock } from "../vehicle/blocks
 // a dictionary of bonus objectives and their images
 let bonusObjectives = {
     "Beat the Level": "../../img/crown.png",
-    "Who needs blocks?": "../../img/bonus-objectives/noBlock.png",
+    "Who needs blocks?": ["../../img/bonus-objectives/noBlock1.png", "../../img/bonus-objectives/noBlock2.png", "../../img/bonus-objectives/noBlock3.png", "../../img/bonus-objectives/noBlock4.png", "../../img/bonus-objectives/noBlock5.png", "../../img/bonus-objectives/noBlock6.png"],
     "Unarmed and Dangerous": "../../img/bonus-objectives/noWeapon.png",
     "Complete Overkill": "../../img/bonus-objectives/overkill.png",
     "Not a Scratch": "../../img/bonus-objectives/noDamage.png",
@@ -11,9 +11,13 @@ let bonusObjectives = {
     "No Remote Blocks": "../../img/bonus-objectives/noRemote.png",
   };
 
-  function displayObjective(name) {
+  function displayObjective(name, value) {
     // Find the image path from the bonusObjectives dictionary
     let imagePath = bonusObjectives[name];
+    // if the image path is an array, choose a random image
+    if (Array.isArray(imagePath)) {
+        imagePath = imagePath[value - 1];
+    }
     if (!imagePath) {
         console.error('Objective not found');
         return;
@@ -52,7 +56,7 @@ function limitedBlocks(gameplayObject, objective) {
     )) {
       console.log("Bonus Objective Unlocked!");
       // celebrate by displaying the objective
-      displayObjective(objective.name);
+      displayObjective(objective.name, objective.value);
       // mark the objective as completed
       gameplayObject.parent.LevelHandler.completeBonusObjective(
           gameplayObject.parent.worldSelected,
@@ -83,7 +87,7 @@ function unarmedAndDangerous(gameplayObject, objective) {
   )) {
     console.log("Bonus Objective Unlocked!");
     // celebrate by displaying the objective
-    displayObjective(objective.name);
+    displayObjective(objective.name, objective.value);
     // mark the objective as completed
     gameplayObject.parent.LevelHandler.completeBonusObjective(
         gameplayObject.parent.worldSelected,
@@ -113,7 +117,7 @@ function noDamage(gameplayObject, objective) {
   )) {
     console.log("Bonus Objective Unlocked!");
     // celebrate by displaying the objective
-    displayObjective(objective.name);
+    displayObjective(objective.name, objective.value);
     // mark the objective as completed
     gameplayObject.parent.LevelHandler.completeBonusObjective(
         gameplayObject.parent.worldSelected,
@@ -128,7 +132,7 @@ function DestroyAllEnemies(gameplayObject, objective) {
   if (enemiesDestroyed >= objective.value) {
     console.log("Bonus Objective Unlocked!");
     // celebrate by displaying the objective
-    displayObjective(objective.name);
+    displayObjective(objective.name, objective.value);
     // mark the objective as completed
     gameplayObject.parent.LevelHandler.completeBonusObjective(
         gameplayObject.parent.worldSelected,
@@ -159,7 +163,7 @@ function noWheels(gameplayObject, objective) {
   )) {
     console.log("Bonus Objective Unlocked!");
     // celebrate by displaying the objective
-    displayObjective(objective.name);
+    displayObjective(objective.name, objective.value);
     // mark the objective as completed
     gameplayObject.parent.LevelHandler.completeBonusObjective(
         gameplayObject.parent.worldSelected,
@@ -187,7 +191,7 @@ function noTNT(gameplayObject, objective) {
   )) {
     console.log("Bonus Objective Unlocked!");
     // celebrate by displaying the objective
-    displayObjective(objective.name);
+    displayObjective(objective.name, objective.value);
     // mark the objective as completed
     gameplayObject.parent.LevelHandler.completeBonusObjective(
         gameplayObject.parent.worldSelected,
@@ -215,7 +219,7 @@ function noRemote(gameplayObject, objective) {
   )) {
     console.log("Bonus Objective Unlocked!");
     // celebrate by displaying the objective
-    displayObjective(objective.name);
+    displayObjective(objective.name, objective.value);
     // mark the objective as completed
     gameplayObject.parent.LevelHandler.completeBonusObjective(
         gameplayObject.parent.worldSelected,

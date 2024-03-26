@@ -43,6 +43,30 @@ class Medal {
       // make the medal slightly grey
       medal.style.filter = "grayscale(100%)";
     }
+    // when the medal is clicked, display the description
+    medal.addEventListener("click", (event) => {
+      // stop the event from bubbling up to the parent
+      event.stopPropagation();
+      console.log("hovered");
+      let description = document.createElement("div");
+      description.className = "medal-description";
+      let title = document.createElement("h3");
+      title.innerHTML = this.name;
+      description.appendChild(title);
+
+      let descriptionText = document.createElement("p");
+      descriptionText.innerHTML = this.description + " (click to close)"
+      description.appendChild(descriptionText);
+      // add the description to the body
+      document.body.appendChild(description);
+      // now if the user clicks anywhere, remove the description, and remove the event listener
+      setTimeout(() => {
+        document.addEventListener("click", () => {
+          description.remove();
+          document.removeEventListener("click", () => {});
+        });
+      }, 250);
+    });
     return medal;
   }
 
@@ -79,8 +103,9 @@ class LevelUI {
       else {
         let wait = 0;
         if (this.parent.building.camera.doingTour) {
-          // if the camera is doing a tour, stop it
+          // if the camera is doing a tour, stop it, and notify that the tour has been cancelled
           this.parent.building.camera.doingTour = false;
+          this.parent.building.camera.tourCancelled = true;
         }
         setTimeout(() => {
           // prevent build mode
@@ -140,6 +165,11 @@ class LevelUI {
     // top 0 right 0
     medalsBox.style.top = "0px";
     medalsBox.style.right = "0px";
+    // if the medals blox is clicked, start the level
+    medalsBox.addEventListener("click", () => {
+      this.parent.LevelLoader.load(i);
+      levelSelector.remove();
+    });
     // display from right to left
     let crown = new Medal("Beat the Level", 1, "Complete the level", this, i + 1).createHTML(box, button);
     // if the crown is not earned, don't show the other medals
@@ -159,7 +189,7 @@ class LevelUI {
     button.className = "level-select-button";
     button.innerHTML = `Level ${i + 1}`;
     button.addEventListener("click", () => {
-      this.parent.load(i);
+      this.parent.LevelLoader.load(i);
       levelSelector.remove();
     });
     // add an image for the level (it is also clickable)

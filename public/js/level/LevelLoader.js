@@ -151,13 +151,42 @@ class LevelLoader {
         console.error(`Unknown block type: ${blockJson.type}`);
       }
     });
-
+    // set the win conditions
+    this.parent.GameplayHandler.mustCompleteBefore = 0;
+    if (LevelJson.objectives) {
+    LevelJson.objectives.forEach((objective) => {
+        if (objective.name === "Collect") {
+        this.parent.GameplayHandler.mustCollect = objective.value;
+        } else if (objective.name === "Destroy") {
+        this.parent.GameplayHandler.mustDestroy = objective.value;
+        } else if (objective.name === "Survive") {
+        this.parent.GameplayHandler.mustSurvive = objective.value;
+        } else if (objective.name === "BeforeTime") {
+        this.parent.GameplayHandler.mustCompleteBefore = objective.value;
+        this.parent.GameplayHandler.remainingTime = objective.value;
+        }
+    });
+    } else {
+    this.parent.GameplayHandler.mustCollect = 1;
+    this.parent.GameplayHandler.mustDestroy = 0;
+    this.parent.GameplayHandler.mustSurvive = 0;
+    this.parent.GameplayHandler.mustCompleteBefore = 0; // 0 means there is no time limit
+    }
+    this.parent.GameplayHandler.updateStats();
     this.parent.building.camera.doingTour = true;
     // do a quick tour of the level to show the player what it looks like
     this.parent.building.camera.levelTour(LevelJson, this.parent.building.buildArea);
     // only do the next part after the tour is done (doingTour is set to false)
     let interval = setInterval(() => {
         if (!this.parent.building.camera.doingTour) {
+            if (this.parent.building.camera.tourCancelled) { // if the tour was cancelled, don't do anything
+              console.log("Tour cancelled");
+              this.parent.building.camera.tourCancelled = false;
+              // clear the level
+              this.clear();
+              clearInterval(interval);
+              return;
+            }
             clearInterval(interval);
             this.parent.building.camera.doingTour = false;
 
@@ -166,28 +195,6 @@ class LevelLoader {
             this.parent.building.makeNewBuildMenu(LevelJson.buildingBlockTypes, this.isEnemyEditor);
             }
             
-            // set the win conditions
-            this.parent.GameplayHandler.mustCompleteBefore = 0;
-            if (LevelJson.objectives) {
-            LevelJson.objectives.forEach((objective) => {
-                if (objective.name === "Collect") {
-                this.parent.GameplayHandler.mustCollect = objective.value;
-                } else if (objective.name === "Destroy") {
-                this.parent.GameplayHandler.mustDestroy = objective.value;
-                } else if (objective.name === "Survive") {
-                this.parent.GameplayHandler.mustSurvive = objective.value;
-                } else if (objective.name === "BeforeTime") {
-                this.parent.GameplayHandler.mustCompleteBefore = objective.value;
-                this.parent.GameplayHandler.remainingTime = objective.value;
-                }
-            });
-            } else {
-            this.parent.GameplayHandler.mustCollect = 1;
-            this.parent.GameplayHandler.mustDestroy = 0;
-            this.parent.GameplayHandler.mustSurvive = 0;
-            this.parent.GameplayHandler.mustCompleteBefore = 0; // 0 means there is no time limit
-            }
-            this.parent.GameplayHandler.updateStats();
             // bind the startLevel function to the building
             this.parent.building.startLevel = this.parent.GameplayHandler.startLevel.bind(this.parent.GameplayHandler);
             // bind the setBuildMode function to the building
@@ -205,7 +212,7 @@ class LevelLoader {
         }
     });
   }
-  despawnEnemyContraptions() {
+  despawnEnemyContraptions(perminant = false) {
     // kill all enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {
       enemyContraption[0].despawn();
@@ -221,6 +228,10 @@ class LevelLoader {
     // Reset the undo stack and action stack
     this.parent.LevelEditor.actionStack = [];
     this.undoStack = [];
+    // clear the enemy contraptions
+    this.parent.enemyContraptions.forEach((enemyContraption) => {
+      enemyContraption[0].destroy();
+    });
   }
   addBlock(block, addToActionStack = true) {
     block.Level = this;

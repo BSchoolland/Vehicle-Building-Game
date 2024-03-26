@@ -52,6 +52,7 @@ class Camera {
 
         this.strength = 1; // the strength of the camera's pull towards the target (for smooth update)
         this.doingTour = false; // whether the camera is currently doing a level tour
+        this.tourCancelled = false; // whether the current tour has been cancelled
         this.tourNumber = 0; // the current tour number
     }
     
@@ -134,7 +135,9 @@ class Camera {
             console.log('center:', this.position.x, this.position.y);
 
             this.strength = 1;
+            this.tourCancelled = false;
             this.doingTour = false;
+
 
         }, numPoints * timePerPoint);
     }

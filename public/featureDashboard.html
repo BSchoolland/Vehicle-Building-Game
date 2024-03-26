@@ -1,0 +1,32 @@
+<!-- this html page shows users the changelog, and allows them to submit suggesions and vote on future features -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Change Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Change Dashboard</h1>
+    </div>
+    <div class="content">
+        <h2>Changelog</h2>
+        <p>Version 1.0.0</p>
+        <ul>
+            <li>Added the ability to submit suggestions</li>
+            <li>Added the ability to vote on future features</li>
+        </ul>
+        <h2>Submit a Suggestion</h2>
+        <form action="/submitSuggestion" method="post">
+            <label for="suggestion">Suggestion:</label>
+            <input type="text" id="suggestion" name="suggestion" required>
+            <button type="submit">Submit</button>
+        </form>
+        <h2>Vote on Future Features</h2>
+        <form action="/voteOnFeature" method="post">
+            <label for="feature">Feature:</label>
+            <input type="text" id="feature" name="feature" required>
+            <button type="submit">Vote</button>
+        </form>
+    </div>

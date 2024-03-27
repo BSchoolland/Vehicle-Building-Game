@@ -1,6 +1,6 @@
 // Import the block classes from public/js/world/mapBlocks.js
 import { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock } from '../world/mapBlocks.js';
-import { LevelManager } from '../world/level.js';
+import LevelManager from '../level/LevelManager.js'; 
 // import the enemyHandler class
 import EnemyHandler from '../loaders/enemyHandler.js';
 // contraption blocks
@@ -325,7 +325,7 @@ class BuildMenu {
             if (!building.buildInProgress) {
                 return;
             }
-            building.level.clear();
+            building.level.LevelLoader.clear();
         };
         this.testButton.onclick = () => {
             // save the level to the local storage
@@ -505,7 +505,7 @@ class Building {
             this.showRightClickMenu(newBlock, _event);
         }
         // Add the block to the level
-        this.level.addBlock(newBlock);
+        this.level.LevelLoader.addBlock(newBlock);
     }
     showRightClickMenu(block, event) { // for when the user places an enemy spawn block
 
@@ -536,7 +536,7 @@ class Building {
                     block.enemyContraption.destroy();
                 };
                 // create a new enemy contraption
-                block.enemyContraption = this.level.loadEnemyContraption({enemyType: enemy, x: block.x, y: block.y});
+                block.enemyContraption = this.level.LevelLoader.loadEnemyContraption({enemyType: enemy, x: block.x, y: block.y});
                 // remove the popup
                 popup.remove();
             };
@@ -562,7 +562,7 @@ class Building {
         let block = this.level.blocks.find(block => block.x === x && block.y === y);
         if (block) {
             // delete the block
-            this.level.removeBlock(block);
+            this.level.LevelLoader.removeBlock(block);
         }
     }
 

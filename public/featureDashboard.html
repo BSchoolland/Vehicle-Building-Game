@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Change Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="css/features.css">
 </head>
 
 <body>
@@ -11,22 +11,65 @@
         <h1>Change Dashboard</h1>
     </div>
     <div class="content">
-        <h2>Changelog</h2>
-        <p>Version 1.0.0</p>
-        <ul>
-            <li>Added the ability to submit suggestions</li>
-            <li>Added the ability to vote on future features</li>
-        </ul>
         <h2>Submit a Suggestion</h2>
         <form action="/submitSuggestion" method="post">
             <label for="suggestion">Suggestion:</label>
             <input type="text" id="suggestion" name="suggestion" required>
             <button type="submit">Submit</button>
         </form>
+
         <h2>Vote on Future Features</h2>
-        <form action="/voteOnFeature" method="post">
-            <label for="feature">Feature:</label>
-            <input type="text" id="feature" name="feature" required>
-            <button type="submit">Vote</button>
-        </form>
+        <div class="vote">
+            <div class="feature"
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/editor.png');"
+            >
+                <h3>Level Editor</h3>
+                <p>Create your own levels and play levels created by other players</p>
+                <button>Vote</button>
+            </div>
+            <div class="feature"
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/world45.png');"
+            >
+                <h3>World 4 and 5</h3>
+                <p>Explore new worlds with new blocks and challenges</p>
+                <button>Vote</button>
+            </div>
+            <div class="feature"
+                 style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/sandbox.png');"        
+            >
+                <h3>Sandbox Mode</h3>
+                <p>Build and test vehicles without objectives or restrictions. Also includes several new blocks</p>
+                <button>Vote</button>
+            </div>
+        </div>
+
+        <h2>Changelog</h2>
+        <div class="markdownContent">
+            <h2>Version 1.1.0 - Released on ____TBD____</h2>
+
+            <h3>New Features:</h3>
+            <ul>
+                <li>Added bonus objectives to levels you've already completed</li>
+                <li>Added the feature dashboard, where you can vote on upcoming features, submit feedback, and view the changelog</li>
+            </ul>
+
+            <h3>Fixes:</h3>
+            <ul>
+                <li>Fixed visual bug when leaving a level before it is fully loaded</li>
+                <li>Fixed objectives not displaying during level tours</li>
+            </ul>
+
+            <h2>Version 1.0.0 - Released on 02-26-2024</h2>
+
+            <h3>New Features:</h3>
+            <ul>
+                <li>Wrecking Wheels: A unique 2D physics-based game where you build and control vehicles of mahem</li>
+                <li>Explore 33 levels</li>
+                <li>Satisfying destruction and explosions</li>
+                <li>7 different blocks to build with, including wheels, rocket boosters, and TNT</li>
+            </ul>
+
+            <h3>Thank You:</h3>
+            <p>A huge thank you to my friends and family for their playtesting and feedback, as well as encouragement to keep going</p>
+        </div>
     </div>

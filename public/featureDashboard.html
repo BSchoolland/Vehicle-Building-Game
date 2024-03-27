@@ -1,10 +1,20 @@
 <!-- this html page shows users the changelog, and allows them to submit suggesions and vote on future features -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Change Dashboard</title>
     <link rel="stylesheet" type="text/css" href="css/features.css">
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V15BD9CZKN"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-V15BD9CZKN');
+</script>
 
 <body>
     <div class="header">
@@ -12,7 +22,7 @@
     </div>
     <div class="content">
         <h2>Submit a Suggestion</h2>
-        <form action="/submitSuggestion" method="post">
+        <form id="suggesions" action="/submitSuggestion" method="post">
             <label for="suggestion">Suggestion:</label>
             <input type="text" id="suggestion" name="suggestion" required>
             <button type="submit">Submit</button>
@@ -21,22 +31,19 @@
         <h2>Vote on Future Features</h2>
         <div class="vote">
             <div class="feature"
-            style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/editor.png');"
-            >
+                style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/editor.png');">
                 <h3>Level Editor</h3>
                 <p>Create your own levels and play levels created by other players</p>
                 <button>Vote</button>
             </div>
             <div class="feature"
-            style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/world45.png');"
-            >
+                style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/world45.png');">
                 <h3>World 4 and 5</h3>
                 <p>Explore new worlds with new blocks and challenges</p>
                 <button>Vote</button>
             </div>
             <div class="feature"
-                 style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/sandbox.png');"        
-            >
+                style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/sandbox.png');">
                 <h3>Sandbox Mode</h3>
                 <p>Build and test vehicles without objectives or restrictions. Also includes several new blocks</p>
                 <button>Vote</button>
@@ -50,7 +57,8 @@
             <h3>New Features:</h3>
             <ul>
                 <li>Added bonus objectives to levels you've already completed</li>
-                <li>Added the feature dashboard, where you can vote on upcoming features, submit feedback, and view the changelog</li>
+                <li>Added the feature dashboard, where you can vote on upcoming features, submit feedback, and view the
+                    changelog</li>
             </ul>
 
             <h3>Fixes:</h3>
@@ -70,6 +78,13 @@
             </ul>
 
             <h3>Thank You:</h3>
-            <p>A huge thank you to my friends and family for their playtesting and feedback, as well as encouragement to keep going</p>
+            <ul>
+                <li>A huge thank you to my friends and family for their playtesting and feedback, as well as
+                    encouragement to keep going</li>
+                <li>Special thanks to Michael, who helped write the game's soundtrack</li>
+                <li>And of course, thank you for playing! It wouldn't really be a game without players!</li>
+            </ul>
         </div>
     </div>
+    <script src="js/featureDasboard.js"></script>
+</body>

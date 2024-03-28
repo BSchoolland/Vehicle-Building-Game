@@ -1,12 +1,13 @@
 body {
     overflow: hidden;
     /* set the background as a single image covering the entire screen */
-    background-image: url(../img/background.png);
+    background-image:  url(../img/background.png);
     background-size: cover;
     background-position: center;
     background-attachment: fixed; 
     perspective: 1000px; /*  perspective for 3D effect */
 }
+
 
 /* Parent container for the progress bar */
 .progress-bar-parent {

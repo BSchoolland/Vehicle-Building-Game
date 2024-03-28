@@ -1,107 +1,88 @@
 body {
-    /* set the background as a gradient */
-    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0, 0.5) 20%, rgb(38, 177, 231) 100%);
-    /* make the gradient cover the whole screen */
-    background-size: cover;
-    /* ensure the background image covers the entire body, even when scrolling */
-    background-attachment: fixed;
-    
-    /* set the font family */
-    font-family: 'Roboto', sans-serif;
-}
+  /* set the background as a gradient */
+  background: linear-gradient(0deg, black 0%, rgba(0, 0, 0, 0.5) 20%, #26b1e7 100%);
+  /* make the gradient cover the whole screen */
+  background-size: cover;
+  /* ensure the background image covers the entire body, even when scrolling */
+  background-attachment: fixed;
+  /* set the font family */
+  font-family: 'Roboto', sans-serif; }
 
 .hero-container {
-    display: flex;  
-    flex-direction: row;  
-    justify-content: flex-start;
-    @media screen and (max-width: 768px){
-        flex-direction: column;
-    }
-}
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start; }
+  @media screen and (max-width: 768px) {
+    .hero-container {
+      flex-direction: column; } }
 
 .title-container {
-    padding: 5% 5% 5% 5%;
-    display: flex;  
-    flex-direction: column;  
-    justify-content: flex-start;
-    width: 60%;
-    @media screen and (max-width: 768px){
-        width: 90%;
-    }
-}
+  padding: 5% 5% 5% 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 60%; }
+  @media screen and (max-width: 768px) {
+    .title-container {
+      width: 90%; } }
 
 .video-container {
-    padding: 150px 5% 5% 5%;
-    display: flex;  
-    flex-direction: column;  
-    width: 40%;
-    @media screen and (max-width: 768px){
-        width: 90%;
-    }
-}
+  padding: 150px 5% 5% 5%;
+  display: flex;
+  flex-direction: column;
+  width: 40%; }
+  @media screen and (max-width: 768px) {
+    .video-container {
+      width: 90%; } }
 
 .action-container {
-    /* padding: 5% 5% 5% 5%; */
-    display: flex;  
-    flex-direction: column;  
-    align-items: center;
-}
-
-
-
+  /* padding: 5% 5% 5% 5%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
 
 .video {
-    border-radius: 30px;
-}
+  border-radius: 30px; }
 
 .action-button {
-    background-color: #007bff;
-    color: white;
-    padding: 20px 40px;
-    text-align: center;
-    border-radius: 15px;
-    margin-top: 50px;
-    font-size: 30px;
-    cursor: pointer;
-    width: fit-content;
-}
+  background-color: #007bff;
+  color: white;
+  padding: 20px 40px;
+  text-align: center;
+  border-radius: 15px;
+  margin-top: 50px;
+  font-size: 30px;
+  cursor: pointer;
+  width: fit-content; }
 
 .action-button:hover {
-    background-color: #0056b3;
-}
-
+  background-color: #0056b3; }
 
 h1 {
-    font-size: 80px;
-    text-shadow: 2px 2px 4px #ffffff;
-    margin-top: 50px;
-    margin-bottom: 0px;
-}
+  font-size: 80px;
+  text-shadow: 2px 2px 4px #ffffff;
+  margin-top: 50px;
+  margin-bottom: 0px; }
 
 h2 {
-    font-size: 40px;
-    margin-top: 0px;
-    margin-bottom: 50px;
-}
+  font-size: 40px;
+  margin-top: 0px;
+  margin-bottom: 50px; }
 
-
-   
 .button {
-    font-size: 60px;
-    /* style the link to look like a button */
-    display: inline-block;
-    padding: 20px 40px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
+  font-size: 60px;
+  /* style the link to look like a button */
+  display: inline-block;
+  padding: 20px 40px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px; }
 
 .disabled {
-    /* grey in color, no hover effect */
-    background-color: #6c757d;
-    cursor: not-allowed;
-}
+  /* grey in color, no hover effect */
+  background-color: #6c757d;
+  cursor: not-allowed; }

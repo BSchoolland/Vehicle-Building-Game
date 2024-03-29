@@ -126,8 +126,8 @@ function startGame() {
   }
   // play the sound
   setSong("mainTheme");
-  // // remove the background from body
-  document.body.style.backgroundImage = " linear-gradient(rgba(125, 125, 125, 0.8), rgba(125, 125, 125, 0.8)), url('../img/background2.png"
+  // make the background a gradient
+  document.body.style.background = "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)";
   // // make the body white
   // document.body.style.backgroundColor = "white";
   createHTML();

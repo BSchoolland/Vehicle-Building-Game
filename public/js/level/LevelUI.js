@@ -3,6 +3,15 @@ import { bonusObjectives } from "./bonusObjectives.js";
 
 const medalSize = "30px";
 
+const worldGradients = [
+  // world 1, a nice blue
+  "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)",
+  // world 2, with some sunset orange
+  "linear-gradient(to bottom, #87CEEB 50%, #FF6347)",
+  // world 3, ominous purple
+  "linear-gradient(0deg, rgba(162,97,113,1) -35%, rgba(64,101,148,1) 59%, rgba(44,38,88,1) 125%)",
+];
+
 // a class for managing medals players earn for completing levels or bunus challenges
 class Medal {
   constructor(name, value, description, parent, levelNum) {
@@ -138,6 +147,8 @@ class LevelUI {
     // if this world is already selected, make the button look selected
     if (i + 1 === this.parent.worldSelected) {
       button.className = "world-select-button selected";
+      // set the body gradient to the world gradient
+      document.body.style.background = worldGradients[i];
     } else {
       button.addEventListener("click", () => {
         levelSelector.remove();

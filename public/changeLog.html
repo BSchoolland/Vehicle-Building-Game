@@ -22,32 +22,39 @@
         <h1>Change Dashboard</h1>
     </div>
     <div class="content">
-        <h2>Submit a Suggestion</h2>
+        <h2>Submit a Suggestion
+            <p style="font-size: 16px; color: #ff0000; margin: 0; padding: 0;">
+                you must be logged in to submit a suggestion</p>
+
+        </h2>
         <form id="suggesions" action="/submitSuggestion" method="post">
             <label for="suggestion">Suggestion:</label>
             <input type="text" id="suggestion" name="suggestion" required>
             <button type="submit">Submit</button>
         </form>
 
-        <h2>Vote on Future Features</h2>
+        <h2>Vote on Future Features <p style="font-size: 16px; color: #ff0000; margin: 0; padding: 0;">
+            All these features are planned, but your votes will decide the order they are implemented!</p>
+        </h2>
         <div class="vote">
             <div class="feature"
                 style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/editor.png');">
                 <h3>Level Editor</h3>
                 <p>Create your own levels and play levels created by other players</p>
-                <button>Vote</button>
+                <button class="vote-button" data-feature-id="editor">Log in to Vote</button>
             </div>
             <div class="feature"
                 style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/world45.png');">
                 <h3>World 4 and 5</h3>
                 <p>Explore new worlds with new blocks and challenges</p>
-                <button>Vote</button>
+                <button class="vote-button" data-feature-id="world45">Log in to Vote</button>
+
             </div>
             <div class="feature"
-                style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/sandbox.png');">
-                <h3>Sandbox Mode</h3>
-                <p>Build and test vehicles without objectives or restrictions. Also includes several new blocks</p>
-                <button>Vote</button>
+                style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/2p.png');">
+                <h3>Local 2 Player</h3>
+                <p>Play against a friend on the same computer</p>
+                <button class="vote-button" data-feature-id="pvp">Log in to Vote</button>
             </div>
         </div>
 
@@ -58,10 +65,11 @@
             <h3>New Features:</h3>
             <ul>
                 <li>Added bonus objectives to levels you've already completed</li>
-                <li>Added the feature dashboard, where you can vote on upcoming features, submit feedback, and view the
+                <li>Added the feature dashboard, where you can vote on upcoming features, submit feedback, and view this
                     changelog</li>
+                <li>Added new login system, allowing you to save progress across devices</li>
+                <li>Added new coin texture</li>
             </ul>
-
             <h3>Fixes:</h3>
             <ul>
                 <li>Fixed visual bug when leaving a level before it is fully loaded</li>
@@ -87,5 +95,5 @@
             </ul>
         </div>
     </div>
-    <script src="js/featureDasboard.js"></script>
+    <script src="js/changeLog.js"></script>
 </body>

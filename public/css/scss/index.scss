@@ -43,8 +43,10 @@ body {
 .action-container {
     /* padding: 5% 5% 5% 5%; */
     display: flex;  
-    flex-direction: column;  
+    flex-direction: row;  
     align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
 

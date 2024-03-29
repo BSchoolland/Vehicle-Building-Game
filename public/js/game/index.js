@@ -13,3 +13,9 @@ let changeButton = document.getElementById('change-log');
 changeButton.addEventListener('click', () => {
     window.location.href = 'changeLog.html';
 });
+
+// when the login button is clicked, go to the login page
+let loginButton = document.getElementById('login');
+loginButton.addEventListener('click', () => {
+    window.location.href = 'login.html';
+});

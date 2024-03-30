@@ -141,7 +141,7 @@ router.post("/api/login", (req, res) => {
     if (match) {
       // send the user a cookie signed with the secret
       const token = jwt.sign({ user_id: user.id }, secret);
-      res.cookie("user", token, { httpOnly: true });
+      res.cookie("user", token, { httpOnly: false });
       res.status(200).json({ message: "Login successful", success: true});
     } else {
       res.status(401).json({ message: "Incorrect password" });

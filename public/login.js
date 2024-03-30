@@ -19,11 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
-                // save the cookie sent by the server
-                
-                alert("Login successful!");
-                
+            if (data.success) {                
                 // Redirect to athe home page
                 window.location.href = '/';
             } else {

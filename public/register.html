@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Register Page</title>
-    <link rel="stylesheet" href="css/login.css"> <!-- Reference to the same CSS file -->
+    <link rel="stylesheet" href="css/login.css"> 
 </head>
 <body>
-    <div class="login-container"> <!-- Using the same container for consistency -->
+    <a href="/"><h3>Home</h3></a>
+    <div class="login-container"> 
         <h2>Register</h2>
         <form id="registerForm">
             <div class="form-group">
@@ -26,6 +27,8 @@
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
             </div>
             <button type="submit">Register</button>
+            <!-- a link to the login form -->
+            <a href="/login.html">Already have an account?</a>
         </form>
         <div id="message"></div>
     </div>

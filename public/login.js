@@ -20,9 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Handle successful login here
-                messageBox.textContent = "Login successful!";
-                // Redirect to another page or update the UI accordingly
+                // save the cookie sent by the server
+                
+                alert("Login successful!");
+                
+                // Redirect to athe home page
+                window.location.href = '/';
             } else {
                 // Handle login failure here
                 messageBox.textContent = "Login failed: " + data.message;

@@ -5,6 +5,10 @@ const userRoutes = require('./routes/userRoutes'); // Import your routes
 const app = express();
 const port = process.env.PORT || 3000;
 
+// a cookie parser to parse the user's cookie
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.set('trust proxy', 1);

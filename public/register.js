@@ -32,11 +32,11 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
+            if (data.message === "User registered successfully") {
                 // Registration was successful
-                messageBox.textContent = "Registration successful!";
+                alert("Registration successful! Please log in.");
                 // Redirect to the login page
-                window.location.href = '/login';
+                window.location.href = '/login.html';
             } else {
                 // Check for specific errors like duplicate email or username
                 if (data.errorCode === "DUPLICATE_EMAIL") {

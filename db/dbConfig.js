@@ -17,6 +17,21 @@ db.serialize(() => {
     timestamp TEXT NOT NULL,
     user_id INTEGER
   )`);
+  db.run(`CREATE TABLE IF NOT EXISTS featureVotes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    feature_id TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  );`);
+  db.run(`CREATE TABLE IF NOT EXISTS suggestions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    suggestion TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  );
+`)
+  
 });
 
 module.exports = { db };

@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = formData.get("password");
 
         // Example login request to the server
-        fetch("/login", {
+        fetch("api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

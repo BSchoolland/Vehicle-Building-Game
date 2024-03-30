@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // send the registration request to the server
-        fetch("/register", {
+        fetch("api/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

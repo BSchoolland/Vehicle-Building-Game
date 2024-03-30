@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { db } = require('../db/dbConfig');
+const bcrypt = require('bcrypt');
+const saltRounds = 10; // for bcrypt password hashing
 
 // Utility function to get the user's id from their cookie
 const getUserIdFromCookie = (cookie) => {
@@ -77,6 +79,69 @@ router.get("/api/num-levels-beat", (req, res) => {
       console.error(e);
       res.status(500).send("Error getting levels beat");
     }
+});
+
+// Registration endpoint
+router.post("/api/register", async (req, res) => {
+  console.log('Registration request received:', req.body);
+  try {
+    const { username, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    console.log('Password hashed successfully');
+
+    // Check if user or email already exists
+    db.get(`SELECT * FROM users WHERE username = ? OR email = ?`, [username, email], (err, row) => {
+      if (err) {
+        console.error('Error checking user existence:', err);
+        res.status(500).send("Error checking user existence");
+        return;
+      }
+      if (row) {
+        console.log('User or email already exists:', row);
+        res.status(409).send("Username or email already exists");
+        return;
+      }
+
+      // Insert new user
+      db.run(`INSERT INTO users (username, email, password) VALUES (?, ?, ?)`, [username, email, hashedPassword], function(err) {
+        if (err) {
+          console.error('Error registering user:', err);
+          res.status(500).send("Error registering user");
+          return;
+        }
+        console.log('User registered successfully:', this.lastID);
+        res.status(201).send("User registered successfully");
+      });
+    });
+  } catch (e) {
+    console.error('Error in registration process:', e);
+    res.status(500).send("Error registering user");
+  }
+});
+
+// Login endpoint
+router.post("/api/login", (req, res) => {
+  const { username, password } = req.body;
+
+  db.get(`SELECT * FROM users WHERE username = ?`, [username], async (err, user) => {
+      if (err) {
+          res.status(500).send("Error fetching user");
+          return;
+      }
+      if (!user) {
+          res.status(404).send("User not found");
+          return;
+      }
+
+      // Compare submitted password with stored hashed password
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+          // Assuming you'll handle sessions or JWT tokens here
+          res.status(200).send("Login successful");
+      } else {
+          res.status(401).send("Incorrect password");
+      }
+  });
 });
 
 module.exports = router;

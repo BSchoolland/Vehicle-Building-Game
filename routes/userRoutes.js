@@ -9,19 +9,39 @@ const secret = process.env.JWT || 'secret'; // for testing purposes only
 
 // Utility function to get the user's id from their cookie
 const getUserIdFromCookie = (cookie) => {
-    const cookieParts = cookie.split("=");
-    const userId = cookieParts[1];
-    return userId;
+    const decoded = jwt.verify(cookie, secret);
+    return decoded.user_id;
 };
 
 // Insert a new row into the UserActivity table
-const logLevelBeat = (level, world, userIp, timestamp, user_id) => {
+const logLevelBeat = (level, world, userIp, timestamp, user_id, medals) => {
     // if the user_id is not provided, set it to null
     if (!user_id) {
       user_id = null;
     }
-    const sql = `INSERT INTO levelsBeat (level, world, userIp, timestamp, user_id) VALUES (?, ?, ?, ?, ?)`;
-  
+    // only log the level if it has not been beaten by the user before
+    const checkSql = `SELECT * FROM levelsBeat WHERE level = ? AND world = ? AND user_id = ?`;
+    db.get(checkSql, [level, world, user_id], (err, row) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      if (row) {
+        console.log(`Level ${level} in world ${world} already beaten by user ${user_id}`);
+        // update the log with the new medals
+        const updateSql = `UPDATE levelsBeat SET medals = ? WHERE level = ? AND world = ? AND user_id = ?`;
+        db.run(updateSql, [medals, level, world, user_id], (err) => {
+          if (err) {
+            return console.error(err.message);
+          }
+          console.log(`Updated medals for level ${level} in world ${world} for user ${user_id}`);
+        });
+        // don't insert a new row
+        return;
+      }
+    }
+    );
+    // insert the new row
+    const sql = `INSERT INTO levelsBeat (level, world, userIp, timestamp, user_id, medals) VALUES (?, ?, ?, ?, ?, ?)`;  
     db.run(
       sql,
       [level, world, userIp, timestamp, user_id],
@@ -29,7 +49,7 @@ const logLevelBeat = (level, world, userIp, timestamp, user_id) => {
         if (err) {
           return console.error(err.message);
         }
-        console.log(`The level was logged with row id ${this.lastID}`);
+        console.log(`Player ${user_id} beat level ${level} in world ${world} at ${timestamp} from IP ${userIp}`);
       }
     );
   };
@@ -48,18 +68,22 @@ router.post("/api/beat-level", (req, res) => {
       } else {
         user_id = getUserIdFromCookie(req.cookies.user);
       }
-      logLevelBeat(level, world, userIp, timestamp, user_id);
+      // an array of the medals the user has earned
+      const medals = req.body.medals;
+      if (medals === undefined) {
+        medals = [];
+      }
+      logLevelBeat(level, world, userIp, timestamp, user_id, medals);
       res
         .status(200)
-        .send("Level: " + level + "in world: " + world + " successfully logged");
+        .send("Level: " + level + "in world: " + world + " beat by user: " + user_id);
     } catch (e) {
       console.error(e);
       res.status(500).send("Error logging level completion");
     }
   });
 
-// an api for getting the number of levels a user has beaten
-router.get("/api/num-levels-beat", (req, res) => {
+router.get("/api/getLevelsBeat", (req, res) => {
     try {
       // get the user's cookie
       const userCookie = req.cookies.user;
@@ -71,12 +95,12 @@ router.get("/api/num-levels-beat", (req, res) => {
       // get the user's id from the cookie
       const userId = getUserIdFromCookie(userCookie);
       // create the sql query to get the levels the user has beaten
-      const sql = `SELECT COUNT(*) FROM levelsBeat WHERE user_id = ?`;
-      db.get(sql, [userId], (err, row) => {
+      const sql = `SELECT * FROM levelsBeat WHERE user_id = ?`;
+      db.all(sql, [userId], (err, rows) => {
         if (err) {
           return console.error(err.message);
         }
-        res.status(200).send(row["COUNT(*)"].toString());
+        res.status(200).send(rows);
       });
     } catch (e) {
       console.error(e);

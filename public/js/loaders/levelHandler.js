@@ -61,7 +61,6 @@ class LevelHandler {
         this.levelIndex = 0;
         this.progressBar = progressBar;
         this.loadWorlds();
-        this.syncLevelsBeat();
     }
     async loadWorlds() {
         let i = 0;
@@ -76,6 +75,8 @@ class LevelHandler {
                 break;
             }
         }
+        // once all the worlds are loaded, sync the levels the player has beaten with the server
+        this.syncLevelsBeat();
     }
     // get the levels the player has beaten from the server and tell the server of any levels in local storage
     async syncLevelsBeat() {
@@ -97,8 +98,8 @@ class LevelHandler {
         if (response.ok) {
             let data = await response.json();
             for (let i = 0; i < data.length; i++) {
-                let worldNum = data[i].worldNum;
-                let levelNum = data[i].levelNum;
+                let worldNum = data[i].world;
+                let levelNum = data[i].level;
                 this.completeLevel(worldNum, levelNum);
             }
             // now, check for any levels in local storage that the server doesn't know about
@@ -106,10 +107,12 @@ class LevelHandler {
                 for (let j = 0; j < this.worlds[i].levels.length; j++) {
                     let key = `world${i + 1}level${j + 1}`;
                     if (localStorage.getItem(key)) {
+                        console.log(`Level ${j + 1} in world ${i + 1}`);
                         // if this level is in data, the server already knows about it
-                        if (data.some(level => level.worldNum === i + 1 && level.levelNum === j + 1)) {
+                        if (data.some(level => level.world === i + 1 && level.level === j + 1)) {                            console.log(`Level ${j + 1} in world ${i + 1} already synced with server`);
                             continue;
                         }
+                        console.log(`Level ${j + 1} in world ${i + 1} syncing with server`);
                         // send a post request to the server to log that the level has been completed
                         fetch('/api/beat-level', {
                             method: 'POST',
@@ -126,12 +129,13 @@ class LevelHandler {
                     }
                 }
             }
+            console.log('Levels synced with server');
             // update the progress bar
             this.progressBar.update();
         } else {
             console.error('Failed to get levels beat');
             // alert the user that their progress may not be saved
-            alert('Failed to get levels beat. Your progress may not be saved.');
+            alert('Error syncing with your account. Your progress may not be saved across devices.');
             // update the progress bar
             this.progressBar.update();
         }

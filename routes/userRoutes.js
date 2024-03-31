@@ -47,7 +47,7 @@ const logLevelBeat = (level, world, userIp, timestamp, user_id, medals) => {
     const sql = `INSERT INTO levelsBeat (level, world, userIp, timestamp, user_id, medals) VALUES (?, ?, ?, ?, ?, ?)`;  
     db.run(
       sql,
-      [level, world, userIp, timestamp, user_id],
+      [level, world, userIp, timestamp, user_id, medals],
       function (err) {
         if (err) {
           return console.error(err.message);

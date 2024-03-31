@@ -58,9 +58,10 @@ class World {
 class LevelHandler {
     constructor(progressBar) {
         this.worlds = [];
-        this.loadWorlds();
-        this.progressBar = progressBar;
         this.levelIndex = 0;
+        this.progressBar = progressBar;
+        this.loadWorlds();
+        this.syncLevelsBeat();
     }
     async loadWorlds() {
         let i = 0;
@@ -75,6 +76,66 @@ class LevelHandler {
                 break;
             }
         }
+    }
+    // get the levels the player has beaten from the server and tell the server of any levels in local storage
+    async syncLevelsBeat() {
+        // if the user is not logged in, don't bother
+        if (!document.cookie.includes('user')) {
+            console.log('User is not logged in. Skipping level sync');
+            // update the progress bar
+            this.progressBar.update();
+            return;
+        }
+        // request the list of levels the player has beaten from the server
+        let response = await fetch('/api/getLevelsBeat', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // Ensures cookies are sent with the request
+        });
+        if (response.ok) {
+            let data = await response.json();
+            for (let i = 0; i < data.length; i++) {
+                let worldNum = data[i].worldNum;
+                let levelNum = data[i].levelNum;
+                this.completeLevel(worldNum, levelNum);
+            }
+            // now, check for any levels in local storage that the server doesn't know about
+            for (let i = 0; i < this.worlds.length; i++) {
+                for (let j = 0; j < this.worlds[i].levels.length; j++) {
+                    let key = `world${i + 1}level${j + 1}`;
+                    if (localStorage.getItem(key)) {
+                        // if this level is in data, the server already knows about it
+                        if (data.some(level => level.worldNum === i + 1 && level.levelNum === j + 1)) {
+                            continue;
+                        }
+                        // send a post request to the server to log that the level has been completed
+                        fetch('/api/beat-level', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ level: j + 1, world: i + 1 }),
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                    }
+                }
+            }
+            // update the progress bar
+            this.progressBar.update();
+        } else {
+            console.error('Failed to get levels beat');
+            // alert the user that their progress may not be saved
+            alert('Failed to get levels beat. Your progress may not be saved.');
+            // update the progress bar
+            this.progressBar.update();
+        }
+        
     }
     getLevel(worldNum, levelNum) {
         this.levelIndex = levelNum;

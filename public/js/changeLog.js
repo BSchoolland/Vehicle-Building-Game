@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 throw new Error('Failed to register vote');
             })
-            .then(data => {
+            .then(() => {
                 // reload the page
                 location.reload();
             })

@@ -71,7 +71,7 @@ function createHTML() {
 
 // create a progress bar
 let barContainer = document.getElementById("progress-bar-container");
-const steps = ["Loading Contraptions", "Loading Music", "Loading World 1", "Loading World 2", "Loading World 3"];
+const steps = ["Loading Contraptions", "Loading Music", "Loading World 1", "Loading World 2", "Loading World 3", "Requesting account data"];
 let progressBar = new ProgressBar(steps, barContainer );
 
 // Create an engine

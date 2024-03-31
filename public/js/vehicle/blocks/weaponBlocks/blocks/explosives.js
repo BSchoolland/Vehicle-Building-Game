@@ -17,7 +17,7 @@ class TNTBlock extends Block {
     }
     makeBodies() {
         // create a red square
-        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, 50, 50, { render: { fillStyle: this.color }}));
+        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, 50, 50, { render: { strokeStyle: '#ffffff', sprite: { texture: './img/textures/tnt.png' }}}));
         this.bodies[0].block = this;
     }
     makeConstraints() {

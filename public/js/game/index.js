@@ -1,8 +1,3 @@
-import Building from './building.js';
-import { Camera } from './camera.js';
-import { LevelManager } from '../world/level.js';
-
-
 
 // when the button is clicked, start the game
 let button = document.getElementById('start-game');
@@ -13,43 +8,30 @@ button.addEventListener('click', () => {
     }
     window.location.href = 'levels.html';
 });
+// when the other button is clicked, go to the change log
+let changeButton = document.getElementById('change-log');
+changeButton.addEventListener('click', () => {
+    window.location.href = 'changeLog.html';
+});
 
-const noEditor = true; // since the editor is not implemented yet, use a greyed out button that says "coming soon"
 
-function createHTML() {
-    const container = document.getElementById('container');
-    // clear the container
-    container.innerHTML = '';
-    // Create elements
-    const h1 = document.createElement('h1');
-    const editorLink = document.createElement('a');
-    const campaignLink = document.createElement('a');
+let loginButton = document.getElementById('login');
 
-    // Set attributes and content
-    container.className = 'container';
-    h1.textContent = 'Welcome to Wrecking Wheels!';
-    if (noEditor) {
-        editorLink.className = 'button disabled';
-        editorLink.textContent = 'Editor (coming soon)';
-    }
-    else {
-        editorLink.href = 'editor.html';
-        editorLink.className = 'button';
-        editorLink.textContent = 'Editor';
-    }
-    campaignLink.href = 'levels.html';
-    campaignLink.className = 'button';
-    campaignLink.textContent = 'Levels';
-
-    // Append elements
-    container.appendChild(h1);
-    container.appendChild(campaignLink);
-    container.appendChild(editorLink);
-    
-
-    // Append the container to the body (or another parent element)
-    document.body.appendChild(container);
+if (document.cookie.includes('user')) {
+    // switch the button to a logout button
+    loginButton.innerHTML = 'Logout';
+    loginButton.addEventListener('click', () => {
+        // clear all local storage
+        localStorage.clear();
+        // log the user out
+        document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        // reload the page
+        location.reload();
+        return;
+    });
 }
-
-
-// createHTML();
+else {
+    loginButton.addEventListener('click', () => {
+        window.location.href = 'login.html';
+    });
+}

@@ -1,0 +1,13 @@
+@keyframes coinLand {
+    /* scale up then back down, and become not greyscale */
+    0% { transform: translate(-50%, -30%) rotateY(0deg) scale(1); }
+    50% { transform: translate(-50%, -30%) rotateY(180deg) scale(1.5); }
+    100% { transform: translate(-50%, -30%) rotateY(360deg) scale(2); }
+}
+
+.spinAnimation {
+    /* make the image a bit bigger */
+    width: 150px;
+    height: 150px;
+    animation: coinLand 2s linear 0s 1 normal forwards;
+}

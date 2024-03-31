@@ -69,8 +69,6 @@ class Cannonball extends Projectile {
         this.speed = 10;
         this.color = 'grey';
         this.knockback = 20;
-        
-
     }
     
     hit(body) {

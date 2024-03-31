@@ -55,12 +55,19 @@ class World {
     }
 }
 
+class FakeProgressBar { // a hacky way to allow the level handler to not need a progress bar passed in
+    update() {
+        // do nothing
+    }
+}
+
 class LevelHandler {
-    constructor(progressBar) {
+    constructor(progressBar = false) {
         this.worlds = [];
-        this.loadWorlds();
-        this.progressBar = progressBar;
         this.levelIndex = 0;
+        this.progressBar = progressBar || new FakeProgressBar();
+        this.loadWorlds();
+        this.isLoaded = false;
     }
     async loadWorlds() {
         let i = 0;
@@ -75,10 +82,103 @@ class LevelHandler {
                 break;
             }
         }
+        // once all the worlds are loaded, sync the levels the player has beaten with the server
+        this.syncLevelsBeat();
+        this.isLoaded = true;
+    }
+    // get the levels the player has beaten from the server and tell the server of any levels in local storage
+    async syncLevelsBeat() {
+        // if the user is not logged in, don't bother
+        if (!document.cookie.includes('user')) {
+            console.log('User is not logged in. Skipping level sync');
+            // update the progress bar
+            this.progressBar.update();
+            return;
+        }
+        // request the list of levels the player has beaten from the server
+        let response = await fetch('/api/getLevelsBeat', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // Ensures cookies are sent with the request
+        });
+        if (response.ok) {
+            let data = await response.json();
+            for (let i = 0; i < data.length; i++) {
+                
+                let worldNum = data[i].world;
+                let levelNum = data[i].level;
+                // mark the level as complete in local storage if it isn't already
+                if (!this.isLevelCompleted(worldNum, levelNum)) {
+                    this.completeLevel(worldNum, levelNum);
+                }
+                // mark the bonus objectives as complete
+                if (!data[i].medals) {
+                    continue;
+                }
+                let medals = data[i].medals.split(',');
+                for (let j = 0; j < medals.length; j++) {
+                    // mark the bonus objective as complete in local storage if it isn't already
+                    if (!this.isMedalEarned(worldNum, levelNum - 1, medals[j])) {
+                        this.completeBonusObjective(worldNum, levelNum - 1, medals[j]);
+                    }
+                }
+            }
+            // now, check for any levels in local storage that the server doesn't know about
+            for (let i = 0; i < this.worlds.length; i++) {
+                for (let j = 0; j < this.worlds[i].levels.length; j++) {
+                    let key = `world${i + 1}level${j + 1}`;
+                    if (localStorage.getItem(key)) {
+                        let level = this.worlds[i].getLevel(j);
+                        let medals = level.bonusChallenges.map(challenge => challenge.name);
+                        // figure out which medals the player has earned
+                        medals = medals.filter(medal => {
+                            const isMedalEarned = this.isMedalEarned(i + 1, j, medal);
+                            return isMedalEarned;
+                        });
+                        // convert the medals array to a string
+                        medals = medals.join(',');
+                        // if this level is in data with the same medals, skip it
+                        let existingLevel = data.find(level => level.world === i + 1 && level.level === j + 1);
+                        if (existingLevel) {             
+                            if (existingLevel.medals === medals) {
+                                console.log(`Level ${j + 1} in world ${i + 1} already synced with server`);
+                                continue;
+                            }
+                        }
+                        console.log(`Level ${j + 1} in world ${i + 1} syncing with server`);
+                        // send a post request to the server to log that the level has been completed
+                        // figure out which medals are possible for this level
+                        fetch('/api/beat-level', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ level: j + 1, world: i + 1, medals: medals}),
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                    }
+                }
+            }
+            console.log('Levels synced with server');
+            // update the progress bar
+            this.progressBar.update();
+        } else {
+            console.error('Failed to get levels beat');
+            // alert the user that their progress may not be saved
+            alert('Error syncing with your account. Your progress may not be saved across devices.');
+            // update the progress bar
+            this.progressBar.update();
+        }
+        
     }
     getLevel(worldNum, levelNum) {
         this.levelIndex = levelNum;
-        console.log(`Getting level ${levelNum} in world ${worldNum}`);
         return this.worlds[worldNum - 1].getLevel(levelNum);
     }
     getLevelCount(worldNum) {
@@ -98,6 +198,23 @@ class LevelHandler {
     isLevelCompleted(worldNum, levelNum) {
         let key = `world${worldNum}level${levelNum}`;
         return localStorage.getItem(key);
+    }
+    isMedalEarned(worldNum, levelNum, medal) {
+        if (medal === "Beat the Level") {
+            return this.isLevelCompleted(worldNum, levelNum);
+        }
+        let key = `world${worldNum}level${levelNum + 1}medal${medal}`;
+        return localStorage.getItem(key);
+    }
+    completeBonusObjective(worldNum, levelNum, name) {
+        console.log("Objective: ", name, " completed! in world ", worldNum, " level ", levelNum + 1 )
+        let key = `world${worldNum}level${levelNum + 1}medal${name}`;
+        localStorage.setItem(key, true);
+    }
+    getBonusChallenges(worldNum, levelNum) {
+        // look in level json for bonus challenges
+        let level = this.getLevel(worldNum, levelNum);
+        return level.bonusChallenges;
     }
 }
 

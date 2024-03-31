@@ -16,8 +16,8 @@ const effects = {
   blockTakesDamage2: "./js/sounds/effects/blockTakesDamage2.mp3",
   blockTakesDamage3: "./js/sounds/effects/blockTakesDamage3.mp3",
   rocketFlame: "./js/sounds/effects/rocketFlame.mp3",
-  disconnect: "./js/sounds/effects/disconnect.mp3",
-  electricMotor: "./js/sounds/effects/electricMotor.mp3",
+  // disconnect: "./js/sounds/effects/disconnect.mp3",
+  // electricMotor: "./js/sounds/effects/electricMotor.mp3",
   grappleFire: "./js/sounds/effects/grappleFire.mp3",
   grappleReel: "./js/sounds/effects/grappleReel.mp3",
   coin: "./js/sounds/level/coin.mp3",
@@ -110,7 +110,7 @@ function setSong(songName) {
   // Get the buffer for the song
   let songBuffer = loadedSongs[songName];
   if (!songBuffer) {
-    console.error("Song not found:", songName);
+    // console.error("Song not found:", songName);
     return false;
   }
 

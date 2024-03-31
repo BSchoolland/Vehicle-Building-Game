@@ -166,5 +166,12 @@
     { "name": "Collect", "value": 0 },
     { "name": "Survive", "value": 0 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "No Wheels",
+      "description": "Complete the level without using any wheels.",
+      "value": 0
+    }
+  ],
   "tutorialText": "The spike boss is coming!"
 }

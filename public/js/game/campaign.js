@@ -1,6 +1,7 @@
 import Building from "./building.js";
 import { Camera } from "./camera.js";
-import { LevelManager } from "../world/level.js";
+// import { LevelManager } from "../world/level.js";
+import LevelManager from "../level/LevelManager.js";
 import { setSong } from "../sounds/playSound.js";
 import ProgressBar from "../loaders/progressBar.js";
 
@@ -70,7 +71,7 @@ function createHTML() {
 
 // create a progress bar
 let barContainer = document.getElementById("progress-bar-container");
-const steps = ["Loading Contraptions", "Loading Music", "Loading World 1", "Loading World 2", "Loading World 3"];
+const steps = ["Loading Contraptions", "Loading Music", "Loading World 1", "Loading World 2", "Loading World 3", "Requesting account data"];
 let progressBar = new ProgressBar(steps, barContainer );
 
 // Create an engine
@@ -125,10 +126,10 @@ function startGame() {
   }
   // play the sound
   setSong("mainTheme");
-  // remove the background from body
-  document.body.style.background = "none";
-  // make the body white
-  document.body.style.backgroundColor = "white";
+  // make the background a gradient
+  document.body.style.background = "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)";
+  // // make the body white
+  // document.body.style.backgroundColor = "white";
   createHTML();
   // show the container
   if (landscape) {
@@ -137,9 +138,9 @@ function startGame() {
 
   
 
-  // set the background to a gradient
+  // set the background to fully transparent
   render.options.background =
-    "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0, 0.5) 50%, rgba(135, 206, 235) 100%)";
+    "rgba(255, 255, 255, 0)";
 
   // play the background music
   setSong("mainTheme");
@@ -171,10 +172,10 @@ function startGame() {
 
   // update the level object every 10 frames
   Matter.Events.on(engine, "afterUpdate", () => {
-    levelObject.update();
+    levelObject.GameplayHandler.update();
   });
   // load the level selector screen
   // after a short delay to allow the levels to load
 
-  levelObject.loadLevelSelector();
+  levelObject.LevelUI.loadLevelSelector();
 }

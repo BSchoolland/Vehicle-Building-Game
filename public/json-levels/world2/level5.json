@@ -199,5 +199,12 @@
     { "name": "Collect", "value": 3 },
     { "name": "Survive", "value": 0 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "Who needs blocks?",
+      "description": "Complete the level using 6 blocks or less",
+      "value": 6
+    }
+  ],
   "tutorialText": ""
 }

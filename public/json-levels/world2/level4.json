@@ -140,5 +140,12 @@
     { "name": "Collect", "value": 3 },
     { "name": "Survive", "value": 0 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "No Wheels",
+      "description": "Don't use any wheels",
+      "value": 0
+    }
+  ],
   "tutorialText": "Why are there tire tracks on the ceiling?!!?"
 }

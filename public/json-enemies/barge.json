@@ -23,9 +23,9 @@
       { "type": "WheelBlock", "x": 225, "y": 825, "flippedX": false }
     ],
     "commands": [
-      { "key": "d", "start": 3.0, "end": 12.0},
-      { "key": "a", "start": 14, "end": 23},
-      { "key": "d", "start": 30, "end": 39},
+      { "key": "d", "start": 6.0, "end": 15.0},
+      { "key": "a", "start": 17, "end": 26},
+      { "key": "d", "start": 33, "end": 42},
       { "key": "a", "start": 45, "end": 54},
       { "key": "d", "start": 60, "end": 69},
       { "key": "a", "start": 72, "end": 9999}

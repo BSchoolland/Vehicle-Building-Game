@@ -354,7 +354,7 @@ class BuildMenu {
         try {
           building.startBuildModeForLevel();
         } catch (e) {
-          console.log("No level manager found");
+          console.error("No level manager found");
         }
         // set this button's class to active
         this.buildModeButton.classList.add("active");
@@ -635,8 +635,6 @@ class Building {
 
     // Create a new block at the click position
     let newBlock = new this.currentBlockType(x, y, this.contraption);
-    // if this is an enemy editor, flip the block
-    console.log(this.buildMenu.enemyEditor)
     
     // Add the block to the contraption
     this.contraption.addBlock(newBlock);

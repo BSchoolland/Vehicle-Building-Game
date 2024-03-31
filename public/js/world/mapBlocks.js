@@ -181,7 +181,7 @@ class CoinBlock extends Block {
     }
     makeBodies() { // spawn a coin at the block's location
         // the coin is a circle
-        this.coin = Matter.Bodies.circle(this.x, this.y - 25, 25, { isStatic: false, render: { fillStyle: this.color } });
+        this.coin = Matter.Bodies.circle(this.x, this.y - 25, 25, { isStatic: false, render: { fillStyle: this.color, sprite: { texture: './img/textures/coin.png' }  } });
         // make the coin not collide with anything
         this.coin.collisionFilter =  {
             category: 0x0002,

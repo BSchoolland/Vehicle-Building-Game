@@ -55,12 +55,19 @@ class World {
     }
 }
 
+class FakeProgressBar { // a hacky way to allow the level handler to not need a progress bar passed in
+    update() {
+        // do nothing
+    }
+}
+
 class LevelHandler {
-    constructor(progressBar) {
+    constructor(progressBar = false) {
         this.worlds = [];
         this.levelIndex = 0;
-        this.progressBar = progressBar;
+        this.progressBar = progressBar || new FakeProgressBar();
         this.loadWorlds();
+        this.isLoaded = false;
     }
     async loadWorlds() {
         let i = 0;
@@ -77,6 +84,7 @@ class LevelHandler {
         }
         // once all the worlds are loaded, sync the levels the player has beaten with the server
         this.syncLevelsBeat();
+        this.isLoaded = true;
     }
     // get the levels the player has beaten from the server and tell the server of any levels in local storage
     async syncLevelsBeat() {

@@ -204,10 +204,10 @@ router.post("/api/voteFeature", (req, res) => {
     const decoded = jwt.verify(token, secret);
     const userId = decoded.user_id;
 
-    // Check if the user has already voted for this feature
+    // Check if the user has already voted
     db.get(
-      `SELECT * FROM featureVotes WHERE user_id = ? AND feature_id = ?`,
-      [userId, featureId],
+      `SELECT * FROM featureVotes WHERE user_id = ?`,
+      [userId],
       (err, vote) => {
         if (err) {
           console.error("Error checking existing vote:", err);
@@ -219,35 +219,33 @@ router.post("/api/voteFeature", (req, res) => {
         if (vote) {
           // change the vote to the new value
           db.run(
-            `DELETE FROM featureVotes WHERE user_id = ? AND feature_id = ?`,
-            [userId, featureId],
+            `DELETE FROM featureVotes WHERE user_id = ?`,
+            [userId],
             function (err) {
               if (err) {
                 console.error("Error deleting vote:", err);
                 return res.status(500).json({ message: "Error deleting vote" });
               }
-              console.log("Vote changed successfully to", featureId);
-              res.status(200).json({ message: "Vote changed successfully" });
             }
           );
-        } else {
+        } 
           // Record new vote
-          db.run(
-            `INSERT INTO featureVotes (user_id, feature_id) VALUES (?, ?)`,
-            [userId, featureId],
-            function (err) {
-              if (err) {
-                console.error("Error recording vote:", err);
-                return res
-                  .status(500)
-                  .json({ message: "Error recording vote" });
-              }
-              console.log("New vote for", featureId, "recorded successfully");
-              res.status(201).json({ message: "Vote recorded successfully" });
+        db.run(
+          `INSERT INTO featureVotes (user_id, feature_id) VALUES (?, ?)`,
+          [userId, featureId],
+          function (err) {
+            if (err) {
+              console.error("Error recording vote:", err);
+              return res
+                .status(500)
+                .json({ message: "Error recording vote" });
             }
-          );
-        }
+            console.log("New vote for", featureId, "recorded successfully");
+            res.status(201).json({ message: "Vote recorded successfully" });
+          }
+        );
       }
+      
     );
   } catch (error) {
     return res.status(401).json({ message: "Invalid token" });

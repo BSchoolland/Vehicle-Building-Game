@@ -98,16 +98,23 @@ class LevelHandler {
         if (response.ok) {
             let data = await response.json();
             for (let i = 0; i < data.length; i++) {
+                console.log('Level data:', data[i])
                 let worldNum = data[i].world;
                 let levelNum = data[i].level;
-                this.completeLevel(worldNum, levelNum);
+                // mark the level as complete in local storage if it isn't already
+                if (!this.isLevelCompleted(worldNum, levelNum)) {
+                    this.completeLevel(worldNum, levelNum);
+                }
                 // mark the bonus objectives as complete
                 if (!data[i].medals) {
                     continue;
                 }
                 let medals = data[i].medals.split(',');
                 for (let j = 0; j < medals.length; j++) {
-                    this.completeBonusObjective(worldNum, levelNum - 1, medals[j]);
+                    // mark the bonus objective as complete in local storage if it isn't already
+                    if (!this.isMedalEarned(worldNum, levelNum - 1, medals[j])) {
+                        this.completeBonusObjective(worldNum, levelNum - 1, medals[j]);
+                    }
                 }
             }
             // now, check for any levels in local storage that the server doesn't know about
@@ -115,21 +122,22 @@ class LevelHandler {
                 for (let j = 0; j < this.worlds[i].levels.length; j++) {
                     let key = `world${i + 1}level${j + 1}`;
                     if (localStorage.getItem(key)) {
-                        console.log(`Level ${j + 1} in world ${i + 1}`);
-                        let level = this.worlds[i].getLevel(j + 1);
+                        let level = this.worlds[i].getLevel(j);
                         let medals = level.bonusChallenges.map(challenge => challenge.name);
                         // figure out which medals the player has earned
-                        medals = medals.filter(medal => this.isMedalEarned(i + 1, j, medal));
+                        medals = medals.filter(medal => {
+                            const isMedalEarned = this.isMedalEarned(i + 1, j, medal);
+                            return isMedalEarned;
+                        });
                         // convert the medals array to a string
                         medals = medals.join(',');
                         // if this level is in data with the same medals, skip it
                         let existingLevel = data.find(level => level.world === i + 1 && level.level === j + 1);
-                        if (existingLevel) {                            
+                        if (existingLevel) {             
                             if (existingLevel.medals === medals) {
                                 console.log(`Level ${j + 1} in world ${i + 1} already synced with server`);
                                 continue;
                             }
-                            console.log('medals mismatch', existingLevel.medals, medals)
                         }
                         console.log(`Level ${j + 1} in world ${i + 1} syncing with server`);
                         // send a post request to the server to log that the level has been completed

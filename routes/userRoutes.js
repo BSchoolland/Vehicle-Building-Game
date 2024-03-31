@@ -15,13 +15,15 @@ const getUserIdFromCookie = (cookie) => {
 
 // Insert a new row into the UserActivity table
 const logLevelBeat = (level, world, userIp, timestamp, user_id, medals) => {
+  console.log('Logging level beat');
     // if the user_id is not provided, set it to null
     if (!user_id) {
       user_id = null;
     }
-    // only log the level if it has not been beaten by the user before
+    // only log the level if it has 1not been beaten by the user before
     const checkSql = `SELECT * FROM levelsBeat WHERE level = ? AND world = ? AND user_id = ?`;
     db.get(checkSql, [level, world, user_id], (err, row) => {
+      
       if (err) {
         return console.error(err.message);
       }
@@ -41,6 +43,7 @@ const logLevelBeat = (level, world, userIp, timestamp, user_id, medals) => {
     }
     );
     // insert the new row
+    console.log(`Player ${user_id} beat level ${level} in world ${world} at ${timestamp} from IP ${userIp}`);
     const sql = `INSERT INTO levelsBeat (level, world, userIp, timestamp, user_id, medals) VALUES (?, ?, ?, ?, ?, ?)`;  
     db.run(
       sql,
@@ -49,7 +52,6 @@ const logLevelBeat = (level, world, userIp, timestamp, user_id, medals) => {
         if (err) {
           return console.error(err.message);
         }
-        console.log(`Player ${user_id} beat level ${level} in world ${world} at ${timestamp} from IP ${userIp}`);
       }
     );
   };

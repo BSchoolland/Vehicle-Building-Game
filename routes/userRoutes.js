@@ -33,7 +33,7 @@ const logLevelBeat = (level, world, userIp, timestamp, user_id, medals) => {
           if (err) {
             return console.error(err.message);
           }
-          console.log(`Updated medals for level ${level} in world ${world} for user ${user_id}`);
+          console.log(`Updated medals for level ${level} in world ${world} for user ${user_id} to ${medals}`);
         });
         // don't insert a new row
         return;
@@ -69,9 +69,9 @@ router.post("/api/beat-level", (req, res) => {
         user_id = getUserIdFromCookie(req.cookies.user);
       }
       // an array of the medals the user has earned
-      const medals = req.body.medals;
+      let medals = req.body.medals;
       if (medals === undefined) {
-        medals = [];
+        medals = '';
       }
       logLevelBeat(level, world, userIp, timestamp, user_id, medals);
       res

@@ -14,7 +14,8 @@ db.serialize(() => {
     level INTEGER NOT NULL,
     world INTEGER NOT NULL,
     userIp TEXT NOT NULL,
-    timestamp TEXT NOT NULL,
+    timestamp TEXT NOT NULL, 
+    medals TEXT,
     user_id INTEGER
   )`);
   db.run(`CREATE TABLE IF NOT EXISTS featureVotes (

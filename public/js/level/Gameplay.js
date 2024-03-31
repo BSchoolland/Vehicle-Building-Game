@@ -73,14 +73,14 @@ class Gameplay {
       }
       stats.appendChild(before);
     }
-    
+
     stats.style.display = "block";
   }
   incrementEnemyContraptionsDestroyed() {
     this.enemyContraptionsDestroyed++;
     this.updateStats();
   }
-  
+
   setBuildMode() {
     // despawn all enemy contraptions
     this.parent.LevelLoader.despawnEnemyContraptions();
@@ -96,28 +96,19 @@ class Gameplay {
   completeLevel() {
     let level = this.parent.LevelHandler.getLevelIndex() + 1;
     let world = this.parent.worldSelected;
-    // send a post request to the server to log that the level has been completed
-    fetch('/api/beat-level', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ level, world }),
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch((error) => {
-      console.error('Error:', error);
-    });
     // if the player has completed the level before, they are able to achieve bonus objectives
     if (this.parent.LevelHandler.isLevelCompleted(world, level)) {
       checkBonusObjectives(this);
-    }
-    else {
-      displayObjective("Beat the Level", 1)
+    } else {
+      displayObjective("Beat the Level", 1);
       // update the player's local storage to show that the level has been completed
-      this.parent.LevelHandler.completeLevel(this.parent.worldSelected, this.parent.LevelHandler.getLevelIndex() + 1);
+      this.parent.LevelHandler.completeLevel(
+        this.parent.worldSelected,
+        this.parent.LevelHandler.getLevelIndex() + 1
+      );
     }
+    // tell the level handler to sync the levels the player has beaten with the server
+    this.parent.LevelHandler.syncLevelsBeat();
     // hide the tutorial text
     document.getElementById("tutorial-text").style.display = "none";
     // play the level complete sound
@@ -161,8 +152,7 @@ class Gameplay {
       if (this.parent.test) {
         // if this is a test level, return to the level editor by setting href to /editor
         window.location.href = "/editor.html";
-      }
-      else {
+      } else {
         //open the level selector
         this.parent.LevelUI.loadLevelSelector();
       }
@@ -259,5 +249,5 @@ class Gameplay {
     }
   }
 }
-
+13
 export default Gameplay;

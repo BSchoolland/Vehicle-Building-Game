@@ -15,7 +15,6 @@ const getUserIdFromCookie = (cookie) => {
 
 // Insert a new row into the UserActivity table
 const logLevelBeat = (level, world, userIp, timestamp, user_id, medals) => {
-  console.log('Logging level beat');
     // if the user_id is not provided, set it to null
     if (!user_id) {
       user_id = null;
@@ -28,14 +27,12 @@ const logLevelBeat = (level, world, userIp, timestamp, user_id, medals) => {
         return console.error(err.message);
       }
       if (row) {
-        console.log(`Level ${level} in world ${world} already beaten by user ${user_id}`);
         // update the log with the new medals
         const updateSql = `UPDATE levelsBeat SET medals = ? WHERE level = ? AND world = ? AND user_id = ?`;
         db.run(updateSql, [medals, level, world, user_id], (err) => {
           if (err) {
             return console.error(err.message);
           }
-          console.log(`Updated medals for level ${level} in world ${world} for user ${user_id} to ${medals}`);
         });
         // don't insert a new row
         return;
@@ -43,7 +40,6 @@ const logLevelBeat = (level, world, userIp, timestamp, user_id, medals) => {
     }
     );
     // insert the new row
-    console.log(`Player ${user_id} beat level ${level} in world ${world} at ${timestamp} from IP ${userIp}`);
     const sql = `INSERT INTO levelsBeat (level, world, userIp, timestamp, user_id, medals) VALUES (?, ?, ?, ?, ?, ?)`;  
     db.run(
       sql,
@@ -112,11 +108,9 @@ router.get("/api/getLevelsBeat", (req, res) => {
 
 // Registration endpoint
 router.post("/api/register", async (req, res) => {
-  console.log('Registration request received:', req.body);
   try {
     const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    console.log('Password hashed successfully');
 
     // Check if user or email already exists
     db.get(`SELECT * FROM users WHERE username = ? OR email = ?`, [username, email], (err, row) => {
@@ -126,7 +120,6 @@ router.post("/api/register", async (req, res) => {
         return;
       }
       if (row) {
-        console.log('User or email already exists:', row);
         res.status(409).json({ message: "Username or email already exists" });
         return;
       }

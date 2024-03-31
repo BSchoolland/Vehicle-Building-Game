@@ -106,7 +106,7 @@ class LevelHandler {
         if (response.ok) {
             let data = await response.json();
             for (let i = 0; i < data.length; i++) {
-                console.log('Level data:', data[i])
+                
                 let worldNum = data[i].world;
                 let levelNum = data[i].level;
                 // mark the level as complete in local storage if it isn't already

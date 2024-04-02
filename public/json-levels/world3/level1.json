@@ -91,5 +91,13 @@
     { "name": "Survive", "value": 0 },
     { "name": "BeforeTime", "value": 10 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "Who needs blocks?",
+      "description": "Complete the level using 6 blocks or less",
+      "value": 6
+    }
+  ],
+  
   "tutorialText": ""
 }

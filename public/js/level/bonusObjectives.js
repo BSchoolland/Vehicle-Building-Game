@@ -236,6 +236,9 @@ function checkBonusObjectives(gameplayObject) {
         gameplayObject.parent.worldSelected,
         gameplayObject.parent.LevelHandler.getLevelIndex()
       );
+      if (!bonusObjectives) {
+        return;
+      }
       for (let i = 0; i < bonusObjectives.length; i++) {
         let objective = bonusObjectives[i];
         if (objective.name === "Who needs blocks?") {

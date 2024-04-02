@@ -116,7 +116,7 @@
     {
       "name": "Unarmed and Dangerous",
       "description": "Don't use any spike blocks.",
-      "value": 1
+      "value": 0
     }
   ],
   "tutorialText": ""

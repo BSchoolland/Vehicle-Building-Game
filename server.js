@@ -14,8 +14,42 @@ app.use(express.json());
 app.set('trust proxy', 1);
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public/pages/index/index.html'));
 });
+
+app.get('/levels', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/levels/levels.html'));
+});
+
+app.get('/levels.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/levels/levels.html'));
+});
+
+app.get('/changeLog', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/changeLog/changeLog.html'));
+});
+
+app.get('/changeLog.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/changeLog/changeLog.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/login/login.html'));
+});
+
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/login/login.html'));
+});
+
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/register/register.html'));
+});
+
+app.get('/register.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/register/register.html'));
+});
+
+
 
 // Use your imported routes with the app
 app.use(userRoutes);

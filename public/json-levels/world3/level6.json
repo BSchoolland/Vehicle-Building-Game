@@ -84,5 +84,12 @@
     { "name": "Survive", "value": 10 },
     { "name": "Before", "value": 0 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "No Remote Blocks",
+      "description": "Don't use any remote blocks",
+      "value": 0
+    }
+  ],
   "tutorialText": "Destroy the incomming missile!"
 }

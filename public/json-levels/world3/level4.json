@@ -233,5 +233,12 @@
     { "name": "Survive", "value": 0 },
     { "name": "BeforeTime", "value": 0 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "No Wheels",
+      "description": "Complete the level without using any wheels.",
+      "value": 0
+    }
+  ],
   "tutorialText": ""
 }

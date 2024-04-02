@@ -131,6 +131,9 @@ class LevelHandler {
                     let key = `world${i + 1}level${j + 1}`;
                     if (localStorage.getItem(key)) {
                         let level = this.worlds[i].getLevel(j);
+                        if (!level.bonusChallenges) {
+                            continue;
+                        }
                         let medals = level.bonusChallenges.map(challenge => challenge.name);
                         // figure out which medals the player has earned
                         medals = medals.filter(medal => {

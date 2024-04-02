@@ -123,7 +123,14 @@
     { "name": "Destroy", "value": 1 },
     { "name": "Collect", "value": 3 },
     { "name": "Survive", "value": 0 },
-    { "name": "BeforeTime", "value": 15 }
+    { "name": "BeforeTime", "value": 20 }
+  ],
+  "bonusChallenges": [
+    {
+      "name": "Unarmed and Dangerous",
+      "description": "Don't use any spike blocks.",
+      "value": 0
+    }
   ],
   "tutorialText": ""
 }

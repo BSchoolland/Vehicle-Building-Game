@@ -64,7 +64,7 @@ a {
   text-align: center; /* Centers text */
 }
 
-.action-button {
+.login-button {
   background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
   color: #ffffff;
   border: none;
@@ -93,6 +93,31 @@ a {
   height: 1.45em; /* Adjusts the image height to scale with the font size */
   width: auto; /* Keeps the image aspect ratio */
   vertical-align: middle; /* Helps align the image vertically inside the button */
+}
+
+.main-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10vh;
+}
+
+.main-button {
+  display: inline-block;
+  position: relative;
+  background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
+  color: #ffffff;
+  border: 7px solid black;
+  border-radius: 100%;
+  padding: 3%;
+  margin: 5%;
+}
+
+.main-button-image {
+  height: 6em;
+  width: auto;
+  vertical-align: middle;
 }
 
 /*# sourceMappingURL=globals.css.map */

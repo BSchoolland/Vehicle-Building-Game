@@ -25,6 +25,10 @@ a {
   overflow: hidden;
 }
 
+.signature {
+  margin: 20px;
+}
+
 .index-title-container {
   position: absolute;
   top: 15%;

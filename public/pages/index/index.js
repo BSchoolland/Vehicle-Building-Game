@@ -18,3 +18,5 @@ else {
         window.location.href = 'login.html';
     });
 }
+
+// Run a mini fersion of the game here

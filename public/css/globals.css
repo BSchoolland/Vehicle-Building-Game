@@ -1,0 +1,98 @@
+@font-face {
+  font-family: "Muro";
+  src: url("../fonts/muro-webfont.woff2") format("woff2"), url("../fonts/muro-webfont.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+}
+body {
+  font-family: "Muro", sans-serif;
+  letter-spacing: 0.1em;
+  font-weight: 200;
+  color: #ffffff;
+}
+
+a {
+  color: #28a745;
+  text-decoration: underline;
+}
+
+.index-body {
+  background: linear-gradient(rgba(157, 157, 157, 0.8), rgba(157, 157, 157, 0.8)), url("/img/index-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.index-title-container {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(3deg);
+  background-color: #3F270E;
+  text-align: center;
+  padding: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 10px;
+}
+
+.index-title-post {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  height: 20%;
+  width: 40px;
+  background-color: #3F270E;
+}
+
+.index-title {
+  font-size: 3rem;
+  color: #ffffff;
+  line-height: 0.5;
+  letter-spacing: 0.1em;
+}
+
+.topbar {
+  display: flex; /* Enables Flexbox */
+  flex-direction: row; /* Aligns children elements in a row */
+  justify-content: space-between; /* Spaces the children elements evenly, pushing them to the edge of the parent container */
+}
+
+.topbar a {
+  text-align: center; /* Centers text */
+}
+
+.action-button {
+  background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.settings-button {
+  background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 6px;
+  margin: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.settings-image {
+  height: 1.45em; /* Adjusts the image height to scale with the font size */
+  width: auto; /* Keeps the image aspect ratio */
+  vertical-align: middle; /* Helps align the image vertically inside the button */
+}
+
+/*# sourceMappingURL=globals.css.map */

@@ -1,11 +1,6 @@
 import Building from './mapbuilding.js';
 import { Camera } from '../game/camera.js';
 
-// if the user is on mobile, warn them that the game may not work well
-if (window.innerWidth < 800 || window.innerHeight < 600) {
-    alert("WAIT! This game is not optomized for mobile! PLEASE play on a computer.  I can't stop you though, any more than I can stop you from just using a seat and a rocket booster to beat my most complicated levels. *Cries in game developer*");
-}
-
 // Create an engine
 var engine = Matter.Engine.create();
 

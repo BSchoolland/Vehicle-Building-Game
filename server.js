@@ -5,6 +5,9 @@ const userRoutes = require('./routes/userRoutes'); // Import your routes
 const app = express();
 const port = process.env.PORT || 3000;
 
+// environment variables
+require("dotenv").config();
+
 // a cookie parser to parse the user's cookie
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -49,6 +52,14 @@ app.get('/register.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/register/register.html'));
 });
 
+// if the env file says we're in development, add the editor route
+const dev = process.env.DEV
+if ((dev !== null) && (dev === "true")){
+  console.log('editor on')
+  app.get('/editor', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/pages/editor/editor.html'));
+  });
+};
 
 
 // Use your imported routes with the app

@@ -176,11 +176,6 @@ class allowedBlockMenu {
     }
 }
 
-
-
-
-
-
 // a build menu class, for the bottom of the screen.
 // the build menu will contain buttons for each block type, a button to save the level, a button to load a level, a button to clear the level, and a button to toggle build mode.
 class BuildMenu {
@@ -272,7 +267,7 @@ class BuildMenu {
                 return;
             }
             // save the level to a JSON object
-            let LevelManagerJson = building.level.save();
+            let LevelManagerJson = building.level.LevelEditor.save();
             let key = 0;
             // remove the block types that are not allowed
             this.building.blockSelectors.blockTypes = this.building.blockSelectors.blockTypes.filter(blockType => blockType.allowed > 0);
@@ -398,9 +393,9 @@ class BuildMenu {
     }
     loadLevel(LevelManagerJson) {
         // clear the existing level
-        this.building.level.clear();
+        this.building.level.LevelLoader.clear();
         // load the level from the JSON object
-        this.building.level.loadForEditing(LevelManagerJson);
+        this.building.level.LevelEditor.loadForEditing(LevelManagerJson);
         // get the block types from the JSON object
         let buildingBlockTypes = LevelManagerJson.buildingBlockTypes;
         // set the block types

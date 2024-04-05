@@ -47,6 +47,7 @@ class LevelManager {
     // handles loading levels
     this.LevelLoader = new LevelLoader(this, blockTypes);
     // handles the UI for the level (back arrow and level selector)
+    
     this.LevelUI = new LevelUI(this);
     this.worldSelected = 1;
     this.enemyContraptions = [];

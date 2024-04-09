@@ -452,7 +452,28 @@ class Building {
         // Add event listener for canvas click
         const canvas = document.querySelector('canvas');
         // Add event listener for placing blocks
-        canvas.addEventListener('click', (event) => this.handleCanvasClick(event));
+        // canvas.addEventListener('click', (event) => this.handleCanvasClick(event));
+        let isMouseDown = false;
+
+        canvas.addEventListener('mousedown', (event) => {
+            if (event.button === 0) {
+                isMouseDown = true;
+                this.handleCanvasClick(event);
+            }
+        });
+
+        canvas.addEventListener('mousemove', (event) => {
+            if(isMouseDown && event.button === 0) {
+                this.handleCanvasClick(event);
+            }
+        });
+
+        document.addEventListener('mouseup', (event) => {
+            if (event.button === 0) {
+                isMouseDown = false;
+            }
+        });
+
         // Add event listener for keys
         document.addEventListener('keydown', (event) => this.handleKeyDown(event));
         // Add event listener for block editing

@@ -78,6 +78,7 @@ class Gameplay {
   }
   incrementEnemyContraptionsDestroyed() {
     this.enemyContraptionsDestroyed++;
+    console.log("enemy contraptions destroyed: ", this.enemyContraptionsDestroyed);
     this.updateStats();
   }
 

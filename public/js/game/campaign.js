@@ -1,7 +1,5 @@
 import Building from "./building.js";
-import { Camera } from "./camera.js";
-// import { LevelManager } from "../world/level.js";
-import LevelManager from "../level/LevelManager.js";
+import { Camera } from "./camera.js";import LevelManager from "../level/LevelManager.js";
 import { setSong } from "../sounds/playSound.js";
 import ProgressBar from "../loaders/progressBar.js";
 
@@ -129,8 +127,7 @@ function startGame() {
   setSong("mainTheme");
   // make the background a gradient
   document.body.style.background = "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)";
-  // // make the body white
-  // document.body.style.backgroundColor = "white";
+
   createHTML();
   // show the container
   if (landscape) {

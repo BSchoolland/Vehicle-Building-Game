@@ -9,6 +9,7 @@ class LevelLoader {
   constructor(parent, blockTypes) {
     this.parent = parent;
     this.blockTypes = blockTypes;
+    this.enemySpawnPoints = [];
   }
   loadEnemyContraption(blockJson) {
     let enemyType = blockJson.enemyType;
@@ -35,7 +36,7 @@ class LevelLoader {
   }
 
   // load a Level from a JSON object
-  async load(levelIndex, optionalJson = null) {
+  async load(levelIndex, optionalJson = null, playable = true) {
     // clear the enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {
       enemyContraption[0].destroy();
@@ -80,6 +81,7 @@ class LevelLoader {
       height: 0,
     });
     LevelJson.blocks.forEach((blockJson) => {
+      console.log(blockJson);
       // Get the block type constructor
       const BlockType = this.blockTypes[blockJson.type];
       if (BlockType) {
@@ -131,6 +133,7 @@ class LevelLoader {
             console.error("No enemy type defined for enemy spawn block");
             enemyType = "box";
           }
+          this.enemySpawnPoints.push(blockJson);
           // load the enemy contraption
           const EnemyContraption = this.loadEnemyContraption(blockJson);
           return;
@@ -151,6 +154,27 @@ class LevelLoader {
         console.error(`Unknown block type: ${blockJson.type}`);
       }
     });
+    if (!playable) {
+      // aoom way out with the camera
+      this.parent.building.camera.setViewport(
+        1700,
+        1700
+      );
+      // set the camera position to the center of the build area
+
+      this.parent.building.camera.setCenterPosition(
+        2400,
+        300
+      );
+      this.parent.building.camera.update();
+      // print the camera position
+      console.log(this.parent.building.camera.position);
+      // log the camera size
+      console.log(this.parent.building.camera.size);
+      // start the level
+
+      return;
+    }
     // set the win conditions
     this.parent.GameplayHandler.mustCompleteBefore = 0;
     if (LevelJson.objectives) {
@@ -178,38 +202,47 @@ class LevelLoader {
     this.parent.building.camera.levelTour(LevelJson, this.parent.building.buildArea);
     // only do the next part after the tour is done (doingTour is set to false)
     let interval = setInterval(() => {
-        if (!this.parent.building.camera.doingTour) {
-            if (this.parent.building.camera.tourCancelled) { // if the tour was cancelled, don't do anything
-              console.log("Tour cancelled");
-              this.parent.building.camera.tourCancelled = false;
-              // clear the level
-              this.clear();
-              clearInterval(interval);
-              return;
-            }
-            clearInterval(interval);
-            this.parent.building.camera.doingTour = false;
-
-            // if the level has buildingBlockTypes, then set the building's buildingBlockTypes
-            if (LevelJson.buildingBlockTypes) {
-            this.parent.building.makeNewBuildMenu(LevelJson.buildingBlockTypes, this.isEnemyEditor);
-            }
-            
-            // bind the startLevel function to the building
-            this.parent.building.startLevel = this.parent.GameplayHandler.startLevel.bind(this.parent.GameplayHandler);
-            // bind the setBuildMode function to the building
-            this.parent.building.startBuildModeForLevel = this.parent.GameplayHandler.setBuildMode.bind(this.parent.GameplayHandler);
-            // clear the building's contraption
-            this.parent.building.contraption.clear();
-            // allow the building to enter build mode
-            this.parent.building.canEnterBuildMode = true;
-            // activate building mode by clicking the building button if it is not already active
-            this.parent.building.toggleBuildingMode(true);
-            if (!this.parent.building.buildInProgress) {
-              this.parent.building.toggleBuildingMode(true);
-            }
-
+      if (!this.parent.building.camera.doingTour) {
+        if (this.parent.building.camera.tourCancelled) {
+          // if the tour was cancelled, don't do anything
+          console.log("Tour cancelled");
+          this.parent.building.camera.tourCancelled = false;
+          // clear the level
+          this.clear();
+          clearInterval(interval);
+          return;
         }
+        clearInterval(interval);
+        this.parent.building.camera.doingTour = false;
+
+        // if the level has buildingBlockTypes, then set the building's buildingBlockTypes
+        if (LevelJson.buildingBlockTypes) {
+          this.parent.building.makeNewBuildMenu(
+            LevelJson.buildingBlockTypes,
+            this.isEnemyEditor
+          );
+        }
+
+        // bind the startLevel function to the building
+        this.parent.building.startLevel =
+          this.parent.GameplayHandler.startLevel.bind(
+            this.parent.GameplayHandler
+          );
+        // bind the setBuildMode function to the building
+        this.parent.building.startBuildModeForLevel =
+          this.parent.GameplayHandler.setBuildMode.bind(
+            this.parent.GameplayHandler
+          );
+        // clear the building's contraption
+        this.parent.building.contraption.clear();
+        // allow the building to enter build mode
+        this.parent.building.canEnterBuildMode = true;
+        // activate building mode by clicking the building button if it is not already active
+        this.parent.building.toggleBuildingMode(true);
+        if (!this.parent.building.buildInProgress) {
+          this.parent.building.toggleBuildingMode(true);
+        }
+      }
     });
   }
   despawnEnemyContraptions(perminant = false) {
@@ -217,6 +250,31 @@ class LevelLoader {
     this.parent.enemyContraptions.forEach((enemyContraption) => {
       enemyContraption[0].despawn();
       enemyContraption[0].moveTo(enemyContraption[1], enemyContraption[2]);
+    });
+  }
+  spawnRandomEnemy() { // a fun function that spawns a random enemy contraption at each enemy spawn block
+    console.log("spawning random enemy");
+    this.enemySpawnPoints.forEach((block) => {
+      if (block.type === "EnemySpawnBlock") {
+        console.log(block);
+        let enemyType = Math.random() < 0.5 ? "box" : "triangle";
+        let enemyContraptionJson = this.parent.EnemyHandler.getEnemyJSON(enemyType);
+        if (enemyContraptionJson === undefined) {
+          console.error(`Unknown enemy type: ${enemyType}`);
+          return;
+        }
+        // load the enemy contraption
+        const EnemyContraption = new Contraption(this.parent.engine, "AI", this.parent);
+        EnemyContraption.load(enemyContraptionJson);
+        // load the commands
+        EnemyContraption.AiLoadCommands(enemyContraptionJson.commands);
+        // move the enemy contraption to the spawn point
+        EnemyContraption.moveTo(block.x, block.y);
+        // add the enemy contraption to the enemy contraptions array
+        this.parent.enemyContraptions.push([EnemyContraption, block.x, block.y]);
+        // make the enemy contraption move
+        EnemyContraption.spawn();
+      }
     });
   }
   

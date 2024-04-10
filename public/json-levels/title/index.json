@@ -175,13 +175,18 @@
     { "type": "GrassBlock", "x": 1300, "y": 1300 },
     { "type": "GrassBlock", "x": 800, "y": 1300 },
     { "type": "GrassBlock", "x": 1100, "y": 1400 },
-    { "type": "EnemySpawnBlock", "x": 3300, "y": 900, "enemyType": "spikeCar" },
-    { "type": "EnemySpawnBlock", "x": 1300, "y": 900, "enemyType": "box" }
+    { "type": "EnemySpawnBlock", "x": 4000, "y": 800, "enemyType": "randomR" },
+    { "type": "EnemySpawnBlock", "x": 500, "y": 800, "enemyType": "randomL" },
+    { "type": "GrassBlock", "x": 600, "y": 1000 },
+    { "type": "GrassBlock", "x": 500, "y": 1000 },
+    { "type": "GrassBlock", "x": 400, "y": 1000 },
+    { "type": "GrassBlock", "x": 300, "y": 1000 },
+    { "type": "GrassBlock", "x": 4200, "y": 1000 },
+    { "type": "GrassBlock", "x": 4300, "y": 1000 },
+    { "type": "GrassBlock", "x": 200, "y": 1000 }
   ],
   "commands": [],
-  "buildingBlockTypes": [
-    { "name": "Seat Block", "key": "1", "type": "SeatBlock", "limit": 0 }
-  ],
+  "buildingBlockTypes": [],
   "objectives": [
     { "name": "Destroy", "value": 0 },
     { "name": "Collect", "value": 0 },

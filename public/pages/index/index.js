@@ -110,6 +110,6 @@ if (response.ok) {
   });
   // for fun, repeatetively spawn random enemies at the enemy spawn points
   setInterval(() => {
-    levelObject.LevelLoader.spawnRandomEnemy();
-  }, 5000);
+    levelObject.LevelLoader.respawnEnemies();
+  }, 20000);
 } 

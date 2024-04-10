@@ -4,6 +4,7 @@ import {
   CoinBlock,
 } from "../world/mapBlocks.js";
 
+
 // a class that handles the loading of levels, including all blocks and entities
 class LevelLoader {
   constructor(parent, blockTypes) {
@@ -157,14 +158,14 @@ class LevelLoader {
     if (!playable) {
       // aoom way out with the camera
       this.parent.building.camera.setViewport(
-        1700,
-        1700
+        1000,
+        1000
       );
       // set the camera position to the center of the build area
 
       this.parent.building.camera.setCenterPosition(
-        2400,
-        300
+        2200,
+        575
       );
       this.parent.building.camera.update();
       // print the camera position
@@ -252,12 +253,13 @@ class LevelLoader {
       enemyContraption[0].moveTo(enemyContraption[1], enemyContraption[2]);
     });
   }
-  spawnRandomEnemy() { // a fun function that spawns a random enemy contraption at each enemy spawn block
-    console.log("spawning random enemy");
+  respawnEnemies() { // spawns an enemy at each enemy spawn point
+    console.log("spawning more enemies");
     this.enemySpawnPoints.forEach((block) => {
       if (block.type === "EnemySpawnBlock") {
         console.log(block);
-        let enemyType = Math.random() < 0.5 ? "box" : "triangle";
+        // get the enemyType
+        let enemyType = block.enemyType;
         let enemyContraptionJson = this.parent.EnemyHandler.getEnemyJSON(enemyType);
         if (enemyContraptionJson === undefined) {
           console.error(`Unknown enemy type: ${enemyType}`);

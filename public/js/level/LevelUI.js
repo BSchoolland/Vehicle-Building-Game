@@ -29,8 +29,7 @@ class Medal {
     // if it's a who needs blocks medal, use the image that relates to the number of blocks
     if (this.name === "Who needs blocks?") {
       src = bonusObjectives[this.name][this.value - 1];
-    }
-    else {
+    } else {
       src = bonusObjectives[this.name];
     }
     medal.src = src // || "../../img/crown.png";

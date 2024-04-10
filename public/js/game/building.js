@@ -202,6 +202,7 @@ class BuildMenu {
   }
   createMenuButtons() {
     // if this is the enemy editor, show the save and load buttons
+    this.enemyEditor = true;
     if (this.enemyEditor) {
       // create a button to save the contraption
       this.saveButton = document.createElement("button");
@@ -645,7 +646,7 @@ class Building {
     this.selectBlock(newBlock);
     this.buildMenu.updateButtonLimits();
     if (this.buildMenu.enemyEditor) {
-      newBlock.flipX();
+      // newBlock.flipX();
     }
   }
   selectBlock(block) {

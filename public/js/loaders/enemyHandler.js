@@ -17,6 +17,9 @@ class EnemyHandler {
             base: '../../json-enemies/base.json',
             largeSpikeCarL: '../../json-enemies/largeSpikeCarL.json',
             drivingCarL: '../../json-enemies/drivingCarL.json',
+            tankL: '../../json-enemies/tankL.json',
+            rocketCar: '../../json-enemies/rocketCar.json',
+            flierL: '../../json-enemies/flierL.json',
         }
         this.enemyContraptionsJSON = {};
         this.progressBar = progressBar;
@@ -30,12 +33,17 @@ class EnemyHandler {
         });
         this.RightFacingEnemies = [
             'spikeCar',
+            'spikeCar',
             'largeSpikeCar',
-            'world1Boss'
+            'world1Boss',
+            'rocketCar',
         ];
         this.LeftFacingEnemies = [
             'largeSpikeCarL',
-            'drivingCarL'
+            'largeSpikeCarL',
+            'tankL',
+            'flierL',
+
         ]
         console.log("all enemies preloaded");
         if (this.progressBar) this.progressBar.update();

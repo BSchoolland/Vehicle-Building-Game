@@ -48,6 +48,9 @@ class Gameplay {
   }
   updateStats() {
     let stats = document.getElementById("stats");
+    if (!stats) {
+      return;
+    }
     stats.innerHTML = "";
     if (this.mustCollect > 0) {
       let collect = document.createElement("h1");

@@ -11,6 +11,7 @@ class LevelLoader {
     this.parent = parent;
     this.blockTypes = blockTypes;
     this.enemySpawnPoints = [];
+    this.playable = true;
   }
   loadEnemyContraption(blockJson) {
     let enemyType = blockJson.enemyType;
@@ -38,6 +39,7 @@ class LevelLoader {
 
   // load a Level from a JSON object
   async load(levelIndex, optionalJson = null, playable = true) {
+    this.playable = playable;
     // clear the enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {
       enemyContraption[0].destroy();
@@ -47,7 +49,6 @@ class LevelLoader {
     this.parent.coins = [];
 
     if (!this.parent.building.buildArea) {
-      console.log("level editing mode");
       this.parent.loadForEditing(levelIndex);
       return;
     }
@@ -82,7 +83,6 @@ class LevelLoader {
       height: 0,
     });
     LevelJson.blocks.forEach((blockJson) => {
-      console.log(blockJson);
       // Get the block type constructor
       const BlockType = this.blockTypes[blockJson.type];
       if (BlockType) {
@@ -158,20 +158,18 @@ class LevelLoader {
     if (!playable) {
       // aoom way out with the camera
       this.parent.building.camera.setViewport(
-        1000,
-        1000
+        2000,
+        2000
       );
       // set the camera position to the center of the build area
 
       this.parent.building.camera.setCenterPosition(
-        2200,
-        575
+        2400,
+        400
       );
       this.parent.building.camera.update();
       // print the camera position
-      console.log(this.parent.building.camera.position);
       // log the camera size
-      console.log(this.parent.building.camera.size);
       // start the level
 
       return;
@@ -254,10 +252,8 @@ class LevelLoader {
     });
   }
   respawnEnemies() { // spawns an enemy at each enemy spawn point
-    console.log("spawning more enemies");
     this.enemySpawnPoints.forEach((block) => {
       if (block.type === "EnemySpawnBlock") {
-        console.log(block);
         // get the enemyType
         let enemyType = block.enemyType;
         let enemyContraptionJson = this.parent.EnemyHandler.getEnemyJSON(enemyType);

@@ -86,6 +86,10 @@ class LevelUI {
     this.createBackArrow();
   }
   createBackArrow() {
+    // if we are on the home page (/), don't create a back arrow
+    if (window.location.pathname === '/') {
+      return;
+    }
     // create a back arrow for leaving levels or returning to the main menu
     let backArrow = document.createElement("img");
     backArrow.src = "../../img/back-arrow.png";

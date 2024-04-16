@@ -206,7 +206,7 @@
   ],
   "commands": [
     { "key": "d", "start": 2.0, "end": 60.0},
-    { "key": "x", "start": 6.0, "end": 7.0},
-    { "key": "SHIFT", "start": 7.0, "end": 10.0}
+    { "key": "x", "start": 5.0, "end": 7.0},
+    { "key": "SHIFT", "start": 6.0, "end": 10.0}
   ]
 }

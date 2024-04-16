@@ -1,4 +1,3 @@
-
 import { bonusObjectives } from "./bonusObjectives.js";
 
 const medalSize = "30px";
@@ -32,14 +31,20 @@ class Medal {
     } else {
       src = bonusObjectives[this.name];
     }
-    medal.src = src // || "../../img/crown.png";
+    medal.src = src; // || "../../img/crown.png";
     medal.className = "medal";
     medal.style.width = medalSize;
     medal.style.height = medalSize;
     medal.style.padding = "10px";
     medal.title = this.description;
     // check if the medal has been earned
-    if (this.parent.parent.LevelHandler.isMedalEarned(this.worldNum, this.levelNum, this.name)) {
+    if (
+      this.parent.parent.LevelHandler.isMedalEarned(
+        this.worldNum,
+        this.levelNum,
+        this.name
+      )
+    ) {
       medal.style.opacity = "1";
       if (box != null) {
         // make the box and button dark gold
@@ -63,7 +68,7 @@ class Medal {
       description.appendChild(title);
 
       let descriptionText = document.createElement("p");
-      descriptionText.innerHTML = this.description + " (click to close)"
+      descriptionText.innerHTML = this.description + " (click to close)";
       description.appendChild(descriptionText);
       // add the description to the body
       document.body.appendChild(description);
@@ -77,29 +82,34 @@ class Medal {
     });
     return medal;
   }
-
 }
 // class for managing the UI of the levels
 class LevelUI {
-  constructor(parent) {
+  constructor(parent, progressBar) {
     this.parent = parent;
-    this.createBackArrow();
+    this.createBackArrow(progressBar);
   }
-  createBackArrow() {
+  createBackArrow(progressBar) {
     // if we are on the home page (/), don't create a back arrow
-    if (window.location.pathname === '/') {
+    if (window.location.pathname === "/") {
       return;
     }
-    // create a back arrow for leaving levels or returning to the main menu
-    let backArrow = document.createElement("img");
-    backArrow.src = "../../img/back-arrow.png";
-    backArrow.id = "back-arrow";
-    backArrow.className = "back-arrow";
-    backArrow.addEventListener("click", () => {
-      this.handleBackArrowClick();
-    });
-    // append to the body
-    document.body.appendChild(backArrow);
+    // wait for the game to load
+    const interval = setInterval(() => {
+      if (progressBar.loaded) {
+        clearInterval(interval);
+        // create the back arrow
+        let backArrow = document.createElement("img");
+        backArrow.src = "../../img/back-arrow.png";
+        backArrow.className = "back-arrow";
+        backArrow.addEventListener("click", () => {
+          this.handleBackArrowClick();
+        });
+        // add the back arrow to the game
+        document.getElementById("game-container").appendChild(backArrow);
+      }
+    }
+    , 100);
   }
   handleBackArrowClick() {
     if (this.parent.test) {
@@ -163,12 +173,21 @@ class LevelUI {
     worldSelector.appendChild(button);
   }
   createBonusObjectives(levelSelector, levelNum, box, button) {
-    let usedBonusObjectives = this.parent.LevelHandler.getBonusChallenges(this.parent.worldSelected, levelNum);
+    let usedBonusObjectives = this.parent.LevelHandler.getBonusChallenges(
+      this.parent.worldSelected,
+      levelNum
+    );
     if (usedBonusObjectives === undefined) {
       return;
     }
     for (let i = 0; i < usedBonusObjectives.length; i++) {
-      let medal = new Medal(usedBonusObjectives[i].name, usedBonusObjectives[i].value, usedBonusObjectives[i].description, this, levelNum).createHTML();
+      let medal = new Medal(
+        usedBonusObjectives[i].name,
+        usedBonusObjectives[i].value,
+        usedBonusObjectives[i].description,
+        this,
+        levelNum
+      ).createHTML();
       box.appendChild(medal);
     }
   }
@@ -185,7 +204,13 @@ class LevelUI {
       levelSelector.remove();
     });
     // display from right to left
-    let crown = new Medal("Beat the Level", 1, "Complete the level", this, i + 1).createHTML(box, button);
+    let crown = new Medal(
+      "Beat the Level",
+      1,
+      "Complete the level",
+      this,
+      i + 1
+    ).createHTML(box, button);
     // if the crown is not earned, don't show the other medals
     if (crown.style.opacity === "1") {
       this.createBonusObjectives(levelSelector, i, medalsBox, button);
@@ -216,7 +241,7 @@ class LevelUI {
     });
     box.appendChild(image);
     box.appendChild(this.createMedalIcons(levelSelector, i, box, button));
-    
+
     box.appendChild(button);
     levelSelector.appendChild(box);
   }

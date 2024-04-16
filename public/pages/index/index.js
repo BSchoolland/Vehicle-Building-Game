@@ -108,8 +108,21 @@ if (response.ok) {
   Matter.Events.on(engine, "afterUpdate", () => {
     levelObject.GameplayHandler.update();
   });
-  // for fun, repeatetively spawn random enemies at the enemy spawn points
-  setInterval(() => {
-    levelObject.LevelLoader.respawnEnemies(); // wait a random amount of time 
-  }, 6000);
+  let intervalId;
+
+  function startInterval() {
+    console.log("starting interval");
+    intervalId = setInterval(() => {
+      levelObject.LevelLoader.respawnEnemies(); // wait a random amount of time 
+    }, 9000);
+  }
+  
+  startInterval(); // Start the interval when the page loads
+
+  window.addEventListener('blur', (event) => {
+    clearInterval(intervalId);
+    console.log("cleared interval");
+  });
+
+  window.addEventListener('focus', startInterval);
 } 

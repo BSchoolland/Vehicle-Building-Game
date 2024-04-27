@@ -16,7 +16,7 @@ Then you'll need to install the neccecary dependencies
 ``` sh
 npm install
 ```
-Almost done! you can start the server locally with
+Then you can start the server locally with
 ``` sh
 npm start
 ```

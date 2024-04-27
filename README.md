@@ -21,7 +21,5 @@ Almost done! you can start the server locally with
 npm start
 ```
 finally, go to http://localhost:3000 and you should see the game!
-### Planned updates
-See the [plan](plan.md) file for details.
 ### Licence
 This project is licenced under the MIT License -- see the [LICENSE](LICENSE.txt) file for details.

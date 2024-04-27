@@ -11,6 +11,7 @@
 $action-color: #28a745;
 $text-color: #ffffff;
 $sign-color: #3F270E;
+$ui-background-color: #1A3A5F;
 
 // use the font globally
 body {
@@ -27,4 +28,5 @@ a {
 }
 
 @import "index.scss";
+@import "login.scss";
 

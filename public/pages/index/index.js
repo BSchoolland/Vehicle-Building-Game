@@ -142,12 +142,12 @@ if (response.ok) {
   });
   let intervalId;
 
-  // function startInterval() {
-  //   console.log("starting interval");
-  //   intervalId = setInterval(() => {
-  //     levelObject.LevelLoader.respawnEnemies(); // wait a random amount of time 
-  //   }, 9000);
-  // }
+  function startInterval() {
+    console.log("starting interval");
+    intervalId = setInterval(() => {
+      // levelObject.LevelLoader.respawnEnemies(); // wait a random amount of time 
+    }, 9000);
+  }
   
   startInterval(); // Start the interval when the page loads
 
@@ -158,3 +158,115 @@ if (response.ok) {
 
   window.addEventListener('focus', startInterval);
 } 
+
+
+
+import LevelHandler from "/js/loaders/levelHandler.js";
+// start the level handler (required for syncing data with the server)
+const levelHandler = new LevelHandler();
+
+const loginForm = document.getElementById("login-form");
+const messageBox = document.getElementById("message");
+loginForm.addEventListener("submit", function(e) {
+    e.preventDefault(); // Prevent default form submission
+    console.log("Login form submitted");
+
+    const formData = new FormData(loginForm);
+    const username = formData.get("username");
+    const password = formData.get("password");
+
+    // Example login request to the server
+    fetch("api/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {      
+            // wait for the level handler to finish loading
+            let checkInterval = setInterval(() => {
+                console.log("Checking if levels are loaded");
+                if (levelHandler.isLoaded) {
+                    console.log("Levels are loaded");
+                    // stop the interval
+                    clearInterval(checkInterval);
+                    // sync the levels with the server
+                    levelHandler.syncLevelsBeat();
+                    // Redirect to the home page
+                    window.location.href = '/';
+                }
+            }, 500);
+
+        } else {
+            // Handle login failure here
+            messageBox.textContent = "Login failed: " + data.message;
+        }
+    })
+    .catch(error => {
+        console.error("Error during login:", error);
+        messageBox.textContent = "Login error, please try again later.";
+    });
+});
+
+const registerForm = document.getElementById("register-form");
+const messageBox2 = document.getElementById("message2");
+
+registerForm.addEventListener("submit", function(e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(registerForm);
+    const username = formData.get("username-create");
+    const email = formData.get("email-create");
+    const password = formData.get("password-create");
+    const confirmPassword = formData.get("confirm-password-create");
+
+    // Simple client-side check for matching passwords
+    if (password !== confirmPassword) {
+        messageBox2.textContent = "Passwords do not match.";
+        return;
+    }
+    // require a somewhat secure password
+    if (password.length < 8) {
+        messageBox2.textContent = "Password must be at least 8 characters long.";
+        return;
+    }
+
+    // send the registration request to the server
+    fetch("api/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email, password }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === "User registered successfully") {
+            // Registration was successful
+            alert("Registration successful! Please log in.");
+            // open the login popup
+            let loginPopup = document.getElementById("login-popup");
+            loginPopup.classList.remove("hidden");
+            // close the register popup
+            let registerPopup = document.getElementById("register-popup");
+            registerPopup.classList.add("hidden");
+        } else {
+            // Check for specific errors like duplicate email or username
+            if (data.errorCode === "DUPLICATE_EMAIL") {
+                messageBox2.textContent = "The email address " + email + " is already in use.";
+            } else if (data.errorCode === "DUPLICATE_USERNAME") {
+                messageBox2.textContent = "The username" + username + " is already taken.";
+            } else {
+                // Handle other registration failures not specified above
+                messageBox2.textContent = "Registration failed: " + data.message;
+            }
+        }
+    })
+    .catch(error => {
+        console.error("Error during registration:", error);
+        messageBox2.textContent = "Registration error, please try again later.";
+    });
+});

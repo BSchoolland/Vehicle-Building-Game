@@ -62,7 +62,6 @@
     <script type="module" src="/pages/index/index.js"></script>
     
     <p id="tutorial-text"></p>
-
     <!-- when active, the login popup will be displayed -->
     <div id="login-popup" class="login-popup hidden" hidden>
         <div class="login-popup-content">
@@ -79,6 +78,7 @@
                 <button type="submit">LOGIN</button>
             </form>
             <button id="register-button" class="login-change">Don't have an account?</button>
+            <p id="message" style="color: red; text-align: center;"></p>
         </div>
     </div>
     <!-- when active, the register popup will be displayed -->
@@ -89,7 +89,7 @@
                 <span class="close" id="close-register">&times;</span>
             </div>
 
-            <form class="register-form" id="login-form">
+            <form class="login-form" id="register-form">
                 <label for="username">Username:</label>
                 <input type="text" id="username-create" name="username-create" required>
                 <label for="username">Email:</label>
@@ -101,8 +101,11 @@
                 <button type="submit">LOGIN</button>
             </form>
             <button id="login-button" class="login-change">Already have an account?</button>
+            <p id="message2" style="color: red; text-align: center;"></p>
         </div>
+        
     </div>
+    
 </body>
 
 </html>

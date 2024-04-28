@@ -110,12 +110,12 @@ if (response.ok) {
   });
   let intervalId;
 
-  function startInterval() {
-    console.log("starting interval");
-    intervalId = setInterval(() => {
-      levelObject.LevelLoader.respawnEnemies(); // wait a random amount of time 
-    }, 9000);
-  }
+  // function startInterval() {
+  //   console.log("starting interval");
+  //   intervalId = setInterval(() => {
+  //     levelObject.LevelLoader.respawnEnemies(); // wait a random amount of time 
+  //   }, 9000);
+  // }
   
   startInterval(); // Start the interval when the page loads
 

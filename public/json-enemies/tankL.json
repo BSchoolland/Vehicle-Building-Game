@@ -112,13 +112,7 @@
       "rotatedTimes": 0,
       "flippedX": false
     },
-    {
-      "type": "SpikeBlock",
-      "x": 775,
-      "y": 1175,
-      "rotatedTimes": 0,
-      "flippedX": false
-    },
+
     {
       "type": "WheelBlock",
       "x": 725,

@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,17 +14,113 @@
 .login-popup-content {
     position: relative;
     background-color: $ui-background-color;
+    // padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    width: 30%;
+    height: 70%;
+    overflow: hidden;
+    // center content
+    display: flex;
+    flex-direction: column;
+}
+
+.register-popup-content {
+    position: relative;
+    background-color: $ui-background-color;
+    // padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    width: 30%;
+    height: 95%;
+    overflow: hidden;
+    // center content
+    display: flex;
+    flex-direction: column;
+}
+
+.login-popup-header {
+    margin: 0;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 300px;
+    text-align: center;
+    font-size: x-large;
+    color: $text-color;
+    background: #238B22;
+    height: 60px;
+}
+
+.login-form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form label {
+    color: $text-color;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.login-form input {
+    width: 55%;
+    font-size: 25px;
+    padding: 2.5px 0px;
+    margin: 10px 0;
+    border: 1px solid $text-color;
+    border-radius: 50px;
+}
+
+.login-form button {
+    width: 55%;
+    padding: 10px;
+    margin: 10px 0;
+    margin-top: 30px;
+    border-radius: 50px;
+    background: linear-gradient(0deg, #1B6B1A, #31C930);
+    color: $text-color;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    // darken slightly
+    background: linear-gradient(0deg, darken(#1B6B1A, 10%), darken(#31C930, 10%));
+}
+
+.login-title {
+    color: $text-color;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.login-change {
+    color: $text-color;
+    font-size: 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: $action-color;
+    text-decoration: underline;
+}
+
+.login-change:hover {
+    // darken slightly
+    color: darken($action-color, 10%)
 }
 
 .close {
     position: absolute;
-    top: 10px;
+    top: 0px;
     right: 10px;
-    font-size: large;
+    font-size: 50px;
     color: $text-color;
     cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }

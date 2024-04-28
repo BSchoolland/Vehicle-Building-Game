@@ -64,35 +64,45 @@
     <p id="tutorial-text"></p>
 
     <!-- when active, the login popup will be displayed -->
-    <div id="login-popup" class="login-popup">
+    <div id="login-popup" class="login-popup hidden" hidden>
         <div class="login-popup-content">
-            <span class="close">&times;</span>
-            <h2>Login</h2>
-            <form id="login-form">
+            <div class="login-popup-header">
+                <h2 class="login-title">Login</h2>
+                <span class="close" id="close-login">&times;</span>
+            </div>
+
+            <form class="login-form" id="login-form">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
-                <button type="submit">Login</button>
+                <button type="submit">LOGIN</button>
             </form>
+            <button id="register-button" class="login-change">Don't have an account?</button>
         </div>
     </div>
     <!-- when active, the register popup will be displayed -->
-    <!-- <div id="register-popup" class="login-popup">
-        <div class="login-popup-content">
-            <span class="close">&times;</span>
-            <h2>Register</h2>
-            <form id="register-form">
+    <div id="register-popup" class="login-popup hidden">
+        <div class="register-popup-content">
+            <div class="login-popup-header">
+                <h2 class="login-title">Register</h2>
+                <span class="close" id="close-register">&times;</span>
+            </div>
+
+            <form class="register-form" id="login-form">
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username-create" name="username-create" required>
+                <label for="username">Email:</label>
+                <input type="text" id="email-create" name="email-create" required>
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <button type="submit">Register</button>
+                <input type="password" id="password-create" name="password-create" required>
+                <label for="password">Confirm password:</label>
+                <input type="password" id="confirm-password" name="confirm-password-create" required>
+                <button type="submit">LOGIN</button>
             </form>
+            <button id="login-button" class="login-change">Already have an account?</button>
         </div>
-    </div> -->
+    </div>
 </body>
 
 </html>

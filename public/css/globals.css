@@ -130,7 +130,7 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -140,19 +140,109 @@ a {
 .login-popup-content {
   position: relative;
   background-color: #1A3A5F;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  width: 30%;
+  height: 70%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-popup-content {
+  position: relative;
+  background-color: #1A3A5F;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  width: 30%;
+  height: 95%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-popup-header {
+  margin: 0;
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  width: 300px;
+  text-align: center;
+  font-size: x-large;
+  color: #ffffff;
+  background: #238B22;
+  height: 60px;
+}
+
+.login-form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form label {
+  color: #ffffff;
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.login-form input {
+  width: 55%;
+  font-size: 25px;
+  padding: 2.5px 0px;
+  margin: 10px 0;
+  border: 1px solid #ffffff;
+  border-radius: 50px;
+}
+
+.login-form button {
+  width: 55%;
+  padding: 10px;
+  margin: 10px 0;
+  margin-top: 30px;
+  border-radius: 50px;
+  background: linear-gradient(0deg, #1B6B1A, #31C930);
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background: linear-gradient(0deg, #114210, #27a026);
+}
+
+.login-title {
+  color: #ffffff;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+.login-change {
+  color: #ffffff;
+  font-size: 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #28a745;
+  text-decoration: underline;
+}
+
+.login-change:hover {
+  color: #1e7e34;
 }
 
 .close {
   position: absolute;
-  top: 10px;
+  top: 0px;
   right: 10px;
-  font-size: large;
+  font-size: 50px;
   color: #ffffff;
   cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }
 
 /*# sourceMappingURL=globals.css.map */

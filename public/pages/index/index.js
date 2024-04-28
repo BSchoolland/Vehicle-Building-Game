@@ -19,9 +19,42 @@ if (document.cookie.includes("user")) {
   });
 } else {
   loginButton.addEventListener("click", () => {
-    window.location.href = "login.html";
+    // remove the hidden class from the login popup
+    let loginPopup = document.getElementById("login-popup");
+    loginPopup.classList.remove("hidden");
   });
 }
+
+// if the close button is clicked, hide the popup
+let closeButton = document.getElementById("close-login");
+closeButton.addEventListener("click", () => {
+  let loginPopup = document.getElementById("login-popup");
+  loginPopup.classList.add("hidden");
+});
+// if the register close button is clicked, hide the popup
+let registerCloseButton = document.getElementById("close-register");
+registerCloseButton.addEventListener("click", () => {
+  let registerPopup = document.getElementById("register-popup");
+  registerPopup.classList.add("hidden");
+});
+// if the register button is clicked, show the register popup
+let registerButton = document.getElementById("register-button");
+registerButton.addEventListener("click", () => {
+  let registerPopup = document.getElementById("register-popup");
+  registerPopup.classList.remove("hidden");
+  // hide the login popup
+  let loginPopup = document.getElementById("login-popup");
+  loginPopup.classList.add("hidden");
+});
+// if the login button is clicked, show the login popup
+let loginButton2 = document.getElementById("login-button");
+loginButton2.addEventListener("click", () => {
+  let loginPopup = document.getElementById("login-popup");
+  loginPopup.classList.remove("hidden");
+  // hide the register popup
+  let registerPopup = document.getElementById("register-popup");
+  registerPopup.classList.add("hidden");
+});
 
 // Create an engine
 var engine = Matter.Engine.create();
@@ -96,7 +129,6 @@ let response = await fetch(path);
 if (response.ok) {
     const levelData = JSON.stringify(await response.json());
     // load the level
-    console.log(levelData);
     levelObject.LevelLoader.load(0, levelData, false);
     levelObject.GameplayHandler.startLevel();
     // run the camera

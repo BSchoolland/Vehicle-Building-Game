@@ -143,7 +143,6 @@ a {
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   width: 30%;
-  height: 70%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -155,7 +154,6 @@ a {
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   width: 30%;
-  height: 95%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -165,10 +163,10 @@ a {
   margin: 0;
   padding: 20px;
   text-align: center;
-  font-size: x-large;
+  font-size: 20px;
   color: #ffffff;
   background: #238B22;
-  height: 60px;
+  height: 40px;
 }
 
 .login-form {
@@ -181,15 +179,15 @@ a {
 
 .login-form label {
   color: #ffffff;
-  font-size: 20px;
-  margin: 10px 0;
+  font-size: 16px;
+  margin: 6px 0;
 }
 
 .login-form input {
   width: 55%;
-  font-size: 25px;
+  font-size: 18px;
   padding: 2.5px 0px;
-  margin: 10px 0;
+  margin: 6px 0;
   border: 1px solid #ffffff;
   border-radius: 50px;
 }
@@ -202,7 +200,7 @@ a {
   border-radius: 50px;
   background: linear-gradient(0deg, #1B6B1A, #31C930);
   color: #ffffff;
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
 }
 
@@ -212,8 +210,8 @@ a {
 
 .login-title {
   color: #ffffff;
+  font-size: 30px;
   margin: 0;
-  padding: 20px;
   text-align: center;
 }
 

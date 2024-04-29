@@ -18,7 +18,7 @@
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
     width: 30%;
-    height: 70%;
+    // min-height: 60%; 
     overflow: hidden;
     // center content
     display: flex;
@@ -32,7 +32,7 @@
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
     width: 30%;
-    height: 95%;
+    // min-height: 95%;
     overflow: hidden;
     // center content
     display: flex;
@@ -43,10 +43,10 @@
     margin: 0;
     padding: 20px;
     text-align: center;
-    font-size: x-large;
+    font-size: 20px;
     color: $text-color;
     background: #238B22;
-    height: 60px;
+    height: 40px;
 }
 
 .login-form {
@@ -59,15 +59,15 @@
 
 .login-form label {
     color: $text-color;
-    font-size: 20px;
-    margin: 10px 0;
+    font-size: 16px;
+    margin: 6px 0;
 }
 
 .login-form input {
     width: 55%;
-    font-size: 25px;
+    font-size: 18px;
     padding: 2.5px 0px;
-    margin: 10px 0;
+    margin: 6px 0;
     border: 1px solid $text-color;
     border-radius: 50px;
 }
@@ -80,7 +80,7 @@
     border-radius: 50px;
     background: linear-gradient(0deg, #1B6B1A, #31C930);
     color: $text-color;
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
 }
 
@@ -91,8 +91,9 @@
 
 .login-title {
     color: $text-color;
+    font-size: 30px;
     margin: 0;
-    padding: 20px;
+    // padding: 20px;
     text-align: center;
 }
 

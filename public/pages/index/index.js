@@ -145,7 +145,7 @@ if (response.ok) {
   function startInterval() {
     console.log("starting interval");
     intervalId = setInterval(() => {
-      // levelObject.LevelLoader.respawnEnemies(); // wait a random amount of time 
+      levelObject.LevelLoader.respawnEnemies(); // wait a random amount of time 
     }, 9000);
   }
   

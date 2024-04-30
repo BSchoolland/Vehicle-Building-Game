@@ -1,5 +1,4 @@
 import { bonusObjectives } from "./bonusObjectives.js";
-
 const medalSize = "30px";
 
 const worldGradients = [
@@ -220,6 +219,57 @@ class LevelUI {
     return medalsBox;
   }
 
+  createForwardArrow(levelSelector, worldSelector, worldCount) {
+    let forwardArrow = document.createElement("button");
+    forwardArrow.className = "world-arrow";
+
+    let forwardImg = document.createElement("img");
+    forwardImg.src = "/img/Arrow.png"; 
+    // rotate the arrow 180 degrees
+    forwardImg.style.transform = "rotate(180deg)";
+    forwardArrow.appendChild(forwardImg);
+
+    forwardArrow.addEventListener("click", () => {
+      levelSelector.remove();
+      this.parent.worldSelected++;
+      this.loadLevelSelector();
+      this.updateArrowState(forwardArrow, worldCount);
+    });
+    worldSelector.appendChild(forwardArrow);
+    this.updateArrowState(forwardArrow, worldCount);
+  }
+
+  createBackwardArrow(levelSelector, worldSelector, worldCount) {
+    let backwardArrow = document.createElement("button");
+    backwardArrow.className = "world-arrow";
+
+    let backwardImg = document.createElement("img");
+    backwardImg.src = "/img/Arrow.png"; 
+    backwardArrow.appendChild(backwardImg);
+
+    backwardArrow.addEventListener("click", () => {
+      levelSelector.remove();
+      this.parent.worldSelected--;
+      this.loadLevelSelector();
+      this.updateArrowState(backwardArrow, worldCount, "backward");
+    });
+    worldSelector.appendChild(backwardArrow);
+    this.updateArrowState(backwardArrow, worldCount, "backward");
+  }
+
+  updateArrowState(arrow, worldCount, direction = "forward") {
+    if (direction === "backward" && this.parent.worldSelected <= 1) {
+      arrow.disabled = true;
+      arrow.classList.add("disabled");
+    } else if (direction === "forward" && this.parent.worldSelected >= worldCount) {
+      arrow.disabled = true;
+      arrow.classList.add("disabled");
+    } else {
+      arrow.disabled = false;
+      arrow.classList.remove("disabled");
+    }
+  }
+
   createLevelSelectButton(levelSelector, i) {
     let box = document.createElement("div");
     box.className = "level-select-box";
@@ -243,7 +293,8 @@ class LevelUI {
     box.appendChild(this.createMedalIcons(levelSelector, i, box, button));
 
     box.appendChild(button);
-    levelSelector.appendChild(box);
+    // add the box to the element with the id level-container
+    document.getElementById("level-container").appendChild(box);
   }
   // creates the level menu
   loadLevelSelector() {
@@ -255,23 +306,34 @@ class LevelUI {
     this.parent.building.canEnterBuildMode = false;
     // a screen to select the level to play
     let levelSelector = document.createElement("div");
+    levelSelector.id = "level-selector";
+    levelSelector.className = "level-menu-container";
     // a list of buttons at the top to select the world
     let worldSelector = document.createElement("div");
     worldSelector.id = "world-selector";
-    worldSelector.className = "world-select-menu";
+    worldSelector.className = "level-menu-header";
     // get the game object
     let game = document.getElementById("game-container");
-    // add the world selector to the game
-    game.appendChild(worldSelector);
+    // // add the world selector to the game
+    // game.appendChild(worldSelector);
     // add a button for each world
     let worldCount = this.parent.LevelHandler.getWorldCount();
-    for (let i = 0; i < worldCount; i++) {
-      this.createWorldSelectButton(worldSelector, i, levelSelector);
-    }
+
+    // use the backward arrow function to create the backward arrow
+    this.createBackwardArrow(levelSelector, worldSelector, worldCount);
+    // the title of the world
+    let worldTitle = document.createElement("h1");
+    worldTitle.innerHTML = `World ${this.parent.worldSelected}`;
+    worldSelector.appendChild(worldTitle);
+    // use the forward arrow function to create the forward arrow
+    this.createForwardArrow(levelSelector, worldSelector, worldCount);
+    
     levelSelector.appendChild(worldSelector);
-    levelSelector.id = "level-selector";
-    levelSelector.className = "level-select-menu";
-    // get the game object
+    // add a container for the levels
+    let levelContainer = document.createElement("div");
+    levelContainer.id = "level-container";
+    levelContainer.className = "level-container";
+    levelSelector.appendChild(levelContainer);
     // add the level selector to the game
     game.appendChild(levelSelector);
     // add a button for each level

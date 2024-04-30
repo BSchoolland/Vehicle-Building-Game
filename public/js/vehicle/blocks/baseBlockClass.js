@@ -215,7 +215,12 @@ class Block {
       this.bodies.forEach((body) => {
         body.collisionFilter = { mask: 0x0002 };
       });
-      // after 1 second, remove the block from the world
+      // tell the seat that a block has been destroyed
+      if (this.contraption.seat !== this) {
+        this.contraption.seat.triggerBlockDestroyed();
+      }
+      
+      // after a short delay, remove the block from the world
       setTimeout(() => {
         // since a block has been removed, the structure has changed and we need to check connected blocks again
         this.removeFromWorld(this.contraption.engine.world);

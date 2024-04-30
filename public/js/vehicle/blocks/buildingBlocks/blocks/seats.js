@@ -223,6 +223,16 @@ class SeatBlock extends Block {
             Matter.Body.setVelocity(thisBody, { x: 0, y: -15 });
         }
     }
+    triggerBlockDestroyed() {
+        // if there are no blocks other than the seat, destroy the contraption
+        for (let block of this.contraption.blocks) {
+            if (block.hitPoints > 0 && block !== this) {
+                return;
+            }
+        }
+        // if no blocks were found, destroy the contraption
+        this.damage(this.maxHitPoints);
+    }
 }
 
 

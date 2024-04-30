@@ -16,6 +16,28 @@ a {
   text-decoration: underline;
 }
 
+.toast {
+  background: #28a745;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  color: #ffffff;
+}
+
+.toast-err {
+  background: red;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  color: #ffffff;
+  opacity: 0.8;
+  border-radius: 10px;
+}
+
 .index-body {
   background: linear-gradient(rgba(157, 157, 157, 0.8), rgba(157, 157, 157, 0.8)), url("/img/index-bg.png");
   background-size: cover;

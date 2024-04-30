@@ -25,6 +25,31 @@ a {
     color: $action-color;
     text-decoration: underline;
 
+    
+}
+
+.toast {
+    background: $action-color;
+    position: absolute;
+    // centered in the middle of the screen
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    color: $text-color;
+}
+
+.toast-err {
+    background: red;
+    position: absolute;
+    // centered in the middle of the screen
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    color: $text-color;
+    opacity: 0.8;
+    border-radius: 10px;
 }
 
 @import "index.scss";

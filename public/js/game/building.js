@@ -385,15 +385,39 @@ class BuildMenu {
         }, 500);
       } else {
         // if the contraption has no seat, don't disable build mode
-        if (!building.contraption.seat && building.canEnterBuildMode) {
+        if ((!building.contraption.seat) && building.canEnterBuildMode) {
           
           
           if (!this.buildModeForce) { // force gets past the no seat check
             playSound("error");
+            // create a toast saying that the contraption needs a seat
+            let toast = document.createElement("div");
+            toast.classList.add("toast-err"); 
+            toast.innerText = "Your contraption needs a seat!";
+            document.getElementById("game-container").appendChild(toast);
+            setTimeout(() => {
+              toast.remove();
+            }, 3000);
             building.buildInProgress = true;
             return;
           }
         }
+        // if there is exactly 1 block, (the seat), don't disable build mode
+        if (building.contraption.blocks.length === 1) {
+          if (!this.buildModeForce) { // force gets past the no seat check
+            playSound("error");
+            let toast = document.createElement("div");
+            toast.classList.add("toast-err"); 
+            toast.innerText = "You need at least one block other than the seat!";
+            document.getElementById("game-container").appendChild(toast);
+            setTimeout(() => {
+              toast.remove();
+            }, 3000);
+            building.buildInProgress = true;
+            return;
+          }
+        }
+
         // call levelMode to hide the menu
         this.levelMode();
         // remove the active class from all the block type buttons

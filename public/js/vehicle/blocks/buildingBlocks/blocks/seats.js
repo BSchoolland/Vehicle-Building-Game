@@ -228,7 +228,7 @@ class SeatBlock extends Block {
         for (let block of this.contraption.blocks) {
             if (block.hitPoints > 0 && block !== this) {
                 return;
-            }
+            }1
         }
         // if no blocks were found, destroy the contraption
         this.damage(this.maxHitPoints);

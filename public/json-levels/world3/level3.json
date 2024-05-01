@@ -193,5 +193,6 @@
     { "name": "Survive", "value": 0 },
     { "name": "Before", "value": 0 }
   ],
-  "tutorialText": ""
+  "tutorialText": "",
+  "floating": true
 }

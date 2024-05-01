@@ -42,11 +42,36 @@ const grassColors = [
     "rgb(50, 205, 50)"  // Lime Green
   ];
 
+const dirtColors = [
+    "rgb(85, 107, 47)",   // Dark Olive Green
+    "rgb(107, 142, 35)",  // Olive Drab
+    "rgb(101, 67, 33)",   // Dark Brown
+    "rgb(139, 90, 43)"    // Saddle Brown
+];
+
 // a basic grass block
 class GrassBlock extends Block {
     constructor(x, y, level) {
         // pick random shade of green
         let color = grassColors[Math.floor(Math.random() * grassColors.length)];
+        super(x, y, level, color);
+        this.width = 100;2
+        this.height = 100;  
+        this.bodies = [];
+        this.makeBodies();
+    }
+    makeBodies() {
+        // a square that is the color of the block
+        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, this.width, this.height, { isStatic: true, render: { fillStyle: this.color } }));
+        this.bodies[0].block = this;
+    }
+}
+
+// a dirt block
+class DirtBlock extends Block {
+    constructor(x, y, level) {
+        // pick random shade of brown
+        let color = dirtColors[Math.floor(Math.random() * dirtColors.length)];
         super(x, y, level, color);
         this.width = 100;2
         this.height = 100;  
@@ -275,4 +300,4 @@ class EnemySpawnBlock extends Block {
     }
 }
 
-export { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock}; 
+export { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, DirtBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock}; 

@@ -143,7 +143,7 @@ class LevelLoader {
         // Create a new block instance
         let newBlock = new BlockType(blockJson.x, blockJson.y, this);
         // Add the block to the Level
-        this.addBlock(newBlock);
+        this.addBlock(newBlock);        
 
         if (blockJson.flippedX) {
           newBlock.flipX();
@@ -155,8 +155,20 @@ class LevelLoader {
         console.error(`Unknown block type: ${blockJson.type}`);
       }
     });
+    // as long as the level is not a floating level, add a line of grass blocks below each lowest block
+    if (!LevelJson.floating) {
+      // loop through the blocks to find all the lowest blocks in their column
+      let lowestBlocks = this.findLowestBlocks();
+      // add a line of n dirtBlocks below each lowest block
+      this.addDirtBlocks(lowestBlocks);
+    }
+    else {
+      console.log("Floating level");
+    }
+
+
     if (!playable) {
-      // aoom way out with the camera
+      // zoom way out with the camera
       this.parent.building.camera.setViewport(
         2000,
         2000
@@ -244,6 +256,54 @@ class LevelLoader {
       }
     });
   }
+
+  findLowestBlocks() {
+    let lowestBlocks = [];
+    this.parent.blocks.forEach((block) => {
+      // if the block's class is GrassBlock, add it to the lowestBlocks array
+      if (block instanceof this.blockTypes["GrassBlock"]) {
+        let found = false;
+        for (let i = 0; i < lowestBlocks.length; i++) {
+          let lowestBlock = lowestBlocks[i];
+          // if this block is lower than the lowest block at its x position remove the lowest block and add this block
+          if (block.x === lowestBlock.x && block.y > lowestBlock.y) {
+            lowestBlocks.splice(i, 1);
+            lowestBlocks.push(block);
+            found = true;
+            break;
+          }
+          // if this block is higher than the lowest block at its x position, don't add it
+          else if (block.x === lowestBlock.x && block.y < lowestBlock.y) {
+            found = true;
+            break;
+          }
+        }
+        // if this block is the only block in its column, add it
+        if (!found) {
+          lowestBlocks.push(block);
+        }
+      }
+    });
+    return lowestBlocks;
+  }
+
+  addDirtBlocks(lowestBlocks, n = 10) {
+    lowestBlocks.forEach((block) => {
+      // determine the number of GrassBlocks to add
+      const grassBlocks = Math.floor(Math.random() * 3) + 1;
+      for (let i = 1; i <= n; i++) {
+        let newBlock;
+        // if i is less than or equal to grassBlocks, create a GrassBlock
+        if (i <= grassBlocks) {
+          newBlock = new this.blockTypes["GrassBlock"](block.x, block.y + i * 100, this);
+        } else {
+          newBlock = new this.blockTypes["DirtBlock"](block.x, block.y + i * 100, this);
+        }
+        this.addBlock(newBlock);
+      }
+    });
+  }
+
   despawnEnemyContraptions(perminant = false) {
     // kill all enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {

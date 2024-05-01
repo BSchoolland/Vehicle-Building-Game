@@ -2,6 +2,7 @@ import {
   slightRampBlockRUpsideDown,
   slightRampBlockLUpsideDown,
   GrassBlock,
+  DirtBlock,
   RampBlockL,
   RampBlockR,
   slightRampBlockL,
@@ -12,6 +13,7 @@ import {
 } from "../world/mapBlocks.js";
 const blockTypes = {
   GrassBlock,
+  DirtBlock,
   RampBlockL,
   slightRampBlockL,
   RampBlockR,

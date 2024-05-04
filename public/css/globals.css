@@ -359,4 +359,29 @@ a {
   border-radius: 6px;
 }
 
+.back-button {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
+  padding: 40px;
+  border-radius: 100%;
+  border-width: 4px;
+  display: flex;
+  flex-direction: row;
+  color: white;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button:hover {
+  background: linear-gradient(0deg, #33CD32 100%, #238B22 0%);
+}
+
+.level-ui-back-arrow {
+  position: absolute;
+  font-size: 50px;
+  width: 30px;
+}
+
 /*# sourceMappingURL=globals.css.map */

@@ -86,30 +86,35 @@ class Medal {
 class LevelUI {
   constructor(parent, progressBar) {
     this.parent = parent;
-    // this.createBackArrow(progressBar);
   }
-  createBackArrow(progressBar) {
-    // if we are on the home page (/), don't create a back arrow
-    if (window.location.pathname === "/") {
-      return;
-    }
-    // wait for the game to load
-    const interval = setInterval(() => {
-      if (progressBar.loaded) {
-        clearInterval(interval);
-        // create the back arrow
-        let backArrow = document.createElement("img");
-        backArrow.src = "../../img/back-arrow.png";
-        backArrow.className = "back-arrow";
-        backArrow.addEventListener("click", () => {
-          this.handleBackArrowClick();
-        });
-        // add the back arrow to the game
-        document.getElementById("game-container").appendChild(backArrow);
-      }
-    }
-    , 100);
+
+  createBackArrow() {
+    // create the back arrow
+    let backButton = document.createElement("button");
+    backButton.className = "back-button";
+    backButton.id = 'back-button'
+    let backArrow = document.createElement("img");
+    backArrow.src = "../../img/Arrow.png";
+    backArrow.className = "level-ui-back-arrow";
+    backArrow.addEventListener("click", () => {
+      this.handleBackArrowClick();
+      // remove the button
+      this.destroyBackArrow();
+    });
+    backButton.appendChild(backArrow);
+    // add the back arrow to the game
+    document.getElementById("game-container").appendChild(backButton);
   }
+
+  destroyBackArrow() {
+    // get the back button
+    let backButton = document.getElementById('back-button');
+    // remove the back button from the game
+    if (backButton) {
+      backButton.remove();
+    }
+  }
+
   handleBackArrowClick() {
     if (this.parent.test) {
       window.location.href = "/editor.html";
@@ -199,6 +204,7 @@ class LevelUI {
     medalsBox.style.right = "0px";
     // if the medals blox is clicked, start the level
     medalsBox.addEventListener("click", () => {
+      this.createBackArrow();
       this.parent.LevelLoader.load(i);
       levelSelector.remove();
     });
@@ -278,6 +284,8 @@ class LevelUI {
     button.className = "level-select-button";
     button.innerHTML = `Level ${i + 1}`;
     button.addEventListener("click", () => {
+      this.createBackArrow();
+      // create the back arrow
       this.parent.LevelLoader.load(i);
       levelSelector.remove();
     });
@@ -286,6 +294,7 @@ class LevelUI {
     image.className = "level-select-image";
     image.src = `../../img/world${this.parent.worldSelected}.png`;
     image.addEventListener("click", () => {
+      this.createBackArrow();
       this.parent.LevelLoader.load(i);
       levelSelector.remove();
     });
@@ -302,6 +311,8 @@ class LevelUI {
     if (this.parent.building.buildInProgress) {
       this.parent.building.toggleBuildingMode();
     }
+    // destroy the back arrow if it exists
+    this.destroyBackArrow();
     // prevent build mode
     this.parent.building.canEnterBuildMode = false;
     // a screen to select the level to play
@@ -322,7 +333,7 @@ class LevelUI {
     returnImg.src = "/img/Arrow.png";
     returnArrow.appendChild(returnImg);
     let returnText = document.createElement("h2");
-    returnText.innerText = "Back"
+    returnText.innerText = "Main Menu"
     returnArrow.appendChild(returnText)
     returnArrow.addEventListener("click", () => {
       this.handleBackArrowClick();

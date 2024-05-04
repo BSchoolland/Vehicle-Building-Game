@@ -301,7 +301,29 @@ a {
   width: 30px;
 }
 
+.return-arrow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: none;
+  border: none;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  color: white;
+}
+
+.return-arrow img {
+  width: 30px;
+  padding-right: 20px;
+}
+
 .world-arrow :hover {
+  cursor: pointer;
+  filter: brightness(0.8);
+}
+
+.return-arrow :hover {
   cursor: pointer;
   filter: brightness(0.8);
 }

@@ -86,7 +86,7 @@ class Medal {
 class LevelUI {
   constructor(parent, progressBar) {
     this.parent = parent;
-    this.createBackArrow(progressBar);
+    // this.createBackArrow(progressBar);
   }
   createBackArrow(progressBar) {
     // if we are on the home page (/), don't create a back arrow
@@ -314,8 +314,20 @@ class LevelUI {
     worldSelector.className = "level-menu-header";
     // get the game object
     let game = document.getElementById("game-container");
-    // // add the world selector to the game
-    // game.appendChild(worldSelector);
+    // add the return to main menu button
+    let returnArrow = document.createElement('button');
+    returnArrow.className = "return-arrow";
+
+    let returnImg = document.createElement("img");
+    returnImg.src = "/img/Arrow.png";
+    returnArrow.appendChild(returnImg);
+    let returnText = document.createElement("h2");
+    returnText.innerText = "Back"
+    returnArrow.appendChild(returnText)
+    returnArrow.addEventListener("click", () => {
+      this.handleBackArrowClick();
+    });
+    worldSelector.appendChild(returnArrow);
     // add a button for each world
     let worldCount = this.parent.LevelHandler.getWorldCount();
 

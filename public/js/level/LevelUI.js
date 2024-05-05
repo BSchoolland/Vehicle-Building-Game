@@ -96,7 +96,7 @@ class LevelUI {
     let backArrow = document.createElement("img");
     backArrow.src = "../../img/Arrow.png";
     backArrow.className = "level-ui-back-arrow";
-    backArrow.addEventListener("click", () => {
+    backButton.addEventListener("click", () => {
       this.handleBackArrowClick();
       // remove the button
       this.destroyBackArrow();

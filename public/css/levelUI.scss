@@ -11,10 +11,12 @@
     color: white;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .back-button:hover {
     background: linear-gradient(0deg, #33CD32 100%, #238B22 0%);
+
 }
 
 .level-ui-back-arrow {
@@ -43,7 +45,27 @@
     padding: 20px;
     background-color: rgba(92, 116, 142, 0.5);
     border-radius: 10px;
+    max-width: 60%;
     @media (max-width: 768px) {
         font-size: 0.5em;
     }
+}
+
+.stat-container {
+    position: absolute;
+    top: 10px;
+    right: 40px;
+    padding: 20px;
+    background-color: rgba(92, 116, 142, 0.5);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center items horizontally */
+    
+}
+
+.stat-container h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2.5em;
 }

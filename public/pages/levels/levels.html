@@ -30,6 +30,15 @@
         <h1>Please rotate your device to landscape mode to play the game.</h1>
     </div>
     <div id="blur">
+        
+        <h1 id="tutorial-text" class="tutorial-text" style="display: none;">Press B to toggle build mode!</h1>
+
+        <!-- a div for keeping track of win conditions -->
+        <div class="stat-container" id="stats" style="display: none;">
+            <h1>Coins: 0/1</h1>
+            <h1>Destroyed: 0/1</h1>
+            <h1>Survived: 0/30</h1>
+        </div>
         <div id="game-container"></div>
         <div id="container">
             <div class="progress-bar-parent">
@@ -43,13 +52,6 @@
                 </div>
             </div>
         </div>
-        <!-- a div for keeping track of win conditions -->
-        <div class="stat-container" id="stats" style="display: none;">
-            <h1>Coins: 0/1</h1>
-            <h1>Destroyed: 0/1</h1>
-            <h1>Survived: 0/30</h1>
-        </div>
-        <h1 id="tutorial-text" class="tutorial-text" style="display: none;">Press B to toggle build mode!</h1>
     </div>
     <!-- runs the matter.js simulation -->
     <script type="module" src="js/game/campaign.js"></script>

@@ -1,4 +1,4 @@
-.stat-container {
+/* .stat-container {
     position: absolute;
     top: 5%;
     right: 5%;
@@ -11,7 +11,7 @@
     font-family: 'Courier New', monospace; 
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center items horizontally */
+    justify-content: center; 
     
 }
 
@@ -19,7 +19,7 @@
     margin: 0;
     padding: 0;
     font-size: 1.5em;
-}
+} */
 
 /* .tutorial {
     position: absolute;

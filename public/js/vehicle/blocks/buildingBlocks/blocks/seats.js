@@ -109,6 +109,9 @@ class SeatBlock extends Block {
             if (this.contraption.Ai) {
                 // increase number of enemy contraptions destroyed
                 this.contraption.level.GameplayHandler.incrementEnemyContraptionsDestroyed();
+            } else {
+                // this was the player, so display the game over screen
+                this.contraption.level.LevelUI.gameOver();
             }
         }
     }

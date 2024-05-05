@@ -367,6 +367,43 @@ class LevelUI {
       this.createLevelSelectButton(levelSelector, i);
     }
   }
+  gameOver() {
+    let gameOver = document.createElement("div");
+    gameOver.classList.add("toast-game-over"); 
+    gameOver.innerText = "Click to return to build mode";
+    // define the listener as a named function
+    const clickListener = () => {
+      this.parent.building.toggleBuildingMode();
+      gameOver.remove();
+      // unblur the game
+      document.getElementById("game-container").style.filter = "none";
+      // remove the listener after it's activated
+      document.removeEventListener("click", clickListener);
+    };
+
+    // add the listener to the document to listen for any click
+    document.addEventListener("click", clickListener);
+    // define the listener as a named function
+    const keydownListener = (event) => {
+      if (event.key === "b") {
+        gameOver.remove();
+        // remove the listener after it's activated
+        document.removeEventListener("keydown", keydownListener);
+        // unblur the game
+        document.getElementById("game-container").style.filter = "none";
+      }
+    };
+
+    // blur the game
+    document.getElementById("game-container").style.filter = "blur(5px)";
+
+    // add the listener
+    document.addEventListener("keydown", keydownListener);
+
+    // add the game over message to the body so it's on top of everything
+    document.body.appendChild(gameOver);
+    console.log("game over");
+  }
 }
 
 export default LevelUI;

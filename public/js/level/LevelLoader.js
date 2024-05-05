@@ -53,6 +53,9 @@ class LevelLoader {
       return;
     }
 
+    // set the building's contraption's level to this
+    this.parent.building.contraption.level = this.parent;
+
     let LevelJson;
     
     if (optionalJson) { // if optionalJson is provided, use that instead of loading from the LevelHandler

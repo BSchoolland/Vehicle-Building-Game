@@ -362,11 +362,11 @@ a {
 .back-button {
   position: absolute;
   left: 10px;
-  top: 10px;
+  top: 15px;
   background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
-  padding: 40px;
+  padding: 50px;
   border-radius: 100%;
-  border-width: 4px;
+  border-width: 5px;
   display: flex;
   flex-direction: row;
   color: white;
@@ -395,6 +395,20 @@ a {
   opacity: 0.8;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.tutorial-text {
+  position: absolute;
+  top: 10px;
+  left: 150px;
+  padding: 20px;
+  background-color: rgba(92, 116, 142, 0.5);
+  border-radius: 10px;
+}
+@media (max-width: 768px) {
+  .tutorial-text {
+    font-size: 0.5em;
+  }
 }
 
 /*# sourceMappingURL=globals.css.map */

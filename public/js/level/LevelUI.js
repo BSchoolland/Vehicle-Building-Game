@@ -376,7 +376,7 @@ class LevelUI {
       this.parent.building.toggleBuildingMode();
       gameOver.remove();
       // unblur the game
-      document.getElementById("game-container").style.filter = "none";
+      document.getElementById("blur").style.filter = "none";
       // remove the listener after it's activated
       document.removeEventListener("click", clickListener);
     };
@@ -390,12 +390,12 @@ class LevelUI {
         // remove the listener after it's activated
         document.removeEventListener("keydown", keydownListener);
         // unblur the game
-        document.getElementById("game-container").style.filter = "none";
+        document.getElementById("blur").style.filter = "none";
       }
     };
 
     // blur the game
-    document.getElementById("game-container").style.filter = "blur(5px)";
+    document.getElementById("blur").style.filter = "blur(5px)";
 
     // add the listener
     document.addEventListener("keydown", keydownListener);

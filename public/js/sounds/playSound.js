@@ -25,6 +25,8 @@ const effects = {
   error: "./js/sounds/level/error.mp3",
   placeBlock: "./js/sounds/level/placeBlock.mp3",
   removeBlock: "./js/sounds/level/removeBlock.mp3",
+  rotateBlock: "./js/sounds/level/rotateBlock.mp3",
+  selectBlock: "./js/sounds/level/selectBlock.mp3",
   selectLevel: "./js/sounds/level/selectLevel.mp3",
 };
 

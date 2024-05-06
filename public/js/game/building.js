@@ -237,7 +237,10 @@ class BuildMenu {
 
   createBlockButtons() {
     this.blockButtons = {};
-    this.blockTypes.forEach((blockType) => {
+    let blockTypesArray = Array.from(this.blockTypes);
+    let currentIndex = 0;
+
+    this.blockTypes.forEach((blockType, index) => {
       let button = document.createElement("button");
       button.classList.add("menu-button", "build-menu-button");
       let buttonImg = document.createElement("img");
@@ -256,9 +259,20 @@ class BuildMenu {
         );
         // Set this button's class to active
         button.classList.add("active");
+        currentIndex = index;
       };
       this.menu.appendChild(button);
       this.blockButtons[blockType.type.name] = button;
+    });
+
+    // when user scrolls, change the selected block
+    window.addEventListener('wheel', (event) => {
+      // Determine scroll direction
+      let direction = event.deltaY > 0 ? 1 : -1;
+      // Calculate new index
+      currentIndex = (currentIndex + direction + blockTypesArray.length) % blockTypesArray.length;
+      // Simulate a click on the new block button
+      this.blockButtons[blockTypesArray[currentIndex].type.name].click();
     });
   }
   createMenuButtons() {
@@ -597,6 +611,8 @@ class Building {
   setCurrentBlockType(blockType, limit) {
     this.currentBlockType = blockType;
     this.currentBlockTypeLimit = limit;
+    // play the select block sound
+    // playSound("selectBlock");
   }
   makeNewBuildMenu(blockTypes, isEnemyEditor = false) {
     console.log(isEnemyEditor)
@@ -727,7 +743,7 @@ class Building {
     // Add the block to the contraption
     this.contraption.addBlock(newBlock);
     // play the place block sound
-    // playSound("placeBlock");
+    playSound("placeBlock");
     // update the button limits
     // make the new block selected
     this.selectBlock(newBlock);
@@ -802,6 +818,8 @@ class Building {
       this.contraption.removeBlock(block);
       this.buildMenu.updateButtonLimits();
       this.removeGhostBlocks();
+      // play the remove block sound
+      playSound("removeBlock");
     }
   }
 
@@ -836,6 +854,8 @@ class Building {
       // if R is pressed, rotate
       if (event.keyCode === 82) {
         this.selectedBlock.rotate90();
+        // play the rotate block sound
+        playSound("rotateBlock");
       }
       // if backspace, remove the block
       if (event.keyCode === 8) {

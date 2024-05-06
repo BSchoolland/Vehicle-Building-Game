@@ -46,6 +46,8 @@ class Block {
 
     this.flameDuration = 0; // the time the block will be on fire for
     this.flameDamage = 0; // the damage the block will take per second while on fire
+
+    // image for use by the build menu
   }
   getControls() {
     // to be defined in subclasses

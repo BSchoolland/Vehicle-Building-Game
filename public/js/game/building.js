@@ -15,6 +15,20 @@ import {
 import { Contraption } from "../vehicle/contraption.js";
 import { playSound, setSong } from "../sounds/playSound.js";
 
+const buildClassesToImages = {
+  "BasicWoodenBlock": "/img/build-buttons/basic-block.png",
+  "BasicIronBlock": "/img/build-buttons/iron-block.png",
+  "BasicDiamondBlock": "img/build-buttons/diamond-block.png",
+  "WheelBlock": "img/build-buttons/wheel-block.png",
+  "TNTBlock": "img/build-buttons/tnt-block.png",
+  "rocketBoosterBlock": "img/build-buttons/rocket-booster-block.png",
+  "SpikeBlock": "img/build-buttons/spike-block.png",
+  "GrappleBlock": "img/build-buttons/grapple-block.png",
+  "SeatBlock": "img/build-buttons/seat-block.png",
+  "PoweredHingeBlock": "img/build-buttons/powered-hinge-block.png",
+  "RemoteBlock": "img/build-buttons/remote-block.png",
+};
+
 class RightClickMenu {
   constructor(building) {
     this.building = building;
@@ -99,25 +113,66 @@ class BuildMenu {
       this.blockTypes.forEach((blockType, index) => {
         try {
           this.blockTypes[index].type = eval(blockType.type);
+          this.blockTypes[index].buildImage = buildClassesToImages[blockType.type.name];
+          console.log(this.blockTypes[index].buildImage);
+          console.log(blockType.type.name);
         } catch (e) {
           // if the block type is not valid, set it to a basic wooden block
           this.blockTypes[index].type = BasicWoodenBlock;
+          this.blockTypes[index].image = "img/build-buttons/basic-block.png";
         }
       });
     } else {
       this.blockTypes = [
-        { name: "Basic Block", key: "1", type: BasicWoodenBlock, limit: 100 },
-        { name: "Wheel Block", key: "2", type: WheelBlock, limit: 100 },
-        { name: "TNT Block", key: "3", type: TNTBlock, limit: 100 },
+        {
+          name: "Basic Block",
+          key: "1",
+          type: BasicWoodenBlock,
+          limit: 100,
+          image: "img/build-buttons/basic-block.png",
+        },
+        {
+          name: "Wheel Block",
+          key: "2",
+          type: WheelBlock,
+          limit: 100,
+          image: "img/build-buttons/wheel-block.png",
+        },
+        {
+          name: "TNT Block",
+          key: "3",
+          type: TNTBlock,
+          limit: 100,
+          image: "img/build-buttons/tnt-block.png",
+        },
         {
           name: "Rocket Booster Block",
           key: "4",
           type: rocketBoosterBlock,
           limit: 100,
+          image: "img/build-buttons/rocket-booster-block.png",
         },
-        { name: "Spike Block", key: "5", type: SpikeBlock, limit: 100 },
-        { name: "Grapple Block", key: "6", type: GrappleBlock, limit: 100 },
-        { name: "Seat Block", key: "7", type: SeatBlock, limit: 1 },
+        {
+          name: "Spike Block",
+          key: "5",
+          type: SpikeBlock,
+          limit: 100,
+          image: "img/build-buttons/spike-block.png",
+        },
+        {
+          name: "Grapple Block",
+          key: "6",
+          type: GrappleBlock,
+          limit: 100,
+          image: "img/build-buttons/grapple-block.png",
+        },
+        {
+          name: "Seat Block",
+          key: "7",
+          type: SeatBlock,
+          limit: 1,
+          image: "img/build-buttons/seat-block.png",
+        },
         {
           name: "Powered Hinge Block",
           key: "8",
@@ -185,7 +240,13 @@ class BuildMenu {
     this.blockTypes.forEach((blockType) => {
       let button = document.createElement("button");
       button.classList.add("menu-button", "build-menu-button");
-      button.innerHTML = `${blockType.name}<br>0/${blockType.limit}`;
+      let buttonImg = document.createElement("img");
+      buttonImg.classList.add("build-menu-button-img");
+      buttonImg.src = blockType.buildImage;
+      let buttonText = document.createElement("p");
+      buttonText.innerText = `0/${blockType.limit}`;
+      button.appendChild(buttonImg);
+      button.appendChild(buttonText);
       button.setAttribute("data-keycode", blockType.key.charCodeAt(0));
       button.onclick = () => {
         this.building.setCurrentBlockType(blockType.type, blockType.limit);
@@ -253,13 +314,11 @@ class BuildMenu {
     // update the button limits
     this.blockTypes.forEach((blockType) => {
       if (blockTypeCount[blockType.type.name]) {
-        this.blockButtons[blockType.type.name].innerHTML = `${
-          blockType.name
-        }<br>${blockTypeCount[blockType.type.name]}/${blockType.limit}`;
+        const buttonText = this.blockButtons[blockType.type.name].querySelector("p");
+        buttonText.innerText = `${blockTypeCount[blockType.type.name]}/${blockType.limit}`;
       } else {
-        this.blockButtons[
-          blockType.type.name
-        ].innerHTML = `${blockType.name}<br>0/${blockType.limit}`;
+        const buttonText = this.blockButtons[blockType.type.name].querySelector("p");
+        buttonText.innerText = `0/${blockType.limit}`;
       }
     });
   }

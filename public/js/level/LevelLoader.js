@@ -67,6 +67,10 @@ class LevelLoader {
     let tutorial = document.getElementById("tutorial-text");
 
     let string = LevelJson.tutorialText;
+    if (string === "") {
+      // the string should equal the level number
+      string = `Level ${levelIndex + 1}`;
+    }
     let sentences = string.split(/(?<=[\.!])/).map(sentence => {
       let trimmedSentence = sentence.trim();
       if (trimmedSentence) {

@@ -262,8 +262,12 @@ class BuildMenu {
     });
   }
   createMenuButtons() {
+    // create a vertical line to separate the block buttons from the other buttons
+    let line = document.createElement("div");
+    line.classList.add("build-menu-line");
+    this.menu.appendChild(line);
     // if this is the enemy editor, show the save and load buttons
-    this.enemyEditor = true;
+    this.enemyEditor = false;
     if (this.enemyEditor) {
       // create a button to save the contraption
       this.saveButton = document.createElement("button");
@@ -276,16 +280,17 @@ class BuildMenu {
       this.loadButton.innerText = "Load";
       this.menu.appendChild(this.loadButton);
     }
-    // create a button to clear the contraption
-    this.clearButton = document.createElement("button");
-    this.clearButton.classList.add("menu-button");
-    this.clearButton.innerText = "Clear";
-    this.menu.appendChild(this.clearButton);
+
     // create a button to toggle build mode
     this.buildModeButton = document.createElement("button");
-    this.buildModeButton.classList.add("menu-button");
-    this.buildModeButton.innerText = "Start Level (b)";
+    this.buildModeButton.classList.add("menu-action-button");
+    this.buildModeButton.innerText = "Start";
     this.menu.appendChild(this.buildModeButton);
+    // create a button to clear the contraption
+    this.clearButton = document.createElement("button");
+    this.clearButton.classList.add("menu-action-button");
+    this.clearButton.innerText = "Clear";
+    this.menu.appendChild(this.clearButton);
 
     // style the menu
     this.menu.classList.add("build-menu");
@@ -294,8 +299,7 @@ class BuildMenu {
       this.saveButton.classList.add("build-menu-button");
       this.loadButton.classList.add("build-menu-button");
     }
-    this.clearButton.classList.add("build-menu-button");
-    this.buildModeButton.classList.add("build-menu-button");
+
     // Add the menu to the game container
     let gameContainer = document.getElementById("game-container");
     gameContainer.appendChild(this.menu);
@@ -417,7 +421,7 @@ class BuildMenu {
           console.error("No level manager found");
         }
         // set this button's class to active
-        this.buildModeButton.classList.add("active");
+        // this.buildModeButton.classList.add("active");
         // activate the first block type button
         Object.values(this.blockButtons)[0].click();
         console.log("Build mode enabled");

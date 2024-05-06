@@ -94,11 +94,10 @@
     background-color: #d4af3746;
     border: none;
     padding: 5px 10px;
-    margin: 0 5px; 
+    margin: 0 20px; 
     border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s;
-    text-transform: uppercase;
     font-weight: bold;
     font-size: 1.5em;
     /* prevent user from highlighting text */
@@ -127,4 +126,35 @@
     border: 2px solid #f5deb3; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
     color: #1a3a5f; 
+}
+
+// a vertical line that separates blocks from the start game button
+.build-menu-line {
+    background-color: #ffffff;
+    width: 5px;
+    height: 60px;
+    margin: 0 40px;
+}
+
+// style for the start game button
+.menu-action-button {
+    background-color: #14273C;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 15px; 
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    font-size: 2em;
+    color: #ffffff;
+    /* prevent user from highlighting text */
+    user-select: none;
+    -webkit-user-select: none; /* For older versions of webkit-based browsers */
+    -moz-user-select: none; /* For older versions of Firefox */
+    -ms-user-select: none; /* For Internet Explorer/Edge */
+}
+
+.menu-action-button:hover {
+    background-color: #1a3a5f;
 }

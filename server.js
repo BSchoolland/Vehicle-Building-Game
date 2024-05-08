@@ -52,6 +52,15 @@ app.get('/register.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/register/register.html'));
 });
 
+app.get('/sandbox', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/sandbox/sandbox.html'));
+});
+
+app.get('/sandbox.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/sandbox/sandbox.html'));
+});
+
+
 // I'll allow editor access with the direct link, but it's not linked anywhere
 app.get('/editor.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/editor/editor.html'));

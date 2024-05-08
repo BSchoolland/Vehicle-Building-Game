@@ -124,19 +124,19 @@
     {
       "type": "EnemySpawnBlock",
       "x": 2100,
-      "y": 1100,
+      "y": 1200,
       "enemyType": "largeSpikeCar"
     },
     {
       "type": "EnemySpawnBlock",
       "x": 2700,
-      "y": 1100,
+      "y": 1200,
       "enemyType": "largeSpikeCar"
     },
     {
       "type": "EnemySpawnBlock",
       "x": 3400,
-      "y": 1100,
+      "y": 1200,
       "enemyType": "movingSpikeWall"
     },
     {

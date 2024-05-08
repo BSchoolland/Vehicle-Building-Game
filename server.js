@@ -52,14 +52,15 @@ app.get('/register.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/register/register.html'));
 });
 
-// if the env file says we're in development, add the editor route
-const dev = process.env.DEV
-if ((dev !== null) && (dev === "true")){
-  console.log('editor on')
-  app.get('/editor', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/pages/editor/editor.html'));
-  });
-};
+// I'll allow editor access with the direct link, but it's not linked anywhere
+app.get('/editor.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/editor/editor.html'));
+});
+
+app.get('/mylevel.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/editor/mylevel.html'));
+});
+
 
 
 // Use your imported routes with the app

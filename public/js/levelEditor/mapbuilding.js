@@ -324,7 +324,7 @@ class BuildMenu {
         };
         this.testButton.onclick = () => {
             // save the level to the local storage
-            let LevelManagerJson = building.level.save();
+            let LevelManagerJson = building.level.LevelEditor.save();
             let key = 0;
             // remove the block types that are not allowed
             this.building.blockSelectors.blockTypes = this.building.blockSelectors.blockTypes.filter(blockType => blockType.allowed > 0);

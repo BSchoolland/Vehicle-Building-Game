@@ -1,6 +1,6 @@
 import Building from "./building.js";
 import { Camera } from "./camera.js";
-import { LevelManager } from "../world/level.js";
+import LevelManager from "../level/LevelManager.js";
 import { setSong } from "../sounds/playSound.js";
 
 let gameStarted = false;
@@ -88,11 +88,11 @@ function startGame() {
 
   // update the level object every 10 frames
   Matter.Events.on(engine, "afterUpdate", () => {
-    levelObject.update();
+    levelObject.GameplayHandler.update();
   });
   // load the level selector screen
   // after a short delay to allow the levels to load
   const localJSON = localStorage.getItem("level");
   console.log(localJSON);
-  levelObject.load(-1, localJSON);
+  levelObject.LevelLoader.load(-1, localJSON);
 }

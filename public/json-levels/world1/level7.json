@@ -43,7 +43,7 @@
     { "type": "BuildingAreaBlock", "x": 1100, "y": 600 },
     { "type": "BuildingAreaBlock", "x": 1200, "y": 600 },
     { "type": "BuildingAreaBlock", "x": 1300, "y": 600 },
-    { "type": "EnemySpawnBlock", "x": 1525, "y": 850, "enemyType": "barge" },
+    { "type": "EnemySpawnBlock", "x": 1500, "y": 800, "enemyType": "barge" },
     { "type": "CoinBlock", "x": 1900, "y": 700 },
     { "type": "CoinBlock", "x": 2600, "y": 700 },
     { "type": "CoinBlock", "x": 400, "y": 700 }

@@ -44,7 +44,7 @@
     {
       "type": "EnemySpawnBlock",
       "x": 6000,
-      "y": 500,
+      "y": 600,
       "enemyType": "movingSpikeWall"
     },
     { "type": "GrassBlock", "x": 3400, "y": 800 },

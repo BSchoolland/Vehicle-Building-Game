@@ -82,7 +82,7 @@
     {
       "type": "EnemySpawnBlock",
       "x": 2800,
-      "y": 800,
+      "y": 900,
       "enemyType": "largeSpikeCar"
     },
     { "type": "BuildingAreaBlock", "x": 1700, "y": 900 },

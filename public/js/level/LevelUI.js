@@ -291,15 +291,18 @@ class LevelUI {
       levelSelector.remove();
     });
     // add an image for the level (it is also clickable)
+    let imageContainer = document.createElement("div");
+    imageContainer.className = "level-select-image-container";
     let image = document.createElement("img");
     image.className = "level-select-image";
-    image.src = `../../img/world${this.parent.worldSelected}.png`;
+    image.src = `../../img/levelImages/world${this.parent.worldSelected}/level${i + 1}.png`;
+    imageContainer.appendChild(image);
     image.addEventListener("click", () => {
       this.createBackArrow();
       this.parent.LevelLoader.load(i);
       levelSelector.remove();
     });
-    box.appendChild(image);
+    box.appendChild(imageContainer);
     box.appendChild(this.createMedalIcons(levelSelector, i, box, button));
 
     box.appendChild(button);
@@ -366,8 +369,8 @@ class LevelUI {
     game.appendChild(levelSelector);
     // add a button for each level
     if (this.isSandbox) {
-      this.parent.worldSelected = 4; // set the world to 999 for sandbox
-      
+      this.parent.worldSelected = 4; // this is not ideal, but it works
+      // currently, the sandbox is the last world, adding more worlds will break this
     }
       
     let count = this.parent.LevelHandler.getLevelCount(

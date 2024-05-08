@@ -86,6 +86,7 @@ class Medal {
 class LevelUI {
   constructor(parent, progressBar) {
     this.parent = parent;
+    this.isSandbox = false;
   }
 
   createBackArrow() {
@@ -339,18 +340,22 @@ class LevelUI {
       this.handleBackArrowClick();
     });
     worldSelector.appendChild(returnArrow);
-    // add a button for each world
-    let worldCount = this.parent.LevelHandler.getWorldCount();
+    if (!this.isSandbox) {
+      
+      // add a button for each world
+      let worldCount = this.parent.LevelHandler.getWorldCount();
 
-    // use the backward arrow function to create the backward arrow
-    this.createBackwardArrow(levelSelector, worldSelector, worldCount);
-    // the title of the world
-    let worldTitle = document.createElement("h1");
-    worldTitle.innerHTML = `World ${this.parent.worldSelected}`;
-    worldSelector.appendChild(worldTitle);
-    // use the forward arrow function to create the forward arrow
-    this.createForwardArrow(levelSelector, worldSelector, worldCount);
-    
+      // use the backward arrow function to create the backward arrow
+      this.createBackwardArrow(levelSelector, worldSelector, worldCount);
+      // the title of the world
+      let worldTitle = document.createElement("h1");
+      worldTitle.innerHTML = `World ${this.parent.worldSelected}`;
+      worldSelector.appendChild(worldTitle);
+      // use the forward arrow function to create the forward arrow
+      this.createForwardArrow(levelSelector, worldSelector, worldCount);
+      
+      
+    }
     levelSelector.appendChild(worldSelector);
     // add a container for the levels
     let levelContainer = document.createElement("div");
@@ -360,12 +365,18 @@ class LevelUI {
     // add the level selector to the game
     game.appendChild(levelSelector);
     // add a button for each level
+    if (this.isSandbox) {
+      this.parent.worldSelected = 4; // set the world to 999 for sandbox
+      
+    }
+      
     let count = this.parent.LevelHandler.getLevelCount(
       this.parent.worldSelected
     );
     for (let i = 0; i < count; i++) {
       this.createLevelSelectButton(levelSelector, i);
     }
+    
   }
   gameOver() {
     let gameOver = document.createElement("div");

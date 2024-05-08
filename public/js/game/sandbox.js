@@ -70,7 +70,7 @@ function createHTML() {
 
 // create a progress bar
 let barContainer = document.getElementById("progress-bar-container");
-const steps = ["Loading Contraptions", "Loading Music", "Loading World 1", "Loading World 2", "Loading World 3", "Requesting account data"];
+const steps = ["Loading Contraptions", "Loading Music", "Loading World 1", "Loading World 2", "Loading World 3",  "Requesting account data"];
 let progressBar = new ProgressBar(steps, barContainer );
 
 // Create an engine
@@ -96,6 +96,8 @@ let building = new Building(engine, camera);
 building.init();
 const levelObject = new LevelManager(engine, building, progressBar);
 levelObject.init();
+// tell the level object that this is a sandbox
+levelObject.LevelUI.isSandbox = true;
 document.addEventListener("click", clickHandler);
 
 function checkMusicLoaded() {
@@ -174,6 +176,5 @@ function startGame() {
   });
   // load the level selector screen
   // after a short delay to allow the levels to load
-
   levelObject.LevelUI.loadLevelSelector();
 }

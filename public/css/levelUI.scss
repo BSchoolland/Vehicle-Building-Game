@@ -40,12 +40,13 @@
 
 .tutorial-text {
     position: absolute;
-    top: 10px;
+    // top: 10px;
     left: 150px;
     padding: 20px;
     background-color: rgba(92, 116, 142, 0.5);
     border-radius: 20px;
     max-width: 60%;
+    font-size: 1.5em;
     @media (max-width: 768px) {
         font-size: 0.5em;
     }
@@ -53,7 +54,7 @@
 
 .stat-container {
     position: absolute;
-    top: 10px;
+    top: 15px;
     right: 40px;
     padding: 20px;
     background-color: rgba(92, 116, 142, 0.5);
@@ -67,7 +68,7 @@
 .stat-container h1 {
     margin: 0;
     padding: 0;
-    font-size: 2.5em;
+    font-size: 1.75em;
 }
 
 /* Style for the build menu container */
@@ -78,7 +79,7 @@
     transform: translateX(-50%); 
     background-color: rgba(92, 116, 142, 0.8);
     border-radius: 20px;
-    padding: 30px;
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center; 
@@ -93,8 +94,8 @@
 .build-menu-button {
     background-color: #d4af3746;
     border: none;
-    padding: 5px 10px;
-    margin: 0 20px; 
+    padding: 4px 8px;
+    margin: 0 15px; 
     border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -105,6 +106,8 @@
     -webkit-user-select: none; /* For older versions of webkit-based browsers */
     -moz-user-select: none; /* For older versions of Firefox */
     -ms-user-select: none; /* For Internet Explorer/Edge */
+    // invisible border to prevent the button from moving when clicked
+    border: 2px solid transparent;
 }
 
 .build-menu-button:hover {
@@ -115,9 +118,10 @@
 }
 
 .build-menu-button-img {
-    width: 35px;
-    height: 35px;
-    padding: 15px;
+    width: 30px;
+    height: 30px;
+    padding: 3px 10px;
+    pointer-events: none;
 }
 
 /* Style for the build menu button that is currently selected */
@@ -132,8 +136,8 @@
 .build-menu-line {
     background-color: #ffffff;
     width: 5px;
-    height: 60px;
-    margin: 0 40px;
+    height: 50px;
+    margin: 0 35px;
 }
 
 // style for the start game button
@@ -146,7 +150,7 @@
     cursor: pointer;
     transition: background-color 0.3s;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1.5em;
     color: #ffffff;
     /* prevent user from highlighting text */
     user-select: none;

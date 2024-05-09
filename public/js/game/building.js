@@ -445,8 +445,8 @@ class BuildMenu {
         building.camera.removeTarget();
         // set the camera viewport to the size of the build area
         building.camera.setViewport(
-          building.buildArea.width * 30,
-          building.buildArea.height * 30
+          building.buildArea.width * 2,
+          building.buildArea.height * 2
         );
         // set the camera position to the center of the build area
 

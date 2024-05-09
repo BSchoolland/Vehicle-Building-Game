@@ -194,5 +194,6 @@
     { "name": "Before", "value": 0 }
   ],
   "tutorialText": "",
-  "floating": true
+  "floating": true,
+  "title": "Wall Crawler"
 }

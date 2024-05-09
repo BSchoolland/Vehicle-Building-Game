@@ -91,5 +91,6 @@
       "value": 0
     }
   ],
-  "tutorialText": "Destroy the incomming missile!"
+  "tutorialText": "Destroy the incomming missile!",
+  "title": "Missile Defense"
 }

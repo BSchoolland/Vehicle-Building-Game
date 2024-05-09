@@ -68,8 +68,8 @@ class LevelLoader {
 
     let string = LevelJson.tutorialText;
     if (string === "") {
-      // the string should equal the level number
-      string = `Level ${levelIndex + 1}`;
+      // set the string to the level name
+      string = "Level: " + LevelJson.title;
     }
     let sentences = string.split(/(?<=[\.!])/).map(sentence => {
       let trimmedSentence = sentence.trim();

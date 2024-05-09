@@ -191,5 +191,6 @@
       "value": 1
     }
   ],
-  "tutorialText": "Press SHIFT to activate the rocket booster!"
+  "tutorialText": "Press SHIFT to activate the rocket booster!",
+  "title": "Jump"
 }

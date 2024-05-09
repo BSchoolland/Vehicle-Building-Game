@@ -368,6 +368,7 @@ a {
   flex-direction: column;
   background-color: #2b5572;
   border-radius: 30px;
+  cursor: pointer;
 }
 
 .level-select-box:hover {

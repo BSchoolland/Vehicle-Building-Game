@@ -229,6 +229,10 @@ class LevelHandler {
         let level = this.getLevel(worldNum, levelNum);
         return level.bonusChallenges;
     }
+    getLevelName(worldNum, levelNum) {
+        let level = this.getLevel(worldNum, levelNum);
+        return level.title || "unnamed level";
+    }
 }
 
 export default LevelHandler;

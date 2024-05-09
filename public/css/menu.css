@@ -162,56 +162,8 @@ body {
     margin: 0 0;
     border-radius: 3px;
 } */
-.level-select-image-container {
-    position: relative;
-    width: 100%;  /* Adjust the width as needed, or use max-width */
-    padding-top: 75%;  /* Aspect ratio of 4:3 (3/4 = 0.75) */
-
-    overflow: hidden;  /* Optional: for cropping the image if it doesn't fit exactly */
-}
-
-.level-select-image-container img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;  /* Ensures the image covers the area, cropping as needed */
-}
 
 
-
-.level-select-box {
-    width: 20%;
-    margin: 5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: #2b5572;
-    border-radius: 3px;
-}
-
-.level-select-box:hover {
-    transform: scale(1.1);
-    transition: transform 0.5s;
-}
-
-/* Style for each button in the level select menu */
-.level-select-button {
-    /* position: absolute; */
-    background-color: #2b5572; /* Slightly lighter blue for buttons */
-    color: #e4e8ec; /* Light text color for contrast */
-    border: none;
-    padding: 5px 10px;
-    margin: 0 0;
-    width: 100%;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-transform: uppercase; /* Makes text uppercase for a more formal look */
-    font-weight: bold;
-}
 
 .allowed-block-menu {
     position: absolute;

@@ -21,7 +21,7 @@ class Medal {
     this.levelNum = levelNum;
   }
   // create the medal
-  createHTML(box = null, button = null) {
+  createHTML(box = null) {
     let medal = document.createElement("img");
     let src;
     // if it's a who needs blocks medal, use the image that relates to the number of blocks
@@ -48,7 +48,6 @@ class Medal {
       if (box != null) {
         // make the box and button dark gold
         box.style.backgroundColor = "darkgoldenrod";
-        button.style.backgroundColor = "darkgoldenrod";
       }
     } else {
       medal.style.opacity = "0.5";
@@ -177,7 +176,7 @@ class LevelUI {
     }
     worldSelector.appendChild(button);
   }
-  createBonusObjectives(levelSelector, levelNum, box, button) {
+  createBonusObjectives(levelSelector, levelNum, box) {
     let usedBonusObjectives = this.parent.LevelHandler.getBonusChallenges(
       this.parent.worldSelected,
       levelNum
@@ -197,7 +196,7 @@ class LevelUI {
     }
   }
 
-  createMedalIcons(levelSelector, i, box, button) {
+  createMedalIcons(levelSelector, i, box) {
     let medalsBox = document.createElement("div");
     medalsBox.style.position = "absolute";
     // top 0 right 0
@@ -216,10 +215,10 @@ class LevelUI {
       "Complete the level",
       this,
       i + 1
-    ).createHTML(box, button);
+    ).createHTML(box);
     // if the crown is not earned, don't show the other medals
     if (crown.style.opacity === "1") {
-      this.createBonusObjectives(levelSelector, i, medalsBox, button);
+      this.createBonusObjectives(levelSelector, i, medalsBox);
     }
     // the crown is placed in the corner of the image
     medalsBox.appendChild(crown);
@@ -281,15 +280,16 @@ class LevelUI {
     let box = document.createElement("div");
     box.className = "level-select-box";
     box.style.position = "relative";
-    let button = document.createElement("button");
-    button.className = "level-select-button";
-    button.innerHTML = `Level ${i + 1}`;
-    button.addEventListener("click", () => {
-      this.createBackArrow();
-      // create the back arrow
-      this.parent.LevelLoader.load(i);
-      levelSelector.remove();
-    });
+
+    // add the level's title
+    let title = document.createElement("h2");
+    title.className = "level-select-title";
+    // get the name of the level from the level handler
+    title.innerHTML = this.parent.LevelHandler.getLevelName(
+      this.parent.worldSelected,
+      i
+    );
+    box.appendChild(title);
     // add an image for the level (it is also clickable)
     let imageContainer = document.createElement("div");
     imageContainer.className = "level-select-image-container";
@@ -303,9 +303,19 @@ class LevelUI {
       levelSelector.remove();
     });
     box.appendChild(imageContainer);
-    box.appendChild(this.createMedalIcons(levelSelector, i, box, button));
+    box.appendChild(this.createMedalIcons(levelSelector, i, box));
+    let levelNumber = document.createElement("p");
+    levelNumber.className = "level-select-number";
+    levelNumber.innerHTML = `Level ${i + 1}`;
 
-    box.appendChild(button);
+    box.appendChild(levelNumber);
+    // when the box is clicked, load the level
+    box.addEventListener("click", () => {
+      this.createBackArrow();
+      // create the back arrow
+      this.parent.LevelLoader.load(i);
+      levelSelector.remove();
+    });
     // add the box to the element with the id level-container
     document.getElementById("level-container").appendChild(box);
   }

@@ -172,7 +172,7 @@ engine.world.gravity.y = 1;
 
 
 // Create a circle at a more practical location
-let circle = Matter.Bodies.circle(100, 100, 10, {
+let circle = Matter.Bodies.circle(10000, 10000, 10, {
   isStatic: false
 });
 
@@ -203,19 +203,20 @@ const afterUpdateListener = () => {
     let elapsedSeconds = (endTime - startTime) / 1000; // time elapsed in seconds
     let x = circle.position.x;
     let distance = x - firstX; // distance traveled
-
-    console.log(`Time elapsed: ${elapsedSeconds.toFixed(2)} s, Frames watched: ${counter}`);
+    console.log("<--- DEBUG FOR GRAVITY --->")
+    console.log(`Time elapsed (should be ~1): ${elapsedSeconds.toFixed(2)} s, Frames watched: ${counter}`);
     console.log("Desired time: ", durationInSeconds, "s", "Actual gravity: ", engine.world.gravity.y);
-    console.log(`X Distance traveled: ${distance}`);
-    console.log(`Y Distance traveled: ${circle.position.y - firstY}`);
+    console.log(`X Distance traveled (should be ~600): ${distance}`);
+    console.log(`Y Distance traveled (should be ~525): ${circle.position.y - firstY}`);
     // log the measured frame rate
-    console.log(`Measured frame rate: ${counter / elapsedSeconds}`);
+    console.log(`Measured frame rate (should be ~60): ${counter / elapsedSeconds}`);
     // calculate the Measured gravity based on the y distance traveled
     let MeasuredGravity = 2 * (circle.position.y - firstY) / (elapsedSeconds * elapsedSeconds);
-    console.log(`Measured gravity: ${MeasuredGravity.toFixed(2)}`);
+    console.log(`Measured gravity (should be ~1000): ${MeasuredGravity.toFixed(2)}`);
     // Clean-up and remove event listener
     Matter.World.remove(engine.world, circle);
     Matter.Events.off(engine, "afterUpdate", afterUpdateListener);
+    console.log("<--- END DEBUG FOR GRAVITY --->")
   }
 };
 

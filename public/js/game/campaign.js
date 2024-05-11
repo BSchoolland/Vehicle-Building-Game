@@ -4,7 +4,7 @@ import { Camera } from "./camera.js";
 import LevelManager from "../level/LevelManager.js";
 import { setSong } from "../sounds/playSound.js";
 import ProgressBar from "../loaders/progressBar.js";
-
+import gameTest from "./gameTest.js";
 // if the user is on mobile, warn them that the game may not work well
 if (window.innerWidth < 800 || window.innerHeight < 600) {
   // alert("Again, I really do suggest you play on a computer.  The experience is much better.  If you choose to ignore me, be ready for unbeatable levels, and more bugs than a termite farm.  You have been warned.");
@@ -18,33 +18,34 @@ if (window.innerWidth < 800 || window.innerHeight < 600) {
   });
   // if the user is on mobile, disable zooming
   var lastTouchEnd = 0;
-  document.addEventListener('touchend', function(event) {
-    var now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
+  document.addEventListener(
+    "touchend",
+    function (event) {
+      var now = new Date().getTime();
+      if (now - lastTouchEnd <= 300) {
         event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
-
+      }
+      lastTouchEnd = now;
+    },
+    false
+  );
 }
 // get the orientation of the screen
-let landscape = !window.screen.orientation.type.includes('portrait');
+let landscape = !window.screen.orientation.type.includes("portrait");
 if (!landscape) {
   document.getElementById("game-container").style.display = "none";
   document.getElementById("landscape-warning").style.display = "block";
-}
-else {
+} else {
   document.getElementById("game-container").style.display = "block";
   document.getElementById("landscape-warning").style.display = "none";
 }
 // constantly check the orientation of the screen
 window.screen.orientation.addEventListener("change", () => {
-  if (window.screen.orientation.type.includes('portrait')) {
+  if (window.screen.orientation.type.includes("portrait")) {
     document.getElementById("game-container").style.display = "none";
     document.getElementById("landscape-warning").style.display = "block";
     landscape = false;
-  }
-  else {
+  } else {
     document.getElementById("game-container").style.display = "block";
     document.getElementById("landscape-warning").style.display = "none";
     landscape = true;
@@ -71,11 +72,19 @@ function createHTML() {
 
 // create a progress bar
 let barContainer = document.getElementById("progress-bar-container");
-const steps = ["Loading Contraptions", "Loading Music", "Loading World 1", "Loading World 2", "Loading World 3", "Requesting account data"];
-let progressBar = new ProgressBar(steps, barContainer );
+const steps = [
+  "Loading Contraptions",
+  "Loading Music",
+  "Loading World 1",
+  "Loading World 2",
+  "Loading World 3",
+  "Requesting account data",
+];
+let progressBar = new ProgressBar(steps, barContainer);
 
 // Create an engine
 var engine = Matter.Engine.create();
+
 
 // Create a renderer
 var container = document.getElementById("game-container");
@@ -112,11 +121,9 @@ function checkMusicLoaded() {
   }
 }
 
-
 // create a loop to update the progress bar
 let musicLoaded = false;
 checkMusicLoaded();
-
 
 function startGame() {
   // wait until loading is done
@@ -127,7 +134,8 @@ function startGame() {
   // play the sound
   setSong("mainTheme");
   // make the background a gradient
-  document.body.style.background = "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)";
+  document.body.style.background =
+    "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)";
   // // make the body white
   // document.body.style.backgroundColor = "white";
   createHTML();
@@ -136,11 +144,8 @@ function startGame() {
     container.style.display = "block";
   }
 
-  
-
   // set the background to fully transparent
-  render.options.background =
-    "rgba(255, 255, 255, 0)";
+  render.options.background = "rgba(255, 255, 255, 0)";
 
   // play the background music
   setSong("mainTheme");
@@ -165,63 +170,12 @@ function startGame() {
   Matter.Runner.run(engine);
   Matter.Render.run(render);
 
-// Set the time scale to real-time
-engine.timing.timeScale = 1;
-// Set gravity
-engine.world.gravity.y = 1;
 
-
-// Create a circle at a more practical location
-let circle = Matter.Bodies.circle(10000, 10000, 10, {
-  isStatic: false
-});
-
-// remove air resistance from the circle
-circle.frictionAir = 0;
-
-// Set initial velocity, assuming horizontal motion
-const initialVelocity = 10; // distance per frame (likely in cm)
-Matter.Body.setVelocity(circle, { x: initialVelocity, y: 0 });
-
-// Add the circle to the world
-Matter.World.add(engine.world, circle);
-
-// Initial setup for measurement
-let counter = 0;
-const framesPerSecond = 60; // Adjust based on your expected frame rate
-const durationInSeconds = 1; // We want to measure the distance after one second
-const desiredFrames = framesPerSecond * durationInSeconds;
-let firstX = circle.position.x; // Start position for distance measurement
-let firstY = circle.position.y;
-let startTime = Date.now();
-
-// Define the event listener as a named function
-const afterUpdateListener = () => {
-  counter++;
-  if (counter >= desiredFrames) {
-    let endTime = Date.now();
-    let elapsedSeconds = (endTime - startTime) / 1000; // time elapsed in seconds
-    let x = circle.position.x;
-    let distance = x - firstX; // distance traveled
-    console.log("<--- DEBUG FOR GRAVITY --->")
-    console.log(`Time elapsed (should be ~1): ${elapsedSeconds.toFixed(2)} s, Frames watched: ${counter}`);
-    console.log("Desired time: ", durationInSeconds, "s", "Actual gravity: ", engine.world.gravity.y);
-    console.log(`X Distance traveled (should be ~600): ${distance}`);
-    console.log(`Y Distance traveled (should be ~525): ${circle.position.y - firstY}`);
-    // log the measured frame rate
-    console.log(`Measured frame rate (should be ~60): ${counter / elapsedSeconds}`);
-    // calculate the Measured gravity based on the y distance traveled
-    let MeasuredGravity = 2 * (circle.position.y - firstY) / (elapsedSeconds * elapsedSeconds);
-    console.log(`Measured gravity (should be ~1000): ${MeasuredGravity.toFixed(2)}`);
-    // Clean-up and remove event listener
-    Matter.World.remove(engine.world, circle);
-    Matter.Events.off(engine, "afterUpdate", afterUpdateListener);
-    console.log("<--- END DEBUG FOR GRAVITY --->")
-  }
-};
-
-// Add the event listener to the engine
-Matter.Events.on(engine, "afterUpdate", afterUpdateListener);
+  // Set gravity
+  engine.world.gravity.y = 1;
+  // set teh time scale based on the frame rate
+  const baseTimeScale = gameTest(engine, engine.gravity.y, levelObject);
+  
   // run the camera
   Matter.Events.on(engine, "beforeUpdate", () => {
     camera.smoothUpdate();

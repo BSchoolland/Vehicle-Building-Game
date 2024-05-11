@@ -446,7 +446,7 @@ class BuildMenu {
         // set the camera viewport to the size of the build area
         building.camera.setViewport(
           building.buildArea.width * 2,
-          building.buildArea.height * 2.5
+          building.buildArea.height * 2
         );
         // set the camera position to the center of the build area
 
@@ -522,10 +522,13 @@ class BuildMenu {
             button.innerHTML = control.name;
             button.onmousedown = button.ontouchstart = () => {
               building.contraption.pressKey(control.key); // press the key
+              
             };
             button.onmouseup = button.ontouchend = () => {
               building.contraption.releaseKey(control.key); // release the key
             };
+
+  
             // scale the button up compared to the build menu buttons
             button.style.fontSize = "1.5em";
             controlMenu.appendChild(button);
@@ -625,8 +628,33 @@ class Building {
     // Add event listener for canvas click
     const canvas = document.querySelector("canvas");
     // Add event listener for placing blocks
-    canvas.addEventListener("click", (event) => this.handleCanvasClick(event));
+    let isMouseDown = false;
+    let isRightClick = false;
+    canvas.addEventListener("mousedown", (event) => 
+    {
+      // if it is right click, don't do anything
+      if (event.button === 2) {
+        isRightClick = true;
+        return;
+      }
+      isMouseDown = true;
+      this.handleCanvasClick()
+    });
     canvas.addEventListener("touchend", (event) => this.handleCanvasClick(event)); // for mobile
+    // wait for the mouse to be released
+    canvas.addEventListener("mouseup", () => {
+      isMouseDown = false;
+      isRightClick = false;
+    });
+    // whenever the mouse moves, remove the ghost blocks
+    canvas.addEventListener("mousemove", () => {
+      if (isMouseDown) {
+        this.handleCanvasClick()
+      }
+      if (isRightClick) {
+        this.handleRightClick()
+      }
+    });
     // Add event listener for keys
     document.addEventListener("keydown", (event) => this.handleKeyDown(event));
     // Add event listener for block editing
@@ -646,7 +674,7 @@ class Building {
     // clear the selected block
     this.selectedBlock = null;
   }
-  handleCanvasClick(event) {
+  handleCanvasClick(event = { type: "click" }) {
     // make sure build mode is enabled
     if (!this.buildInProgress) {
       return;
@@ -797,7 +825,7 @@ class Building {
     this.RightClickMenu.show();
   }
 
-  handleRightClick(event) {
+  handleRightClick(event=null) {
     // edit the block at the click position
     // make sure build mode is enabled
     if (!this.buildInProgress) {

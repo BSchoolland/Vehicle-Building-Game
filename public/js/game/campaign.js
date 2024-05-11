@@ -173,8 +173,8 @@ function startGame() {
 
   // Set gravity
   engine.world.gravity.y = 1;
-  // set teh time scale based on the frame rate
-  const baseTimeScale = gameTest(engine, engine.gravity.y, levelObject);
+  // set the time scale based on the frame rate
+  gameTest(engine, engine.gravity.y, levelObject);
   
   // run the camera
   Matter.Events.on(engine, "beforeUpdate", () => {

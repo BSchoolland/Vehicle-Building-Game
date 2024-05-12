@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 // get dotenv to load the environment variables
 require("dotenv").config();
 // get the secret from the environment variables
-const secret = process.env.JWT;
+let secret = process.env.JWT;
 if (!secret) {
   console.error("No secret found in environment variables");
   secret = "default_secret_that_should_be_changed";

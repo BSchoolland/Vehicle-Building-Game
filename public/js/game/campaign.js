@@ -125,6 +125,16 @@ function checkMusicLoaded() {
 let musicLoaded = false;
 checkMusicLoaded();
 
+function setFullScreenCanvas() {
+  let canvas = render.canvas;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  render.options.width = window.innerWidth;
+  render.options.height = window.innerHeight;
+  render.bounds.max.x = window.innerWidth;
+  render.bounds.max.y = window.innerHeight;
+}
+
 function startGame() {
   // wait until loading is done
   if (!progressBar.loaded) {
@@ -133,60 +143,42 @@ function startGame() {
   }
   // play the sound
   setSong("mainTheme");
-  // make the background a gradient
-  document.body.style.background =
-    "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)";
-  // // make the body white
-  // document.body.style.backgroundColor = "white";
+
+  // Update the UI as necessary
+  document.body.style.background = "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)";
   createHTML();
-  // show the container
   if (landscape) {
     container.style.display = "block";
   }
-
-  // set the background to fully transparent
   render.options.background = "rgba(255, 255, 255, 0)";
 
-  // play the background music
-  setSong("mainTheme");
-
-  // fullscren
-  function setFullScreenCanvas() {
-    let canvas = render.canvas;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    render.options.width = window.innerWidth;
-    render.options.height = window.innerHeight;
-    render.bounds.max.x = window.innerWidth;
-    render.bounds.max.y = window.innerHeight;
-  }
-
+  // Fullscreen and render setup
+  setFullScreenCanvas();
   window.addEventListener("resize", function () {
     setFullScreenCanvas();
   });
-  setFullScreenCanvas();
 
-  // Run the engine and the renderer
-  Matter.Runner.run(engine);
+  // Gravity and initial music
+  engine.world.gravity.y = 1;
+  setSong("mainTheme");
+
+  // Start rendering
   Matter.Render.run(render);
 
+  // Fixed timestep for consistent engine updates
+  const fixedDeltaTime = 1000 / 60; // milliseconds, approximately 60Hz
+  setInterval(() => {
+    Matter.Engine.update(engine, fixedDeltaTime);
+  }, fixedDeltaTime);
 
-  // Set gravity
-  engine.world.gravity.y = 1;
-  // set the time scale based on the frame rate
-  gameTest(engine, engine.gravity.y, levelObject);
-  
-  // run the camera
+  // Camera and level update handling
   Matter.Events.on(engine, "beforeUpdate", () => {
     camera.smoothUpdate();
   });
-
-  // update the level object every 10 frames
   Matter.Events.on(engine, "afterUpdate", () => {
     levelObject.GameplayHandler.update();
   });
-  // load the level selector screen
-  // after a short delay to allow the levels to load
 
+  // Load the initial level selector screen
   levelObject.LevelUI.loadLevelSelector();
 }

@@ -17,33 +17,34 @@ if (window.innerWidth < 800 || window.innerHeight < 600) {
   });
   // if the user is on mobile, disable zooming
   var lastTouchEnd = 0;
-  document.addEventListener('touchend', function(event) {
-    var now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
+  document.addEventListener(
+    "touchend",
+    function (event) {
+      var now = new Date().getTime();
+      if (now - lastTouchEnd <= 300) {
         event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
-
+      }
+      lastTouchEnd = now;
+    },
+    false
+  );
 }
 // get the orientation of the screen
-let landscape = !window.screen.orientation.type.includes('portrait');
+let landscape = !window.screen.orientation.type.includes("portrait");
 if (!landscape) {
   document.getElementById("game-container").style.display = "none";
   document.getElementById("landscape-warning").style.display = "block";
-}
-else {
+} else {
   document.getElementById("game-container").style.display = "block";
   document.getElementById("landscape-warning").style.display = "none";
 }
 // constantly check the orientation of the screen
 window.screen.orientation.addEventListener("change", () => {
-  if (window.screen.orientation.type.includes('portrait')) {
+  if (window.screen.orientation.type.includes("portrait")) {
     document.getElementById("game-container").style.display = "none";
     document.getElementById("landscape-warning").style.display = "block";
     landscape = false;
-  }
-  else {
+  } else {
     document.getElementById("game-container").style.display = "block";
     document.getElementById("landscape-warning").style.display = "none";
     landscape = true;
@@ -70,11 +71,19 @@ function createHTML() {
 
 // create a progress bar
 let barContainer = document.getElementById("progress-bar-container");
-const steps = ["Loading Contraptions", "Loading Music", "Loading World 1", "Loading World 2", "Loading World 3", "Requesting account data"];
-let progressBar = new ProgressBar(steps, barContainer );
+const steps = [
+  "Loading Contraptions",
+  "Loading Music",
+  "Loading World 1",
+  "Loading World 2",
+  "Loading World 3",
+  "Requesting account data",
+];
+let progressBar = new ProgressBar(steps, barContainer);
 
 // Create an engine
 var engine = Matter.Engine.create();
+
 
 // Create a renderer
 var container = document.getElementById("game-container");
@@ -111,11 +120,19 @@ function checkMusicLoaded() {
   }
 }
 
-
 // create a loop to update the progress bar
 let musicLoaded = false;
 checkMusicLoaded();
 
+function setFullScreenCanvas() {
+  let canvas = render.canvas;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  render.options.width = window.innerWidth;
+  render.options.height = window.innerHeight;
+  render.bounds.max.x = window.innerWidth;
+  render.bounds.max.y = window.innerHeight;
+}
 
 function startGame() {
   // wait until loading is done
@@ -125,55 +142,43 @@ function startGame() {
   }
   // play the sound
   setSong("mainTheme");
-  // make the background a gradient
+
+  // Update the UI as necessary
   document.body.style.background = "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)";
 
   createHTML();
-  // show the container
   if (landscape) {
     container.style.display = "block";
   }
+  render.options.background = "rgba(255, 255, 255, 0)";
 
-  
-
-  // set the background to fully transparent
-  render.options.background =
-    "rgba(255, 255, 255, 0)";
-
-  // play the background music
-  setSong("mainTheme");
-
-  // fullscren
-  function setFullScreenCanvas() {
-    let canvas = render.canvas;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    render.options.width = window.innerWidth;
-    render.options.height = window.innerHeight;
-    render.bounds.max.x = window.innerWidth;
-    render.bounds.max.y = window.innerHeight;
-  }
-
+  // Fullscreen and render setup
+  setFullScreenCanvas();
   window.addEventListener("resize", function () {
     setFullScreenCanvas();
   });
-  setFullScreenCanvas();
 
-  // Run the engine and the renderer
-  Matter.Runner.run(engine);
+  // Gravity and initial music
+  engine.world.gravity.y = 1;
+  setSong("mainTheme");
+
+  // Start rendering
   Matter.Render.run(render);
 
-  // run the camera
+  // Fixed timestep for consistent engine updates
+  const fixedDeltaTime = 1000 / 55; // milliseconds, approximately 60Hz
+  setInterval(() => {
+    Matter.Engine.update(engine, fixedDeltaTime);
+  }, fixedDeltaTime);
+
+  // Camera and level update handling
   Matter.Events.on(engine, "beforeUpdate", () => {
     camera.smoothUpdate();
   });
-
-  // update the level object every 10 frames
   Matter.Events.on(engine, "afterUpdate", () => {
     levelObject.GameplayHandler.update();
   });
-  // load the level selector screen
-  // after a short delay to allow the levels to load
 
+  // Load the initial level selector screen
   levelObject.LevelUI.loadLevelSelector();
 }

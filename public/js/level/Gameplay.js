@@ -22,11 +22,17 @@ class Gameplay {
     this.secondsSurvived = 0;
     this.mustSurvive = 0;
     this.startTime = 0;
+    this.baseTimeScale = 1;
+  }
+  setBaseTimeScale(baseTimeScale) {
+    this.baseTimeScale = baseTimeScale;
+    // set the time scale to the base time scale
+    this.parent.engine.timing.timeScale = this.baseTimeScale;
   }
 
   startLevel() {
     // set time to normal speed
-    this.parent.engine.timing.timeScale = 1;
+    this.parent.engine.timing.timeScale = this.baseTimeScale;
     this.won = false;
     // despawn all enemy contraptions
 
@@ -222,7 +228,7 @@ class Gameplay {
           }
           this.won = true;
           // slow down time
-          this.parent.engine.timing.timeScale = 0.2;
+          // this.parent.engine.timing.timeScale = this.baseTimeScale / 10;
           // deactivate build mode if it is somehow active
           if (this.parent.building.buildInProgress) {
             this.parent.building.toggleBuildingMode();

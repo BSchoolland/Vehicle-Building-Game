@@ -166,7 +166,7 @@ function startGame() {
   Matter.Render.run(render);
 
   // Fixed timestep for consistent engine updates
-  const fixedDeltaTime = 1000 / 60; // milliseconds, approximately 60Hz
+  const fixedDeltaTime = 1000 / 55; // milliseconds, approximately 60Hz
   setInterval(() => {
     Matter.Engine.update(engine, fixedDeltaTime);
   }, fixedDeltaTime);

@@ -224,7 +224,7 @@ class Gameplay {
           }
           this.won = true;
           // slow down time
-          this.parent.engine.timing.timeScale = this.baseTimeScale / 5;
+          this.parent.engine.timing.timeScale = this.baseTimeScale / 10;
           // deactivate build mode if it is somehow active
           if (this.parent.building.buildInProgress) {
             this.parent.building.toggleBuildingMode();

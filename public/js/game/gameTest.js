@@ -31,7 +31,7 @@ export default function gameTest(engine, ActualGravity = 1, levelObject, tries =
       let x = circle.position.x;
       console.log(circle.position);
       let distance = x - firstX; // distance traveled
-      console.log("<--- CALIBRATING GRAVITY --->");
+      console.log("<--- DEBUGGING GRAVITY --->");
       console.log(
         `Time elapsed (should be ~1): ${elapsedSeconds.toFixed(
           2
@@ -63,38 +63,7 @@ export default function gameTest(engine, ActualGravity = 1, levelObject, tries =
       // Clean-up and remove event listener
     Matter.World.remove(engine.world, circle);
     Matter.Events.off(engine, "afterUpdate", afterUpdateListener);
-    // propose a new timescale value based on the measured gravity
-    console.log(ActualGravity, MeasuredGravity)
-    let newTimeScale = Math.sqrt(ActualGravity / MeasuredGravity) ;
-    console.log(
-        `Proposed time scale (should be ~1): ${newTimeScale.toFixed(2)}`
-    );
-    // check if the new time scale is within a reasonable range
-    if (newTimeScale < 1.2 && newTimeScale > 0.8) {
-        console.log('<--- GRAVITY OK --->');
-    }
-    // if the new timescale is above 1, it will probably break the game, so we set it to 1
-    else if (newTimeScale > 1) {
-        console.log('<--- GRAVITY CANNOT BE FIXED, SETTING TIME SCALE TO 1 --->');
-        levelObject.GameplayHandler.setBaseTimeScale(1);
-    }
-    else {
-        if (tries >= 5) {
-            console.log('<--- GRAVITY NOT OK, TOO MANY TRIES, STOPPING --->');
-            alert('Uh oh! Your game may be running at the wrong speed.  Try refreshing the page or contact the developer');
-            // if we have tried too many times, just set the time scale to 1, 
-            levelObject.GameplayHandler.setBaseTimeScale(1);
-
-        }
-        else {
-            console.log('<--- GRAVITY NOT OK, ADJUSTING TIME SCALE --->');
-            // apply the new time scale
-            levelObject.GameplayHandler.setBaseTimeScale(newTimeScale);
-            // run the test again
-            gameTest(engine, ActualGravity, levelObject, tries + 1);
-        }
-    }
-    
+    console.log("<--- DEBUGGING COMPLETE --->");
     }
   };
 

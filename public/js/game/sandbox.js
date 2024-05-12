@@ -1,8 +1,8 @@
 import Building from "./building.js";
-import { Camera } from "./camera.js";import LevelManager from "../level/LevelManager.js";
+import { Camera } from "./camera.js";
+import LevelManager from "../level/LevelManager.js";
 import { setSong } from "../sounds/playSound.js";
 import ProgressBar from "../loaders/progressBar.js";
-
 
 // if the user is on mobile, warn them that the game may not work well
 if (window.innerWidth < 800 || window.innerHeight < 600) {
@@ -17,33 +17,34 @@ if (window.innerWidth < 800 || window.innerHeight < 600) {
   });
   // if the user is on mobile, disable zooming
   var lastTouchEnd = 0;
-  document.addEventListener('touchend', function(event) {
-    var now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
+  document.addEventListener(
+    "touchend",
+    function (event) {
+      var now = new Date().getTime();
+      if (now - lastTouchEnd <= 300) {
         event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
-
+      }
+      lastTouchEnd = now;
+    },
+    false
+  );
 }
 // get the orientation of the screen
-let landscape = !window.screen.orientation.type.includes('portrait');
+let landscape = !window.screen.orientation.type.includes("portrait");
 if (!landscape) {
   document.getElementById("game-container").style.display = "none";
   document.getElementById("landscape-warning").style.display = "block";
-}
-else {
+} else {
   document.getElementById("game-container").style.display = "block";
   document.getElementById("landscape-warning").style.display = "none";
 }
 // constantly check the orientation of the screen
 window.screen.orientation.addEventListener("change", () => {
-  if (window.screen.orientation.type.includes('portrait')) {
+  if (window.screen.orientation.type.includes("portrait")) {
     document.getElementById("game-container").style.display = "none";
     document.getElementById("landscape-warning").style.display = "block";
     landscape = false;
-  }
-  else {
+  } else {
     document.getElementById("game-container").style.display = "block";
     document.getElementById("landscape-warning").style.display = "none";
     landscape = true;
@@ -70,8 +71,15 @@ function createHTML() {
 
 // create a progress bar
 let barContainer = document.getElementById("progress-bar-container");
-const steps = ["Loading Contraptions", "Loading Music", "Loading World 1", "Loading World 2", "Loading World 3",  "Requesting account data"];
-let progressBar = new ProgressBar(steps, barContainer );
+const steps = [
+  "Loading Contraptions",
+  "Loading Music",
+  "Loading World 1",
+  "Loading World 2",
+  "Loading World 3",
+  "Requesting account data",
+];
+let progressBar = new ProgressBar(steps, barContainer);
 
 // Create an engine
 var engine = Matter.Engine.create();
@@ -113,11 +121,9 @@ function checkMusicLoaded() {
   }
 }
 
-
 // create a loop to update the progress bar
 let musicLoaded = false;
 checkMusicLoaded();
-
 
 function startGame() {
   // wait until loading is done
@@ -128,7 +134,8 @@ function startGame() {
   // play the sound
   setSong("mainTheme");
   // make the background a gradient
-  document.body.style.background = "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)";
+  document.body.style.background =
+    "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)";
 
   createHTML();
   // show the container
@@ -136,11 +143,8 @@ function startGame() {
     container.style.display = "block";
   }
 
-  
-
   // set the background to fully transparent
-  render.options.background =
-    "rgba(255, 255, 255, 0)";
+  render.options.background = "rgba(255, 255, 255, 0)";
 
   // play the background music
   setSong("mainTheme");
@@ -161,9 +165,14 @@ function startGame() {
   });
   setFullScreenCanvas();
 
-  // Run the engine and the renderer
-  Matter.Runner.run(engine);
+  // start the render
   Matter.Render.run(render);
+
+  // Fixed timestep for consistent engine updates
+  const fixedDeltaTime = 1000 / 55; // milliseconds, approximately 60Hz
+  setInterval(() => {
+    Matter.Engine.update(engine, fixedDeltaTime);
+  }, fixedDeltaTime);
 
   // run the camera
   Matter.Events.on(engine, "beforeUpdate", () => {

@@ -1,5 +1,5 @@
 import { bonusObjectives } from "./bonusObjectives.js";
-const medalSize = "30px";
+
 
 const worldGradients = [
   // world 1, a nice blue
@@ -31,10 +31,12 @@ class Medal {
       src = bonusObjectives[this.name];
     }
     medal.src = src; // || "../../img/crown.png";
-    medal.className = "medal";
-    medal.style.width = medalSize;
-    medal.style.height = medalSize;
-    medal.style.padding = "10px";
+    // if the medal is a crown, use the crown-image class
+    if (this.name === "Beat the Level") {
+      medal.className = "crown-image";
+    } else {
+      medal.className = "bonus-objective-image";
+    }
     medal.title = this.description;
     // check if the medal has been earned
     if (
@@ -51,6 +53,10 @@ class Medal {
       }
     } else {
       medal.style.opacity = "0.5";
+      // if it's the crown, don't show it at all
+      if (this.name === "Beat the Level") {
+        medal.style.display = "none";
+      }
       // make the medal slightly grey
       medal.style.filter = "grayscale(100%)";
     }

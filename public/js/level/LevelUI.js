@@ -351,6 +351,8 @@ class LevelUI {
   }
   // creates the level menu
   loadLevelSelector() {
+    // remove the back arrow if it exists
+    this.destroyBackArrow();
     // if build mode is active, deactivate it
     if (this.parent.building.buildInProgress) {
       this.parent.building.toggleBuildingMode();

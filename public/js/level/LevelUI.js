@@ -56,8 +56,10 @@ class Medal {
     ) {
       medal.style.opacity = "1";
       if (box != null) {
-        // make the box and button dark gold
-        box.style.backgroundColor = "darkgoldenrod";
+        // make the box and button dark gold if this is "beat the level"
+        if (this.name === "Beat the Level") {
+          box.style.backgroundColor = "darkgoldenrod";
+        }
       }
     } else {
       medal.style.opacity = "0.5";
@@ -68,8 +70,8 @@ class Medal {
       // make the medal slightly grey
       medal.style.filter = "grayscale(100%)";
     }
-    // when the medal is clicked, display the description
-    medal.addEventListener("click", (event) => {
+    // when the medal is hovered over, show the description
+    medal.addEventListener("mouseover", (event) => {
       // stop the event from bubbling up to the parent
       event.stopPropagation();
       console.log("hovered");
@@ -80,17 +82,18 @@ class Medal {
       description.appendChild(title);
 
       let descriptionText = document.createElement("p");
-      descriptionText.innerHTML = this.description + " (click to close)";
+      descriptionText.innerHTML = this.description || "No description available.";
       description.appendChild(descriptionText);
-      // add the description to the body
-      document.body.appendChild(description);
-      // now if the user clicks anywhere, remove the description, and remove the event listener
-      setTimeout(() => {
-        document.addEventListener("click", () => {
-          description.remove();
-          document.removeEventListener("click", () => {});
-        });
-      }, 250);
+      // add the description to the medal
+      box.appendChild(description);
+      
+    });
+    // if the user moves the mouse off the medal, remove the description
+    medal.addEventListener("mouseout", () => {
+      let description = box.querySelector(".medal-description");
+      if (description) {
+        description.remove();
+      }
     });
     this.medalReference = medal;
     return medal;
@@ -191,7 +194,7 @@ class LevelUI {
     }
     worldSelector.appendChild(button);
   }
-  createBonusObjectives(levelSelector, levelNum, box) {
+  createBonusObjectives(levelSelector, levelNum, medalsBox, box) {
     let usedBonusObjectives = this.parent.LevelHandler.getBonusChallenges(
       this.parent.worldSelected,
       levelNum
@@ -207,11 +210,11 @@ class LevelUI {
         usedBonusObjectives[i].description,
         this,
         levelNum
-      ).createHTML();
+      ).createHTML(box);
       if (medal.style.opacity === "0.5") {
         allEarned = false;
       }
-      box.appendChild(medal);
+      medalsBox.appendChild(medal);
     }
     return allEarned;
   }
@@ -239,7 +242,7 @@ class LevelUI {
     let allEarned = false;
     // if the crown is not earned, don't show the other medals
     if (crown.style.opacity === "1") {
-      allEarned = this.createBonusObjectives(levelSelector, i, medalsBox);
+      allEarned = this.createBonusObjectives(levelSelector, i, medalsBox, box);
     }
     // if all other medals are earned, display the extra fancy crown
     if (allEarned) {

@@ -177,3 +177,25 @@
     padding: 10px;
     transform: translateX(-80%) translateY(-60%);
 }
+
+// a speech bubble that appears on the level select box
+.medal-description {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background-color: #2b5572;
+    color: #e4e8ec;
+    border-radius: 30px;
+    transform: translatey(50%);
+    z-index: 500;
+}
+
+.medal-description h3 {
+    padding: 10px;
+    text-align: center;
+}
+
+.medal-description p {
+    padding: 10px;
+    text-align: center;
+}

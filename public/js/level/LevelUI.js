@@ -84,6 +84,10 @@ class Medal {
       let descriptionText = document.createElement("p");
       descriptionText.innerHTML = this.description || "No description available.";
       description.appendChild(descriptionText);
+      // if the bonus objective is earned, set the background to gold
+      if (medal.style.opacity === "1") {
+        description.style.backgroundColor = "darkgoldenrod";
+      }
       // add the description to the medal
       box.appendChild(description);
       

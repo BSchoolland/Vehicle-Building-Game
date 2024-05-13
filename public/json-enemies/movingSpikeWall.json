@@ -22,6 +22,6 @@
     { "type": "BasicWoodenBlock", "x": 1525, "y": 375, "flippedX": false }
   ],
   "commands": [
-    { "key": "a", "start": 3.0, "end": 60.0}
+    { "key": "a", "start": 3.0, "end": 6000000.0}
   ]
 }

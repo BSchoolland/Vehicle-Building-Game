@@ -21,13 +21,6 @@ class Medal {
     this.levelNum = levelNum;
     this.medalReference = null;
   }
-  // change the source of the medal
-  changeSrc(src) {
-    if (this.medalReference === null) {
-      return;
-    }
-    this.medalReference.src = src;
-  }
   // create the medal
   createHTML(box = null) {
     let medal = document.createElement("img");
@@ -58,7 +51,7 @@ class Medal {
       if (box != null) {
         // make the box and button dark gold if this is "beat the level"
         if (this.name === "Beat the Level") {
-          box.style.backgroundColor = "darkgoldenrod";
+          box.style.backgroundColor = "#879096";
         }
       }
     } else {
@@ -86,7 +79,7 @@ class Medal {
       description.appendChild(descriptionText);
       // if the bonus objective is earned, set the background to gold
       if (medal.style.opacity === "1") {
-        description.style.backgroundColor = "darkgoldenrod";
+        description.style.backgroundColor = "goldenrod";
       }
       // add the description to the medal
       box.appendChild(description);
@@ -252,6 +245,8 @@ class LevelUI {
     // if all other medals are earned, display the extra fancy crown
     if (allEarned) {
       crown.src = "../../img/fancy-crown.png";
+      // set the box to dark gold
+      box.style.backgroundColor = "goldenrod";
     }
 
     // the crown is placed in the corner of the image

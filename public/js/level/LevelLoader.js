@@ -5,6 +5,78 @@ import {
 } from "../world/mapBlocks.js";
 
 
+// Function to create a compound body from an array of blocks that form horizontal lines
+function createCompoundBody(blocks) {
+  // Create lists of blocks that have the same y coordinate
+  let blockLists = [];
+  blocks.forEach((block) => {
+      let found = false;
+      for (let i = 0; i < blockLists.length; i++) {
+          if (blockLists[i][0].y === block.y) {
+              blockLists[i].push(block);
+              found = true;
+              break;
+          }
+      }
+      if (!found) {
+          blockLists.push([block]);
+      }
+  });
+
+  // For each list of blocks with the same y coordinate, merge horizontally adjacent blocks
+  let rectangles = [];
+  blockLists.forEach(blockList => {
+      blockList.sort((a, b) => a.x - b.x); // Sort by x-coordinate
+      let startX = blockList[0].x;
+      let currentEndX = startX + 100; // Assume all blocks are 100 pixels wide
+
+      for (let i = 1; i < blockList.length; i++) {
+          let block = blockList[i];
+          if (block.x <= currentEndX) { // Block is adjacent or overlapping
+              currentEndX = block.x + 100; // Extend the rectangle
+          } else {
+              // Complete the current rectangle before starting a new one
+              rectangles.push({
+                  x: startX + (currentEndX - startX) / 2 - 50, // Center x of the rectangle
+                  y: blockList[0].y, // Center y of the rectangle, assuming height is 100
+                  width: currentEndX - startX,
+                  height: 100
+              });
+              // Start new rectangle
+              startX = block.x;
+              currentEndX = block.x + 100;
+          }
+      }
+      // Add the last rectangle in the list
+      rectangles.push({
+          x: startX + (currentEndX - startX) / 2 - 50, // Center x of the rectangle
+          y: blockList[0].y, // Center y of the rectangle
+          width: currentEndX - startX,
+          height: 100
+      });
+  });
+
+  // Merge the rectangles into a single body
+  let compoundBody = Matter.Body.create({
+      parts: rectangles.map(rectangle =>
+          Matter.Bodies.rectangle(
+              rectangle.x,
+              rectangle.y,
+              rectangle.width,
+              rectangle.height,
+              { isStatic: true, friction: 0.5, restitution: 0.5 }
+          )
+      ),
+      isStatic: true,
+      // invisible
+      render: {
+          visible: false
+      }
+  });
+
+  return compoundBody;
+}
+
 // a class that handles the loading of levels, including all blocks and entities
 class LevelLoader {
   constructor(parent, blockTypes) {
@@ -12,6 +84,8 @@ class LevelLoader {
     this.blockTypes = blockTypes;
     this.enemySpawnPoints = [];
     this.playable = true;
+    this.blockList = [];
+    this.compoundBody = null;
   }
   loadEnemyContraption(blockJson) {
     let enemyType = blockJson.enemyType;
@@ -172,7 +246,15 @@ class LevelLoader {
     else {
       console.log("Floating level");
     }
+    // turn the blockList into a Matter.js body
+    let compoundBody = createCompoundBody(this.blockList);
+    // add the compound body to the world
+    Matter.World.add(this.parent.engine.world, compoundBody);
+    // Matter.World.remove(this.parent.engine.world, compoundBody);
+    
+    // record the compound body so we can remove it later
 
+    this.compoundBody = compoundBody;
 
     if (!playable) {
       // zoom way out with the camera
@@ -348,6 +430,13 @@ class LevelLoader {
     [...this.parent.blocks].forEach((block) => {
       this.removeBlock(block);
     });
+    // remove the compound body from the world
+    if (this.compoundBody) {
+      Matter.World.remove(this.parent.engine.world, this.compoundBody);
+    }
+   
+    this.compoundBody = null;
+    this.blockList = [];
     // Reset the undo stack and action stack
     this.parent.LevelEditor.actionStack = [];
     this.undoStack = [];
@@ -359,9 +448,15 @@ class LevelLoader {
   addBlock(block, addToActionStack = true) {
     block.Level = this;
     this.parent.blocks.push(block);
-    // add the block to the world
-    block.addToWorld(this.parent.engine.world);
-    // add the action to the action stack
+    // if it's a grassBlock or DirtBlock, add it to the blocklist, otherwise add it to the world
+    if (block instanceof this.blockTypes["GrassBlock"] || block instanceof this.blockTypes["DirtBlock"]) {
+      this.blockList.push(block);
+      block.addToWorld(this.parent.engine.world);
+
+    } else {
+      block.addToWorld(this.parent.engine.world);
+    }
+
     if (addToActionStack) {
       this.parent.LevelEditor.actionStack.push({ action: "add", block: block });
     }

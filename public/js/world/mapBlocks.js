@@ -55,8 +55,8 @@ class GrassBlock extends Block {
         // pick random shade of green
         let color = grassColors[Math.floor(Math.random() * grassColors.length)];
         super(x, y, level, color);
-        this.width = 100;2
-        this.height = 100;  
+        this.width = 100;
+        this.height =100;  
         this.bodies = [];
         this.makeBodies();
     }

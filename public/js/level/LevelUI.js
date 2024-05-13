@@ -19,6 +19,14 @@ class Medal {
     this.parent = parent;
     this.worldNum = this.parent.parent.worldSelected;
     this.levelNum = levelNum;
+    this.medalReference = null;
+  }
+  // change the source of the medal
+  changeSrc(src) {
+    if (this.medalReference === null) {
+      return;
+    }
+    this.medalReference.src = src;
   }
   // create the medal
   createHTML(box = null) {
@@ -84,6 +92,7 @@ class Medal {
         });
       }, 250);
     });
+    this.medalReference = medal;
     return medal;
   }
 }
@@ -190,6 +199,7 @@ class LevelUI {
     if (usedBonusObjectives === undefined) {
       return;
     }
+    let allEarned = true;
     for (let i = 0; i < usedBonusObjectives.length; i++) {
       let medal = new Medal(
         usedBonusObjectives[i].name,
@@ -198,8 +208,12 @@ class LevelUI {
         this,
         levelNum
       ).createHTML();
+      if (medal.style.opacity === "0.5") {
+        allEarned = false;
+      }
       box.appendChild(medal);
     }
+    return allEarned;
   }
 
   createMedalIcons(levelSelector, i, box) {
@@ -222,10 +236,16 @@ class LevelUI {
       this,
       i + 1
     ).createHTML(box);
+    let allEarned = false;
     // if the crown is not earned, don't show the other medals
     if (crown.style.opacity === "1") {
-      this.createBonusObjectives(levelSelector, i, medalsBox);
+      allEarned = this.createBonusObjectives(levelSelector, i, medalsBox);
     }
+    // if all other medals are earned, display the extra fancy crown
+    if (allEarned) {
+      crown.src = "../../img/fancy-crown.png";
+    }
+
     // the crown is placed in the corner of the image
     medalsBox.appendChild(crown);
     return medalsBox;

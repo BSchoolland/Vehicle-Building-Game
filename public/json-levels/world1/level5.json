@@ -97,6 +97,13 @@
     { "name": "Collect", "value": 3 },
     { "name": "Survive", "value": 0 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "Unarmed and Dangerous",
+      "description": "Don't use any spike blocks.",
+      "value": 0
+    }
+  ],
   "tutorialText": "",
   "title": "High Ground"
 }

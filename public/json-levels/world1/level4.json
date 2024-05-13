@@ -250,6 +250,13 @@
     { "name": "Collect", "value": 6 },
     { "name": "Survive", "value": 25 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "Complete Overkill",
+      "description": "Destroy all enemies!",
+      "value": 6
+    }
+  ],
   "tutorialText": "Blocks can be rotated with the R key. No need to destroy all enemies, just survive and collect the coins!",
   "title": "The Great Escape"
 }

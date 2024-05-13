@@ -95,6 +95,18 @@
     { "name": "Collect", "value": 2 },
     { "name": "Survive", "value": 0 }
   ],
+  "bonusChallenges": [
+    {
+      "name": "Who needs blocks?",
+      "description": "Complete the level using 3 blocks or less",
+      "value": 3
+    },
+    {
+      "name": "Unarmed and Dangerous",
+      "description": "Don't use any spike blocks.",
+      "value": 1
+    }
+  ],
   "tutorialText": "Spikes can damage and destroy enemy contraptions!  If you ever need to remove your own blocks, just right click, it's less painful than spikes.",
   "title": "Attack!"
 }

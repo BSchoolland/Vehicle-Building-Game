@@ -1,7 +1,8 @@
 import { SpikeBlock, WheelBlock, RemoteBlock, TNTBlock } from "../vehicle/blocks.js";
 // a dictionary of bonus objectives and their images
 let bonusObjectives = {
-    "Beat the Level": "../../img/crown.png",
+    "Beat the Level": "../../img/silver-crown.png",
+    "First win": "../../img/crown.png",
     "Who needs blocks?": ["../../img/bonus-objectives/noBlock1.png", "../../img/bonus-objectives/noBlock2.png", "../../img/bonus-objectives/noBlock3.png", "../../img/bonus-objectives/noBlock4.png", "../../img/bonus-objectives/noBlock5.png", "../../img/bonus-objectives/noBlock6.png"],
     "Unarmed and Dangerous": "../../img/bonus-objectives/noWeapon.png",
     "Complete Overkill": "../../img/bonus-objectives/overkill.png",

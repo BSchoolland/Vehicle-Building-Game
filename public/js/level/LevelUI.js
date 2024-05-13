@@ -79,7 +79,7 @@ class Medal {
       description.appendChild(descriptionText);
       // if the bonus objective is earned, set the background to gold
       if (medal.style.opacity === "1") {
-        description.style.backgroundColor = "goldenrod";
+        description.style.backgroundColor = "darkgoldenrod";
       }
       // add the description to the medal
       box.appendChild(description);
@@ -198,7 +198,7 @@ class LevelUI {
       levelNum
     );
     if (usedBonusObjectives === undefined) {
-      return;
+      return true;
     }
     let allEarned = true;
     for (let i = 0; i < usedBonusObjectives.length; i++) {
@@ -214,6 +214,7 @@ class LevelUI {
       }
       medalsBox.appendChild(medal);
     }
+    console.log(allEarned);
     return allEarned;
   }
 
@@ -244,9 +245,9 @@ class LevelUI {
     }
     // if all other medals are earned, display the extra fancy crown
     if (allEarned) {
-      crown.src = "../../img/fancy-crown.png";
+      crown.src = "../../img/gold-crown.png";
       // set the box to dark gold
-      box.style.backgroundColor = "goldenrod";
+      box.style.backgroundColor = "darkgoldenrod";
     }
 
     // the crown is placed in the corner of the image

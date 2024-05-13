@@ -110,7 +110,7 @@ class Gameplay {
     if (this.parent.LevelHandler.isLevelCompleted(world, level)) {
       checkBonusObjectives(this);
     } else {
-      displayObjective("Beat the Level", 1);
+      displayObjective("First win", 1);
       // update the player's local storage to show that the level has been completed
       this.parent.LevelHandler.completeLevel(
         this.parent.worldSelected,

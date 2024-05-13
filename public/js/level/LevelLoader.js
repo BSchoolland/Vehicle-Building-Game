@@ -224,12 +224,12 @@ class LevelLoader {
         if (this.parent.building.camera.tourCancelled) {
           // if the tour was cancelled, don't do anything
           console.log("Tour cancelled");
-          this.parent.building.camera.tourCancelled = false;
           // clear the level
           this.clear();
           clearInterval(interval);
           return;
         }
+        console.log("Tour done");
         clearInterval(interval);
         this.parent.building.camera.doingTour = false;
 

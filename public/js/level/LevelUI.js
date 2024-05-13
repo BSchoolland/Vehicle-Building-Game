@@ -151,6 +151,7 @@ class LevelUI {
       else {
         let wait = 0;
         if (this.parent.building.camera.doingTour) {
+          console.log("tour cancelled!");
           // if the camera is doing a tour, stop it, and notify that the tour has been cancelled
           this.parent.building.camera.doingTour = false;
           this.parent.building.camera.tourCancelled = true;

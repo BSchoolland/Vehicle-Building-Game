@@ -114,8 +114,6 @@ class BuildMenu {
         try {
           this.blockTypes[index].type = eval(blockType.type);
           this.blockTypes[index].buildImage = buildClassesToImages[blockType.type.name];
-          console.log(this.blockTypes[index].buildImage);
-          console.log(blockType.type.name);
         } catch (e) {
           // if the block type is not valid, set it to a basic wooden block
           this.blockTypes[index].type = BasicWoodenBlock;
@@ -618,7 +616,6 @@ class Building {
     // playSound("selectBlock");
   }
   makeNewBuildMenu(blockTypes, isEnemyEditor = false) {
-    console.log(isEnemyEditor)
     // makes a new build menu with the given block types (for levels that limit the blocks that can be used)
     // remove the old build menu
     this.buildMenu.menu.remove();

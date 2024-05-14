@@ -1,5 +1,5 @@
 // Import the block classes from public/js/world/mapBlocks.js
-import { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock } from '../world/mapBlocks.js';
+import { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock, DirtBlock } from '../world/mapBlocks.js';
 import LevelManager from '../level/LevelManager.js'; 
 // import the enemyHandler class
 import EnemyHandler from '../loaders/enemyHandler.js';
@@ -196,6 +196,7 @@ class BuildMenu {
             { name: 'Enemy Spawn Block', key: '8', type: EnemySpawnBlock },
             { name: 'upsidedown slight ramp', key: '9', type: slightRampBlockLUpsideDown},
             { name: 'upsidedown slight ramp R', key: '0', type: slightRampBlockRUpsideDown},
+            { name: 'Dirt Block', key: 'q', type: DirtBlock}
         ];
         this.createBlockButtons();
         // create a button to save the level

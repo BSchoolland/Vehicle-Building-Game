@@ -182,20 +182,6 @@
       "y": 1075,
       "rotatedTimes": 0,
       "flippedX": false
-    },
-    {
-      "type": "SpikeBlock",
-      "x": 525,
-      "y": 1125,
-      "rotatedTimes": 3,
-      "flippedX": false
-    },
-    {
-      "type": "SpikeBlock",
-      "x": 475,
-      "y": 1175,
-      "rotatedTimes": 2,
-      "flippedX": false
     }
   ],
   "commands": [

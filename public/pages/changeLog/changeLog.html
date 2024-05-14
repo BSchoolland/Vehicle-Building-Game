@@ -1,10 +1,14 @@
-<!-- this html page shows users the changelog, and allows them to submit suggesions and vote on future features -->
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Change Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="css/features.css">
+    <title>Community Dashboard</title>
+    <!-- import css -->
+    <link rel="stylesheet" href="css/globals.css">
+    <!-- favicon -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <meta name="keywords" content="Wrecking Wheels, game, video game, browser game, building, destruction, sandbox, levels, change log, vote, suggestions">
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V15BD9CZKN"></script>
@@ -16,121 +20,63 @@
     gtag('config', 'G-V15BD9CZKN');
 </script>
 
-<body>
-    <a href="/"><h3>Home</h3></a>
-    <div class="header">
-        <h1>Change Dashboard</h1>
-    </div>
-    <div class="content">
-        <h2>Submit a Suggestion
-            <p class="logged-out-only" style="font-size: 16px; color: #ff0000; margin: 0; padding: 0;">
-                you must be logged in to submit a suggestion</p>
+<body class="community-body">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
 
-        </h2>
-        <form id="suggesions" action="/submitSuggestion" method="post">
-            <label for="suggestion">Suggestion:</label>
-            <input type="text" id="suggestion" name="suggestion" required>
-            <button type="submit">Submit</button>
-        </form>
-
-        <h2>Vote on What to Add in 1.3.0 <p style="font-size: 16px; color: #ff0000; margin: 0; padding: 0;">
-            All these features are planned, but your votes will decide the order they are implemented!</p>
-        </h2>
-        <div class="vote">
-            <div class="feature"
-                style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/editor.png');">
-                <h3>Level Editor</h3>
-                <p>Create your own levels and play levels created by other players</p>
-                <button class="vote-button" data-feature-id="editor">Log in to Vote</button>
-            </div>
-            <div class="feature"
-                style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/world45.png');">
-                <h3>World 4 and 5</h3>
-                <p>Explore new worlds with new blocks and challenges</p>
-                <button class="vote-button" data-feature-id="world45">Log in to Vote</button>
-
-            </div>
-            <div class="feature"
-                style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/2p.png');">
-                <h3>Local 2 Player</h3>
-                <p>Play against a friend on the same computer</p>
-                <button class="vote-button" data-feature-id="pvp">Log in to Vote</button>
-            </div>
+    <div class="topbar">
+        <div>
+            <p class="signature">Made by: <a href="https://bschoolland.com" target="_blank">Benjamin Schoolland</a></p>
         </div>
-        <h2>Currently working on:</h2>
-        <div class = "markdownContent">
-            <h3> Version 1.2.0 - Sandbox Mode and UI Improvements</h3>
-            <ul>
-            <li>Currently working on a sandbox mode, where you can build with unlimited blocks and no objectives. Also
-                working on improving all UI elements, including the main menu, level select, and in-game UI. Planned for May 18!</li>
-            </ul>
-        </div>
-        <h2>Changelog</h2>
-        
-        <div class="markdownContent">
-            <!-- in progress -->
-            <h2>Version 1.2.0 - Sandbox Mode and UI Improvements - Released on 05-18-2024</h2>
-            <h3>New Features:</h3>
-            <ul>
-                <!-- <li>Added sandbox mode, where you can build with unlimited blocks and no objectives</li> -->
-
-                <li>Improved home screen with new buttons and an animated background</li>
-                <li>Updated level select screen for better visuals</li>
-                <li>Maps now automatically create dirt blocks below the grass, to make levels look more grounded (pun intended)</li>
-            </ul>
-            <h3>Changes:</h3>
-            <ul>
-                <li>All contraptions must now have at least one block in addition to the seat</li>
-            </ul>
-            <h2>Version 1.1.1 - Bug Fixes - Released on 04-01-2024</h2>
-            <h3>Fixes:</h3>
-                <ul>
-                    <li>Fixed bug where level would not end when beating a level you had already completed</li>
-                    <li>Fixed bug where the game would not load in certain cases</li>
-                </ul>
-            <h3>Changes:</h3>
-                <ul>
-                    <li>Added more bonus objectives to levels in world 2 and 3</li>
-                </ul>
-            
-            <h2>Version 1.1.0 - Bonus Objectives and Feature Voting - Released on 03-31-2024</h2>
-
-            <h3>New Features:</h3>
-            <ul>
-                <li>Added bonus objectives to levels you've already completed</li>
-                <li>Added the feature dashboard, where you can vote on upcoming features, submit feedback, and view this
-                    changelog</li>
-                <li>Added new login system, allowing you to save progress across devices</li>
-            </ul>
-            <h3>Changes:</h3>
-            <ul>
-                <li>Replaced coin texture</li>
-                <li>Added "TNT" text to the TNT texture</li>
-            </ul>
-            <h3>Fixes:</h3>
-            <ul>
-                <li>Fixed visual bug when leaving a level before it is fully loaded</li>
-                <li>Fixed objectives not displaying during level tours</li>
-            </ul>
-
-            <h2>Version 1.0.0 - Initial Release - Released on 02-26-2024</h2>
-
-            <h3>New Features:</h3>
-            <ul>
-                <li>Wrecking Wheels: A unique 2D physics-based game where you build and control vehicles of mahem</li>
-                <li>Explore 33 levels</li>
-                <li>Satisfying destruction and explosions</li>
-                <li>7 different blocks to build with, including wheels, rocket boosters, and TNT</li>
-            </ul>
-
-            <h3>Thank You:</h3>
-            <ul>
-                <li>A huge thank you to my friends and family for their playtesting and feedback, as well as
-                    encouragement to keep going</li>
-                <li>Special thanks to Michael, who helped write the game's soundtrack</li>
-                <li>And of course, thank you for playing! It wouldn't really be a game without players!</li>
-            </ul>
+        <div class="top-bar-right" style="margin-top: 20px">
+            <a href="#feature-fight" class="login-button">Feature Fight</a>
+            <a href="#suggestions" class="login-button">Suggestions</a>
+            <a href="#change-log" class="login-button">Change Log</a>
         </div>
     </div>
-    <script src="/pages/changeLog/changeLog.js"></script>
+
+    <!-- div for the suggestion button and image -->
+    <div class="suggestion-div">
+        <!-- button for toggling the suggestion popup -->
+        <button id="login-button" class="login-button" style="transform: translateX(60%);">Suggestions</button>
+        <!-- image for suggestions -->
+        <img src="/img/community/suggestions.png" alt="suggestion" class="suggestion">
+    </div>  
+
+        <!-- div for the suggestion button and image -->
+        <div class="suggestion-div">
+            <!-- button for toggling the suggestion popup -->
+            <button id="login-button" class="login-button" style="transform: translateX(60%);">Suggestions</button>
+            <!-- image for suggestions -->
+            <img src="/img/community/suggestions.png" alt="suggestion" class="suggestion">
+        </div>  
+
+            <!-- div for the suggestion button and image -->
+    <div class="suggestion-div">
+        <!-- button for toggling the suggestion popup -->
+        <button id="login-button" class="login-button" style="transform: translateX(60%);">Suggestions</button>
+        <!-- image for suggestions -->
+        <img src="/img/community/suggestions.png" alt="suggestion" class="suggestion">
+    </div>  
+    
+
+    <!-- when active, the suggestion popup will be displayed -->
+    <div id="login-popup" class="login-popup hidden" hidden>
+        <div class="login-popup-content">
+            <div class="login-popup-header">
+                <h2 class="login-title">Suggestions</h2>
+                <span class="close" id="close-login">&times;</span>
+            </div>
+
+            <form class="login-form" id="login-form">
+                <label for="suggestion">Enter your suggestion:</label>
+                <textarea class="suggestion-text" id="suggestion" name="suggestion" required></textarea>
+                <button type="submit">SUBMIT</button>
+            </form>
+            <p id="message" style="color: red; text-align: center;"></p>
+        </div>
+    </div>
+<script src="/pages/changeLog/changeLog.js"></script>
+
 </body>
+
+</html>

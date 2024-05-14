@@ -1,0 +1,16 @@
+.community-body {
+    // a gradient background that stretches further than the screen, so that it can be scrolled
+    background: linear-gradient(rgb(86, 195, 248), rgb(36, 40, 44))
+}
+
+
+.suggestion-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+    padding: 20px;
+    // place the div on the left side of the screen
+    transform: translateX(-45%);
+}

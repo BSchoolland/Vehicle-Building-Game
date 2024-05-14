@@ -1,27 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-
-    
-    let suggestionButton = document.getElementById("login-button");
-    suggestionButton.addEventListener("click", () => {
-        let loginPopup = document.getElementById("login-popup");
-        loginPopup.classList.remove("hidden");
-    });
-
-    // if the close button is clicked, hide the popup
-    let closeButton = document.getElementById("close-login");
-        closeButton.addEventListener("click", () => {
-        let loginPopup = document.getElementById("login-popup");
-        loginPopup.classList.add("hidden");
-    });
-
-
-    const suggestionForm = document.getElementById("login-form");
+    const suggestionForm = document.getElementById('suggesions');
     const voteButtons = document.querySelectorAll('.vote-button');
 
     suggestionForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const suggestion = document.getElementById('suggestion').value;
-        console.log('suggestion:', suggestion)
+
         fetch('/api/submitSuggestion', {
             method: 'POST',
             headers: {
@@ -34,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if(response.ok) {
                 return response.json();
             }
-            throw new Error(response.status);
+            throw new Error('Failed to submit suggestion');
         })
         .then(data => {
             alert('Suggestion submitted successfully');
@@ -42,11 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => {
             console.error('Error:', error);
-            if(error.message == '401') {
-                alert('You need to log in to submit a suggestion');
-                // redirect to home page
-                window.location.href = '/'
-            }
         });
     });
 

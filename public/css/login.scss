@@ -89,6 +89,16 @@
     background: linear-gradient(0deg, darken(#1B6B1A, 10%), darken(#31C930, 10%));
 }
 
+.login-form .suggestion-text {
+    width: 75%;
+    height: 100px;
+    font-size: 18px;
+    padding: 5px;
+    margin: 6px 0;
+    border: 1px solid $text-color;
+    border-radius: 5px;
+}
+
 .login-title {
     color: $text-color;
     font-size: 30px;

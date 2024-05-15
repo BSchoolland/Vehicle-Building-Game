@@ -1,6 +1,7 @@
 .community-body {
     // a gradient background that stretches further than the screen, so that it can be scrolled
-    background: linear-gradient(rgb(86, 195, 248), rgb(36, 40, 44))
+    background: linear-gradient(rgb(86, 195, 248), rgb(36, 40, 44));
+    overflow-x: hidden;
 }
 
 
@@ -13,4 +14,45 @@
     padding: 20px;
     // place the div on the left side of the screen
     transform: translateX(-45%);
+}
+
+.left-vote {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+    padding: 20px;
+    // place the div on the left side of the screen
+    transform: translateX(-45%);
+}
+
+.right-vote {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+    padding: 20px;
+    // place the div on the right side of the screen
+    transform: translateX(45%);
+}
+
+.vote-button {
+    background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
+    color: $text-color;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: 900;
+    // not underlined
+    text-decoration: none;
+    // set the font
+    font-family: 'Roboto', sans-serif;  
+    
 }

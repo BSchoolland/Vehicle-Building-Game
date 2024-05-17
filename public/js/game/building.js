@@ -778,11 +778,7 @@ class Building {
     }
   }
   selectBlock(block) {
-    // if the block is already selected, deselect it
-    if (this.selectedBlock === block) {
-      this.removeGhostBlocks();
-      return;
-    }
+
     // remove the ghost blocks
     this.removeGhostBlocks();
     // add a ghost block, a large blue square, to show that the block is selected

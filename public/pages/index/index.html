@@ -10,9 +10,9 @@
     </style>
     <!-- import css -->
     <link rel="stylesheet" href="css/globals.css">
+    <!-- disalow zoom -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">    favicon
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- favicon -->
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
 
     <meta name="keywords"
@@ -43,6 +43,36 @@
 </script>
 
 <body class="index-body">
+        <!-- if the browser is programmed to ignore the user-scalable=no, the following script will prevent zooming -->
+
+        <script>
+            // JavaScript to prevent zooming
+            document.addEventListener('gesturestart', function (e) {
+              e.preventDefault();
+            });
+        
+            document.addEventListener('gesturechange', function (e) {
+              e.preventDefault();
+            });
+        
+            document.addEventListener('gestureend', function (e) {
+              e.preventDefault();
+            });
+        
+            document.addEventListener('touchmove', function (event) {
+              if (event.scale !== 1) {
+                event.preventDefault();
+              }
+            }, { passive: false });
+        
+            document.addEventListener('wheel', function (event) {
+              if (event.ctrlKey) {
+                event.preventDefault();
+              }
+            });
+          </script>
+        </body>
+        </html>
     <div style="z-index: -10;" id="game-container"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
     <div class="index-title-post">

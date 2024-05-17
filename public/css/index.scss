@@ -1,6 +1,3 @@
-
-
-
 .index-body {
   background: linear-gradient(rgba(157, 157, 157, 0.8), rgba(157, 157, 157, 0.8)), url('/img/index-bg.png');
   background-size: cover;
@@ -14,7 +11,7 @@
   margin: 20px;
 }
 
-// the below code is for the tilted title sign
+/* Tilted title sign */
 .index-title-container {
   position: absolute;
   top: 15%;
@@ -28,7 +25,8 @@
   border-radius: 10px;
 }
 
-.index-title-post { // a post coming down from the top that "holds" the sign
+.index-title-post {
+  /* Post holding the sign */
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
@@ -44,15 +42,15 @@
   letter-spacing: 0.1em;
 }
 
-// the content of the page
+/* Top bar content */
 .topbar {
-  display: flex; /* Enables Flexbox */
-  flex-direction: row; /* Aligns children elements in a row */
-  justify-content: space-between; /* Spaces the children elements evenly, pushing them to the edge of the parent container */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .topbar a {
-  text-align: center; /* Centers text */
+  text-align: center;
 }
 
 .login-button {
@@ -60,18 +58,13 @@
   color: $text-color;
   border: none;
   border-radius: 5px;
-  padding: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 10px 20px; /* Combined padding */
   margin: 10px;
   font-size: 1.5rem;
   cursor: pointer;
   font-weight: 900;
-  // not underlined
   text-decoration: none;
-  // set the font
-  font-family: 'Roboto', sans-serif;  
-  
+  font-family: 'Roboto', sans-serif;
 }
 
 .settings-button {
@@ -85,14 +78,13 @@
   cursor: pointer;
 }
 
-
 .settings-image {
-  height: 1.45em; /* Adjusts the image height to scale with the font size */
-  width: auto; /* Keeps the image aspect ratio */
-  vertical-align: middle; /* Helps align the image vertically inside the button */
+  height: 1.45em;
+  width: auto;
+  vertical-align: middle;
 }
 
-// this contains the 3 large buttons on the index page
+/* Main button container */
 .main-button-container {
   display: flex;
   flex-direction: row;
@@ -102,11 +94,11 @@
 }
 
 .main-button {
-  display: inline-block; // Add this line
+  display: inline-block;
   position: relative;
   background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
   color: $text-color;
-  border: 7px solid black; // Add this line
+  border: 7px solid black;
   border-radius: 100%;
   padding: 3%;
   margin: 5%;
@@ -116,4 +108,53 @@
   height: 6em;
   width: auto;
   vertical-align: middle;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+
+  .signature {
+    margin: 0px;
+    max-width: 75%;
+  }
+
+  .index-title-container {
+    top: 10%;
+    transform: translate(-50%, -50%) rotate(3deg);
+    padding: 10px;
+  }
+
+  .index-title-post {
+    display: none;
+  }
+
+  .index-title {
+    font-size: 2rem;
+  }
+
+  .topbar {
+    margin-top: 10px;
+  }
+
+  .login-button, .settings-button {
+    width: 90%;
+    margin: 5px 0;
+    font-size: 1.2rem;
+    padding: 10px;
+  }
+
+  .main-button-container {
+
+    margin-top: 5vh;
+  }
+
+  .main-button {
+    margin: -40px 10px;
+    padding: 5%;
+    border-width: 5px;
+  }
+
+  .main-button-image {
+    height: 2em;
+  }
 }

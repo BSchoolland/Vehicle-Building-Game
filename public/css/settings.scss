@@ -87,3 +87,64 @@
 .hidden {
     display: none;
 }
+
+
+@media screen and (max-width: 768px) {
+    .settings-popup-content {
+        width: 70%;
+        margin: 2px;
+        max-height: 90%;
+        overflow: scroll;
+    }
+
+    .settings-form input {
+        width: 75%;
+        margin: 2px;
+    }
+
+    .settings-form button {
+        width: 30%;
+        margin: 15px;
+    }
+
+    .settings-form .suggestion-text {
+        width: 85%;
+        margin: 2px;
+    }
+    // smaller font size for smaller screens
+    .settings-form label {
+        font-size: 14px;
+        margin: 2px;
+    }
+
+    .settings-form input {
+        font-size: 16px;
+        margin: 2px;
+    }
+
+    .settings-form button {
+        font-size: 14px;
+        margin: 2px;
+    }
+
+    .settings-form .suggestion-text {
+        font-size: 16px;
+        margin: 2px;
+    }
+
+    .settings-title {
+        font-size: 24px;
+        margin: 2px;
+    }
+
+    .settings-change {
+        font-size: 16px;
+        margin: 2px;
+    }
+
+    .close {
+        font-size: 40px;
+        margin: 2px;
+    }
+
+}

@@ -135,3 +135,70 @@
 .hidden {
     display: none;
 }
+
+@media screen and (max-width: 768px) {
+    .login-popup-content {
+        width: 70%;
+        margin: 2px;
+        max-height: 90%;
+        overflow: scroll;
+    }
+
+    .register-popup-content {
+        width: 70%;
+        margin: 2px;
+        max-height: 90%;
+        overflow: scroll;
+    }
+
+    .login-form input {
+        width: 75%;
+        margin: 2px;
+    }
+
+    .login-form button {
+        width: 30%;
+        margin: 15px;
+    }
+
+    .login-form .suggestion-text {
+        width: 85%;
+        margin: 2px;
+    }
+    // smaller font size for smaller screens
+    .login-form label {
+        font-size: 14px;
+        margin: 2px;
+    }
+
+    .login-form input {
+        font-size: 16px;
+        margin: 2px;
+    }
+
+    .login-form button {
+        font-size: 14px;
+        margin: 2px;
+    }
+
+    .login-form .suggestion-text {
+        font-size: 16px;
+        margin: 2px;
+    }
+
+    .login-title {
+        font-size: 24px;
+        margin: 2px;
+    }
+
+    .login-change {
+        font-size: 16px;
+        margin: 2px;
+    }
+
+    .close {
+        font-size: 40px;
+        margin: 2px;
+    }
+
+}

@@ -408,6 +408,7 @@ class LevelUI {
     // use inline styles to make sure the button displays all the way to the right
     settingsButton.style.position = "absolute";
     settingsButton.style.right = "15px";
+    settingsButton.style.maxWidth = "50px"; // workaround for mobile css bug I didn't want to track down
 
     let settingsImage = document.createElement("img");
     settingsImage.className = "settings-image";
@@ -415,7 +416,7 @@ class LevelUI {
     settingsImage.alt = "settings";
     settingsButton.appendChild(settingsImage);
     
-    // this is a temporary (who am i kidding it will probably stay) solution to the settings button
+    // this is a temporary (who am I kidding it will probably stay) solution to the settings button
     // works very similarly to the settings button on the index page, but changed to work with this settings button that does not always exist
     settingsButton.addEventListener("click", () => {
       let settingsPopup = document.getElementById("settings-popup");

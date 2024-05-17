@@ -11,7 +11,7 @@
     <!-- import css -->
     <link rel="stylesheet" href="css/globals.css">
     <!-- disalow zoom -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
 
@@ -43,136 +43,135 @@
 </script>
 
 <body class="index-body">
-        <!-- if the browser is programmed to ignore the user-scalable=no, the following script will prevent zooming -->
-        <script>
-            // JavaScript to prevent zooming
-            document.addEventListener('gesturestart', function (e) {
-              e.preventDefault();
-            });
-        
-            document.addEventListener('gesturechange', function (e) {
-              e.preventDefault();
-            });
-        
-            document.addEventListener('gestureend', function (e) {
-              e.preventDefault();
-            });
-        
-            document.addEventListener('touchmove', function (event) {
-              if (event.scale !== 1) {
-                event.preventDefault();
-              }
-            }, { passive: false });
-        
-            document.addEventListener('wheel', function (event) {
-              if (event.ctrlKey) {
-                event.preventDefault();
-              }
-            });
-          </script>
-        </body>
-        </html>
-    <div style="z-index: -10;" id="game-container"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
-    <div class="index-title-post">
+ <!-- if the browser is programmed to ignore the user-scalable=no, the following script will prevent zooming -->
+ <script>
+    // JavaScript to prevent zooming
+    document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+    });
 
+    document.addEventListener('gesturechange', function (e) {
+        e.preventDefault();
+    });
+
+    document.addEventListener('gestureend', function (e) {
+        e.preventDefault();
+    });
+
+    document.addEventListener('touchmove', function (event) {
+        if (event.scale !== 1) {
+        event.preventDefault();
+        }
+    }, { passive: false });
+
+    document.addEventListener('wheel', function (event) {
+        if (event.ctrlKey) {
+        event.preventDefault();
+        }
+    });
+    </script>
+
+<div style="z-index: -10;" id="game-container"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+<div class="index-title-post">
+
+</div>
+<div class="index-title-container">
+    <h1 class="index-title">Wrecking Wheels</h1>
+</div>
+<div class="topbar">
+    <div>
+        <p class="signature">Made by: <a href="https://bschoolland.com" target="_blank">Benjamin Schoolland</a></p>
     </div>
-    <div class="index-title-container">
-        <h1 class="index-title">Wrecking Wheels</h1>
+    <div class="top-bar-right">
+        <button id="login" class="login-button">Login</button>
+        <button id="settings-button" class="settings-button">
+            <img class="settings-image" src="/img/settings.png" alt="settings">
+        </button>
     </div>
-    <div class="topbar">
-        <div>
-            <p class="signature">Made by: <a href="https://bschoolland.com" target="_blank">Benjamin Schoolland</a></p>
+</div>
+<div class="main-button-container">
+    <a id="sandbox" class="main-button" href="/sandbox">
+        <img class="main-button-image" src="/img/Sandbox.png" alt="sandbox">
+    </a>
+    <a id="play" class="main-button" href="/levels">
+        <img class="main-button-image" src="/img/Play.png" alt="play">
+    </a>
+    <a id="community" class="main-button" href="/community">
+        <img class="main-button-image" src="/img/Community.png" alt="change-log">
+    </a>
+</div>
+
+<script type="module" src="/pages/index/index.js"></script>
+
+<p id="tutorial-text" style="opacity: 0;"></p>
+<!-- when active, the login popup will be displayed -->
+<div id="login-popup" class="login-popup hidden" hidden>
+    <div class="login-popup-content">
+        <div class="login-popup-header">
+            <h2 class="login-title">Login</h2>
+            <span class="close" id="close-login">&times;</span>
         </div>
-        <div class="top-bar-right">
-            <button id="login" class="login-button">Login</button>
-            <button id="settings-button" class="settings-button">
-                <img class="settings-image" src="/img/settings.png" alt="settings">
-            </button>
+
+        <form class="login-form" id="login-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">LOGIN</button>
+        </form>
+        <button id="register-button" class="login-change">Don't have an account?</button>
+        <p id="message" style="color: red; text-align: center;"></p>
+    </div>
+</div>
+<!-- when active, the register popup will be displayed -->
+<div id="register-popup" class="login-popup hidden">
+    <div class="register-popup-content">
+        <div class="login-popup-header">
+            <h2 class="login-title">Register</h2>
+            <span class="close" id="close-register">&times;</span>
         </div>
-    </div>
-    <div class="main-button-container">
-        <a id="sandbox" class="main-button" href="/sandbox">
-            <img class="main-button-image" src="/img/Sandbox.png" alt="sandbox">
-        </a>
-        <a id="play" class="main-button" href="/levels">
-            <img class="main-button-image" src="/img/Play.png" alt="play">
-        </a>
-        <a id="community" class="main-button" href="/community">
-            <img class="main-button-image" src="/img/Community.png" alt="change-log">
-        </a>
+
+        <form class="login-form" id="register-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username-create" name="username-create" required>
+            <label for="username">Email:</label>
+            <input type="text" id="email-create" name="email-create" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password-create" name="password-create" required>
+            <label for="password">Confirm password:</label>
+            <input type="password" id="confirm-password" name="confirm-password-create" required>
+            <button type="submit">LOGIN</button>
+        </form>
+        <button id="login-button" class="login-change">Already have an account?</button>
+        <p id="message2" style="color: red; text-align: center;"></p>
     </div>
 
-    <script type="module" src="/pages/index/index.js"></script>
-
-    <p id="tutorial-text" style="opacity: 0;"></p>
-    <!-- when active, the login popup will be displayed -->
-    <div id="login-popup" class="login-popup hidden" hidden>
-        <div class="login-popup-content">
-            <div class="login-popup-header">
-                <h2 class="login-title">Login</h2>
-                <span class="close" id="close-login">&times;</span>
+</div>
+<!-- A settings popup -->
+<div id="settings-popup" class="settings-popup hidden">
+    <div class="settings-popup-content">
+        <div class="settings-popup-header">
+            <h2 class="settings-title">Settings</h2>
+            <span class="close" id="close-settings">&times;</span>
+        </div>
+        <div class="settings-content">
+            <div class="settings-option">
+                <label for="music">Music Volume:</label>
+                <input type="range" id="music-slider" name="music" min="0" max="20" value="10" />
             </div>
-
-            <form class="login-form" id="login-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <button type="submit">LOGIN</button>
-            </form>
-            <button id="register-button" class="login-change">Don't have an account?</button>
-            <p id="message" style="color: red; text-align: center;"></p>
-        </div>
-    </div>
-    <!-- when active, the register popup will be displayed -->
-    <div id="register-popup" class="login-popup hidden">
-        <div class="register-popup-content">
-            <div class="login-popup-header">
-                <h2 class="login-title">Register</h2>
-                <span class="close" id="close-register">&times;</span>
+            <div class="settings-option">
+                <label for="sound">Sound Effect Volume:</label>
+                <input type="range" id="sound-slider" name="sound" min="0" max="20" value="10" />
             </div>
-
-            <form class="login-form" id="register-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username-create" name="username-create" required>
-                <label for="username">Email:</label>
-                <input type="text" id="email-create" name="email-create" required>
-                <label for="password">Password:</label>
-                <input type="password" id="password-create" name="password-create" required>
-                <label for="password">Confirm password:</label>
-                <input type="password" id="confirm-password" name="confirm-password-create" required>
-                <button type="submit">LOGIN</button>
-            </form>
-            <button id="login-button" class="login-change">Already have an account?</button>
-            <p id="message2" style="color: red; text-align: center;"></p>
-        </div>
-
-    </div>
-    <!-- A settings popup -->
-    <div id="settings-popup" class="settings-popup hidden">
-        <div class="settings-popup-content">
-            <div class="settings-popup-header">
-                <h2 class="settings-title">Settings</h2>
-                <span class="close" id="close-settings">&times;</span>
-            </div>
-            <div class="settings-content">
-                <div class="settings-option">
-                    <label for="music">Music Volume:</label>
-                    <input type="range" id="music-slider" name="music" min="0" max="20" value="10"/>
-                </div>
-                <div class="settings-option">
-                    <label for="sound">Sound Effect Volume:</label>
-                    <input type="range" id="sound-slider" name="sound" min="0" max="20" value="10"/>
-                </div>
-                <!-- potential graphics quality control -->
-                <!-- <div class="settings-option">
+            <!-- potential graphics quality control -->
+            <!-- <div class="settings-option">
                     <label for="graphics">Graphics:</label>
                     <input type="range" id="graphics" name="graphics" min="0" max="10" value="5"/>
                 </div> -->
-            </div>
         </div>
     </div>
+</div>
 
 </body>
 

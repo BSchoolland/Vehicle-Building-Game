@@ -31,6 +31,34 @@
     }
 </style>
 <body>
+     <!-- if the browser is programmed to ignore the user-scalable=no, the following script will prevent zooming -->
+     <script>
+        // JavaScript to prevent zooming
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+    
+        document.addEventListener('gesturechange', function (e) {
+            e.preventDefault();
+        });
+    
+        document.addEventListener('gestureend', function (e) {
+            e.preventDefault();
+        });
+    
+        document.addEventListener('touchmove', function (event) {
+            if (event.scale !== 1) {
+            event.preventDefault();
+            }
+        }, { passive: false });
+    
+        document.addEventListener('wheel', function (event) {
+            if (event.ctrlKey) {
+            event.preventDefault();
+            }
+        });
+        // FIXME: prevent double tap zoom
+        </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
     <!-- game container object -->
     <div id="landscape-warning" style="display: none;">

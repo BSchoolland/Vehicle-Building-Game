@@ -199,3 +199,34 @@
     padding: 10px;
     text-align: center;
 }
+
+@media screen and (max-width: 768px) {
+    .level-select-box {
+        width: 37%;
+        margin-top: 40px;
+    }
+    .level-menu-header {
+        font-size: 16px;
+    }
+
+    .return-arrow {
+        padding: 20px;
+    }
+
+    .return-arrow img {
+        width: 20px;
+    }
+
+    .world-arrow {
+        padding: 20px;
+    }
+
+    .world-arrow img {
+        width: 20px;
+    }
+
+    .level-select-title {
+        font-size: 16px;
+    }
+    
+}

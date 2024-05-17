@@ -1,6 +1,6 @@
 import Building from "./building.js";
 import { Camera } from "./camera.js";import LevelManager from "../level/LevelManager.js";
-import { setSong } from "../sounds/playSound.js";
+import { setSong, setMusicVolume, setSoundEffectVolume } from "../sounds/playSound.js";
 import ProgressBar from "../loaders/progressBar.js";
 
 
@@ -182,3 +182,32 @@ function startGame() {
   // Load the initial level selector screen
   levelObject.LevelUI.loadLevelSelector();
 }
+
+
+// handle popups 
+// if close settings is pressed, close the settings popuop
+let closeSettings = document.getElementById("close-settings");
+closeSettings.addEventListener("click", () => {
+  let settingsPopup = document.getElementById("settings-popup");
+  settingsPopup.classList.add("hidden");
+});
+// watch for the "music" slider to change
+let musicSlider = document.getElementById("music-slider");
+// set the music slider to the current volume in local storage
+musicSlider.value = localStorage.getItem("musicVolume") * musicSlider.max || 0.5 * musicSlider.max;
+musicSlider.addEventListener("input", () => {
+  let volume = musicSlider.value / musicSlider.max;
+  console.log("Music volume:", volume);
+  // set the volume of the music
+  setMusicVolume(volume);
+});
+// watch for the "sound" slider to change
+let soundSlider = document.getElementById("sound-slider");
+// set the sound slider to the current volume in local storage
+soundSlider.value = localStorage.getItem("soundEffectVolume") * soundSlider.max || 0.5 * soundSlider.max;
+soundSlider.addEventListener("input", () => {
+  let volume = soundSlider.value / soundSlider.max;
+  console.log("Sound volume:", volume);
+  
+  setSoundEffectVolume(volume);
+});

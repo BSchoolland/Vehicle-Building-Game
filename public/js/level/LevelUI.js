@@ -401,6 +401,28 @@ class LevelUI {
       
       
     }
+    // add the settings button
+    let settingsButton = document.createElement("button");
+    settingsButton.id = "settings-button";
+    settingsButton.className = "settings-button";
+    // use inline styles to make sure the button displays all the way to the right
+    settingsButton.style.position = "absolute";
+    settingsButton.style.right = "15px";
+
+    let settingsImage = document.createElement("img");
+    settingsImage.className = "settings-image";
+    settingsImage.src = "/img/settings.png";
+    settingsImage.alt = "settings";
+    settingsButton.appendChild(settingsImage);
+    
+    // this is a temporary (who am i kidding it will probably stay) solution to the settings button
+    // works very similarly to the settings button on the index page, but changed to work with this settings button that does not always exist
+    settingsButton.addEventListener("click", () => {
+      let settingsPopup = document.getElementById("settings-popup");
+      settingsPopup.classList.remove("hidden");
+    });
+
+    worldSelector.appendChild(settingsButton);
     levelSelector.appendChild(worldSelector);
     // add a container for the levels
     let levelContainer = document.createElement("div");

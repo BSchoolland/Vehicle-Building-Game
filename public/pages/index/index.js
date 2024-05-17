@@ -1,7 +1,7 @@
 import Building from "../../js/game/building.js";
 import { Camera } from "../../js/game/camera.js";
 import LevelManager from "../../js/level/LevelManager.js";
-import { setSong } from "../../js/sounds/playSound.js";
+import { setSong, setMusicVolume, setSoundEffectVolume } from "../../js/sounds/playSound.js";
 
 let loginButton = document.getElementById("login");
 
@@ -55,6 +55,39 @@ loginButton2.addEventListener("click", () => {
   let registerPopup = document.getElementById("register-popup");
   registerPopup.classList.add("hidden");
 });
+// if the settings button is clicked, show the settings popup
+let settingsButton = document.getElementById("settings-button");
+settingsButton.addEventListener("click", () => {
+  let settingsPopup = document.getElementById("settings-popup");
+  settingsPopup.classList.remove("hidden");
+});
+// if close settings is pressed, close the settings popuop
+let closeSettings = document.getElementById("close-settings");
+closeSettings.addEventListener("click", () => {
+  let settingsPopup = document.getElementById("settings-popup");
+  settingsPopup.classList.add("hidden");
+});
+
+// watch for the "music" slider to change
+let musicSlider = document.getElementById("music-slider");
+// set the music slider to the current volume in local storage
+musicSlider.value = localStorage.getItem("musicVolume") * musicSlider.max || 0.5 * musicSlider.max;
+musicSlider.addEventListener("input", () => {
+  let volume = musicSlider.value / musicSlider.max;
+  console.log("Music volume:", volume);
+  // set the volume of the music
+  setMusicVolume(volume);
+});
+// watch for the "sound" slider to change
+let soundSlider = document.getElementById("sound-slider");
+// set the sound slider to the current volume in local storage
+soundSlider.value = localStorage.getItem("soundEffectVolume") * soundSlider.max || 0.5 * soundSlider.max;
+soundSlider.addEventListener("input", () => {
+  let volume = soundSlider.value / soundSlider.max;
+  console.log("Sound volume:", volume);
+  
+  setSoundEffectVolume(volume);
+});
 
 // Create an engine
 var engine = Matter.Engine.create();
@@ -83,16 +116,20 @@ building.init();
 const levelObject = new LevelManager(engine, building);
 levelObject.init();
 
-// play the sound
-setSong("mainTheme");
+// play the sound as soon as the user interacts with anything
+document.addEventListener("click", function playSound() {
+  // play the sound
+  setSong("mainTheme");
+
+  // remove the event listener after it's triggered
+  document.removeEventListener("click", playSound);
+});
 
 // set the background to fully transparent
 render.options.background = "rgba(255, 255, 255, 0)";
 // get rid of the border
 render.canvas.style.border = "none";
 
-// play the background music
-setSong("mainTheme");
 
 // fullscren
 function setFullScreenCanvas() {

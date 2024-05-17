@@ -277,6 +277,89 @@ a {
   display: none;
 }
 
+.settings-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.settings-popup-content {
+  position: relative;
+  background-color: #1A3A5F;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  width: 30%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-popup-header {
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
+  color: #ffffff;
+  background: #238B22;
+  height: 40px;
+}
+
+.settings-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.settings-option {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.settings-content label {
+  color: #ffffff;
+  font-size: 16px;
+  margin: 6px 0;
+}
+
+.settings-content input {
+  width: 100%;
+  font-size: 18px;
+  padding: 2.5px 0px;
+  margin: 6px 0;
+  border: 1px solid #ffffff;
+  border-radius: 50px;
+}
+
+.settings-title {
+  color: #ffffff;
+  font-size: 30px;
+  margin: 0;
+  text-align: center;
+}
+
+.close {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 50px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
 .level-menu-container {
   position: absolute;
   top: 5%;

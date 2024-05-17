@@ -15,8 +15,10 @@
     <!-- favicon -->
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
 
-    <meta name="keywords" content="Wrecking Wheels, game, video game, browser game, building, destruction, sandbox, levels, community">
-    <meta name="description" content="Wrecking Wheels - An engaging, browser-based game where you creatively construct vehicles to conquer challenging levels.">
+    <meta name="keywords"
+        content="Wrecking Wheels, game, video game, browser game, building, destruction, sandbox, levels, community">
+    <meta name="description"
+        content="Wrecking Wheels - An engaging, browser-based game where you creatively construct vehicles to conquer challenging levels.">
     <script type="application/ld+json">
         {
             "@context": "http://schema.org",
@@ -41,11 +43,10 @@
 </script>
 
 <body class="index-body">
-    <div style="z-index: -10;"
-     id="game-container"></div>
+    <div style="z-index: -10;" id="game-container"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
     <div class="index-title-post">
-        
+
     </div>
     <div class="index-title-container">
         <h1 class="index-title">Wrecking Wheels</h1>
@@ -56,7 +57,7 @@
         </div>
         <div class="top-bar-right">
             <button id="login" class="login-button">Login</button>
-            <button id="settings" class="settings-button">
+            <button id="settings-button" class="settings-button">
                 <img class="settings-image" src="/img/settings.png" alt="settings">
             </button>
         </div>
@@ -74,7 +75,7 @@
     </div>
 
     <script type="module" src="/pages/index/index.js"></script>
-    
+
     <p id="tutorial-text" style="opacity: 0;"></p>
     <!-- when active, the login popup will be displayed -->
     <div id="login-popup" class="login-popup hidden" hidden>
@@ -117,9 +118,33 @@
             <button id="login-button" class="login-change">Already have an account?</button>
             <p id="message2" style="color: red; text-align: center;"></p>
         </div>
-        
+
     </div>
-    
+    <!-- A settings popup -->
+    <div id="settings-popup" class="settings-popup hidden">
+        <div class="settings-popup-content">
+            <div class="settings-popup-header">
+                <h2 class="settings-title">Settings</h2>
+                <span class="close" id="close-settings">&times;</span>
+            </div>
+            <div class="settings-content">
+                <div class="settings-option">
+                    <label for="music">Music Volume:</label>
+                    <input type="range" id="music-slider" name="music" min="0" max="20" value="10"/>
+                </div>
+                <div class="settings-option">
+                    <label for="sound">Sound Effect Volume:</label>
+                    <input type="range" id="sound-slider" name="sound" min="0" max="20" value="10"/>
+                </div>
+                <!-- potential graphics quality control -->
+                <!-- <div class="settings-option">
+                    <label for="graphics">Graphics:</label>
+                    <input type="range" id="graphics" name="graphics" min="0" max="10" value="5"/>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

@@ -28,7 +28,7 @@ app.get('/levels.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/levels/levels.html'));
 });
 
-app.get('/community', (req, res) => {
+app.get('/changelog', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/changeLog/changeLog.html'));
 });
 

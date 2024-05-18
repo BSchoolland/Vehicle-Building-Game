@@ -160,6 +160,11 @@ class Gameplay {
       setTimeout(() => {
         Matter.World.remove(this.parent.engine.world, confetti);
       }, 5000);
+      // delete any html objects with className "build-menu"
+      let buildMenus = document.getElementsByClassName("build-menu");
+      for (let i = 0; i < buildMenus.length; i++) {
+        buildMenus[i].remove();
+      }
     }
     setTimeout(() => {
       // clear the level

@@ -765,11 +765,6 @@ a {
   max-width: 60%;
   font-size: 1.5em;
 }
-@media (max-width: 768px) {
-  .tutorial-text {
-    font-size: 0.5em;
-  }
-}
 
 .stat-container {
   position: absolute;
@@ -792,8 +787,8 @@ a {
 /* Style for the build menu container */
 .build-menu {
   position: absolute;
-  bottom: 10px;
   left: 50%;
+  margin: 15px;
   transform: translateX(-50%);
   background-color: rgba(92, 116, 142, 0.8);
   border-radius: 20px;
@@ -801,13 +796,8 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-@media screen and (max-width: 768px) {
-  .build-menu {
-    /* allow buttons to flow into a new row */
-    flex-wrap: wrap;
-    width: 90%;
-  }
+  max-width: 100%;
+  overflow-x: scroll;
 }
 
 /* Style for each button in the build menu */
@@ -880,6 +870,36 @@ a {
   background-color: #1a3a5f;
 }
 
+@media screen and (max-width: 768px) {
+  .build-menu {
+    bottom: 20px;
+    padding: 10px;
+    overflow-x: scroll;
+  }
+  .build-menu-button {
+    padding: 2px 4px;
+    margin: 0 10px;
+    font-size: 1em;
+  }
+  .build-menu-line {
+    height: 30px;
+    margin: 0 20px;
+  }
+  .menu-action-button {
+    padding: 5px 10px;
+    margin: 0 10px;
+    font-size: 1em;
+  }
+  .tutorial-text {
+    opacity: 0;
+  }
+  .stat-container {
+    top: 10px;
+    right: 20px;
+    padding: 10px;
+    font-size: 1em;
+  }
+}
 .community-body {
   background: linear-gradient(rgb(86, 195, 248), rgb(36, 40, 44));
   overflow-x: hidden;

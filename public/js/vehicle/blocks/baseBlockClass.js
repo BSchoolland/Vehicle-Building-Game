@@ -142,7 +142,7 @@ class Block {
     // clear the welds array
     this.welds = [];
   }
-  damage(amount) {
+  damage(amount, typeOfDamage = "normal") {
     // subtract the amount from the hitpoints
     playSound("blockTakesDamage");
     this.hitPoints -= amount;
@@ -155,16 +155,32 @@ class Block {
       }
       this.contraption.currentSparks++;
       // create a spark with a random position and velocity
-      let spark = Matter.Bodies.circle(
-        this.bodies[0].position.x + Math.random() * 10 - 5,
-        this.bodies[0].position.y + Math.random() * 10 - 5,
-        2,
-        { render: { fillStyle: "#ff0000" } }
-      );
-      Matter.Body.setVelocity(spark, {
-        x: Math.random() * 10 - 5,
-        y: Math.random() * 10 - 10,
-      });
+      let spark;
+      // if the typeOfDamage is fire, make the spark bigger
+      if (typeOfDamage === "fire") {
+        spark = Matter.Bodies.circle(
+          this.bodies[0].position.x + Math.random() * 10 - 5,
+          this.bodies[0].position.y + Math.random() * 10 - 5,
+          4,
+          { render: { fillStyle: "#ff0000" } }
+        );
+        Matter.Body.setVelocity(spark, {
+          x: Math.random() * 10 - 5,
+          y: Math.random() * 10 - 15,
+        });
+      }
+      else {
+        spark = Matter.Bodies.circle(
+          this.bodies[0].position.x + Math.random() * 10 - 5,
+          this.bodies[0].position.y + Math.random() * 10 - 5,
+          2,
+          { render: { fillStyle: "#ff0000" } }
+        );
+        Matter.Body.setVelocity(spark, {
+          x: Math.random() * 10 - 5,
+          y: Math.random() * 10 - 10,
+        });
+      }
       // change the color by a random amount
       spark.render.fillStyle =
         "#ff" + Math.floor(Math.random() * 100).toString(16) + "00";

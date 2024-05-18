@@ -1,5 +1,5 @@
 // Import the block classes from public/js/world/mapBlocks.js
-import { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock } from '../world/mapBlocks.js';
+import { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock, DirtBlock } from '../world/mapBlocks.js';
 import LevelManager from '../level/LevelManager.js'; 
 // import the enemyHandler class
 import EnemyHandler from '../loaders/enemyHandler.js';
@@ -176,11 +176,6 @@ class allowedBlockMenu {
     }
 }
 
-
-
-
-
-
 // a build menu class, for the bottom of the screen.
 // the build menu will contain buttons for each block type, a button to save the level, a button to load a level, a button to clear the level, and a button to toggle build mode.
 class BuildMenu {
@@ -201,6 +196,7 @@ class BuildMenu {
             { name: 'Enemy Spawn Block', key: '8', type: EnemySpawnBlock },
             { name: 'upsidedown slight ramp', key: '9', type: slightRampBlockLUpsideDown},
             { name: 'upsidedown slight ramp R', key: '0', type: slightRampBlockRUpsideDown},
+            { name: 'Dirt Block', key: 'q', type: DirtBlock}
         ];
         this.createBlockButtons();
         // create a button to save the level
@@ -272,7 +268,7 @@ class BuildMenu {
                 return;
             }
             // save the level to a JSON object
-            let LevelManagerJson = building.level.save();
+            let LevelManagerJson = building.level.LevelEditor.save();
             let key = 0;
             // remove the block types that are not allowed
             this.building.blockSelectors.blockTypes = this.building.blockSelectors.blockTypes.filter(blockType => blockType.allowed > 0);
@@ -329,7 +325,7 @@ class BuildMenu {
         };
         this.testButton.onclick = () => {
             // save the level to the local storage
-            let LevelManagerJson = building.level.save();
+            let LevelManagerJson = building.level.LevelEditor.save();
             let key = 0;
             // remove the block types that are not allowed
             this.building.blockSelectors.blockTypes = this.building.blockSelectors.blockTypes.filter(blockType => blockType.allowed > 0);
@@ -367,7 +363,7 @@ class BuildMenu {
                 // get rid of the camera target
                 building.camera.removeTarget();
                 // set the camera viewport to the size of the build area
-                building.camera.setViewport(building.buildArea.width * 1.75, building.buildArea.height * 1.75);
+                building.camera.setViewport(building.buildArea.width * 3, building.buildArea.height * 1.75);
                 // set the camera position to the center of the build area
 
                 building.camera.setCenterPosition(building.buildArea.x + building.buildArea.width / 2, building.buildArea.y + building.buildArea.height / 2);
@@ -398,9 +394,9 @@ class BuildMenu {
     }
     loadLevel(LevelManagerJson) {
         // clear the existing level
-        this.building.level.clear();
+        this.building.level.LevelLoader.clear();
         // load the level from the JSON object
-        this.building.level.loadForEditing(LevelManagerJson);
+        this.building.level.LevelEditor.loadForEditing(LevelManagerJson);
         // get the block types from the JSON object
         let buildingBlockTypes = LevelManagerJson.buildingBlockTypes;
         // set the block types
@@ -457,7 +453,28 @@ class Building {
         // Add event listener for canvas click
         const canvas = document.querySelector('canvas');
         // Add event listener for placing blocks
-        canvas.addEventListener('click', (event) => this.handleCanvasClick(event));
+        // canvas.addEventListener('click', (event) => this.handleCanvasClick(event));
+        let isMouseDown = false;
+
+        canvas.addEventListener('mousedown', (event) => {
+            if (event.button === 0) {
+                isMouseDown = true;
+                this.handleCanvasClick(event);
+            }
+        });
+
+        canvas.addEventListener('mousemove', (event) => {
+            if(isMouseDown && event.button === 0) {
+                this.handleCanvasClick(event);
+            }
+        });
+
+        document.addEventListener('mouseup', (event) => {
+            if (event.button === 0) {
+                isMouseDown = false;
+            }
+        });
+
         // Add event listener for keys
         document.addEventListener('keydown', (event) => this.handleKeyDown(event));
         // Add event listener for block editing

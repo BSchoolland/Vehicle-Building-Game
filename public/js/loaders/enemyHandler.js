@@ -15,21 +15,46 @@ class EnemyHandler {
             delayedRocketCar: '../../json-enemies/delayedRocketCar.json',
             missileCar: '../../json-enemies/missileCar.json',
             base: '../../json-enemies/base.json',
+            largeSpikeCarL: '../../json-enemies/largeSpikeCarL.json',
+            drivingCarL: '../../json-enemies/drivingCarL.json',
+            tankL: '../../json-enemies/tankL.json',
+            rocketCar: '../../json-enemies/rocketCar.json',
+            flierL: '../../json-enemies/flierL.json',
         }
         this.enemyContraptionsJSON = {};
         this.progressBar = progressBar;
         this.preLoadEnemies();
     }
-    preLoadEnemies() {1
+    preLoadEnemies() {
         const enemies = this.enemies;
         Object.keys(enemies).forEach(async (key) => {
             var enemyJson = await (await fetch(enemies[key])).json();
             this.enemyContraptionsJSON[key] = enemyJson;
         });
+        this.RightFacingEnemies = [
+            'spikeCar',
+            'spikeCar',
+            'largeSpikeCar',
+            'world1Boss',
+            'rocketCar',
+        ];
+        this.LeftFacingEnemies = [
+            'largeSpikeCarL',
+            'largeSpikeCarL',
+            'tankL',
+            'flierL',
+
+        ]
         console.log("all enemies preloaded");
         if (this.progressBar) this.progressBar.update();
     }
     getEnemyJSON(enemyName) {
+        if (enemyName === "randomR") { // a random enemy facing right
+            enemyName = this.RightFacingEnemies[Math.floor(Math.random() * this.RightFacingEnemies.length)];
+        }
+        if (enemyName === "randomL") { // a random enemy facing left
+            enemyName = this.LeftFacingEnemies[Math.floor(Math.random() * this.LeftFacingEnemies.length)];
+        }
         if (this.enemyContraptionsJSON[enemyName] === undefined) {
             console.error("Enemy not found, returning default enemy.");
             // return a default enemy (the first one in the list)

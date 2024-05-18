@@ -205,7 +205,7 @@
     {
       "type": "EnemySpawnBlock",
       "x": 3100,
-      "y": 500,
+      "y": 600,
       "enemyType": "movingSpikeWall"
     },
     { "type": "RampBlockR", "x": 3400, "y": 700 },
@@ -297,5 +297,6 @@
       "value": 0
     }
   ],
-  "tutorialText": ""
+  "tutorialText": "",
+  "title": "Short Fuse"
 }

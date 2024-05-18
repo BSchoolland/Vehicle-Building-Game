@@ -127,7 +127,7 @@
     {
       "type": "EnemySpawnBlock",
       "x": 1400,
-      "y": 800,
+      "y": 900,
       "enemyType": "movingSpikeWall"
     },
     { "type": "GrassBlock", "x": 2500, "y": 1200 },
@@ -206,5 +206,6 @@
       "value": 6
     }
   ],
-  "tutorialText": ""
+  "tutorialText": "",
+  "title": "Leapfrog"
 }

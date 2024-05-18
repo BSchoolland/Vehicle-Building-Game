@@ -1,0 +1,160 @@
+.index-body {
+  background: linear-gradient(rgba(157, 157, 157, 0.8), rgba(157, 157, 157, 0.8)), url('/img/index-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.signature {
+  margin: 20px;
+}
+
+/* Tilted title sign */
+.index-title-container {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(3deg);
+  background-color: $sign-color;
+  text-align: center;
+  padding: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 10px;
+}
+
+.index-title-post {
+  /* Post holding the sign */
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  height: 24%;
+  width: 2.5%;
+  background-color: $sign-color;
+}
+
+.index-title {
+  font-size: 3rem;
+  color: $text-color;
+  line-height: 0.5;
+  letter-spacing: 0.1em;
+}
+
+/* Top bar content */
+.topbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.topbar a {
+  text-align: center;
+}
+
+.login-button {
+  background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
+  color: $text-color;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px; /* Combined padding */
+  margin: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  font-weight: 900;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+}
+
+.settings-button {
+  background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
+  color: $text-color;
+  border: none;
+  border-radius: 5px;
+  padding: 6px;
+  margin: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.settings-image {
+  height: 1.45em;
+  width: auto;
+  vertical-align: middle;
+}
+
+/* Main button container */
+.main-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10vh;
+}
+
+.main-button {
+  display: inline-block;
+  position: relative;
+  background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
+  color: $text-color;
+  border: 7px solid black;
+  border-radius: 100%;
+  padding: 3%;
+  margin: 5%;
+}
+
+.main-button-image {
+  height: 6em;
+  width: auto;
+  vertical-align: middle;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+
+  .signature {
+    margin: 0px;
+    max-width: 75%;
+  }
+
+  .index-title-container {
+    top: 10%;
+    transform: translate(-50%, -50%) rotate(3deg);
+    padding: 10px;
+  }
+
+  .index-title-post {
+    display: none;
+  }
+
+  .index-title {
+    font-size: 2rem;
+  }
+
+  .topbar {
+    margin-top: 10px;
+  }
+
+  .login-button, .settings-button {
+    width: 90%;
+    margin: 5px 0;
+    font-size: 1.2rem;
+    padding: 10px;
+  }
+
+  .main-button-container {
+
+    margin-top: 5vh;
+  }
+
+  .main-button {
+    margin: -40px 10px;
+    padding: 5%;
+    border-width: 5px;
+  }
+
+  .main-button-image {
+    height: 2em;
+  }
+}

@@ -1,0 +1,204 @@
+.login-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.login-popup-content {
+    position: relative;
+    background-color: $ui-background-color;
+    // padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    width: 30%;
+    // min-height: 60%; 
+    overflow: hidden;
+    // center content
+    display: flex;
+    flex-direction: column;
+}
+
+.register-popup-content {
+    position: relative;
+    background-color: $ui-background-color;
+    // padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    width: 30%;
+    // min-height: 95%;
+    overflow: hidden;
+    // center content
+    display: flex;
+    flex-direction: column;
+}
+
+.login-popup-header {
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    color: $text-color;
+    background: #238B22;
+    height: 40px;
+}
+
+.login-form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form label {
+    color: $text-color;
+    font-size: 16px;
+    margin: 6px 0;
+}
+
+.login-form input {
+    width: 55%;
+    font-size: 18px;
+    padding: 2.5px 0px;
+    margin: 6px 0;
+    border: 1px solid $text-color;
+    border-radius: 50px;
+}
+
+.login-form button {
+    width: 55%;
+    padding: 10px;
+    margin: 10px 0;
+    margin-top: 30px;
+    border-radius: 50px;
+    background: linear-gradient(0deg, #1B6B1A, #31C930);
+    color: $text-color;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    // darken slightly
+    background: linear-gradient(0deg, darken(#1B6B1A, 10%), darken(#31C930, 10%));
+}
+
+.login-form .suggestion-text {
+    width: 75%;
+    height: 100px;
+    font-size: 18px;
+    padding: 5px;
+    margin: 6px 0;
+    border: 1px solid $text-color;
+    border-radius: 5px;
+}
+
+.login-title {
+    color: $text-color;
+    font-size: 30px;
+    margin: 0;
+    // padding: 20px;
+    text-align: center;
+}
+
+.login-change {
+    color: $text-color;
+    font-size: 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: $action-color;
+    text-decoration: underline;
+}
+
+.login-change:hover {
+    // darken slightly
+    color: darken($action-color, 10%)
+}
+
+.close {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    font-size: 50px;
+    color: $text-color;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .login-popup-content {
+        width: 70%;
+        margin: 2px;
+        max-height: 90%;
+        overflow: scroll;
+    }
+
+    .register-popup-content {
+        width: 70%;
+        margin: 2px;
+        max-height: 90%;
+        overflow: scroll;
+    }
+
+    .login-form input {
+        width: 75%;
+        margin: 2px;
+    }
+
+    .login-form button {
+        width: 30%;
+        margin: 15px;
+    }
+
+    .login-form .suggestion-text {
+        width: 85%;
+        margin: 2px;
+    }
+    // smaller font size for smaller screens
+    .login-form label {
+        font-size: 14px;
+        margin: 2px;
+    }
+
+    .login-form input {
+        font-size: 16px;
+        margin: 2px;
+    }
+
+    .login-form button {
+        font-size: 14px;
+        margin: 2px;
+    }
+
+    .login-form .suggestion-text {
+        font-size: 16px;
+        margin: 2px;
+    }
+
+    .login-title {
+        font-size: 24px;
+        margin: 2px;
+    }
+
+    .login-change {
+        font-size: 16px;
+        margin: 2px;
+    }
+
+    .close {
+        font-size: 40px;
+        margin: 2px;
+    }
+
+}

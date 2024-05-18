@@ -25,6 +25,8 @@ const effects = {
   error: "./js/sounds/level/error.mp3",
   placeBlock: "./js/sounds/level/placeBlock.mp3",
   removeBlock: "./js/sounds/level/removeBlock.mp3",
+  rotateBlock: "./js/sounds/level/rotateBlock.mp3",
+  selectBlock: "./js/sounds/level/selectBlock.mp3",
   selectLevel: "./js/sounds/level/selectLevel.mp3",
 };
 
@@ -58,6 +60,10 @@ Promise.all(
 
 let playingSounds = {}; // track the sounds that are currently playing, so that the same sound can't be played twice at the same time
 
+const soundGainNode = audioContext.createGain();
+soundGainNode.gain.value = localStorage.getItem("soundEffectVolume") / 2 || 0.25;
+soundGainNode.connect(audioContext.destination);
+
 function playSound(name) {
     // if the sound is already playing x times, don't play it again
     if (playingSounds[name] >= 2) {
@@ -82,7 +88,7 @@ function playSound(name) {
   }
   let source = audioContext.createBufferSource();
   source.buffer = buffer;
-  source.connect(audioContext.destination);
+  source.connect(soundGainNode);
   source.start();
   // get the duration of the sound
     let duration = buffer.duration;
@@ -100,6 +106,9 @@ function playSound(name) {
 }
 
 let currentSong = null;
+const musicGainNode = audioContext.createGain();
+musicGainNode.gain.value = localStorage.getItem("musicVolume") || 0.5;
+musicGainNode.connect(audioContext.destination);
 
 function setSong(songName) {
   // If there is already a song playing, stop it
@@ -118,7 +127,7 @@ function setSong(songName) {
   if (songBuffer) {
     currentSong = audioContext.createBufferSource();
     currentSong.buffer = songBuffer;
-    currentSong.connect(audioContext.destination);
+    currentSong.connect(musicGainNode);
     currentSong.start();
     // loop the song
     currentSong.loop = true;
@@ -126,4 +135,19 @@ function setSong(songName) {
   return true;
 }
 
-export { setSong, playSound };
+
+function setMusicVolume(volume) {
+  // save the new volume to local storage
+  localStorage.setItem("musicVolume", volume);
+  // update the gain node
+  musicGainNode.gain.value = volume;
+}
+
+function setSoundEffectVolume(volume) {
+  // save the new volume to local storage
+  localStorage.setItem("soundEffectVolume", volume);
+  // update the gain node
+  soundGainNode.gain.value = volume / 2; // sound effects are too loud, so divide by 2
+}
+
+export { setSong, playSound, setMusicVolume, setSoundEffectVolume };

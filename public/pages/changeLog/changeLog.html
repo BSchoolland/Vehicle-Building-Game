@@ -1,0 +1,150 @@
+<!-- this html page shows users the changelog, and allows them to submit suggesions and vote on future features -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Change Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="css/features.css">
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V15BD9CZKN"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-V15BD9CZKN');
+</script>
+
+<body>
+    <a href="/"><h3>Home</h3></a>
+    <div class="header">
+        <h1>Change Dashboard</h1>
+    </div>
+    <div class="content">
+        <h2>Submit a Suggestion
+            <p class="logged-out-only" style="font-size: 16px; color: #ff0000; margin: 0; padding: 0;">
+                you must be logged in to submit a suggestion</p>
+
+        </h2>
+        <form id="suggesions" action="/submitSuggestion" method="post">
+            <label for="suggestion">Suggestion:</label>
+            <input type="text" id="suggestion" name="suggestion" required>
+            <button type="submit">Submit</button>
+        </form>
+        <h2>The next feature vote starts on 06-01-2024.</h2>
+        <p> The winner of the previous vote was "World 4 and 5"! I'll be adding both of these worlds, along with brand new blocks, in version 1.3.0. </p>
+        <!-- <h2>Vote on What to Add in 1.3.0 <p style="font-size: 16px; color: #ff0000; margin: 0; padding: 0;">
+            All these features are planned, but your votes will decide the order they are implemented!</p>
+        </h2>
+        <div class="vote">
+            <div class="feature"
+                style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/editor.png');">
+                <h3>Level Editor</h3>
+                <p>Create your own levels and play levels created by other players</p>
+                <button class="vote-button" data-feature-id="editor">Log in to Vote</button>
+            </div>
+            <div class="feature"
+                style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/world45.png');">
+                <h3>World 4 and 5</h3>
+                <p>Explore new worlds with new blocks and challenges</p>
+                <button class="vote-button" data-feature-id="world45">Log in to Vote</button>
+
+            </div>
+            <div class="feature"
+                style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/features/2p.png');">
+                <h3>Local 2 Player</h3>
+                <p>Play against a friend on the same computer</p>
+                <button class="vote-button" data-feature-id="pvp">Log in to Vote</button>
+            </div>
+        </div> -->
+        <h2>Currently working on:</h2>
+        <div class = "markdownContent">
+            <h3> Version 1.3.0 - Worlds Galore - Expected to release early June 2024</h3>
+            <ul>
+            <li>
+                Revamping world 3 by getting rid of levels that are buggy or not fun and replacing them with new levels
+            </li>
+            <li>
+                Adding world 4 and 5, as voted for by the community
+            </li>
+            <li>
+                Adding even more types of blocks to build with
+            </li>
+            <li>
+                Adding community suggestions including: a <b>"grappling hook block"</b> (great suggestion from the community) and a <b>"hidden rickroll"</b> (slightly worse suggestion from the community) <b><a href = "https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran">More info on how to get your suggestions implemented into the game here!</a></b>
+            </li>
+
+        </ul>
+        </div>
+        <h2>Changelog</h2>
+        
+        <div class="markdownContent">
+            
+            <h2>Version 1.2.0 - Sandbox Mode and Major UI Improvements - Released on 05-18-2024</h2>
+            <h3>New Features:</h3>
+            <ul>
+                <li>Added sandbox mode, where you can build with unlimited blocks and no objectives</li>
+                <li>Improved home screen with new buttons and an animated background</li>
+                <li>Updated level select screen for better visuals</li>
+                <li>Remade the build mode UI to be more user-friendly and visually appealing</li>
+                <li>Maps now automatically create dirt blocks below the grass, to make levels look more grounded (pun intended)</li>
+            </ul>
+            <h3>Changes:</h3>
+            <ul>
+                <li>All contraptions must now have at least one block in addition to the seat</li>
+                <li>Made some world 1 bonus objectives easier to complete</li>
+                <li>Buffed fire damage, it deals slightly less damage per second, but lasts much longer</li>
+            </ul>
+            <h2>Version 1.1.1 - Bug Fixes - Released on 04-01-2024</h2>
+            <h3>Fixes:</h3>
+                <ul>
+                    <li>Fixed bug where level would not end when beating a level you had already completed</li>
+                    <li>Fixed bug where the game would not load in certain cases</li>
+                </ul>
+            <h3>Changes:</h3>
+                <ul>
+                    <li>Added more bonus objectives to levels in world 2 and 3</li>
+                </ul>
+            
+            <h2>Version 1.1.0 - Bonus Objectives and Feature Voting - Released on 03-31-2024</h2>
+
+            <h3>New Features:</h3>
+            <ul>
+                <li>Added bonus objectives to levels you've already completed</li>
+                <li>Added the feature dashboard, where you can vote on upcoming features, submit feedback, and view this
+                    changelog</li>
+                <li>Added new login system, allowing you to save progress across devices</li>
+            </ul>
+            <h3>Changes:</h3>
+            <ul>
+                <li>Replaced coin texture</li>
+                <li>Added "TNT" text to the TNT texture</li>
+            </ul>
+            <h3>Fixes:</h3>
+            <ul>
+                <li>Fixed visual bug when leaving a level before it is fully loaded</li>
+                <li>Fixed objectives not displaying during level tours</li>
+            </ul>
+
+            <h2>Version 1.0.0 - Initial Release - Released on 02-26-2024</h2>
+
+            <h3>New Features:</h3>
+            <ul>
+                <li>Wrecking Wheels: A unique 2D physics-based game where you build and control vehicles of mahem</li>
+                <li>Explore 33 levels</li>
+                <li>Satisfying destruction and explosions</li>
+                <li>7 different blocks to build with, including wheels, rocket boosters, and TNT</li>
+            </ul>
+
+            <h3>Thank You:</h3>
+            <ul>
+                <li>A huge thank you to my friends and family for their playtesting and feedback, as well as
+                    encouragement to keep going</li>
+                <li>Special thanks to Michael, who helped write the game's soundtrack</li>
+                <li>And of course, thank you for playing! It wouldn't really be a game without players!</li>
+            </ul>
+        </div>
+    </div>
+    <script src="/pages/changeLog/changeLog.js"></script>
+</body>

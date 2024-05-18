@@ -109,6 +109,9 @@ class SeatBlock extends Block {
             if (this.contraption.Ai) {
                 // increase number of enemy contraptions destroyed
                 this.contraption.level.GameplayHandler.incrementEnemyContraptionsDestroyed();
+            } else {
+                // this was the player, so display the game over screen
+                this.contraption.level.LevelUI.gameOver();
             }
         }
     }
@@ -222,6 +225,16 @@ class SeatBlock extends Block {
             // apply an upward force to this body 
             Matter.Body.setVelocity(thisBody, { x: 0, y: -15 });
         }
+    }
+    triggerBlockDestroyed() {
+        // if there are no blocks other than the seat, destroy the contraption
+        for (let block of this.contraption.blocks) {
+            if (block.hitPoints > 0 && block !== this) {
+                return;
+            }1
+        }
+        // if no blocks were found, destroy the contraption
+        this.damage(this.maxHitPoints);
     }
 }
 

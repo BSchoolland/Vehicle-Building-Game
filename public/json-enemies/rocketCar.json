@@ -1,0 +1,99 @@
+{
+  "blocks": [
+    {
+      "type": "BasicWoodenBlock",
+      "x": 575,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 625,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 675,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 725,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "rocketBoosterBlock",
+      "x": 775,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": true
+    },
+    {
+      "type": "SpikeBlock",
+      "x": 525,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": true
+    },
+    {
+      "type": "SpikeBlock",
+      "x": 575,
+      "y": 1125,
+      "rotatedTimes": 0,
+      "flippedX": true
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 625,
+      "y": 1125,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "SeatBlock",
+      "x": 675,
+      "y": 1125,
+      "rotatedTimes": 0,
+      "flippedX": true
+    },
+    {
+      "type": "WheelBlock",
+      "x": 575,
+      "y": 1225,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "WheelBlock",
+      "x": 625,
+      "y": 1225,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "WheelBlock",
+      "x": 675,
+      "y": 1225,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "WheelBlock",
+      "x": 725,
+      "y": 1225,
+      "rotatedTimes": 0,
+      "flippedX": false
+    }
+  ],
+  "commands": [
+    { "key": "a", "start": 0, "end": 60.0},
+    { "key": "SHIFT", "start": 2, "end": 60}
+  ]
+}

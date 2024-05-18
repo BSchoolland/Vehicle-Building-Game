@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>my level</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+    <!-- import css -->
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/stats.css">
+    <link rel="stylesheet" href="css/globals.css">
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V15BD9CZKN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V15BD9CZKN');
+</script>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+    <!-- game container object -->
+    
+    <div id="game-container"></div>
+    <h1 id="tutorial-text" class="tutorial-text" style="display: none;">Press B to toggle build mode!</h1>
+    <div id="container">
+        <h1>Click to start!</h1>
+    </div>
+    <!-- a div for keeping track of win conditions -->
+    <div class="stat-container" id="stats" style="display: none;">
+        <h1>Coins: 0/1</h1>
+        <h1>Destroyed: 0/1</h1>
+        <h1>Survived: 0/30</h1>
+    </div>
+    <!-- runs the matter.js simulation -->
+    <script type="module" src = "js/game/testLevel.js"></script>
+</body>
+</html>

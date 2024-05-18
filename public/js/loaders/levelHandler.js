@@ -8,7 +8,13 @@ class Level {
         this.completed = false;
     }
     async loadLevel() {
-        let path = `../../json-levels/world${this.worldNum}/level${this.levelNum}.json`;
+        let path;
+        if (this.worldNum === 999) {
+            path = `../../json-levels/sandbox/level${this.levelNum}.json`
+        }
+        else {
+            path = `../../json-levels/world${this.worldNum}/level${this.levelNum}.json`;
+        } 
         let response = await fetch(path);
         if (response.ok) {
             this.levelData = await response.json();
@@ -82,6 +88,10 @@ class LevelHandler {
                 break;
             }
         }
+        // load the sandbox world as world 999
+        let sandbox = new World();
+        await sandbox.loadLevels(999);
+        this.worlds.push(sandbox);
         // once all the worlds are loaded, sync the levels the player has beaten with the server
         this.syncLevelsBeat();
         this.isLoaded = true;
@@ -188,7 +198,7 @@ class LevelHandler {
         return this.worlds[worldNum - 1].levels.length;
     }
     getWorldCount() {
-        return this.worlds.length;
+        return this.worlds.length - 1; // one less because the sandbox world is included
     }
     getLevelIndex() {
         return this.levelIndex;
@@ -218,6 +228,10 @@ class LevelHandler {
         // look in level json for bonus challenges
         let level = this.getLevel(worldNum, levelNum);
         return level.bonusChallenges;
+    }
+    getLevelName(worldNum, levelNum) {
+        let level = this.getLevel(worldNum, levelNum);
+        return level.title || "unnamed level";
     }
 }
 

@@ -1,0 +1,56 @@
+{
+  "blocks": [
+    {
+      "type": "BasicWoodenBlock",
+      "x": 225,
+      "y": 775,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 275,
+      "y": 775,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "SpikeBlock",
+      "x": 325,
+      "y": 775,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 275,
+      "y": 825,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "rocketBoosterBlock",
+      "x": 225,
+      "y": 825,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "SeatBlock",
+      "x": 225,
+      "y": 725,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "rocketBoosterBlock",
+      "x": 175,
+      "y": 725,
+      "rotatedTimes": 0,
+      "flippedX": false
+    }
+  ],
+  "commands": [
+    { "key": "SHIFT", "start": 2.9, "end": 60 }
+  ]
+}

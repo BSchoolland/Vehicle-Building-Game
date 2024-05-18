@@ -4,11 +4,88 @@ import {
   CoinBlock,
 } from "../world/mapBlocks.js";
 
+
+// Function to create a compound body from an array of blocks that form horizontal lines
+function createCompoundBody(blocks) {
+  // Create lists of blocks that have the same y coordinate
+  let blockLists = [];
+  blocks.forEach((block) => {
+      let found = false;
+      for (let i = 0; i < blockLists.length; i++) {
+          if (blockLists[i][0].y === block.y) {
+              blockLists[i].push(block);
+              found = true;
+              break;
+          }
+      }
+      if (!found) {
+          blockLists.push([block]);
+      }
+  });
+
+  // For each list of blocks with the same y coordinate, merge horizontally adjacent blocks
+  let rectangles = [];
+  blockLists.forEach(blockList => {
+      blockList.sort((a, b) => a.x - b.x); // Sort by x-coordinate
+      let startX = blockList[0].x;
+      let currentEndX = startX + 100; // Assume all blocks are 100 pixels wide
+
+      for (let i = 1; i < blockList.length; i++) {
+          let block = blockList[i];
+          if (block.x <= currentEndX) { // Block is adjacent or overlapping
+              currentEndX = block.x + 100; // Extend the rectangle
+          } else {
+              // Complete the current rectangle before starting a new one
+              rectangles.push({
+                  x: startX + (currentEndX - startX) / 2 - 50, // Center x of the rectangle
+                  y: blockList[0].y, // Center y of the rectangle, assuming height is 100
+                  width: currentEndX - startX,
+                  height: 100
+              });
+              // Start new rectangle
+              startX = block.x;
+              currentEndX = block.x + 100;
+          }
+      }
+      // Add the last rectangle in the list
+      rectangles.push({
+          x: startX + (currentEndX - startX) / 2 - 50, // Center x of the rectangle
+          y: blockList[0].y, // Center y of the rectangle
+          width: currentEndX - startX,
+          height: 100
+      });
+  });
+
+  // Merge the rectangles into a single body
+  let compoundBody = Matter.Body.create({
+      parts: rectangles.map(rectangle =>
+          Matter.Bodies.rectangle(
+              rectangle.x,
+              rectangle.y,
+              rectangle.width,
+              rectangle.height,
+              { isStatic: true, friction: 0.5, restitution: 0.5 }
+          )
+      ),
+      isStatic: true,
+      // invisible
+      render: {
+          visible: false
+      }
+  });
+
+  return compoundBody;
+}
+
 // a class that handles the loading of levels, including all blocks and entities
 class LevelLoader {
   constructor(parent, blockTypes) {
     this.parent = parent;
     this.blockTypes = blockTypes;
+    this.enemySpawnPoints = [];
+    this.playable = true;
+    this.blockList = [];
+    this.compoundBody = null;
   }
   loadEnemyContraption(blockJson) {
     let enemyType = blockJson.enemyType;
@@ -35,7 +112,8 @@ class LevelLoader {
   }
 
   // load a Level from a JSON object
-  async load(levelIndex, optionalJson = null) {
+  async load(levelIndex, optionalJson = null, playable = true) {
+    this.playable = playable;
     // clear the enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {
       enemyContraption[0].destroy();
@@ -45,10 +123,12 @@ class LevelLoader {
     this.parent.coins = [];
 
     if (!this.parent.building.buildArea) {
-      console.log("level editing mode");
       this.parent.loadForEditing(levelIndex);
       return;
     }
+
+    // set the building's contraption's level to this
+    this.parent.building.contraption.level = this.parent;
 
     let LevelJson;
     
@@ -61,6 +141,10 @@ class LevelLoader {
     let tutorial = document.getElementById("tutorial-text");
 
     let string = LevelJson.tutorialText;
+    if (string === "") {
+      // set the string to the level name
+      string = "Level: " + LevelJson.title;
+    }
     let sentences = string.split(/(?<=[\.!])/).map(sentence => {
       let trimmedSentence = sentence.trim();
       if (trimmedSentence) {
@@ -131,6 +215,7 @@ class LevelLoader {
             console.error("No enemy type defined for enemy spawn block");
             enemyType = "box";
           }
+          this.enemySpawnPoints.push(blockJson);
           // load the enemy contraption
           const EnemyContraption = this.loadEnemyContraption(blockJson);
           return;
@@ -139,7 +224,7 @@ class LevelLoader {
         // Create a new block instance
         let newBlock = new BlockType(blockJson.x, blockJson.y, this);
         // Add the block to the Level
-        this.addBlock(newBlock);
+        this.addBlock(newBlock);        
 
         if (blockJson.flippedX) {
           newBlock.flipX();
@@ -151,6 +236,45 @@ class LevelLoader {
         console.error(`Unknown block type: ${blockJson.type}`);
       }
     });
+    // as long as the level is not a floating level, add a line of grass blocks below each lowest block
+    if (!LevelJson.floating) {
+      // loop through the blocks to find all the lowest blocks in their column
+      let lowestBlocks = this.findLowestBlocks();
+      // add a line of n dirtBlocks below each lowest block
+      this.addDirtBlocks(lowestBlocks);
+    }
+    else {
+      console.log("Floating level");
+    }
+    // turn the blockList into a Matter.js body
+    let compoundBody = createCompoundBody(this.blockList);
+    // add the compound body to the world
+    Matter.World.add(this.parent.engine.world, compoundBody);
+    // Matter.World.remove(this.parent.engine.world, compoundBody);
+    
+    // record the compound body so we can remove it later
+
+    this.compoundBody = compoundBody;
+
+    if (!playable) {
+      // zoom way out with the camera
+      this.parent.building.camera.setViewport(
+        2000,
+        2000
+      );
+      // set the camera position to the center of the build area
+
+      this.parent.building.camera.setCenterPosition(
+        2400,
+        400
+      );
+      this.parent.building.camera.update();
+      // print the camera position
+      // log the camera size
+      // start the level
+
+      return;
+    }
     // set the win conditions
     this.parent.GameplayHandler.mustCompleteBefore = 0;
     if (LevelJson.objectives) {
@@ -178,45 +302,126 @@ class LevelLoader {
     this.parent.building.camera.levelTour(LevelJson, this.parent.building.buildArea);
     // only do the next part after the tour is done (doingTour is set to false)
     let interval = setInterval(() => {
-        if (!this.parent.building.camera.doingTour) {
-            if (this.parent.building.camera.tourCancelled) { // if the tour was cancelled, don't do anything
-              console.log("Tour cancelled");
-              this.parent.building.camera.tourCancelled = false;
-              // clear the level
-              this.clear();
-              clearInterval(interval);
-              return;
-            }
-            clearInterval(interval);
-            this.parent.building.camera.doingTour = false;
-
-            // if the level has buildingBlockTypes, then set the building's buildingBlockTypes
-            if (LevelJson.buildingBlockTypes) {
-            this.parent.building.makeNewBuildMenu(LevelJson.buildingBlockTypes, this.isEnemyEditor);
-            }
-            
-            // bind the startLevel function to the building
-            this.parent.building.startLevel = this.parent.GameplayHandler.startLevel.bind(this.parent.GameplayHandler);
-            // bind the setBuildMode function to the building
-            this.parent.building.startBuildModeForLevel = this.parent.GameplayHandler.setBuildMode.bind(this.parent.GameplayHandler);
-            // clear the building's contraption
-            this.parent.building.contraption.clear();
-            // allow the building to enter build mode
-            this.parent.building.canEnterBuildMode = true;
-            // activate building mode by clicking the building button if it is not already active
-            this.parent.building.toggleBuildingMode(true);
-            if (!this.parent.building.buildInProgress) {
-              this.parent.building.toggleBuildingMode(true);
-            }
-
+      if (!this.parent.building.camera.doingTour) {
+        if (this.parent.building.camera.tourCancelled) {
+          // if the tour was cancelled, don't do anything
+          console.log("Tour cancelled");
+          // clear the level
+          this.clear();
+          clearInterval(interval);
+          return;
         }
+        console.log("Tour done");
+        clearInterval(interval);
+        this.parent.building.camera.doingTour = false;
+
+        // if the level has buildingBlockTypes, then set the building's buildingBlockTypes
+        if (LevelJson.buildingBlockTypes) {
+          this.parent.building.makeNewBuildMenu(
+            LevelJson.buildingBlockTypes,
+            this.isEnemyEditor
+          );
+        }
+
+        // bind the startLevel function to the building
+        this.parent.building.startLevel =
+          this.parent.GameplayHandler.startLevel.bind(
+            this.parent.GameplayHandler
+          );
+        // bind the setBuildMode function to the building
+        this.parent.building.startBuildModeForLevel =
+          this.parent.GameplayHandler.setBuildMode.bind(
+            this.parent.GameplayHandler
+          );
+        // clear the building's contraption
+        this.parent.building.contraption.clear();
+        // allow the building to enter build mode
+        this.parent.building.canEnterBuildMode = true;
+        // activate building mode by clicking the building button if it is not already active
+        this.parent.building.toggleBuildingMode(true);
+        if (!this.parent.building.buildInProgress) {
+          this.parent.building.toggleBuildingMode(true);
+        }
+      }
     });
   }
+
+  findLowestBlocks() {
+    let lowestBlocks = [];
+    this.parent.blocks.forEach((block) => {
+      // if the block's class is GrassBlock, add it to the lowestBlocks array
+      if (block instanceof this.blockTypes["GrassBlock"]) {
+        let found = false;
+        for (let i = 0; i < lowestBlocks.length; i++) {
+          let lowestBlock = lowestBlocks[i];
+          // if this block is lower than the lowest block at its x position remove the lowest block and add this block
+          if (block.x === lowestBlock.x && block.y > lowestBlock.y) {
+            lowestBlocks.splice(i, 1);
+            lowestBlocks.push(block);
+            found = true;
+            break;
+          }
+          // if this block is higher than the lowest block at its x position, don't add it
+          else if (block.x === lowestBlock.x && block.y < lowestBlock.y) {
+            found = true;
+            break;
+          }
+        }
+        // if this block is the only block in its column, add it
+        if (!found) {
+          lowestBlocks.push(block);
+        }
+      }
+    });
+    return lowestBlocks;
+  }
+
+  addDirtBlocks(lowestBlocks, n = 10) {
+    lowestBlocks.forEach((block) => {
+      // determine the number of GrassBlocks to add
+      const grassBlocks = Math.floor(Math.random() * 3) + 1;
+      for (let i = 1; i <= n; i++) {
+        let newBlock;
+        // if i is less than or equal to grassBlocks, create a GrassBlock
+        if (i <= grassBlocks) {
+          newBlock = new this.blockTypes["GrassBlock"](block.x, block.y + i * 100, this);
+        } else {
+          newBlock = new this.blockTypes["DirtBlock"](block.x, block.y + i * 100, this);
+        }
+        this.addBlock(newBlock);
+      }
+    });
+  }
+
   despawnEnemyContraptions(perminant = false) {
     // kill all enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {
       enemyContraption[0].despawn();
       enemyContraption[0].moveTo(enemyContraption[1], enemyContraption[2]);
+    });
+  }
+  respawnEnemies() { // spawns an enemy at each enemy spawn point
+    this.enemySpawnPoints.forEach((block) => {
+      if (block.type === "EnemySpawnBlock") {
+        // get the enemyType
+        let enemyType = block.enemyType;
+        let enemyContraptionJson = this.parent.EnemyHandler.getEnemyJSON(enemyType);
+        if (enemyContraptionJson === undefined) {
+          console.error(`Unknown enemy type: ${enemyType}`);
+          return;
+        }
+        // load the enemy contraption
+        const EnemyContraption = new Contraption(this.parent.engine, "AI", this.parent);
+        EnemyContraption.load(enemyContraptionJson);
+        // load the commands
+        EnemyContraption.AiLoadCommands(enemyContraptionJson.commands);
+        // move the enemy contraption to the spawn point
+        EnemyContraption.moveTo(block.x, block.y);
+        // add the enemy contraption to the enemy contraptions array
+        this.parent.enemyContraptions.push([EnemyContraption, block.x, block.y]);
+        // make the enemy contraption move
+        EnemyContraption.spawn();
+      }
     });
   }
   
@@ -225,6 +430,13 @@ class LevelLoader {
     [...this.parent.blocks].forEach((block) => {
       this.removeBlock(block);
     });
+    // remove the compound body from the world
+    if (this.compoundBody) {
+      Matter.World.remove(this.parent.engine.world, this.compoundBody);
+    }
+   
+    this.compoundBody = null;
+    this.blockList = [];
     // Reset the undo stack and action stack
     this.parent.LevelEditor.actionStack = [];
     this.undoStack = [];
@@ -236,9 +448,15 @@ class LevelLoader {
   addBlock(block, addToActionStack = true) {
     block.Level = this;
     this.parent.blocks.push(block);
-    // add the block to the world
-    block.addToWorld(this.parent.engine.world);
-    // add the action to the action stack
+    // if it's a grassBlock or DirtBlock, add it to the blocklist, otherwise add it to the world
+    if (block instanceof this.blockTypes["GrassBlock"] || block instanceof this.blockTypes["DirtBlock"]) {
+      this.blockList.push(block);
+      block.addToWorld(this.parent.engine.world);
+
+    } else {
+      block.addToWorld(this.parent.engine.world);
+    }
+
     if (addToActionStack) {
       this.parent.LevelEditor.actionStack.push({ action: "add", block: block });
     }

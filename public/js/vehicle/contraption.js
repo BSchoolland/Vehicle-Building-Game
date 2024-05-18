@@ -410,7 +410,7 @@ class Contraption {
     // calculate fire damage for each block
     this.blocks.forEach((block) => {
       if (block.flameDuration > 0) {
-        block.damage(block.flameDamage * deltaTime / 1000);
+        block.damage(block.flameDamage * deltaTime / 1000, "fire");
         block.flameDuration -= deltaTime / 1000;
       }
     });

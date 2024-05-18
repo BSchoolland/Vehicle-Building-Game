@@ -35,8 +35,8 @@ class rocketBoosterBlock extends Block {
     this.secondsSinceLastFlame = 0;
     this.flameSize = 20; // the size of the flame
     this.flameRange = 200; // the range of the flame
-    this.attackFlameDuration = 3; // the duration of fire this gives to other blocks
-    this.attackFlameDamage = 20; // the damage per second this block's flame does to other blocks
+    this.attackFlameDuration = 7; // the duration of fire this gives to other blocks
+    this.attackFlameDamage = 15; // the damage per second this block's flame does to other blocks
     this.flames = [];
   }
   makeBodies() {

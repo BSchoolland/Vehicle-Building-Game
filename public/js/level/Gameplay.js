@@ -54,6 +54,9 @@ class Gameplay {
   }
   updateStats() {
     let stats = document.getElementById("stats");
+    if (!stats) {
+      return;
+    }
     stats.innerHTML = "";
     if (this.mustCollect > 0) {
       let collect = document.createElement("h1");
@@ -84,6 +87,7 @@ class Gameplay {
   }
   incrementEnemyContraptionsDestroyed() {
     this.enemyContraptionsDestroyed++;
+    console.log("enemy contraptions destroyed: ", this.enemyContraptionsDestroyed);
     this.updateStats();
   }
 
@@ -106,7 +110,7 @@ class Gameplay {
     if (this.parent.LevelHandler.isLevelCompleted(world, level)) {
       checkBonusObjectives(this);
     } else {
-      displayObjective("Beat the Level", 1);
+      displayObjective("First win", 1);
       // update the player's local storage to show that the level has been completed
       this.parent.LevelHandler.completeLevel(
         this.parent.worldSelected,
@@ -119,7 +123,7 @@ class Gameplay {
     document.getElementById("tutorial-text").style.display = "none";
     // play the level complete sound
     playSound("win");
-    // make a bunch of confetti above the player
+    // make a bunch of confetti all over the top of the screen
     for (let i = 0; i < 500; i++) {
       let confettiColors = [
         "#f44336",
@@ -130,27 +134,37 @@ class Gameplay {
       ];
       let x =
         this.parent.playerContraption.seat.bodies[0].position.x +
-        Math.random() * 200 -
-        100;
-      let y = this.parent.playerContraption.seat.bodies[0].position.y - 300;
+        Math.random() * 2000 -
+        1000;
+      let y = this.parent.playerContraption.seat.bodies[0].position.y - 500;
       let color =
         confettiColors[Math.floor(Math.random() * confettiColors.length)];
-      let confetti = Matter.Bodies.circle(x, y, 5, {
+      let confetti = Matter.Bodies.rectangle(x, y, 20, 16, {
         render: { fillStyle: color },
       });
       Matter.Body.setVelocity(confetti, {
         x: Math.random() * 20 - 10,
         y: Math.random() * 20 - 10,
       });
+      // randomly set the confetti's angular velocity
+      Matter.Body.setAngularVelocity(confetti, Math.random() * 0.5 - 0.25);
+
       // make the confetti not collide with anything
       (confetti.collisionFilter = {
         category: 0x0003,
       }),
+      // make the confetti experience a lot of air resistance
+      confetti.frictionAir = 0.03;
         Matter.World.add(this.parent.engine.world, confetti);
       // remove the confetti after 5 seconds
       setTimeout(() => {
         Matter.World.remove(this.parent.engine.world, confetti);
       }, 5000);
+      // delete any html objects with className "build-menu"
+      let buildMenus = document.getElementsByClassName("build-menu");
+      for (let i = 0; i < buildMenus.length; i++) {
+        buildMenus[i].remove();
+      }
     }
     setTimeout(() => {
       // clear the level

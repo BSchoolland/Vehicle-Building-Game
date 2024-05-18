@@ -1,0 +1,195 @@
+.back-button {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    background: linear-gradient(0deg, #238B22 0%, #33CD32 100%);
+    padding: 50px;
+    border-radius: 100%;
+    border-width: 5px;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background: linear-gradient(0deg, #33CD32 100%, #238B22 0%);
+
+}
+
+.level-ui-back-arrow {
+    position: absolute;
+    font-size: 50px;
+    width: 30px;
+}
+
+.toast-game-over {
+    background: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    color: #ffffff;
+    opacity: 0.8;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.tutorial-text {
+    position: absolute;
+    left: 150px;
+    padding: 20px;
+    background-color: rgba(92, 116, 142, 0.5);
+    border-radius: 20px;
+    max-width: 60%;
+    font-size: 1.5em;
+}
+
+.stat-container {
+    position: absolute;
+    top: 15px;
+    right: 40px;
+    padding: 20px;
+    background-color: rgba(92, 116, 142, 0.5);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center items horizontally */
+    
+}
+
+.stat-container h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.75em;
+}
+
+/* Style for the build menu container */
+.build-menu {
+    position: absolute;
+    // top: 90%;
+    left: 50%;
+    margin: 15px;
+    transform: translateX(-50%); 
+    background-color: rgba(92, 116, 142, 0.8);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    max-width: 100%; 
+    overflow-x: scroll;
+}
+
+/* Style for each button in the build menu */
+.build-menu-button {
+    background-color: #d4af3746;
+    border: none;
+    padding: 4px 8px;
+    margin: 0 15px; 
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    font-size: 1.5em;
+    /* prevent user from highlighting text */
+    user-select: none;
+    -webkit-user-select: none; /* For older versions of webkit-based browsers */
+    -moz-user-select: none; /* For older versions of Firefox */
+    -ms-user-select: none; /* For Internet Explorer/Edge */
+    // invisible border to prevent the button from moving when clicked
+    border: 2px solid transparent;
+}
+
+.build-menu-button:hover {
+    background-color: #d4af37;
+    border: 2px solid #f5deb3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #1a3a5f;
+}
+
+.build-menu-button-img {
+    width: 30px;
+    height: 30px;
+    padding: 3px 10px;
+    pointer-events: none;
+}
+
+/* Style for the build menu button that is currently selected */
+.active {
+    background-color: #d4af37; 
+    border: 2px solid #f5deb3; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    color: #1a3a5f; 
+}
+
+// a vertical line that separates blocks from the start game button
+.build-menu-line {
+    background-color: #ffffff;
+    width: 5px;
+    height: 50px;
+    margin: 0 35px;
+}
+
+// style for the start game button
+.menu-action-button {
+    background-color: #14273C;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 15px; 
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #ffffff;
+    /* prevent user from highlighting text */
+    user-select: none;
+    -webkit-user-select: none; /* For older versions of webkit-based browsers */
+    -moz-user-select: none; /* For older versions of Firefox */
+    -ms-user-select: none; /* For Internet Explorer/Edge */
+}
+
+.menu-action-button:hover {
+    background-color: #1a3a5f;
+}
+
+// mobile styles
+@media screen and (max-width: 768px) {
+    .build-menu {
+        bottom: 20px;
+        padding: 10px;
+        overflow-x: scroll;
+    }
+
+    .build-menu-button {
+        padding: 2px 4px;
+        margin: 0 10px;
+        font-size: 1em;
+    }
+
+    .build-menu-line {
+        height: 30px;
+        margin: 0 20px;
+    }
+
+    .menu-action-button {
+        padding: 5px 10px;
+        margin: 0 10px;
+        font-size: 1em;
+    }
+
+    .tutorial-text {
+        opacity: 0; // don't show tutorial text on mobile (can't use display: none because that property is modified by JS)
+    }
+
+    .stat-container {
+        top: 10px;
+        right: 20px;
+        padding: 10px;
+        font-size: 1em;
+    }
+}

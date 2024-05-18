@@ -15,6 +15,20 @@ import {
 import { Contraption } from "../vehicle/contraption.js";
 import { playSound, setSong } from "../sounds/playSound.js";
 
+const buildClassesToImages = {
+  "BasicWoodenBlock": "/img/build-buttons/basic-block.png",
+  "BasicIronBlock": "/img/build-buttons/iron-block.png",
+  "BasicDiamondBlock": "img/build-buttons/diamond-block.png",
+  "WheelBlock": "img/build-buttons/wheel-block.png",
+  "TNTBlock": "img/build-buttons/tnt-block.png",
+  "rocketBoosterBlock": "img/build-buttons/rocket-booster-block.png",
+  "SpikeBlock": "img/build-buttons/spike-block.png",
+  "GrappleBlock": "img/build-buttons/grapple-block.png",
+  "SeatBlock": "img/build-buttons/seat-block.png",
+  "PoweredHingeBlock": "img/build-buttons/powered-hinge-block.png",
+  "RemoteBlock": "img/build-buttons/remote-block.png",
+};
+
 class RightClickMenu {
   constructor(building) {
     this.building = building;
@@ -99,25 +113,64 @@ class BuildMenu {
       this.blockTypes.forEach((blockType, index) => {
         try {
           this.blockTypes[index].type = eval(blockType.type);
+          this.blockTypes[index].buildImage = buildClassesToImages[blockType.type.name];
         } catch (e) {
           // if the block type is not valid, set it to a basic wooden block
           this.blockTypes[index].type = BasicWoodenBlock;
+          this.blockTypes[index].image = "img/build-buttons/basic-block.png";
         }
       });
     } else {
       this.blockTypes = [
-        { name: "Basic Block", key: "1", type: BasicWoodenBlock, limit: 100 },
-        { name: "Wheel Block", key: "2", type: WheelBlock, limit: 100 },
-        { name: "TNT Block", key: "3", type: TNTBlock, limit: 100 },
+        {
+          name: "Basic Block",
+          key: "1",
+          type: BasicWoodenBlock,
+          limit: 100,
+          image: "img/build-buttons/basic-block.png",
+        },
+        {
+          name: "Wheel Block",
+          key: "2",
+          type: WheelBlock,
+          limit: 100,
+          image: "img/build-buttons/wheel-block.png",
+        },
+        {
+          name: "TNT Block",
+          key: "3",
+          type: TNTBlock,
+          limit: 100,
+          image: "img/build-buttons/tnt-block.png",
+        },
         {
           name: "Rocket Booster Block",
           key: "4",
           type: rocketBoosterBlock,
           limit: 100,
+          image: "img/build-buttons/rocket-booster-block.png",
         },
-        { name: "Spike Block", key: "5", type: SpikeBlock, limit: 100 },
-        { name: "Grapple Block", key: "6", type: GrappleBlock, limit: 100 },
-        { name: "Seat Block", key: "7", type: SeatBlock, limit: 1 },
+        {
+          name: "Spike Block",
+          key: "5",
+          type: SpikeBlock,
+          limit: 100,
+          image: "img/build-buttons/spike-block.png",
+        },
+        {
+          name: "Grapple Block",
+          key: "6",
+          type: GrappleBlock,
+          limit: 100,
+          image: "img/build-buttons/grapple-block.png",
+        },
+        {
+          name: "Seat Block",
+          key: "7",
+          type: SeatBlock,
+          limit: 1,
+          image: "img/build-buttons/seat-block.png",
+        },
         {
           name: "Powered Hinge Block",
           key: "8",
@@ -182,10 +235,19 @@ class BuildMenu {
 
   createBlockButtons() {
     this.blockButtons = {};
-    this.blockTypes.forEach((blockType) => {
+    let blockTypesArray = Array.from(this.blockTypes);
+    let currentIndex = 0;
+
+    this.blockTypes.forEach((blockType, index) => {
       let button = document.createElement("button");
       button.classList.add("menu-button", "build-menu-button");
-      button.innerHTML = `${blockType.name}<br>0/${blockType.limit}`;
+      let buttonImg = document.createElement("img");
+      buttonImg.classList.add("build-menu-button-img");
+      buttonImg.src = blockType.buildImage;
+      let buttonText = document.createElement("p");
+      buttonText.innerText = `0/${blockType.limit}`;
+      button.appendChild(buttonImg);
+      button.appendChild(buttonText);
       button.setAttribute("data-keycode", blockType.key.charCodeAt(0));
       button.onclick = () => {
         this.building.setCurrentBlockType(blockType.type, blockType.limit);
@@ -195,13 +257,29 @@ class BuildMenu {
         );
         // Set this button's class to active
         button.classList.add("active");
+        currentIndex = index;
       };
       this.menu.appendChild(button);
       this.blockButtons[blockType.type.name] = button;
     });
+
+    // when user scrolls, change the selected block
+    window.addEventListener('wheel', (event) => {
+      // Determine scroll direction
+      let direction = event.deltaY > 0 ? 1 : -1;
+      // Calculate new index
+      currentIndex = (currentIndex + direction + blockTypesArray.length) % blockTypesArray.length;
+      // Simulate a click on the new block button
+      this.blockButtons[blockTypesArray[currentIndex].type.name].click();
+    });
   }
   createMenuButtons() {
+    // create a vertical line to separate the block buttons from the other buttons
+    let line = document.createElement("div");
+    line.classList.add("build-menu-line");
+    this.menu.appendChild(line);
     // if this is the enemy editor, show the save and load buttons
+    this.enemyEditor = false;
     if (this.enemyEditor) {
       // create a button to save the contraption
       this.saveButton = document.createElement("button");
@@ -214,16 +292,17 @@ class BuildMenu {
       this.loadButton.innerText = "Load";
       this.menu.appendChild(this.loadButton);
     }
-    // create a button to clear the contraption
-    this.clearButton = document.createElement("button");
-    this.clearButton.classList.add("menu-button");
-    this.clearButton.innerText = "Clear";
-    this.menu.appendChild(this.clearButton);
+
     // create a button to toggle build mode
     this.buildModeButton = document.createElement("button");
-    this.buildModeButton.classList.add("menu-button");
-    this.buildModeButton.innerText = "Start Level (b)";
+    this.buildModeButton.classList.add("menu-action-button");
+    this.buildModeButton.innerText = "Start";
     this.menu.appendChild(this.buildModeButton);
+    // create a button to clear the contraption
+    this.clearButton = document.createElement("button");
+    this.clearButton.classList.add("menu-action-button");
+    this.clearButton.innerText = "Clear";
+    this.menu.appendChild(this.clearButton);
 
     // style the menu
     this.menu.classList.add("build-menu");
@@ -232,8 +311,7 @@ class BuildMenu {
       this.saveButton.classList.add("build-menu-button");
       this.loadButton.classList.add("build-menu-button");
     }
-    this.clearButton.classList.add("build-menu-button");
-    this.buildModeButton.classList.add("build-menu-button");
+
     // Add the menu to the game container
     let gameContainer = document.getElementById("game-container");
     gameContainer.appendChild(this.menu);
@@ -252,13 +330,11 @@ class BuildMenu {
     // update the button limits
     this.blockTypes.forEach((blockType) => {
       if (blockTypeCount[blockType.type.name]) {
-        this.blockButtons[blockType.type.name].innerHTML = `${
-          blockType.name
-        }<br>${blockTypeCount[blockType.type.name]}/${blockType.limit}`;
+        const buttonText = this.blockButtons[blockType.type.name].querySelector("p");
+        buttonText.innerText = `${blockTypeCount[blockType.type.name]}/${blockType.limit}`;
       } else {
-        this.blockButtons[
-          blockType.type.name
-        ].innerHTML = `${blockType.name}<br>0/${blockType.limit}`;
+        const buttonText = this.blockButtons[blockType.type.name].querySelector("p");
+        buttonText.innerText = `0/${blockType.limit}`;
       }
     });
   }
@@ -357,7 +433,7 @@ class BuildMenu {
           console.error("No level manager found");
         }
         // set this button's class to active
-        this.buildModeButton.classList.add("active");
+        // this.buildModeButton.classList.add("active");
         // activate the first block type button
         Object.values(this.blockButtons)[0].click();
         console.log("Build mode enabled");
@@ -384,15 +460,39 @@ class BuildMenu {
         }, 500);
       } else {
         // if the contraption has no seat, don't disable build mode
-        if (!building.contraption.seat && building.canEnterBuildMode) {
+        if ((!building.contraption.seat) && building.canEnterBuildMode) {
           
           
           if (!this.buildModeForce) { // force gets past the no seat check
             playSound("error");
+            // create a toast saying that the contraption needs a seat
+            let toast = document.createElement("div");
+            toast.classList.add("toast-err"); 
+            toast.innerText = "Your contraption needs a seat!";
+            document.getElementById("game-container").appendChild(toast);
+            setTimeout(() => {
+              toast.remove();
+            }, 3000);
             building.buildInProgress = true;
             return;
           }
         }
+        // if there is exactly 1 block, (the seat), don't disable build mode
+        if (building.contraption.blocks.length === 1) {
+          if (!this.buildModeForce) { // force gets past the no seat check
+            playSound("error");
+            let toast = document.createElement("div");
+            toast.classList.add("toast-err"); 
+            toast.innerText = "You need at least one block other than the seat!";
+            document.getElementById("game-container").appendChild(toast);
+            setTimeout(() => {
+              toast.remove();
+            }, 3000);
+            building.buildInProgress = true;
+            return;
+          }
+        }
+
         // call levelMode to hide the menu
         this.levelMode();
         // remove the active class from all the block type buttons
@@ -420,10 +520,13 @@ class BuildMenu {
             button.innerHTML = control.name;
             button.onmousedown = button.ontouchstart = () => {
               building.contraption.pressKey(control.key); // press the key
+              
             };
             button.onmouseup = button.ontouchend = () => {
               building.contraption.releaseKey(control.key); // release the key
             };
+
+  
             // scale the button up compared to the build menu buttons
             button.style.fontSize = "1.5em";
             controlMenu.appendChild(button);
@@ -509,9 +612,10 @@ class Building {
   setCurrentBlockType(blockType, limit) {
     this.currentBlockType = blockType;
     this.currentBlockTypeLimit = limit;
+    // play the select block sound
+    // playSound("selectBlock");
   }
   makeNewBuildMenu(blockTypes, isEnemyEditor = false) {
-    console.log(isEnemyEditor)
     // makes a new build menu with the given block types (for levels that limit the blocks that can be used)
     // remove the old build menu
     this.buildMenu.menu.remove();
@@ -521,8 +625,33 @@ class Building {
     // Add event listener for canvas click
     const canvas = document.querySelector("canvas");
     // Add event listener for placing blocks
-    canvas.addEventListener("click", (event) => this.handleCanvasClick(event));
+    let isMouseDown = false;
+    let isRightClick = false;
+    canvas.addEventListener("mousedown", (event) => 
+    {
+      // if it is right click, don't do anything
+      if (event.button === 2) {
+        isRightClick = true;
+        return;
+      }
+      isMouseDown = true;
+      this.handleCanvasClick()
+    });
     canvas.addEventListener("touchend", (event) => this.handleCanvasClick(event)); // for mobile
+    // wait for the mouse to be released
+    canvas.addEventListener("mouseup", () => {
+      isMouseDown = false;
+      isRightClick = false;
+    });
+    // whenever the mouse moves, remove the ghost blocks
+    canvas.addEventListener("mousemove", () => {
+      if (isMouseDown) {
+        this.handleCanvasClick()
+      }
+      if (isRightClick) {
+        this.handleRightClick()
+      }
+    });
     // Add event listener for keys
     document.addEventListener("keydown", (event) => this.handleKeyDown(event));
     // Add event listener for block editing
@@ -542,7 +671,7 @@ class Building {
     // clear the selected block
     this.selectedBlock = null;
   }
-  handleCanvasClick(event) {
+  handleCanvasClick(event = { type: "click" }) {
     // make sure build mode is enabled
     if (!this.buildInProgress) {
       return;
@@ -639,21 +768,17 @@ class Building {
     // Add the block to the contraption
     this.contraption.addBlock(newBlock);
     // play the place block sound
-    // playSound("placeBlock");
+    playSound("placeBlock");
     // update the button limits
     // make the new block selected
     this.selectBlock(newBlock);
     this.buildMenu.updateButtonLimits();
     if (this.buildMenu.enemyEditor) {
-      newBlock.flipX();
+      // newBlock.flipX();
     }
   }
   selectBlock(block) {
-    // if the block is already selected, deselect it
-    if (this.selectedBlock === block) {
-      this.removeGhostBlocks();
-      return;
-    }
+
     // remove the ghost blocks
     this.removeGhostBlocks();
     // add a ghost block, a large blue square, to show that the block is selected
@@ -693,7 +818,7 @@ class Building {
     this.RightClickMenu.show();
   }
 
-  handleRightClick(event) {
+  handleRightClick(event=null) {
     // edit the block at the click position
     // make sure build mode is enabled
     if (!this.buildInProgress) {
@@ -714,6 +839,8 @@ class Building {
       this.contraption.removeBlock(block);
       this.buildMenu.updateButtonLimits();
       this.removeGhostBlocks();
+      // play the remove block sound
+      playSound("removeBlock");
     }
   }
 
@@ -748,6 +875,8 @@ class Building {
       // if R is pressed, rotate
       if (event.keyCode === 82) {
         this.selectedBlock.rotate90();
+        // play the rotate block sound
+        playSound("rotateBlock");
       }
       // if backspace, remove the block
       if (event.keyCode === 8) {

@@ -1,10 +1,9 @@
 import Building from "./building.js";
-import { Camera } from "./camera.js";
-// import { LevelManager } from "../world/level.js";
-import LevelManager from "../level/LevelManager.js";
-import { setSong } from "../sounds/playSound.js";
+import { Camera } from "./camera.js";import LevelManager from "../level/LevelManager.js";
+import { setSong, setMusicVolume, setSoundEffectVolume } from "../sounds/playSound.js";
 import ProgressBar from "../loaders/progressBar.js";
-import gameTest from "./gameTest.js";
+
+
 // if the user is on mobile, warn them that the game may not work well
 if (window.innerWidth < 800 || window.innerHeight < 600) {
   // alert("Again, I really do suggest you play on a computer.  The experience is much better.  If you choose to ignore me, be ready for unbeatable levels, and more bugs than a termite farm.  You have been warned.");
@@ -146,6 +145,7 @@ function startGame() {
 
   // Update the UI as necessary
   document.body.style.background = "linear-gradient(0deg, rgba(115,128,142,1) 0%, rgba(84,199,255,1) 100%)";
+
   createHTML();
   if (landscape) {
     container.style.display = "block";
@@ -182,3 +182,32 @@ function startGame() {
   // Load the initial level selector screen
   levelObject.LevelUI.loadLevelSelector();
 }
+
+
+// handle popups 
+// if close settings is pressed, close the settings popuop
+let closeSettings = document.getElementById("close-settings");
+closeSettings.addEventListener("click", () => {
+  let settingsPopup = document.getElementById("settings-popup");
+  settingsPopup.classList.add("hidden");
+});
+// watch for the "music" slider to change
+let musicSlider = document.getElementById("music-slider");
+// set the music slider to the current volume in local storage
+musicSlider.value = localStorage.getItem("musicVolume") * musicSlider.max || 0.5 * musicSlider.max;
+musicSlider.addEventListener("input", () => {
+  let volume = musicSlider.value / musicSlider.max;
+  console.log("Music volume:", volume);
+  // set the volume of the music
+  setMusicVolume(volume);
+});
+// watch for the "sound" slider to change
+let soundSlider = document.getElementById("sound-slider");
+// set the sound slider to the current volume in local storage
+soundSlider.value = localStorage.getItem("soundEffectVolume") * soundSlider.max || 0.5 * soundSlider.max;
+soundSlider.addEventListener("input", () => {
+  let volume = soundSlider.value / soundSlider.max;
+  console.log("Sound volume:", volume);
+  
+  setSoundEffectVolume(volume);
+});

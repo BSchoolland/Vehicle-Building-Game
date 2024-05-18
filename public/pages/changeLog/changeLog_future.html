@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Community Dashboard</title>
+    <!-- import css -->
+    <link rel="stylesheet" href="css/globals.css">
+    <!-- favicon -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <meta name="keywords" content="Wrecking Wheels, game, video game, browser game, building, destruction, sandbox, levels, change log, vote, suggestions">
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V15BD9CZKN"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-V15BD9CZKN');
+</script>
+
+<body class="community-body">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+
+    <div class="topbar">
+        <div>
+            <p class="signature">Made by: <a href="https://bschoolland.com" target="_blank">Benjamin Schoolland</a></p>
+        </div>
+        <div class="top-bar-right" style="margin-top: 20px">
+            <a href="#feature-fight" class="login-button">Feature Fight</a>
+            <a href="#suggestions" class="login-button">Suggestions</a>
+            <a href="#change-log" class="login-button">Change Log</a>
+        </div>
+    </div>
+
+    <!-- div for the suggestion button and image -->
+    <div class="suggestion-div">
+        <!-- button for toggling the suggestion popup -->
+        <button id="login-button" class="login-button" style="transform: translateX(60%);">Suggestions</button>
+        <!-- image for suggestions -->
+        <img src="/img/community/suggestions.png" alt="suggestion" class="suggestion">
+    </div>  
+
+    <!-- div for feature voting -->
+    <div class="left-vote">
+        <h1 style="transform: translateX(40%);"
+        >Level Editor</h1>
+        <p style="transform: translateX(40%); max-width: 300px";
+        >Create your own levels and play levels created by other players</p>
+        <!-- button for toggling the suggestion popup -->
+        <button  data-feature-id="editor" class="vote-button" style="transform: translateX(30%);">Vote</button>
+        <!-- image for suggestions -->
+        <img src="/img/community/leftVote.png" width="600px" alt="suggestion" class="suggestion">
+    </div>  
+
+    <!-- div for feature voting -->
+    <div class="right-vote">
+        <h1 style="transform: translateX(-50%);"
+        >World 4 and 5</h1>
+        <p style="transform: translateX(-50%);"
+        >Explore new worlds with new blocks and challenges</p>
+        <!-- button for toggling the suggestion popup -->
+        <button data-feature-id="world45" id="login-button" class="login-button" style="transform: translateX(30%);">Vote 2</button>
+        <!-- image for suggestions -->
+        <img src="/img/community/rightVote.png" width="600px" alt="suggestion" class="suggestion">
+    </div>  
+
+    
+
+    <!-- when active, the suggestion popup will be displayed -->
+    <div id="login-popup" class="login-popup hidden" hidden>
+        <div class="login-popup-content">
+            <div class="login-popup-header">
+                <h2 class="login-title">Suggestions</h2>
+                <span class="close" id="close-login">&times;</span>
+            </div>
+
+            <form class="login-form" id="login-form">
+                <label for="suggestion">Enter your suggestion:</label>
+                <textarea class="suggestion-text" id="suggestion" name="suggestion" required></textarea>
+                <button type="submit">SUBMIT</button>
+            </form>
+            <p id="message" style="color: red; text-align: center;"></p>
+        </div>
+    </div>
+<script src="/pages/changeLog/changeLog.js"></script>
+
+</body>
+
+</html>

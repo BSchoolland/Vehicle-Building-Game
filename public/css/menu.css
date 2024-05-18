@@ -97,60 +97,7 @@ body {
 }
 
 
-/* Style for the build menu container */
-.build-menu {
-    position: absolute;
-    bottom: 10px; /* Adjust as needed */
-    left: 50%;
-    transform: translateX(-50%); /* Center the div horizontally */
-    background-color: #1a3a5f; /* Dark blue background */
-    border: 1px solid #557da6; /* Lighter blue border */
-    color: #e4e8ec; /* Light text color */
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
-    font-family: 'Courier New', monospace; /* Font that gives a typewritten or technical feel */
-    display: flex; /* Use flexbox for horizontal layout */
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Align items vertically */   
-    /* mobile media query */
-    @media screen and (max-width: 768px){
-        /* allow buttons to flow into a new row */
-        flex-wrap: wrap;
-        width: 90%;
-    }
-}
 
-/* Style for each button in the build menu */
-.build-menu-button {
-    background-color: #2b5572; /* Slightly lighter blue for buttons */
-    color: #e4e8ec; /* Light text color for contrast */
-    border: none;
-    padding: 5px 10px;
-    margin: 0 5px; /* Horizontal margin for spacing between buttons */
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-transform: uppercase; /* Makes text uppercase for a more formal look */
-    font-weight: bold;
-    /* prevent user from highlighting text */
-    user-select: none;
-    -webkit-user-select: none; /* For older versions of webkit-based browsers */
-    -moz-user-select: none; /* For older versions of Firefox */
-    -ms-user-select: none; /* For Internet Explorer/Edge */
-}
-
-.build-menu-button:hover {
-    background-color: #3b6f92; /* Change background on hover for interactive feel */
-}
-
-/* Style for the build menu button that is currently selected */
-.active {
-    background-color: #d4af37; /* Goldish color */
-    border: 2px solid #f5deb3; /* Lighter gold border */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-    color: #1a3a5f; /* Dark text color for contrast */
-}
 
 .world-select-menu {
     background-color: #1a3a5f; /* Dark blue background */
@@ -209,44 +156,14 @@ body {
     overflow: auto;
 }
 
-.level-select-image {
+/* .level-select-image {
     width: 100%;
     height: auto;
     margin: 0 0;
     border-radius: 3px;
-}
+} */
 
-.level-select-box {
-    width: 20%;
-    margin: 5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: #2b5572;
-    border-radius: 3px;
-}
 
-.level-select-box:hover {
-    transform: scale(1.1);
-    transition: transform 0.5s;
-}
-
-/* Style for each button in the level select menu */
-.level-select-button {
-    /* position: absolute; */
-    background-color: #2b5572; /* Slightly lighter blue for buttons */
-    color: #e4e8ec; /* Light text color for contrast */
-    border: none;
-    padding: 5px 10px;
-    margin: 0 0;
-    width: 100%;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-transform: uppercase; /* Makes text uppercase for a more formal look */
-    font-weight: bold;
-}
 
 .allowed-block-menu {
     position: absolute;
@@ -288,19 +205,4 @@ body {
     width: 10%;
     height: 70%;
     overflow: auto;
-}
-
-.medal-description {
-    position: absolute;
-    top: 1%;
-    left: 50%;
-    /* center the text */
-    transform: translateX(-50%);
-    background-color: #1a3a5f; /* Dark blue background */
-    padding: 15px;
-    width: 20%;
-    text-align: center;
-    color: #e4e8ec; /* Light text color */
-    border: 2px solid #e4e8ec; /* 2px wide, solid, light-colored border */
-    cursor: pointer;
 }

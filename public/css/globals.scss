@@ -1,0 +1,66 @@
+// the main scss file for the project
+@font-face {
+    font-family: 'Muro';
+    src: url('../fonts/muro-webfont.woff2') format('woff2'),
+         url('../fonts/muro-webfont.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+}
+
+// define variables for colors
+$action-color: #28a745;
+$text-color: #ffffff;
+$sign-color: #3F270E;
+$ui-background-color: #1A3A5F;
+
+// use the font globally
+body {
+    font-family: 'Muro', sans-serif;
+    letter-spacing: 0.1em;
+    font-weight: 200;
+    color: $text-color;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+
+a {
+    color: $action-color;
+    text-decoration: underline;
+
+    
+}
+
+.toast {
+    background: $action-color;
+    position: absolute;
+    // centered in the middle of the screen
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    color: $text-color;
+}
+
+.toast-err {
+    background: red;
+    position: absolute;
+    // centered in the middle of the screen
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    color: $text-color;
+    opacity: 0.8;
+    border-radius: 10px;
+}
+
+@import "index.scss";
+@import "login.scss";
+@import "settings.scss";
+@import "levelMenu.scss";
+@import "levelUI.scss";
+@import "community.scss";

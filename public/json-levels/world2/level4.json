@@ -147,5 +147,7 @@
       "value": 0
     }
   ],
-  "tutorialText": "Why are there tire tracks on the ceiling?!!?"
+  "tutorialText": "Why are there tire tracks on the ceiling?",
+  "floating": true,
+  "title": "Upside Down"
 }

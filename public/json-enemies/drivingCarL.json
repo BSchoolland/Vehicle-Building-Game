@@ -1,0 +1,49 @@
+{
+  "blocks": [
+    {
+      "type": "BasicWoodenBlock",
+      "x": 525,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 575,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "BasicWoodenBlock",
+      "x": 625,
+      "y": 1175,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "WheelBlock",
+      "x": 625,
+      "y": 1225,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "WheelBlock",
+      "x": 525,
+      "y": 1225,
+      "rotatedTimes": 0,
+      "flippedX": false
+    },
+    {
+      "type": "SeatBlock",
+      "x": 575,
+      "y": 1125,
+      "rotatedTimes": 0,
+      "flippedX": false
+    }
+  ],
+  "commands": [
+    { "key": "d", "start": 1.0, "end": 60.0}
+  ]
+}

@@ -5,6 +5,9 @@ const userRoutes = require('./routes/userRoutes'); // Import your routes
 const app = express();
 const port = process.env.PORT || 3000;
 
+// environment variables
+require("dotenv").config();
+
 // a cookie parser to parse the user's cookie
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -14,8 +17,60 @@ app.use(express.json());
 app.set('trust proxy', 1);
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public/pages/index/index.html'));
 });
+
+app.get('/levels', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/levels/levels.html'));
+});
+
+app.get('/levels.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/levels/levels.html'));
+});
+
+app.get('/community', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/changeLog/changeLog.html'));
+});
+
+app.get('/changeLog.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/changeLog/changeLog.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/login/login.html'));
+});
+
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/login/login.html'));
+});
+
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/register/register.html'));
+});
+
+app.get('/register.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/register/register.html'));
+});
+
+app.get('/sandbox', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/sandbox/sandbox.html'));
+});
+
+app.get('/sandbox.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/sandbox/sandbox.html'));
+});
+
+
+// I'll allow editor access with the direct link, but it's not linked anywhere
+app.get('/editor.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/editor/editor.html'));
+});
+
+app.get('/mylevel.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/editor/mylevel.html'));
+});
+
+
 
 // Use your imported routes with the app
 app.use(userRoutes);

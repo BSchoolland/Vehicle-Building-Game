@@ -44,7 +44,7 @@
     {
       "type": "EnemySpawnBlock",
       "x": 6000,
-      "y": 500,
+      "y": 600,
       "enemyType": "movingSpikeWall"
     },
     { "type": "GrassBlock", "x": 3400, "y": 800 },
@@ -106,8 +106,6 @@
     { "type": "GrassBlock", "x": -900, "y": 1100 },
     { "type": "GrassBlock", "x": -1000, "y": 1100 },
     { "type": "GrassBlock", "x": -1100, "y": 1100 },
-    { "type": "GrassBlock", "x": -1300, "y": 1100 },
-    { "type": "GrassBlock", "x": -1400, "y": 1100 },
     { "type": "GrassBlock", "x": -1200, "y": 1100 },
     { "type": "GrassBlock", "x": -1100, "y": 1000 },
     { "type": "GrassBlock", "x": -1200, "y": 1000 },
@@ -117,10 +115,8 @@
     { "type": "GrassBlock", "x": -1500, "y": 900 },
     { "type": "GrassBlock", "x": -1500, "y": 800 },
     { "type": "GrassBlock", "x": -1400, "y": 900 },
-    { "type": "GrassBlock", "x": -1500, "y": 1000 },
     { "type": "GrassBlock", "x": -1300, "y": 1000 },
     { "type": "GrassBlock", "x": -1400, "y": 1000 },
-    { "type": "GrassBlock", "x": -1500, "y": 1100 },
     { "type": "GrassBlock", "x": -1800, "y": 800 },
     { "type": "GrassBlock", "x": 1800, "y": 1200 },
     { "type": "GrassBlock", "x": 1900, "y": 1200 },
@@ -164,8 +160,6 @@
       "y": 1100,
       "enemyType": "spikeCar"
     },
-    { "type": "GrassBlock", "x": 5200, "y": 1200 },
-    { "type": "GrassBlock", "x": 5300, "y": 1200 },
     { "type": "GrassBlock", "x": -1600, "y": 800 },
     { "type": "GrassBlock", "x": -1700, "y": 800 },
     { "type": "CoinBlock", "x": -1600, "y": 700 },
@@ -196,14 +190,6 @@
     { "type": "GrassBlock", "x": -4200, "y": 700 },
     { "type": "slightRampBlockL", "x": -1700, "y": 700 },
     { "type": "GrassBlock", "x": -1600, "y": 900 },
-    { "type": "GrassBlock", "x": -1700, "y": 900 },
-    { "type": "GrassBlock", "x": -1800, "y": 900 },
-    { "type": "GrassBlock", "x": -1800, "y": 1000 },
-    { "type": "GrassBlock", "x": -1800, "y": 1100 },
-    { "type": "GrassBlock", "x": -1700, "y": 1100 },
-    { "type": "GrassBlock", "x": -1700, "y": 1000 },
-    { "type": "GrassBlock", "x": -1600, "y": 1000 },
-    { "type": "GrassBlock", "x": -1600, "y": 1100 },
     { "type": "slightRampBlockRUpsideDown", "x": -100, "y": 1200 },
     { "type": "slightRampBlockLUpsideDown", "x": 1600, "y": 900 },
     { "type": "slightRampBlockLUpsideDown", "x": 3500, "y": 800 },
@@ -227,7 +213,25 @@
     { "type": "GrassBlock", "x": 400, "y": 500 },
     { "type": "GrassBlock", "x": 300, "y": 500 },
     { "type": "slightRampBlockRUpsideDown", "x": 400, "y": 600 },
-    { "type": "slightRampBlockR", "x": 400, "y": 400 }
+    { "type": "slightRampBlockR", "x": 400, "y": 400 },
+    { "type": "GrassBlock", "x": 5400, "y": 900 },
+    { "type": "GrassBlock", "x": 5500, "y": 800 },
+    { "type": "GrassBlock", "x": 5200, "y": 1200 },
+    { "type": "GrassBlock", "x": 5300, "y": 1100 },
+    { "type": "slightRampBlockRUpsideDown", "x": 5300, "y": 800 },
+    { "type": "GrassBlock", "x": 5400, "y": 800 },
+    { "type": "RampBlockL", "x": 5300, "y": 1000 },
+    { "type": "GrassBlock", "x": 5400, "y": 1000 },
+    { "type": "GrassBlock", "x": 5500, "y": 900 },
+    { "type": "GrassBlock", "x": 5600, "y": 800 },
+    { "type": "GrassBlock", "x": 5300, "y": 1200 },
+    { "type": "GrassBlock", "x": 5400, "y": 1100 },
+    { "type": "GrassBlock", "x": 5500, "y": 1000 },
+    { "type": "GrassBlock", "x": 5600, "y": 900 },
+    { "type": "GrassBlock", "x": 6400, "y": 700 },
+    { "type": "GrassBlock", "x": 6500, "y": 700 },
+    { "type": "GrassBlock", "x": 6600, "y": 700 },
+    { "type": "GrassBlock", "x": 6700, "y": 700 }
   ],
   "commands": [],
   "buildingBlockTypes": [
@@ -253,5 +257,6 @@
       "value": 6
     }
   ],
-  "tutorialText": "Blocks can be rotated with the R key. No need to destroy all enemies, just survive and collect the coins!"
+  "tutorialText": "Blocks can be rotated with the R key. No need to destroy all enemies, just survive and collect the coins!",
+  "title": "The Great Escape"
 }

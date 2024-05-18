@@ -1,0 +1,232 @@
+.level-menu-container {
+    position: absolute;
+    top: 5%; 
+    left: 50%;
+    transform: translateX(-50%); /* Center the div horizontally */
+    background-color: $ui-background-color;
+    border-radius: 30px;
+    width: 90%;
+    height: 95%;
+    overflow: hidden;
+}
+
+.level-menu-header {
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    color: $text-color;
+    background: #238B22;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.world-arrow {
+    background: none;
+    border: none;
+    padding: 40px;
+}
+
+.world-arrow img {
+    width: 30px;
+}
+
+.return-arrow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: none;
+    border: none;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    color: white;
+}
+
+.return-arrow img {
+    width: 30px;
+    padding-right: 20px;
+}
+
+
+.world-arrow :hover {
+    cursor: pointer;
+    filter: brightness(0.8);
+}
+
+.return-arrow :hover {
+    cursor: pointer;
+    filter: brightness(0.8);
+}
+
+.disabled {
+    // if disabled, darken the image within the button
+    filter: brightness(0.5);
+}
+
+.level-container {
+    /* organize items into rows of 3 */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90%;
+    padding-bottom: 10%;
+    overflow: auto;
+}
+
+// customize the scroll bar of the level menu
+.level-menu-container::-webkit-scrollbar {
+    // border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+    
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: $action-color;
+    border-radius: 6px;
+    border: 2px solid $ui-background-color;
+}
+
+::-webkit-scrollbar-track {
+    background: #000f64;
+    border-radius: 6px;
+}
+
+
+.level-select-box {
+    width: 23%;
+    margin: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #2b5572;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.level-select-box:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+}
+
+.level-select-title {
+    font-size: 20px;
+    color: #e4e8ec;
+    margin: 10px;
+}
+
+/* Style for each button in the level select menu */
+.level-select-button {
+    /* position: absolute; */
+    background-color: #2b5572; /* Slightly lighter blue for buttons */
+    color: #e4e8ec; /* Light text color for contrast */
+    border: none;
+    padding: 5px 10px;
+    margin: 0 0;
+    width: 100%;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase; /* Makes text uppercase for a more formal look */
+    font-weight: bold;
+}
+
+.level-select-image-container {
+    position: relative;
+    width: 100%; 
+    padding-top: 75%; 
+    overflow: hidden; 
+}
+
+.level-select-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Ensures the image covers the area, cropping as needed */
+}
+
+.level-select-number {
+    font-size: 14px;
+    color: #e4e8ec;
+    margin: 10px;
+}
+
+.bonus-objective-image {
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    margin-top: 50px;
+}
+
+// displayed as a crown on top of the level, tilted to the right
+.crown-image {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+    transform: translateX(-80%) translateY(-60%);
+}
+
+// a speech bubble that appears on the level select box
+.medal-description {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background-color: #2b5572;
+    color: #e4e8ec;
+    border-radius: 30px;
+    transform: translatey(50%);
+    z-index: 500;
+}
+
+.medal-description h3 {
+    padding: 10px;
+    text-align: center;
+}
+
+.medal-description p {
+    padding: 10px;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .level-select-box {
+        width: 37%;
+        margin-top: 40px;
+    }
+    .level-menu-header {
+        font-size: 16px;
+    }
+
+    .return-arrow {
+        padding: 20px;
+    }
+
+    .return-arrow img {
+        width: 20px;
+    }
+
+    .world-arrow {
+        padding: 20px;
+    }
+
+    .world-arrow img {
+        width: 20px;
+    }
+
+    .level-select-title {
+        font-size: 16px;
+    }
+    
+}

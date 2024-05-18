@@ -1,3 +1,5 @@
+// import the Block types
+import { EnemySpawnBlock } from "../world/mapBlocks.js";
 // a class that handles all aspects of level editing
 class LevelEditor {
     constructor(parent, blockTypes) {
@@ -21,7 +23,7 @@ class LevelEditor {
     
       loadForEditing(LevelJson) {
         // Clear existing blocks in the Level
-        this.parent.clear(); // remove all blocks from the Level
+        this.parent.LevelLoader.clear(); // remove all blocks from the Level
         // Load new blocks from JSON
         LevelJson.blocks.forEach((blockJson) => {
           // Get the block type constructor
@@ -32,7 +34,7 @@ class LevelEditor {
             if (BlockType === EnemySpawnBlock) {
               newBlock.enemyType = blockJson.enemyType;
               // spawn in an enemy contraption
-              const EnemyContraption = this.loadEnemyContraption(blockJson);
+              const EnemyContraption = this.parent.LevelLoader.loadEnemyContraption(blockJson);
               // add the enemy contraption to the newBlock
               newBlock.enemyContraption = EnemyContraption;
               // make the newBlock invisible
@@ -41,7 +43,7 @@ class LevelEditor {
               });
             }
             // Add the block to the Level
-            this.addBlock(newBlock);
+            this.parent.LevelLoader.addBlock(newBlock);
           } else {
             console.error(`Unknown block type: ${blockJson.type}`);
           }
@@ -56,7 +58,7 @@ class LevelEditor {
           } else if (lastAction.action === "flipX") {
             this.flipX(lastAction.block, false);
           } else {
-            this.addBlock(lastAction.block, false);
+            this.parent.LevelLoader.addBlock(lastAction.block, false);
           }
           // Add the reversed action to the undo stack
           this.undoStack.push(lastAction);
@@ -67,7 +69,7 @@ class LevelEditor {
         if (this.undoStack.length > 0) {
           var lastUndoAction = this.undoStack.pop();
           if (lastUndoAction.action === "add") {
-            this.addBlock(lastUndoAction.block);
+            this.parent.LevelLoader.addBlock(lastUndoAction.block);
           } else if (lastUndoAction.action === "flipX") {
             this.flipX(lastUndoAction.block);
           } else {

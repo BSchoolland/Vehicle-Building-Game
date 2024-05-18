@@ -81,7 +81,7 @@
     {
       "type": "EnemySpawnBlock",
       "x": 2700,
-      "y": 700,
+      "y": 800,
       "enemyType": "largeSpikeCar"
     },
     { "type": "BuildingAreaBlock", "x": 400, "y": 800 },
@@ -159,5 +159,6 @@
       "value": 0
     }
   ],
-  "tutorialText": ""
+  "tutorialText": "",
+  "title": "Ejector Seat"
 }

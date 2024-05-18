@@ -182,6 +182,8 @@ class LevelUI {
       button.className = "world-select-button selected";
       // set the body gradient to the world gradient
       document.body.style.background = worldGradients[i];
+      // make sure the gradient is applied to the whole body
+      
     } else {
       button.addEventListener("click", () => {
         levelSelector.remove();

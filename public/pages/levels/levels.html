@@ -21,58 +21,61 @@
     gtag('js', new Date());
 
     gtag('config', 'G-V15BD9CZKN');
-    
+
 </script>
 <style>
     canvas {
         /* I don't know why this is necessary, but it is */
-        transform: translateX(-10px) translateY(-10px); 
+        transform: translateX(-10px) translateY(-10px);
 
     }
 </style>
+
 <body>
-     <!-- if the browser is programmed to ignore the user-scalable=no, the following script will prevent zooming -->
-     <script>
+    <!-- if the browser is programmed to ignore the user-scalable=no, the following script will prevent zooming -->
+    <script>
         // JavaScript to prevent zooming
         document.addEventListener('gesturestart', function (e) {
             e.preventDefault();
         });
-    
+
         document.addEventListener('gesturechange', function (e) {
             e.preventDefault();
         });
-    
+
         document.addEventListener('gestureend', function (e) {
             e.preventDefault();
         });
-    
+
         document.addEventListener('touchmove', function (event) {
             if (event.scale !== 1) {
-            event.preventDefault();
+                event.preventDefault();
             }
         }, { passive: false });
-    
+
         document.addEventListener('wheel', function (event) {
             if (event.ctrlKey) {
-            event.preventDefault();
+                event.preventDefault();
             }
         });
         // FIXME: prevent double tap zoom
-        </script>
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
-    <!-- game container object -->
+
     <div id="landscape-warning" style="display: none;">
-        <h1>Please rotate your device to landscape mode to play the game.</h1>
+        <img width="200px" src="img/rotate.png" alt="Please rotate your device" style="display: block; margin: 0 auto;">
     </div>
+    <script src="js/easter-eggs/funText.js"></script>
+
     <div id="blur">
-        
+
 
         <h1 id="tutorial-text" class="tutorial-text" style="display: none;">Press B to toggle build mode!</h1>
 
         <div id="game-container"></div>
-         <!-- a div for keeping track of win conditions -->
+        <!-- a div for keeping track of win conditions -->
 
-         <div class="stat-container" id="stats" style="display: none;">
+        <div class="stat-container" id="stats" style="display: none;">
             <h1>Coins: 0/1</h1>
             <h1>Destroyed: 0/1</h1>
             <h1>Survived: 0/30</h1>
@@ -91,30 +94,30 @@
             </div>
         </div>
     </div>
-        <!-- A settings popup -->
-        <div id="settings-popup" class="settings-popup hidden">
-            <div class="settings-popup-content">
-                <div class="settings-popup-header">
-                    <h2 class="settings-title">Settings</h2>
-                    <span class="close" id="close-settings">&times;</span>
+    <!-- A settings popup -->
+    <div id="settings-popup" class="settings-popup hidden">
+        <div class="settings-popup-content">
+            <div class="settings-popup-header">
+                <h2 class="settings-title">Settings</h2>
+                <span class="close" id="close-settings">&times;</span>
+            </div>
+            <div class="settings-content">
+                <div class="settings-option">
+                    <label for="music">Music Volume:</label>
+                    <input type="range" id="music-slider" name="music" min="0" max="20" value="10" />
                 </div>
-                <div class="settings-content">
-                    <div class="settings-option">
-                        <label for="music">Music Volume:</label>
-                        <input type="range" id="music-slider" name="music" min="0" max="20" value="10"/>
-                    </div>
-                    <div class="settings-option">
-                        <label for="sound">Sound Effect Volume:</label>
-                        <input type="range" id="sound-slider" name="sound" min="0" max="20" value="10"/>
-                    </div>
-                    <!-- potential graphics quality control -->
-                    <!-- <div class="settings-option">
+                <div class="settings-option">
+                    <label for="sound">Sound Effect Volume:</label>
+                    <input type="range" id="sound-slider" name="sound" min="0" max="20" value="10" />
+                </div>
+                <!-- potential graphics quality control -->
+                <!-- <div class="settings-option">
                         <label for="graphics">Graphics:</label>
                         <input type="range" id="graphics" name="graphics" min="0" max="10" value="5"/>
                     </div> -->
-                </div>
             </div>
         </div>
+    </div>
     <!-- runs the matter.js simulation -->
     <script type="module" src="js/game/campaign.js"></script>
 </body>

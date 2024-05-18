@@ -9,6 +9,11 @@ body {
   letter-spacing: 0.1em;
   font-weight: 200;
   color: #ffffff;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 a {

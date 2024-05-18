@@ -89,6 +89,35 @@ soundSlider.addEventListener("input", () => {
   setSoundEffectVolume(volume);
 });
 
+
+// get the orientation of the screen
+let landscape = !window.screen.orientation.type.includes("portrait");
+if (!landscape) {
+  document.getElementById("main-container").style.display = "none";
+  document.getElementById("game-container").style.display = "none";
+  document.getElementById("landscape-warning").style.display = "block";
+} else {
+  document.getElementById("main-container").style.display = "block";
+  document.getElementById("game-container").style.display = "block";
+  document.getElementById("landscape-warning").style.display = "none";
+}
+// constantly check the orientation of the screen
+window.screen.orientation.addEventListener("change", () => {
+  if (window.screen.orientation.type.includes("portrait")) {
+    document.getElementById("main-container").style.display = "none";
+    document.getElementById("game-container").style.display = "none";
+
+    document.getElementById("landscape-warning").style.display = "block";
+    landscape = false;
+  } else {
+    document.getElementById("main-container").style.display = "block";
+    document.getElementById("game-container").style.display = "block";
+
+    document.getElementById("landscape-warning").style.display = "none";
+    landscape = true;
+  }
+});
+
 // Create an engine
 var engine = Matter.Engine.create();
 

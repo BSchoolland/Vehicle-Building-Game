@@ -7,21 +7,21 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://www.wreckingwheels.com/community</loc>
-        <lastmod>2024-05-18</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
         <loc>https://www.wreckingwheels.com/levels</loc>
         <lastmod>2024-05-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.4</priority>
+        <priority>0.5</priority>
     </url>
     <url>
         <loc>https://www.wreckingwheels.com/sandbox</loc>
         <lastmod>2024-05-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
+    </url>
+    <url>
+        <loc>https://www.wreckingwheels.com/changelog</loc>
+        <lastmod>2024-05-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
 </urlset>

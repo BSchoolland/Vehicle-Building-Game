@@ -73,6 +73,26 @@ function createCompoundBody(blocks) {
           visible: false
       }
   });
+  compoundBody.parts.forEach(part => {
+      part.block = "ground";
+  });
+  // make all the original blocks non-colliding
+  try {
+    blocks.forEach(block => {
+        block.bodies.forEach(body => {
+            Matter.Body.set(body, {
+                isStatic: true,
+                collisionFilter: {
+                    group: -1
+                }
+              });
+        });
+    });
+  }
+  catch (e) {
+    console.error(e);
+  }
+  
 
   return compoundBody;
 }

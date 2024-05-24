@@ -282,6 +282,7 @@ class rocketBoosterBlock extends Block {
     if (otherBody.block.invincibleParts && otherBody.block.invincibleParts.includes(otherBody)) return; // if the other block is invincible, don't hit it
     if (otherBody.block.flameDuration > this.attackFlameDuration) return; // if the other block is already on fire for longer than this flame, don't hit it
     if (flame.created + this.flameRange < Date.now()) return; // if the flame is older than flameRange, don't hit the block
+    if (!otherBody.block.flameDuration) return; // if the other block can't be set on fire, don't hit it
     otherBody.block.flameDuration = this.attackFlameDuration; // the block will be on fire for 5 seconds
     otherBody.block.flameDamage = this.attackFlameDamage; // the block will take 5 damage per second
     // record that the flame has hit something

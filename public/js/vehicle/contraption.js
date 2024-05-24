@@ -85,7 +85,7 @@ class Contraption {
         ) {
           // trigger hit on the block in the contraption
           pair.bodyB.block.hit(pair.bodyB, pair.bodyA);
-        }
+        } 
       });
     });
     // set the seat

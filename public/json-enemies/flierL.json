@@ -51,6 +51,6 @@
     }
   ],
   "commands": [
-    { "key": "SHIFT", "start": 2.9, "end": 60 }
+    { "key": "SHIFT", "start": 2.8, "end": 60 }
   ]
 }

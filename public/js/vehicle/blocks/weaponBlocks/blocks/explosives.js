@@ -124,7 +124,10 @@ class TNTBlock extends Block {
                     return;
                 }
                 // damage the block
-                body.block.damage(this.blastDamage);
+                if (body.block.damage) {
+                    body.block.damage(this.blastDamage);
+                }
+
             }
         });
         // add a cluster of explosions randomly around the block

@@ -220,10 +220,10 @@ class SeatBlock extends Block {
     }
     hit(thisBody, otherBody) { 
         // if the other body is not in this contraption, take damage
-        if (otherBody.block.contraption !== this.contraption) {
+        if (!otherBody.Block || otherBody.block.contraption !== this.contraption) {
             this.damage(5);
             // apply an upward force to this body 
-            Matter.Body.setVelocity(thisBody, { x: 0, y: -15 });
+            Matter.Body.setVelocity(thisBody, { x: 0, y: -30 });
         }
     }
     triggerBlockDestroyed() {

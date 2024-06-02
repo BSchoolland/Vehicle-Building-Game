@@ -181,8 +181,8 @@ router.post("/api/login", (req, res) => {
         const match = await bcrypt.compare(password, user.password);
         if (match) {
           // send the user a cookie signed with the secret
-          const token = jwt.sign({ user_id: user.id }, secret);
-          res.cookie("user", token, { httpOnly: false });
+          const token = jwt.sign({ user_id: user.id }, secret, { expiresIn: '24h' }); // Token expires in 24 hours for security
+          res.cookie("user", token, { httpOnly: false, maxAge: 10 * 365 * 24 * 60 * 60 * 1000 }); // Cookie set to expire in 10 years
           res.status(200).json({ message: "Login successful", success: true });
         } else {
           res.status(401).json({ message: "Incorrect password" });
@@ -194,6 +194,7 @@ router.post("/api/login", (req, res) => {
     res.status(500).json({ message: "Error logging in" });
   }
 });
+
 
 // Endpoint to handle feature voting
 router.post("/api/voteFeature", (req, res) => {

@@ -141,6 +141,7 @@ button:hover {
   height: 80%;
   background-repeat: no-repeat;
   background-size: cover;
+  color: white;
 }
 
 .markdownContent {

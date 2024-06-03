@@ -25,7 +25,7 @@ import {
     slightRampBlockLUpsideDown,
   };
   
-  
+  import LevelConfigurationHandler from "./levelConfigurationHandler.js";
   class EditManager {
     constructor(engine, building, progressBar, isEnemyEditor = false) {
       this.engine = engine;
@@ -36,8 +36,8 @@ import {
 
       // todo: add action type handler
 
-      // todo: add level configuration handler
-
+      // add level configuration handler
+      this.levelConfigurationHandler = new LevelConfigurationHandler(this);
       // todo: add loading and saving handler
 
       // todo: add building handlers

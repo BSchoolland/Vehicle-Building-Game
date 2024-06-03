@@ -60,9 +60,8 @@ app.get('/sandbox.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/sandbox/sandbox.html'));
 });
 
-
 // I'll allow editor access with the direct link, but it's not linked anywhere
-app.get('/editor.html', (req, res) => {
+app.get('/editor', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/editor/editor.html'));
 });
 

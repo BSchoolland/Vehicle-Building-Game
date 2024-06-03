@@ -25,9 +25,29 @@
     
     <div id="game-container"></div>
     <div id="container"></div>
-    <!-- an input for tutorial text -->
-    <input type="text" id="tutorial-text" placeholder="Tutorial Text">
-
+    <!-- input for objectives -->
+    <div id="objective-popup" class="login-popup hidden" hidden>
+        <div class="login-popup-content">
+            <div class="login-popup-header">
+                <h2 class="login-title">Objectives</h2>
+                <span class="close" id="close-objective">&times;</span>
+            </div>
+    
+            <form class="login-form" id="objective-form">
+                <label for="coins">Coins:</label>
+                <input type="number" id="coins" name="coins" required>
+                <label for="destroy">Destroy:</label>
+                <input type="number" id="destroy" name="destroy" required>
+                <label for="time">Time:</label>
+                <input type="number" id="time" name="time" required>
+                <label for="survive">Survive:</label>
+                <input type="number" id="survive" name="survive" required>
+                <button type="submit">UPDATE</button>
+            </form>
+            <p id="message" style="color: red; text-align: center;"></p>
+        </div>
+    </div>
+    
     <!-- runs the matter.js simulation -->
     <script type="module" src = "js/levelEditor/editor.js"></script>
 </body>

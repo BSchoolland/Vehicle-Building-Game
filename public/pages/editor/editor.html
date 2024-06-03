@@ -47,6 +47,40 @@
             <p id="message" style="color: red; text-align: center;"></p>
         </div>
     </div>
+    <!-- input for level details (name, hint) -->
+    <div id="level-popup" class="login-popup hidden" hidden>
+        <div class="login-popup-content">
+            <div class="login-popup-header">
+                <h2 class="login-title">Level Details</h2>
+                <span class="close" id="close-level">&times;</span>
+            </div>
+    
+            <form class="login-form" id="level-form">
+                <label for="level-name">Level Name:</label>
+                <input type="text" id="level-name" name="level-name" required>
+                <label for="hint">Hint:</label>
+                <input type="text" id="hint" name="hint" required>
+                <button type="submit">UPDATE</button>
+            </form>
+            <p id="message" style="color: red; text-align: center;"></p>
+        </div>
+    </div>
+    <!-- input for allowed building blocks -->
+    <div id="block-popup" class="login-popup hidden" hidden>
+        <div class="login-popup-content">
+            <div class="login-popup-header">
+                <h2 class="login-title">Blocks</h2>
+                <span class="close" id="close-block">&times;</span>
+            </div>
+    
+            <form class="login-form" id="block-form">
+                <label for="blocks">Blocks</label>
+                <textarea type="text" id="blocks" name="blocks" required>basic: 3, wheel: 2, seat: 1</textarea>
+                <button type="submit">UPDATE</button>
+            </form>
+            <p id="message" style="color: red; text-align: center;"></p>
+        </div>
+    </div>
     
     <!-- runs the matter.js simulation -->
     <script type="module" src = "js/levelEditor/editor.js"></script>

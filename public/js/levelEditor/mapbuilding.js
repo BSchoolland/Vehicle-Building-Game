@@ -17,66 +17,6 @@ import {
     GrappleBlock,
     PoweredHingeBlock,
   } from "../vehicle/blocks.js";
-
-class ObjectivesMenu { // creates objectives for the level
-    constructor(building) {
-        this.building = building;
-        // create the menu
-        this.menu = document.createElement('div');
-        this.menu.classList.add('objectives-menu');
-        this.menu.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-        // create a selector for each objective 
-        this.objectiveTypes = [ // different types of levels have different objectives
-            { name: 'Destroy', value: 0 }, // destroy x enemies
-            { name: 'Collect', value: 0 }, // collect x coins
-            { name: 'Survive', value: 0 }, // survive for x seconds
-            { name: 'BeforeTime', value: 0 }, // reach the end before x seconds
-        ];
-        this.createObjectivesSelectors();
-    }
-    createObjectivesSelectors() {
-        this.objectivesSelectors = {};
-        this.objectiveTypes.forEach(objectiveType => {
-            // add a label for the objective type
-            let label = document.createElement('label');
-            // in uppercase
-            label.innerText = objectiveType.name.toUpperCase();
-            this.menu.appendChild(label);
-            // selectors that allow for the numbers 0-15
-            let selector = document.createElement('select');
-            selector.classList.add('menu-button', 'build-menu-button');
-            // add the options
-            for (let i = 0; i < 31; i++) {
-                // add the option
-                let option = document.createElement('option');
-                option.value = i;
-                option.innerText = i;
-                selector.appendChild(option);
-                // set the default value
-                if (i === objectiveType.value) {
-                    selector.value = i;
-                }
-            }
-            // when the selector changes, update the objective value
-            selector.onchange = () => {
-                objectiveType.value = Number(selector.value);
-            }
-            this.menu.appendChild(selector);
-            this.objectivesSelectors[objectiveType.name] = selector;
-        });
-        // get the container
-        let gameContainer = document.getElementById('container');
-        //add the menu to the container
-        gameContainer.appendChild(this.menu);
-    }
-    setObjectiveTypes(objectiveTypes) {
-        this.objectiveTypes = objectiveTypes;
-        // clear the menu
-        this.menu.innerHTML = '';
-        // create the objective selectors
-        this.createObjectivesSelectors();
-    }
-}
             
 
 
@@ -284,9 +224,11 @@ class BuildMenu {
             // save the block types to the JSON object
             LevelManagerJson.buildingBlockTypes = buildingBlockTypes;
             // save the objective types to the JSON object
-            LevelManagerJson.objectives = this.building.objectivesSelectors.objectiveTypes;
+            // LevelManagerJson.objectives = this.building.objectivesSelectors.objectiveTypes;
+            LevelManagerJson.objectives = this.building.level.LevelEditor.ConfigHandler.getObjectives();
+            console.log(LevelManagerJson.objectives);
             // add tutorial text
-            LevelManagerJson.tutorialText = document.getElementById('tutorial-text').value;
+            LevelManagerJson.tutorialText = ''
             // download the JSON object as a file
             let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(LevelManagerJson));
             let dlAnchorElem = document.createElement('a');
@@ -342,7 +284,7 @@ class BuildMenu {
             // save the block types to the JSON object
             LevelManagerJson.buildingBlockTypes = buildingBlockTypes;
             // save the objective types to the JSON object
-            LevelManagerJson.objectives = this.building.objectivesSelectors.objectiveTypes;
+            LevelManagerJson.objectives = this.building.level.LevelEditor.ConfigHandler.getObjectives();
             // add tutorial text
             LevelManagerJson.tutorialText = document.getElementById('tutorial-text').value;
             // save the level to the local storage
@@ -402,9 +344,9 @@ class BuildMenu {
         // set the block types
         this.building.blockSelectors.setBuildingBlockTypes(buildingBlockTypes);
         // set the objective types
-        this.building.objectivesSelectors.setObjectiveTypes(LevelManagerJson.objectives);
+        this.building.level.LevelEditor.ConfigHandler.setObjectives(LevelManagerJson.objectives);
         // set the tutorial text
-        document.getElementById('tutorial-text').value = LevelManagerJson.tutorialText;
+        // document.getElementById('tutorial-text').value = LevelManagerJson.tutorialText;
     }
 }       
 
@@ -416,6 +358,7 @@ class Building {
         this.currentBlockType = GrassBlock;
         this.buildInProgress = false;
         this.level = new LevelManager(this.engine, this.camera);
+        this.level.LevelEditor.init(); // activate the level editor
         this.enemyHandler = new EnemyHandler();
         this.buildArea = {
             x: 0,
@@ -429,7 +372,6 @@ class Building {
         // build menu
         this.buildMenu = new BuildMenu(this);
         this.blockSelectors = new allowedBlockMenu(this);
-        this.objectivesSelectors = new ObjectivesMenu(this);
         // if level is in local storage, load it
         if (localStorage.getItem('level')) {
             try {

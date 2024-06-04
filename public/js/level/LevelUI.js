@@ -136,7 +136,7 @@ class LevelUI {
     } else if (window.location.href.includes("editor")) {
       window.location.href = "/";
     } else {
-      // if the level selector is open, retrun to the main menu
+      // if the level selector is open, return to the main menu
       if (document.getElementById("level-selector")) {
         window.location.href = "/";
       }

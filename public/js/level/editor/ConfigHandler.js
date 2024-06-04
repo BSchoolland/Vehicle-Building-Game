@@ -1,5 +1,19 @@
+import {
+    RemoteBlock,
+    BasicWoodenBlock,
+    BasicIronBlock,
+    BasicDiamondBlock,
+    SeatBlock,
+    WheelBlock,
+    rocketBoosterBlock,
+    SpikeBlock,
+    TNTBlock,
+    GrappleBlock,
+    PoweredHingeBlock,
+  } from "../../vehicle/blocks.js";
+
 // handles all popups for configuring levels (e.g. setting the level name, objectives, and allowed blocks)
-class LevelConfigurationHandler {
+class ConfigHandler {
     constructor(levelManager) {
         this.levelManager = levelManager;
         this.levelName = "My Level #1";
@@ -13,6 +27,8 @@ class LevelConfigurationHandler {
             "wheelBlock": 2,
             "seatBlock": 1,
         }
+    }
+    init() {
         this.handlePopups();
     }
     handlePopups() {
@@ -79,10 +95,10 @@ class LevelConfigurationHandler {
         objectivesForm.addEventListener("submit", (event) => {
             event.preventDefault();
             // get the values from the form
-            const coinObjective = document.getElementById("coin").value;
-            const destroyObjective = document.getElementById("destroy").value;
-            const timeObjective = document.getElementById("time").value;
-            const surviveObjective = document.getElementById("survive").value;
+            const coinObjective = parseInt(document.getElementById("coins").value);
+            const destroyObjective = parseInt(document.getElementById("destroy").value);
+            const timeObjective = parseInt(document.getElementById("time").value);
+            const surviveObjective = parseInt(document.getElementById("survive").value);
             // set the values
             this.coin_objective = coinObjective;
             this.destroy_objective = destroyObjective;
@@ -132,22 +148,40 @@ class LevelConfigurationHandler {
             allowedBlocksPopup.classList.add("hidden");
         });
     }
-    // set the level name
-    setLevelName(levelName) {
-        this.levelName = levelName;
+    getObjectives() {
+        const objectiveTypes = [ // different types of levels have different objectives
+            { name: 'Destroy', value: this.destroy_objective }, // destroy x blocks
+            { name: 'Collect', value: this.coin_objective }, // collect x coins
+            { name: 'Survive', value: this.survive_objective }, // survive for x seconds
+            { name: 'BeforeTime', value: this.time_objective }, // complete the level in x seconds
+        ];
+        return objectiveTypes;
     }
-    // get the level name
-    getLevelName() {
-        return this.levelName;
+
+    setObjectives(objectiveTypes) {
+        objectiveTypes.forEach((objective) => {
+            switch (objective.name) {
+                case 'Destroy':
+                    this.destroy_objective = objective.value;
+                    break;
+                case 'Collect':
+                    this.coin_objective = objective.value;
+                    break;
+                case 'Survive':
+                    this.survive_objective = objective.value;
+                    break;
+                case 'BeforeTime':
+                    this.time_objective = objective.value;
+                    break;
+            }
+        });
+        // update the form values
+        document.getElementById("coins").value = this.coin_objective;
+        document.getElementById("destroy").value = this.destroy_objective;
+        document.getElementById("time").value = this.time_objective;
+        document.getElementById("survive").value = this.survive_objective;
     }
-    // set the allowed blocks
-    setAllowedBlocks(allowedBlocks) {
-        this.allowedBlocks = allowedBlocks;
-    }
-    // get the allowed blocks
-    getAllowedBlocks() {
-        return this.allowedBlocks;
-    }
+
 }
 
-export default LevelConfigurationHandler;
+export default ConfigHandler;

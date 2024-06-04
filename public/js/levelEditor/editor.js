@@ -1,5 +1,4 @@
 import Building from './mapbuilding.js';
-import EditManager from './editManager.js';
 import { Camera } from '../game/camera.js';
 
 // Create an engine
@@ -48,9 +47,6 @@ setFullScreenCanvas();
 // Run the engine and the renderer
 Matter.Runner.run(engine);
 Matter.Render.run(render);
-
-// create the edit manager
-const editManager = new EditManager(engine, building);
 
 // run the camera
 Matter.Events.on(engine, 'beforeUpdate', () => {

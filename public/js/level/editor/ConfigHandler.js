@@ -182,6 +182,13 @@ class ConfigHandler {
         document.getElementById("survive").value = this.survive_objective;
     }
 
+    getLevelDetails() {
+        return {
+            title: this.levelName,
+            tutorialText: this.levelHint,
+        }
+    }
+
 }
 
 export default ConfigHandler;

@@ -1,0 +1,47 @@
+{
+    "blocks": [
+        { "type": "GrassBlock", "x": 600, "y": 1200 },
+        { "type": "GrassBlock", "x": 700, "y": 1200 },
+        { "type": "GrassBlock", "x": 800, "y": 1200 },
+        { "type": "GrassBlock", "x": 900, "y": 1200 },
+        { "type": "GrassBlock", "x": 1000, "y": 1200 },
+        { "type": "GrassBlock", "x": 1100, "y": 1200 },
+        { "type": "GrassBlock", "x": 1200, "y": 1200 },
+        { "type": "GrassBlock", "x": 1300, "y": 1200 },
+        { "type": "GrassBlock", "x": 1400, "y": 1200 },
+        { "type": "GrassBlock", "x": 1500, "y": 1200 },
+        { "type": "GrassBlock", "x": 1600, "y": 1200 },
+        { "type": "GrassBlock", "x": 1700, "y": 1200 },
+        { "type": "CoinBlock", "x": 1600, "y": 1100 },
+        { "type": "CoinBlock", "x": 1500, "y": 1100 },
+        { "type": "CoinBlock", "x": 1400, "y": 1100 },
+        { "type": "CoinBlock", "x": 1300, "y": 1100 },
+        { "type": "CoinBlock", "x": 1400, "y": 1000 },
+        { "type": "CoinBlock", "x": 1500, "y": 1000 },
+        { "type": "BuildingAreaBlock", "x": 700, "y": 1100 },
+        { "type": "BuildingAreaBlock", "x": 700, "y": 1000 },
+        { "type": "BuildingAreaBlock", "x": 900, "y": 1000 },
+        { "type": "BuildingAreaBlock", "x": 800, "y": 1100 },
+        { "type": "BuildingAreaBlock", "x": 800, "y": 1000 },
+        { "type": "BuildingAreaBlock", "x": 900, "y": 1100 }
+    ],
+    "commands": [],
+    "buildingBlockTypes": [
+        {
+            "name": "Basic Block",
+            "key": "1",
+            "type": "BasicWoodenBlock",
+            "limit": 3
+        },
+        { "name": "Wheel Block", "key": "2", "type": "WheelBlock", "limit": 2 },
+        { "name": "Seat Block", "key": "3", "type": "SeatBlock", "limit": 1 }
+    ],
+    "objectives": [
+        { "name": "Destroy", "value": 2 },
+        { "name": "Collect", "value": 4 },
+        { "name": "Survive", "value": 5000 },
+        { "name": "BeforeTime", "value": 1 }
+    ],
+    "tutorialText": "This is a hint for the level",
+    "title": "My Level #39"
+}

@@ -208,35 +208,7 @@ class BuildMenu {
                 return;
             }
             // save the level to a JSON object
-            let LevelManagerJson = building.level.LevelEditor.save();
-            let key = 0;
-            // remove the block types that are not allowed
-            this.building.blockSelectors.blockTypes = this.building.blockSelectors.blockTypes.filter(blockType => blockType.allowed > 0);
-            const buildingBlockTypes = this.building.blockSelectors.blockTypes.map(blockType => {
-                key ++;
-                return {
-                    name: blockType.name,
-                    key: key.toString(),
-                    type: blockType.type.name,
-                    limit: blockType.allowed
-                };
-            });
-            // save the block types to the JSON object
-            LevelManagerJson.buildingBlockTypes = buildingBlockTypes;
-            // save the objective types to the JSON object
-            // LevelManagerJson.objectives = this.building.objectivesSelectors.objectiveTypes;
-            LevelManagerJson.objectives = this.building.level.LevelEditor.ConfigHandler.getObjectives();
-            // add tutorial text
-            LevelManagerJson.tutorialText = this.building.level.LevelEditor.ConfigHandler.getLevelDetails().tutorialText;
-            LevelManagerJson.title = this.building.level.LevelEditor.ConfigHandler.getLevelDetails().title;
-            // download the JSON object as a file
-            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(LevelManagerJson));
-            let dlAnchorElem = document.createElement('a');
-            dlAnchorElem.setAttribute("href", dataStr);
-            dlAnchorElem.setAttribute("download", "level.json");
-            dlAnchorElem.click();
-            // also save the level to the local storage
-            localStorage.setItem('level', JSON.stringify(LevelManagerJson));
+            building.level.LevelEditor.save();
         };
         this.loadButton.onclick = () => {
             if (!building.buildInProgress) {
@@ -252,6 +224,7 @@ class BuildMenu {
                 let reader = new FileReader();
                 reader.readAsText(file);
                 reader.onload = () => {
+                    building.level.LevelEditor.load()
                     let LevelManagerJson = JSON.parse(reader.result);
 
                     this.loadLevel(LevelManagerJson);
@@ -267,28 +240,7 @@ class BuildMenu {
         };
         this.testButton.onclick = () => {
             // save the level to the local storage
-            let LevelManagerJson = building.level.LevelEditor.save();
-            let key = 0;
-            // remove the block types that are not allowed
-            this.building.blockSelectors.blockTypes = this.building.blockSelectors.blockTypes.filter(blockType => blockType.allowed > 0);
-            const buildingBlockTypes = this.building.blockSelectors.blockTypes.map(blockType => {
-                key ++;
-
-                return {
-                    name: blockType.name,
-                    key: key.toString(),
-                    type: blockType.type.name,
-                    limit: blockType.allowed
-                };
-            });
-            // save the block types to the JSON object
-            LevelManagerJson.buildingBlockTypes = buildingBlockTypes;
-            // save the objective types to the JSON object
-            LevelManagerJson.objectives = this.building.level.LevelEditor.ConfigHandler.getObjectives();
-            // add tutorial text
-            LevelManagerJson.tutorialText = document.getElementById('tutorial-text').value;
-            // save the level to the local storage
-            localStorage.setItem('level', JSON.stringify(LevelManagerJson));
+            building.level.LevelEditor.save( download=false );
             // set the href of the page to the mylevel.html
             window.location.href = 'mylevel.html';
         };
@@ -335,18 +287,8 @@ class BuildMenu {
         menu.style.left = 500; //`${rect.left + (rect.width / 2) - (menu.offsetWidth / 2)}px`; // Center horizontally
     }
     loadLevel(LevelManagerJson) {
-        // clear the existing level
-        this.building.level.LevelLoader.clear();
         // load the level from the JSON object
         this.building.level.LevelEditor.loadForEditing(LevelManagerJson);
-        // get the block types from the JSON object
-        let buildingBlockTypes = LevelManagerJson.buildingBlockTypes;
-        // set the block types
-        this.building.blockSelectors.setBuildingBlockTypes(buildingBlockTypes);
-        // set the objective types
-        this.building.level.LevelEditor.ConfigHandler.setObjectives(LevelManagerJson.objectives);
-        // set the tutorial text
-        // document.getElementById('tutorial-text').value = LevelManagerJson.tutorialText;
     }
 }       
 

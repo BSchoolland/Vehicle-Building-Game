@@ -28,15 +28,31 @@ class LevelEditor {
     }
 
     // save the Level to a JSON object
-    save() {
+    save( download = true) {
         var LevelJson = {};
         LevelJson.blocks = [];
         this.parent.blocks.forEach((block) => {
             LevelJson.blocks.push(block.save());
         });
-        // add an empty commands array to the JSON (this will be filled by devs and used by the AI)
-        LevelJson.commands = [];
-        return LevelJson;
+        // objectives
+        LevelJson.objectives = this.ConfigHandler.getObjectives();
+        //TODO: add bonus objectives
+        // allowed blocks
+        LevelJson.buildingBlockTypes = this.ConfigHandler.getAllowedBlocks();
+        // level details
+        LevelJson.title = this.ConfigHandler.getLevelDetails().title;
+        LevelJson.tutorialText = this.ConfigHandler.getLevelDetails().tutorialText;
+        // save level to local storage
+        localStorage.setItem('level', JSON.stringify(LevelJson));
+        // download level as JSON
+        if (download) {
+            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(LevelJson));
+            let dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "level.json");
+            dlAnchorElem.click();
+        }
+        
     }
 
     loadForEditing(LevelJson) {
@@ -67,6 +83,12 @@ class LevelEditor {
                 console.error(`Unknown block type: ${blockJson.type}`);
             }
         });
+        // Load objectives
+        this.ConfigHandler.setObjectives(LevelJson.objectives);
+        // Load allowed blocks
+        this.ConfigHandler.setAllowedBlocks(LevelJson.buildingBlockTypes);
+        // Load level details
+        this.ConfigHandler.setLevelDetails(LevelJson.title, LevelJson.tutorialText);
     }
 
     undo() {

@@ -10,7 +10,8 @@ import {
     TNTBlock,
     GrappleBlock,
     PoweredHingeBlock,
-  } from "../../vehicle/blocks.js";
+} from "../../vehicle/blocks.js";
+
 
 // handles all popups for configuring levels (e.g. setting the level name, objectives, and allowed blocks)
 class ConfigHandler {
@@ -23,10 +24,10 @@ class ConfigHandler {
         this.time_objective = 0;
         this.survive_objective = 0;
         this.allowedBlocks = {
-            "basicBlock": 3,
-            "wheelBlock": 2,
-            "seatBlock": 1,
-        }
+            BasicBlock: 3,
+            WheelBlock: 2,
+            SeatBlock: 1,
+        };
     }
     init() {
         this.handlePopups();
@@ -37,7 +38,8 @@ class ConfigHandler {
         // objectives html objects
         const objectivesPopup = document.getElementById("objective-popup");
         const objectivesButton = document.getElementById("open-objective");
-        const closeObjectivesButton = document.getElementById("close-objective");
+        const closeObjectivesButton =
+            document.getElementById("close-objective");
         // details html objects
         const detailsPopup = document.getElementById("details-popup");
         const detailsButton = document.getElementById("open-details");
@@ -46,7 +48,11 @@ class ConfigHandler {
         const allowedBlocksPopup = document.getElementById("block-popup");
         const allowedBlocksButton = document.getElementById("open-block");
         const closeAllowedBlocksButton = document.getElementById("close-block");
-        console.log(allowedBlocksPopup, allowedBlocksButton, closeAllowedBlocksButton);
+        console.log(
+            allowedBlocksPopup,
+            allowedBlocksButton,
+            closeAllowedBlocksButton
+        );
         // if the objectives button is clicked, open the objectives popup
         objectivesButton.addEventListener("click", () => {
             // remove the hidden class
@@ -81,7 +87,7 @@ class ConfigHandler {
         closeAllowedBlocksButton.addEventListener("click", () => {
             // add the hidden class
             allowedBlocksPopup.classList.add("hidden");
-        });        
+        });
 
         // set up handlers to listen for form submission and update the level configuration (also preset the values)
         // objectives form
@@ -95,10 +101,18 @@ class ConfigHandler {
         objectivesForm.addEventListener("submit", (event) => {
             event.preventDefault();
             // get the values from the form
-            const coinObjective = parseInt(document.getElementById("coins").value);
-            const destroyObjective = parseInt(document.getElementById("destroy").value);
-            const timeObjective = parseInt(document.getElementById("time").value);
-            const surviveObjective = parseInt(document.getElementById("survive").value);
+            const coinObjective = parseInt(
+                document.getElementById("coins").value
+            );
+            const destroyObjective = parseInt(
+                document.getElementById("destroy").value
+            );
+            const timeObjective = parseInt(
+                document.getElementById("time").value
+            );
+            const surviveObjective = parseInt(
+                document.getElementById("survive").value
+            );
             // set the values
             this.coin_objective = coinObjective;
             this.destroy_objective = destroyObjective;
@@ -138,8 +152,7 @@ class ConfigHandler {
             // set the values
             try {
                 JSON.parse(blockText);
-            }
-            catch (error) {
+            } catch (error) {
                 alert("Invalid JSON");
                 return;
             }
@@ -149,11 +162,12 @@ class ConfigHandler {
         });
     }
     getObjectives() {
-        const objectiveTypes = [ // different types of levels have different objectives
-            { name: 'Destroy', value: this.destroy_objective }, // destroy x blocks
-            { name: 'Collect', value: this.coin_objective }, // collect x coins
-            { name: 'Survive', value: this.survive_objective }, // survive for x seconds
-            { name: 'BeforeTime', value: this.time_objective }, // complete the level in x seconds
+        const objectiveTypes = [
+            // different types of levels have different objectives
+            { name: "Destroy", value: this.destroy_objective }, // destroy x blocks
+            { name: "Collect", value: this.coin_objective }, // collect x coins
+            { name: "Survive", value: this.survive_objective }, // survive for x seconds
+            { name: "BeforeTime", value: this.time_objective }, // complete the level in x seconds
         ];
         return objectiveTypes;
     }
@@ -161,16 +175,16 @@ class ConfigHandler {
     setObjectives(objectiveTypes) {
         objectiveTypes.forEach((objective) => {
             switch (objective.name) {
-                case 'Destroy':
+                case "Destroy":
                     this.destroy_objective = objective.value;
                     break;
-                case 'Collect':
+                case "Collect":
                     this.coin_objective = objective.value;
                     break;
-                case 'Survive':
+                case "Survive":
                     this.survive_objective = objective.value;
                     break;
-                case 'BeforeTime':
+                case "BeforeTime":
                     this.time_objective = objective.value;
                     break;
             }
@@ -186,9 +200,43 @@ class ConfigHandler {
         return {
             title: this.levelName,
             tutorialText: this.levelHint,
-        }
+        };
     }
 
+    setLevelDetails(title, tutorialText) {
+        this.levelName = title;
+        this.levelHint = tutorialText;
+        // update the form values
+        document.getElementById("details-name").value = this.levelName;
+        document.getElementById("details-hint").value = this.levelHint;
+    }
+
+    getAllowedBlocks() {
+        let num = 0;
+        console.log(this.allowedBlocks);
+        let buildingBlockTypes = [];
+        for (const key in this.allowedBlocks) {
+            num++;
+            buildingBlockTypes.push({
+                name: key,
+                key: num.toString(),
+                type: key,
+                limit: this.allowedBlocks[key],
+            });
+        }
+        return buildingBlockTypes;
+    }
+
+    setAllowedBlocks(buildingBlockTypes) {
+        this.allowedBlocks = {};
+        for (const block of buildingBlockTypes) {
+            this.allowedBlocks[block.name] = block.value;
+        }
+        // update the form values
+        document.getElementById("block-text").value = JSON.stringify(
+            this.allowedBlocks
+        );
+    }
 }
 
 export default ConfigHandler;

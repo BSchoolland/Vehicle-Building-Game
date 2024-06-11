@@ -1,6 +1,6 @@
 # Wrecking Wheels
 ### Description
-This is a browser game where you build a contraption to complete levels.  Unlock new parts, solve physics based puzzles, and battle enemy contraptions!  I created this game because of my love of building games, and to challenge myself to grow as a coder.  
+This is a browser game where you build a contraption to complete levels.  Unlock new parts, solve physics based puzzles, and battle enemy contraptions!  I created this game because of my love of building games, and to challenge myself to grow as a coder.  Since it's creating, it has since been hosted, and I am trying to get people to play it!
 ### Play the game at [wreckingwheels.com](https://wreckingwheels.com)
 ### Running Wrecking Wheels on your local machine
 To get this to run on your local machine, you'll first need to install node.  You can find information here: https://nodejs.org/en/download 

@@ -243,8 +243,12 @@ class LevelLoader {
 
         // Create a new block instance
         let newBlock = new BlockType(blockJson.x, blockJson.y, this);
+        newBlock.rotatedTimes = blockJson.rotatedTimes;
+        console.log("rotatedTimes", blockJson.rotatedTimes);
         // Add the block to the Level
-        this.addBlock(newBlock);        
+        this.addBlock(newBlock);    
+
+    
 
         if (blockJson.flippedX) {
           newBlock.flipX();
@@ -413,6 +417,8 @@ class LevelLoader {
         } else {
           newBlock = new this.blockTypes["DirtBlock"](block.x, block.y + i * 100, this);
         }
+
+
         this.addBlock(newBlock);
       }
     });

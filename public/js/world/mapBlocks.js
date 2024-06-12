@@ -1,3 +1,5 @@
+import { rotateBodyAroundPoint, rotateConstraintAroundPoint } from "../vehicle/utils.js";
+
 import { playSound } from "../sounds/playSound.js";
 
 // holds the block classes, which are used to create the blocks the map is made of
@@ -7,8 +9,16 @@ class Block {
     constructor(x, y, level, color) {
         this.x = x;
         this.y = y;
+        this.originalX = x;
+        this.originalY = y;
         this.level = level;
         this.color = color;
+        this.rotatedTimes = 0; // how many times the block has been rotated (0-3)
+
+        // unused properties for consistency with vehicle blocks
+        this.constraints = []; // the constraints that hold the block together (unused for terrain blocks)
+        this.weldableFaces = []; // the faces of the block that can be welded to other blocks (unused for terrain blocks)
+        this.rotatedWeldableFaces = []; // the faces of the block that can be welded to other blocks, rotated (unused for terrain blocks)
     }
     removeFromWorld(world) {
         // remove the bodies and constraints from the world
@@ -19,19 +29,95 @@ class Block {
         this.bodies.forEach(body => {
             Matter.Body.setStatic(body, true);
         });
+        
+        // for each time this was rotated, rotate it
+        for (var i = 0; i < this.rotatedTimes; i++) {
+            // rotate the bodies using the rotateBodyAroundPoint function and the original position of the block
+            this.bodies.forEach((body) => {
+            rotateBodyAroundPoint(
+                body,
+                { x: this.originalX, y: this.originalY },
+                90
+            );
+            });
+            // rotate the constraints using the rotateConstraintAroundPoint function and the original position of the block
+            this.constraints.forEach((constraint) => {
+            rotateConstraintAroundPoint(
+                constraint,
+                { x: this.originalX, y: this.originalY },
+                90
+                );
+            });
+        }
+    
+        this.setRotation(this.rotatedTimes);
         // add the bodies and constraints to the world
         Matter.World.add(world, this.bodies);
     }
-    save() {
+
+    damage(ammount) { // players cannot damage terrain blocks
+        console.log("would have damaged block at " + this.x + ", " + this.y + " by " + ammount + " health");
+    }
+    rotate90() {
+        this.rotatedTimes++;
+        if (this.rotatedTimes > 3) {
+          this.rotatedTimes = 0;
+        }
+        // rotate the bodies using the rotateBodyAroundPoint function and the original position of the block
+        this.bodies.forEach((body) => {
+          rotateBodyAroundPoint(body, { x: this.originalX, y: this.originalY }, 90);
+        });
+        // rotate the constraints using the rotateConstraintAroundPoint function and the original position of the block
+        this.constraints.forEach((constraint) => {
+            rotateConstraintAroundPoint(
+                constraint,
+                { x: this.originalX, y: this.originalY },
+                90
+                );
+        });
+        this.setRotation(this.rotatedTimes);
+      }
+      setRotation(rotatedTimes) {
+        // reset the rotation
+        this.rotatedWeldableFaces = this.weldableFaces;
+        // this.removeFromWorld(this.contraption.engine.world);
+        // this.addToWorld(this.contraption.engine.world, false);
+        // rotate the bodies and constraints
+        for (var i = 0; i < rotatedTimes; i++) {
+          // change the weldable faces
+          let newWeldableFaces = [];
+    
+          // for how many times the block has been rotated, rotate the weldable faces
+    
+          this.rotatedWeldableFaces.forEach((face) => {
+            switch (face) {
+              case "top":
+                newWeldableFaces.push("left");
+                break;
+              case "left":
+                newWeldableFaces.push("bottom");
+                break;
+              case "bottom":
+                newWeldableFaces.push("right");
+                break;
+              case "right":
+                newWeldableFaces.push("top");
+                break;
+            }
+          });
+          this.rotatedWeldableFaces = newWeldableFaces;
+        }
+      }
+      save() {
         var blockJson = {};
         blockJson.type = this.constructor.name;
         blockJson.x = this.x;
         blockJson.y = this.y;
+        blockJson.rotatedTimes = this.rotatedTimes;
+        // record if the block is flipped
+        blockJson.flippedX = this.flippedX;
         return blockJson;
-    }
-    damage(ammount) { // players cannot damage terrain blocks
-        console.log("would have damaged block at " + this.x + ", " + this.y + " by " + ammount + " health");
-    }
+      }
 }
 
 

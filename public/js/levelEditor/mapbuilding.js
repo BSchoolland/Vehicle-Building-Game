@@ -4,19 +4,8 @@ import LevelManager from '../level/LevelManager.js';
 // import the enemyHandler class
 import EnemyHandler from '../loaders/enemyHandler.js';
 // contraption blocks
-import {
-    RemoteBlock,
-    BasicWoodenBlock,
-    BasicIronBlock,
-    BasicDiamondBlock,
-    SeatBlock,
-    WheelBlock,
-    rocketBoosterBlock,
-    SpikeBlock,
-    TNTBlock,
-    GrappleBlock,
-    PoweredHingeBlock,
-  } from "../vehicle/blocks.js";
+import { playSound, setSong } from "../sounds/playSound.js";
+
             
 
 
@@ -215,6 +204,7 @@ class Building {
         };
         this.grid = 100;
         this.gridLines = [];
+        this.ghostBlocks = [];
 
         // build menu
         this.buildMenu = new BuildMenu(this);
@@ -236,6 +226,18 @@ class Building {
     setCurrentBlockType(blockType) {
         this.currentBlockType = blockType;
     }
+
+    removeGhostBlocks() {
+
+        // remove the ghost blocks
+        this.ghostBlocks.forEach((block) => {
+          Matter.World.remove(this.engine.world, block);
+        });
+        // clear the ghost blocks array
+        this.ghostBlocks = [];
+        // clear the selected block
+        this.selectedBlock = null;
+      }
 
     init() {
         // Add event listener for canvas click
@@ -300,6 +302,8 @@ class Building {
                 // if the block is an enemy spawn block, show the right click menu
                 if (this.level.blocks[i].constructor.name === 'EnemySpawnBlock') {
                     this.showRightClickMenu(this.level.blocks[i], _event);
+                } else {
+                    this.selectBlock(this.level.blocks[i]);
                 }
                 return;
             }
@@ -311,7 +315,45 @@ class Building {
         }
         // Add the block to the level
         this.level.LevelLoader.addBlock(newBlock);
+        // remove the ghost blocks
+        this.removeGhostBlocks();
+        // select the new block
+        this.selectBlock(newBlock);
     }
+    selectBlock(block) {
+
+        // remove the ghost blocks
+        this.removeGhostBlocks();
+        // add a ghost block, a large blue square, to show that the block is selected
+        let ghostBlock = Matter.Bodies.rectangle(
+          block.x,
+          block.y,
+          this.grid + 2,
+          this.grid + 2,
+          {
+            isStatic: true,
+            render: {
+              fillStyle: "rgba(0, 0, 255, 0)",
+              strokeStyle: "rgba(17, 90, 209, 0.7)",
+              lineWidth: 2,
+            },
+          }
+        );
+        this.ghostBlocks.push(ghostBlock);
+        Matter.World.add(this.engine.world, ghostBlock);
+        // refresh the block, so it displays over the new blocks
+        block.bodies.forEach((body) => {
+          Matter.World.remove(this.engine.world, body);
+          Matter.World.add(this.engine.world, body);
+        });
+        // make the selected block the block that was clicked
+        this.selectedBlock = block;
+        // if the user is on a mobile device, show the right click menu
+        if (this.mobile) {
+          this.showRightClickMenu(block);
+        }
+        return;
+      }
     showRightClickMenu(block, event) { // for when the user places an enemy spawn block
 
         const enemies = this.enemyHandler.enemies;
@@ -368,6 +410,8 @@ class Building {
         if (block) {
             // delete the block
             this.level.LevelLoader.removeBlock(block);
+            // remove the ghost blocks
+            this.removeGhostBlocks();
         }
     }
 
@@ -385,7 +429,22 @@ class Building {
         if (event.keyCode === 88) {
             this.level.redo();
         }
-    }
+            // if there is a block selected, allow rotation and deletion keybinds
+        if (this.selectedBlock && this.buildInProgress) {
+            // if R is pressed, rotate
+            if (event.keyCode === 82) {
+            this.selectedBlock.rotate90();
+            // play the rotate block sound
+            playSound("rotateBlock");
+            }
+            // if backspace, remove the block
+            if (event.keyCode === 8) {
+            this.contraption.removeBlock(this.selectedBlock);
+            this.buildMenu.updateButtonLimits();
+            this.removeGhostBlocks();
+            }
+        }
+        }
     displayGrid() {
         const buildArea = this.buildArea;
         const gridSpacing = this.grid;

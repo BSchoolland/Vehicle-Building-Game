@@ -65,6 +65,9 @@ class LevelEditor {
             if (BlockType) {
                 // Create a new block instance
                 let newBlock = new BlockType(blockJson.x, blockJson.y, this);
+                // set the rotatedTimes property
+                newBlock.rotatedTimes = blockJson.rotatedTimes;
+                console.log(blockJson.rotatedTimes);
                 if (BlockType === EnemySpawnBlock) {
                     newBlock.enemyType = blockJson.enemyType;
                     // spawn in an enemy contraption

@@ -30,7 +30,7 @@ class ConfigHandler {
             WheelBlock: 2,
             SeatBlock: 1,
         };
-        this.killBelow = 0;
+        
     }
     init() {
         this.handlePopups();

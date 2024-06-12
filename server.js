@@ -69,6 +69,10 @@ app.get('/editor.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/editor/editor.html'));
 });
 
+app.get('/mylevel', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/editor/mylevel.html'));
+});
+
 app.get('/mylevel.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/editor/mylevel.html'));
 });

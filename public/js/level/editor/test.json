@@ -2,103 +2,133 @@
     "blocks": [
         {
             "type": "GrassBlock",
-            "x": 1200,
-            "y": 1100
-        },
-        {
-            "type": "GrassBlock",
-            "x": 1300,
-            "y": 1000
-        },
-        {
-            "type": "GrassBlock",
             "x": 1400,
-            "y": 1000
+            "y": 800
         },
         {
             "type": "GrassBlock",
             "x": 1500,
-            "y": 1000
+            "y": 800
+        },
+        {
+            "type": "GrassBlock",
+            "x": 1600,
+            "y": 800
         },
         {
             "type": "GrassBlock",
             "x": 1700,
-            "y": 1000
+            "y": 800
         },
         {
             "type": "GrassBlock",
             "x": 1800,
-            "y": 1000
+            "y": 800
         },
         {
             "type": "GrassBlock",
-            "x": 1900,
-            "y": 1000
-        },
-        {
-            "type": "GrassBlock",
-            "x": 2000,
-            "y": 1000
-        },
-        {
-            "type": "GrassBlock",
-            "x": 2100,
-            "y": 1000
-        },
-        {
-            "type": "GrassBlock",
-            "x": 2200,
-            "y": 1000
-        },
-        {
-            "type": "GrassBlock",
-            "x": 2300,
-            "y": 1000
-        },
-        {
-            "type": "GrassBlock",
-            "x": 2400,
-            "y": 1000
-        },
-        {
-            "type": "GrassBlock",
-            "x": 2500,
-            "y": 1000
-        },
-        {
-            "type": "GrassBlock",
-            "x": 2600,
-            "y": 1000
-        },
-        {
-            "type": "BuildingAreaBlock",
-            "x": 1900,
-            "y": 900
-        },
-        {
-            "type": "BuildingAreaBlock",
-            "x": 2000,
-            "y": 900
-        },
-        {
-            "type": "BuildingAreaBlock",
-            "x": 2200,
-            "y": 900
-        },
-        {
-            "type": "BuildingAreaBlock",
-            "x": 2100,
-            "y": 900
-        },
-        {
-            "type": "BuildingAreaBlock",
             "x": 1900,
             "y": 800
         },
         {
+            "type": "GrassBlock",
+            "x": 2000,
+            "y": 800
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2100,
+            "y": 800
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2200,
+            "y": 800
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2300,
+            "y": 800
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2400,
+            "y": 800
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2500,
+            "y": 800
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2600,
+            "y": 800
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1500,
+            "y": 500
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1600,
+            "y": 600
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1700,
+            "y": 600
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1800,
+            "y": 600
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1800,
+            "y": 700
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1700,
+            "y": 700
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1600,
+            "y": 700
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1500,
+            "y": 700
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1500,
+            "y": 600
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1600,
+            "y": 500
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1700,
+            "y": 500
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1800,
+            "y": 500
+        },
+        {
             "type": "CoinBlock",
-            "x": 1400,
-            "y": 900
+            "x": 2300,
+            "y": 700
         }
     ],
     "objectives": [
@@ -123,19 +153,22 @@
         {
             "name": "Basic Block",
             "key": "1",
-            "type": "BasicBlock"
+            "type": "BasicBlock",
+            "limit": 5
         },
         {
             "name": "Wheel Block",
             "key": "2",
-            "type": "WheelBlock"
+            "type": "WheelBlock",
+            "limit": 2
         },
         {
             "name": "Seat Block",
             "key": "3",
-            "type": "SeatBlock"
+            "type": "SeatBlock",
+            "limit": 1
         }
     ],
-    "title": "My Level #1",
-    "tutorialText": "This is a hint for the level"
+    "title": "EZ",
+    "tutorialText": "This is a hint for the level!"
 }

@@ -328,6 +328,12 @@ class Block {
     this.setRotation(this.rotatedTimes);
   }
   setRotation(rotatedTimes) {
+    if (rotatedTimes === 0) {
+      this.rotatedWeldableFaces = this.weldableFaces;
+      console.log('no rotation needed')
+      return;
+    }
+    console.log('rotation needed')
     // reset the rotation
     this.rotatedWeldableFaces = this.weldableFaces;
     // this.removeFromWorld(this.contraption.engine.world);

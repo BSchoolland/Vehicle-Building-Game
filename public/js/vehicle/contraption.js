@@ -217,12 +217,18 @@ class Contraption {
       if (BlockType) {
         // Create a new block instance
         let newBlock = new BlockType(blockJson.x, blockJson.y, this);
+        // rotate the block if necessary
+        console.log(blockJson.rotatedTimes)
+        
+        newBlock.rotatedTimes = blockJson.rotatedTimes
+
         // flip the block if necessary
         // Add the block to the contraption
         this.addBlock(newBlock);
         if (blockJson.flippedX) {
           newBlock.flipX();
         }
+
       } else {
         console.error(`Unknown block type: ${blockJson.type} using BasicWoodenBlock instead`);
         // Create a new block instance

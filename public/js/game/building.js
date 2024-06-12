@@ -100,7 +100,7 @@ class RightClickMenu {
 // a build menu class, for the bottom of the screen.
 // the build menu will contain buttons for each block type, a button to save the contraption, a button to load a contraption, a button to clear the contraption, and a button to toggle build mode.
 class BuildMenu {
-  constructor(building, blockTypes = false, enemyEditor = false) {
+  constructor(building, blockTypes = false, enemyEditor = true) {
     this.building = building;
     // create the build menu
     this.menu = document.createElement("div");
@@ -279,7 +279,7 @@ class BuildMenu {
     line.classList.add("build-menu-line");
     this.menu.appendChild(line);
     // if this is the enemy editor, show the save and load buttons
-    this.enemyEditor = false;
+    console.log('is enemy editor', this.enemyEditor);
     if (this.enemyEditor) {
       // create a button to save the contraption
       this.saveButton = document.createElement("button");
@@ -593,6 +593,7 @@ class Building {
     this.RightClickMenu = new RightClickMenu(this);
     // build menu
     this.buildMenu = new BuildMenu(this, false, isEnemyEditor);
+    this.isEnemyEditor = isEnemyEditor;
     this.buildMenu.hide();
     this.canEnterBuildMode = false;
     this.ghostBlocks = [];
@@ -615,11 +616,11 @@ class Building {
     // play the select block sound
     // playSound("selectBlock");
   }
-  makeNewBuildMenu(blockTypes, isEnemyEditor = false) {
+  makeNewBuildMenu(blockTypes) {
     // makes a new build menu with the given block types (for levels that limit the blocks that can be used)
     // remove the old build menu
     this.buildMenu.menu.remove();
-    this.buildMenu = new BuildMenu(this, blockTypes, isEnemyEditor);
+    this.buildMenu = new BuildMenu(this, blockTypes, this.isEnemyEditor);
   }
   init() {
     // Add event listener for canvas click

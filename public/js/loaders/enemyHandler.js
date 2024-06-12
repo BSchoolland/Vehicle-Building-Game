@@ -9,6 +9,19 @@ class EnemyHandler {
     }
 
     async preLoadEnemies() {
+        this.RightFacingEnemies = [
+            'spikeCar',
+            'spikeCar',
+            'largeSpikeCar',
+            'world1Boss',
+            'rocketCar',
+        ];
+        this.LeftFacingEnemies = [
+            'largeSpikeCarL',
+            'largeSpikeCarL',
+            'tankL',
+            'flierL',
+        ];
         // Fetch the list of enemies from the API
         const response = await fetch('/api/enemies');
         console.log(response);
@@ -24,19 +37,7 @@ class EnemyHandler {
         console.log(this.enemyContraptionsJSON)
 
 
-        this.RightFacingEnemies = [
-            'spikeCar',
-            'spikeCar',
-            'largeSpikeCar',
-            'world1Boss',
-            'rocketCar',
-        ];
-        this.LeftFacingEnemies = [
-            'largeSpikeCarL',
-            'largeSpikeCarL',
-            'tankL',
-            'flierL',
-        ];
+
 
         this.enemies = enemies
 

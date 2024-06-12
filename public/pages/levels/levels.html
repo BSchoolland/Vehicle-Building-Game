@@ -89,6 +89,12 @@
             <h1>Survived: 0/30</h1>
         </div>
 
+        <div class="help-container" id="help-container" style="display: block;">
+            <button id="help-button" class="help-button">
+                <img src="img/help.png" alt="Help" style="width: 50px; height: 50px;"/>
+            </button>
+        </div>
+
         <div id="container">
             <div class="progress-bar-parent">
                 <div id="progress-bar-container">
@@ -126,6 +132,26 @@
             </div>
         </div>
     </div>
+    <!-- help popup (borrows styles from settings) -->
+    <div id="help-popup" class="settings-popup hidden">
+        <div class="settings-popup-content">
+            <div class="settings-popup-header">
+                <h2 class="settings-title">Help</h2>
+                <span class="close" id="close-help">&times;</span>
+            </div>
+            <div class="settings-content">
+                <div class="settings-option">
+                    <p>Use the arrow keys to move your vehicle.</p>
+                    <p>Press B to toggle build mode.</p>
+                    <p>Press R to reset the level.</p>
+                    <p>Press M to mute the game.</p>
+                    <p>Press H to toggle this help menu.</p>
+                </div>
+            </div>
+        </div>
+
+
+
     <!-- runs the matter.js simulation -->
     <script type="module" src="js/game/campaign.js"></script>
 </body>

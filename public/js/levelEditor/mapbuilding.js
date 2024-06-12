@@ -20,101 +20,6 @@ import {
             
 
 
-class allowedBlockMenu {
-    constructor(building) {
-        this.building = building;
-        // create the menu
-        this.menu = document.createElement('div');
-        this.menu.classList.add('allowed-block-menu');
-        // create a selector for each block type
-        this.blockTypes = [
-            { name: 'Basic Block', type: BasicWoodenBlock, allowed: 0 },
-            { name: 'Wheel Block', type: WheelBlock, allowed: 0 },
-            { name: 'Seat Block', type: SeatBlock, allowed: 1 }, // only one seat block is allowed
-            { name: 'Spike Block', type: SpikeBlock, allowed: 0 },
-            { name: 'TNT Block', type: TNTBlock, allowed: 0 },
-            { name: 'Rocket Booster', type: rocketBoosterBlock, allowed: 0 },
-            { name: 'Remote Block', type: RemoteBlock, allowed: 0 },
-        ];
-        this.createBlockSelectors();
-    }
-    createBlockSelectors() {
-        this.blockSelectors = {};
-        this.blockTypes.forEach(blockType => {
-            // add a label for the block type
-            let label = document.createElement('label');
-            // in uppercase
-            label.innerText = blockType.name.toUpperCase();
-            this.menu.appendChild(label);
-            // selectors that allow for the numbers 0-15
-            let selector = document.createElement('select');
-            selector.classList.add('menu-button', 'build-menu-button');
-            // add the options
-            for (let i = 0; i < 31; i++) {
-                // add the option
-                let option = document.createElement('option');
-                option.value = i;
-                option.innerText = i;
-                selector.appendChild(option);
-                // set the default value
-                if (i === blockType.allowed) {
-                    selector.value = i;
-                }
-            }
-            // when the selector changes, update the allowed number of blocks
-            selector.onchange = () => {
-                blockType.allowed = Number(selector.value);
-            }
-            this.menu.appendChild(selector);
-            this.blockSelectors[blockType.type.name] = selector;
-        });
-        // get the container
-        let gameContainer = document.getElementById('container');
-        //add the menu to the container
-        gameContainer.appendChild(this.menu);
-    }
-    setBuildingBlockTypes(buildingBlockTypes) {
-        // set the block types
-        this.blockTypes = [
-            { name: 'Basic Block', type: BasicWoodenBlock, allowed: 0 },
-            { name: 'Wheel Block', type: WheelBlock, allowed: 0 },
-            { name: 'Seat Block', type: SeatBlock, allowed: 1 }, // only one seat block is allowed
-            { name: 'Spike Block', type: SpikeBlock, allowed: 0 },
-            { name: 'TNT Block', type: TNTBlock, allowed: 0 },
-            { name: 'Rocket Booster', type: rocketBoosterBlock, allowed: 0 },
-            { name: 'Remote Block', type: RemoteBlock, allowed: 0 },
-        ];
-        let length = buildingBlockTypes.length;
-        for (let i = 0; i < length; i++) {
-            let blockType = {};
-
-            // get the block type
-            try {
-                blockType.type = eval(buildingBlockTypes[i].type);
-            } catch (error) {
-                console.error(`Unknown block type: ${buildingBlockTypes[i].name} using BasicWoodenBlock instead`);
-                blockType.type = BasicWoodenBlock;
-            }
-            // set the allowed number of blocks
-            blockType.allowed = buildingBlockTypes[i].limit;
-            // check if the block type is already in the list
-            let index = this.blockTypes.findIndex(block => block.type.name === blockType.type.name);
-            if (index > -1) {
-                // update the allowed number of blocks
-                this.blockTypes[index].allowed = blockType.allowed;
-            }
-            else {
-                // add the block type to the list
-                blockType.name = buildingBlockTypes[i].name;
-                this.blockTypes.push(blockType);
-            }
-        }
-        // clear the menu
-        this.menu.innerHTML = '';
-        // create the block selectors
-        this.createBlockSelectors();
-    }
-}
 
 // a build menu class, for the bottom of the screen.
 // the build menu will contain buttons for each block type, a button to save the level, a button to load a level, a button to clear the level, and a button to toggle build mode.
@@ -240,7 +145,7 @@ class BuildMenu {
         };
         this.testButton.onclick = () => {
             // save the level to the local storage
-            building.level.LevelEditor.save( download=false );
+            building.level.LevelEditor.save( false );
             // set the href of the page to the mylevel.html
             window.location.href = 'mylevel.html';
         };
@@ -313,7 +218,6 @@ class Building {
 
         // build menu
         this.buildMenu = new BuildMenu(this);
-        this.blockSelectors = new allowedBlockMenu(this);
         // if level is in local storage, load it
         if (localStorage.getItem('level')) {
             try {

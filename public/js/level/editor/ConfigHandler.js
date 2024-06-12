@@ -13,6 +13,8 @@ import {
 } from "../../vehicle/blocks.js";
 
 
+
+
 // handles all popups for configuring levels (e.g. setting the level name, objectives, and allowed blocks)
 class ConfigHandler {
     constructor(levelManager) {
@@ -213,12 +215,14 @@ class ConfigHandler {
 
     getAllowedBlocks() {
         let num = 0;
-        console.log(this.allowedBlocks);
+
         let buildingBlockTypes = [];
+
         for (const key in this.allowedBlocks) {
             num++;
+
             buildingBlockTypes.push({
-                name: key,
+                name: key.replace(/([A-Z])/g, ' $1').trim(),
                 key: num.toString(),
                 type: key,
                 limit: this.allowedBlocks[key],
@@ -230,7 +234,7 @@ class ConfigHandler {
     setAllowedBlocks(buildingBlockTypes) {
         this.allowedBlocks = {};
         for (const block of buildingBlockTypes) {
-            this.allowedBlocks[block.name] = block.value;
+            this.allowedBlocks[block.type] = block.limit;
         }
         // update the form values
         document.getElementById("block-text").value = JSON.stringify(

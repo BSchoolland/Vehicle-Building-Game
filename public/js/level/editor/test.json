@@ -1,0 +1,141 @@
+{
+    "blocks": [
+        {
+            "type": "GrassBlock",
+            "x": 1200,
+            "y": 1100
+        },
+        {
+            "type": "GrassBlock",
+            "x": 1300,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 1400,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 1500,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 1700,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 1800,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 1900,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2000,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2100,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2200,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2300,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2400,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2500,
+            "y": 1000
+        },
+        {
+            "type": "GrassBlock",
+            "x": 2600,
+            "y": 1000
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1900,
+            "y": 900
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 2000,
+            "y": 900
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 2200,
+            "y": 900
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 2100,
+            "y": 900
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 1900,
+            "y": 800
+        },
+        {
+            "type": "CoinBlock",
+            "x": 1400,
+            "y": 900
+        }
+    ],
+    "objectives": [
+        {
+            "name": "Destroy",
+            "value": 0
+        },
+        {
+            "name": "Collect",
+            "value": 1
+        },
+        {
+            "name": "Survive",
+            "value": 0
+        },
+        {
+            "name": "BeforeTime",
+            "value": 0
+        }
+    ],
+    "buildingBlockTypes": [
+        {
+            "name": "Basic Block",
+            "key": "1",
+            "type": "BasicBlock"
+        },
+        {
+            "name": "Wheel Block",
+            "key": "2",
+            "type": "WheelBlock"
+        },
+        {
+            "name": "Seat Block",
+            "key": "3",
+            "type": "SeatBlock"
+        }
+    ],
+    "title": "My Level #1",
+    "tutorialText": "This is a hint for the level"
+}

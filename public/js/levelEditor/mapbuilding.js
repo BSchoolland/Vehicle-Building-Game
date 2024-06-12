@@ -1,12 +1,24 @@
 // Import the block classes from public/js/world/mapBlocks.js
-import { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock, DirtBlock } from '../world/mapBlocks.js';
-import LevelManager from '../level/LevelManager.js'; 
+import { 
+    slightRampBlockRUpsideDown, 
+    slightRampBlockLUpsideDown, 
+    GrassBlock,
+     RampBlockL, 
+     RampBlockR, 
+     slightRampBlockL, 
+     slightRampBlockR, 
+     CoinBlock, 
+     BuildingAreaBlock, 
+     EnemySpawnBlock, 
+     DirtBlock 
+} from '../world/mapBlocks.js';
+import LevelManager from '../level/LevelManager.js';
 // import the enemyHandler class
 import EnemyHandler from '../loaders/enemyHandler.js';
 // contraption blocks
 import { playSound, setSong } from "../sounds/playSound.js";
 
-            
+
 
 
 
@@ -21,16 +33,13 @@ class BuildMenu {
         // create a button for each block type
         this.blockTypes = [
             { name: 'Grass Block', key: '1', type: GrassBlock },
-            { name: 'Ramp Block (L)', key: '2', type: RampBlockL },
-            { name: 'Ramp Block (R)', key: '3', type: RampBlockR },
-            { name: 'Slight Ramp Block (L)', key: '4', type: slightRampBlockL },
-            { name: 'Slight Ramp Block (R)', key: '5', type: slightRampBlockR },
-            { name: 'Coin', key: '6', type: CoinBlock },
-            { name: 'Building Area Block', key: '7', type: BuildingAreaBlock },
-            { name: 'Enemy Spawn Block', key: '8', type: EnemySpawnBlock },
-            { name: 'upsidedown slight ramp', key: '9', type: slightRampBlockLUpsideDown},
-            { name: 'upsidedown slight ramp R', key: '0', type: slightRampBlockRUpsideDown},
-            { name: 'Dirt Block', key: 'q', type: DirtBlock}
+            { name: 'Ramp Block', key: '2', type: RampBlockR },
+            { name: 'Slight Ramp Block (R)', key: '3', type: slightRampBlockL },
+            { name: 'Slight Ramp Block (L)', key: '4', type: slightRampBlockR },
+            { name: 'Coin', key: '5', type: CoinBlock },
+            { name: 'Building Area Block', key: '6', type: BuildingAreaBlock },
+            { name: 'Enemy Spawn Block', key: '7', type: EnemySpawnBlock },
+            { name: 'Dirt Block', key: '8', type: DirtBlock }
         ];
         this.createBlockButtons();
         // create a button to save the level
@@ -73,7 +82,7 @@ class BuildMenu {
         gameContainer.appendChild(this.menu);
         // initialize the menu
         this.init(building);
-        
+
     }
     createBlockButtons() {
         this.blockButtons = {};
@@ -125,7 +134,7 @@ class BuildMenu {
                 };
             };
         };
-        
+
         this.clearButton.onclick = () => {
             if (!building.buildInProgress) {
                 return;
@@ -134,7 +143,7 @@ class BuildMenu {
         };
         this.testButton.onclick = () => {
             // save the level to the local storage
-            building.level.LevelEditor.save( false );
+            building.level.LevelEditor.save(false);
             // set the href of the page to the mylevel.html
             window.location.href = 'mylevel.html';
         };
@@ -184,7 +193,7 @@ class BuildMenu {
         // load the level from the JSON object
         this.building.level.LevelEditor.loadForEditing(LevelManagerJson);
     }
-}       
+}
 
 // a refactored version of the building class for level editing
 class Building {
@@ -199,8 +208,8 @@ class Building {
         this.buildArea = {
             x: 0,
             y: 0,
-            width: 100*150,
-            height: 100*75,
+            width: 100 * 150,
+            height: 100 * 75,
         };
         this.grid = 100;
         this.gridLines = [];
@@ -214,9 +223,9 @@ class Building {
                 let LevelManagerJson = JSON.parse(localStorage.getItem('level'));
                 setTimeout(() => { // FIXME: This is a workaround for a bug where the level is not loaded properly due to vehicle contraptions not being loaded
                     this.buildMenu.loadLevel(LevelManagerJson);
-                },1000);
+                }, 1000);
 
-                
+
             } catch (error) {
                 console.error('Failed to load level from local storage');
             }
@@ -231,13 +240,13 @@ class Building {
 
         // remove the ghost blocks
         this.ghostBlocks.forEach((block) => {
-          Matter.World.remove(this.engine.world, block);
+            Matter.World.remove(this.engine.world, block);
         });
         // clear the ghost blocks array
         this.ghostBlocks = [];
         // clear the selected block
         this.selectedBlock = null;
-      }
+    }
 
     init() {
         // Add event listener for canvas click
@@ -254,7 +263,7 @@ class Building {
         });
 
         canvas.addEventListener('mousemove', (event) => {
-            if(isMouseDown && event.button === 0) {
+            if (isMouseDown && event.button === 0) {
                 this.handleCanvasClick(event);
             }
         });
@@ -283,7 +292,7 @@ class Building {
         // Round the position to the nearest grid line
         let x = Math.round(pos.x / this.grid) * this.grid;
         let y = Math.round(pos.y / this.grid) * this.grid;
-        
+
         // make sure the position is within the build area
         if (x < this.buildArea.x || x > this.buildArea.x + this.buildArea.width) {
             // console.log('Cannot place block here');
@@ -326,34 +335,34 @@ class Building {
         this.removeGhostBlocks();
         // add a ghost block, a large blue square, to show that the block is selected
         let ghostBlock = Matter.Bodies.rectangle(
-          block.x,
-          block.y,
-          this.grid + 2,
-          this.grid + 2,
-          {
-            isStatic: true,
-            render: {
-              fillStyle: "rgba(0, 0, 255, 0)",
-              strokeStyle: "rgba(17, 90, 209, 0.7)",
-              lineWidth: 2,
-            },
-          }
+            block.x,
+            block.y,
+            this.grid + 2,
+            this.grid + 2,
+            {
+                isStatic: true,
+                render: {
+                    fillStyle: "rgba(0, 0, 255, 0)",
+                    strokeStyle: "rgba(17, 90, 209, 0.7)",
+                    lineWidth: 2,
+                },
+            }
         );
         this.ghostBlocks.push(ghostBlock);
         Matter.World.add(this.engine.world, ghostBlock);
         // refresh the block, so it displays over the new blocks
         block.bodies.forEach((body) => {
-          Matter.World.remove(this.engine.world, body);
-          Matter.World.add(this.engine.world, body);
+            Matter.World.remove(this.engine.world, body);
+            Matter.World.add(this.engine.world, body);
         });
         // make the selected block the block that was clicked
         this.selectedBlock = block;
         // if the user is on a mobile device, show the right click menu
         if (this.mobile) {
-          this.showRightClickMenu(block);
+            this.showRightClickMenu(block);
         }
         return;
-      }
+    }
     showRightClickMenu(block, event) { // for when the user places an enemy spawn block
 
         const enemies = this.enemyHandler.enemies;
@@ -383,7 +392,7 @@ class Building {
                     block.enemyContraption.destroy();
                 };
                 // create a new enemy contraption
-                block.enemyContraption = this.level.LevelLoader.loadEnemyContraption({enemyType: enemy, x: block.x, y: block.y});
+                block.enemyContraption = this.level.LevelLoader.loadEnemyContraption({ enemyType: enemy, x: block.x, y: block.y });
                 // remove the popup
                 popup.remove();
             };
@@ -401,7 +410,7 @@ class Building {
         }
         //get the mouse position from the camera
         let pos = this.camera.getMousePosition();
-        
+
         // Round the position to the nearest grid line
         let x = Math.round(pos.x / this.grid) * this.grid;
         let y = Math.round(pos.y / this.grid) * this.grid;
@@ -429,36 +438,36 @@ class Building {
         if (event.keyCode === 88) {
             this.level.redo();
         }
-            // if there is a block selected, allow rotation and deletion keybinds
+        // if there is a block selected, allow rotation and deletion keybinds
         if (this.selectedBlock && this.buildInProgress) {
             // if R is pressed, rotate
             if (event.keyCode === 82) {
-            this.selectedBlock.rotate90();
-            // play the rotate block sound
-            playSound("rotateBlock");
+                this.selectedBlock.rotate90();
+                // play the rotate block sound
+                playSound("rotateBlock");
             }
             // if backspace, remove the block
             if (event.keyCode === 8) {
-            this.contraption.removeBlock(this.selectedBlock);
-            this.buildMenu.updateButtonLimits();
-            this.removeGhostBlocks();
+                this.contraption.removeBlock(this.selectedBlock);
+                this.buildMenu.updateButtonLimits();
+                this.removeGhostBlocks();
             }
         }
-        }
+    }
     displayGrid() {
         const buildArea = this.buildArea;
         const gridSpacing = this.grid;
-    
+
         // Vertical lines
         for (let x = buildArea.x; x <= buildArea.x + buildArea.width + gridSpacing; x += gridSpacing) {
-            let line = Matter.Bodies.rectangle(x - gridSpacing / 2, buildArea.y + buildArea.height / 2, 1, buildArea.height + gridSpacing, { isStatic: true, render: { visible: true }});
+            let line = Matter.Bodies.rectangle(x - gridSpacing / 2, buildArea.y + buildArea.height / 2, 1, buildArea.height + gridSpacing, { isStatic: true, render: { visible: true } });
             Matter.World.add(this.engine.world, line);
             this.gridLines.push(line);
         }
-    
+
         // Horizontal lines
         for (let y = buildArea.y; y <= buildArea.y + buildArea.height + gridSpacing; y += gridSpacing) {
-            let line = Matter.Bodies.rectangle(buildArea.x + buildArea.width / 2, y - gridSpacing / 2, buildArea.width + gridSpacing, 1, { isStatic: true, render: { visible: true }});
+            let line = Matter.Bodies.rectangle(buildArea.x + buildArea.width / 2, y - gridSpacing / 2, buildArea.width + gridSpacing, 1, { isStatic: true, render: { visible: true } });
             Matter.World.add(this.engine.world, line);
             this.gridLines.push(line);
         }

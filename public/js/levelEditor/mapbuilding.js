@@ -162,7 +162,6 @@ class BuildMenu {
                 // set the camera viewport to the size of the build area
                 building.camera.setViewport(building.buildArea.width * 0.3, building.buildArea.height * 0.3);
                 // set the camera position to the center of the build area
-
                 building.camera.setCenterPosition(building.buildArea.x + building.buildArea.width / 2, building.buildArea.y + building.buildArea.height / 2);
             } else {
                 // remove the active class from all the block type buttons
@@ -452,6 +451,27 @@ class Building {
                 this.buildMenu.updateButtonLimits();
                 this.removeGhostBlocks();
             }
+        }
+        // if it is the w key or the up arrow key, move the camera up
+        if (event.keyCode === 87 || event.keyCode === 38) {
+            this.camera.position.y = this.camera.position.y - 100;
+
+        }
+        // if it is the s key or the down arrow key, move the camera down
+        if (event.keyCode === 83 || event.keyCode === 40) {
+            this.camera.position.y = this.camera.position.y + 100;
+        }
+        // if it is the a key or the left arrow key, move the camera left
+        if (event.keyCode === 65 || event.keyCode === 37) {
+            this.camera.position.x = this.camera.position.x - 100;
+        }
+        // if it is the d key or the right arrow key, move the camera right
+        if (event.keyCode === 68 || event.keyCode === 39) {
+            this.camera.position.x = this.camera.position.x + 100;
+        }
+        // if the b key is pressed, return the camera to the center of the build area
+        if (event.keyCode === 66) {
+            this.camera.setCenterPosition(this.buildArea.x + this.buildArea.width / 2, this.buildArea.y + this.buildArea.height / 2);
         }
     }
     displayGrid() {

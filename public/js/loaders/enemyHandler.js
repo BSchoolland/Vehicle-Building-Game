@@ -2,35 +2,28 @@
 
 class EnemyHandler {
     constructor(progressBar) {
-        this.enemies = { // a list of all the enemies in the game and the path to their json file
-            box: '../../json-enemies/box.json',
-            car: '../../json-enemies/car.json',
-            spikeCar: '../../json-enemies/spikeCar.json',
-            largeSpikeCar: '../../json-enemies/largeSpikeCar.json',
-            movingSpikeWall: '../../json-enemies/movingSpikeWall.json',
-            barge: '../../json-enemies/barge.json',
-            world1Boss: '../../json-enemies/world1Boss.json',
-            flameTank: '../../json-enemies/flameTank.json', 
-            tntTank: '../../json-enemies/tntTank.json',
-            delayedRocketCar: '../../json-enemies/delayedRocketCar.json',
-            missileCar: '../../json-enemies/missileCar.json',
-            base: '../../json-enemies/base.json',
-            largeSpikeCarL: '../../json-enemies/largeSpikeCarL.json',
-            drivingCarL: '../../json-enemies/drivingCarL.json',
-            tankL: '../../json-enemies/tankL.json',
-            rocketCar: '../../json-enemies/rocketCar.json',
-            flierL: '../../json-enemies/flierL.json',
-        }
         this.enemyContraptionsJSON = {};
         this.progressBar = progressBar;
+        this.enemies = {};
         this.preLoadEnemies();
     }
-    preLoadEnemies() {
-        const enemies = this.enemies;
-        Object.keys(enemies).forEach(async (key) => {
-            var enemyJson = await (await fetch(enemies[key])).json();
+
+    async preLoadEnemies() {
+        // Fetch the list of enemies from the API
+        const response = await fetch('/api/enemies');
+        console.log(response);
+        const enemies = await response.json();
+        console.log(enemies);
+        // Load each enemy's JSON data
+        for (const [key, path] of Object.entries(enemies)) {
+            const enemyResponse = await fetch(path);
+            const enemyJson = await enemyResponse.json();
             this.enemyContraptionsJSON[key] = enemyJson;
-        });
+        }
+
+        console.log(this.enemyContraptionsJSON)
+
+
         this.RightFacingEnemies = [
             'spikeCar',
             'spikeCar',
@@ -43,8 +36,10 @@ class EnemyHandler {
             'largeSpikeCarL',
             'tankL',
             'flierL',
+        ];
 
-        ]
+        this.enemies = enemies
+
         console.log("all enemies preloaded");
         if (this.progressBar) this.progressBar.update();
     }

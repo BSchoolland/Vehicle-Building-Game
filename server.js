@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const userRoutes = require('./routes/userRoutes'); // Import your routes
-
+const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -77,7 +77,24 @@ app.get('/mylevel.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/editor/mylevel.html'));
 });
 
+// api for getting all enemies
+app.get('/api/enemies', (req, res) => {
+  console.log("enemies requested");
+  fs.readdir('public/json-enemies', (err, files) => {
+      if (err) {
+          res.status(500).send('Server error');
+          return;
+      }
 
+      let enemies = {};
+      files.forEach(file => {
+          let fileName = path.basename(file, '.json');
+          enemies[fileName] = `/json-enemies/${file}`;
+      });
+
+      res.json(enemies);
+  });
+});
 
 // Use your imported routes with the app
 app.use(userRoutes);

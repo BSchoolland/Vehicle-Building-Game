@@ -217,9 +217,7 @@ class Contraption {
       if (BlockType) {
         // Create a new block instance
         let newBlock = new BlockType(blockJson.x, blockJson.y, this);
-        // rotate the block if necessary
-        console.log(blockJson.rotatedTimes)
-        
+        // rotate the block if necessary        
         newBlock.rotatedTimes = blockJson.rotatedTimes
 
         // flip the block if necessary

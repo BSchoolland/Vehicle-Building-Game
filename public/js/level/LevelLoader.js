@@ -122,6 +122,10 @@ class LevelLoader {
     // load the enemy contraption
     const EnemyContraption = new Contraption(this.parent.engine, "AI", this.parent);
     EnemyContraption.load(enemyContraptionJson);
+    // find the lowest block in the level
+    let lowestBlock = this.findLowestBlocks()[0];
+    // set the kill below to 500 pixels below the lowest block
+    EnemyContraption.killBelow = lowestBlock.y + 500;
     // load the commands
     EnemyContraption.AiLoadCommands(enemyContraptionJson.commands);
     // move the enemy contraption to the spawn point
@@ -268,12 +272,14 @@ class LevelLoader {
       this.addDirtBlocks(lowestBlocks);
       // set the building's contraption's "kill below" to the lowest block
       this.parent.building.contraption.killBelow = lowestBlocks[0].y + 500;
+      console.log("lowest block", lowestBlocks[0].y);
     }
     else {
       console.log("Floating level");
-      let lowestBlocks = this.findLowestBlocks();
-      // set the building's contraption's "kill below to 1000 pixels below the lowest block
-      this.parent.building.contraption.killBelow = lowestBlocks[0].y + 1000;
+      let lowestBlock = this.findLowestBlocks()[0];
+      console.log("Lowest block", lowestBlock.y);
+      // a bit of extra space for floating levels
+      this.parent.building.contraption.killBelow = lowestBlock.y + 1000;
     }
     // turn the blockList into a Matter.js body
     let compoundBody = createCompoundBody(this.blockList);
@@ -402,6 +408,8 @@ class LevelLoader {
         }
       }
     });
+    // order with the lowest blocks first
+    lowestBlocks.sort((a, b) => b.y - a.y);
     return lowestBlocks;
   }
 

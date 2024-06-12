@@ -94,6 +94,8 @@ class Contraption {
     this.lastTime = 0;
     this.maxSparks = 100;
     this.currentSparks = 0;
+    // kill this contraption if it goes out of bounds
+    this.killBelow = 2500;
   }
   getControls() {
     // Use flatMap to get all controls from all blocks

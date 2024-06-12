@@ -262,9 +262,14 @@ class LevelLoader {
       let lowestBlocks = this.findLowestBlocks();
       // add a line of n dirtBlocks below each lowest block
       this.addDirtBlocks(lowestBlocks);
+      // set the building's contraption's "kill below" to the lowest block
+      this.parent.building.contraption.killBelow = lowestBlocks[0].y + 500;
     }
     else {
       console.log("Floating level");
+      let lowestBlocks = this.findLowestBlocks();
+      // set the building's contraption's "kill below to 1000 pixels below the lowest block
+      this.parent.building.contraption.killBelow = lowestBlocks[0].y + 1000;
     }
     // turn the blockList into a Matter.js body
     let compoundBody = createCompoundBody(this.blockList);

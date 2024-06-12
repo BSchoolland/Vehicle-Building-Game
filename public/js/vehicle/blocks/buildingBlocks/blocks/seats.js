@@ -207,7 +207,7 @@ class SeatBlock extends Block {
     }
     update(deltaTime) {
         // if this too far down, destroy it
-        if (this.bodies[0].position.y > 2500 && !this.destroyed) {
+        if (this.bodies[0].position.y > this.contraption.killBelow && !this.destroyed) {
             this.damage(this.maxHitPoints);
         }
       }

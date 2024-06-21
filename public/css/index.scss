@@ -110,6 +110,17 @@
   vertical-align: middle;
 }
 
+/* Media Queries for Tablets */
+@media screen and (max-width: 1000px) {
+  .signature {
+    max-width: 75%;
+  }
+  .index-title {
+    font-size: 2.5rem;
+  }
+ 
+}
+
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
 
@@ -145,7 +156,7 @@
 
   .main-button-container {
 
-    margin-top: 5vh;
+    margin-top: 10vh;
   }
 
   .main-button {

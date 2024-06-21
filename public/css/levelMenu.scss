@@ -200,6 +200,12 @@
     text-align: center;
 }
 
+@media screen and (max-width: 1024px){ 
+    .level-select-title {
+        font-size: 12px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .level-select-box {
         width: 37%;
@@ -226,7 +232,7 @@
     }
 
     .level-select-title {
-        font-size: 16px;
+        font-size: 12px;
     }
     
 }

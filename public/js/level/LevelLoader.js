@@ -332,6 +332,7 @@ class LevelLoader {
     this.parent.GameplayHandler.mustCompleteBefore = 0; // 0 means there is no time limit
     }
     this.parent.GameplayHandler.updateStats();
+    this.parent.GameplayHandler.updateHelpText();
     this.parent.building.camera.doingTour = true;
     // do a quick tour of the level to show the player what it looks like
     this.parent.building.camera.levelTour(LevelJson, this.parent.building.buildArea);

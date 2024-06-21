@@ -52,6 +52,17 @@ class Gameplay {
       coin.reset();
     });
   }
+  updateHelpText() {
+    console.log("updating help text");
+    let help = document.getElementById("help-container");
+    // if the help container is not found, return
+    if (!help) {
+      return;
+    }
+    // make the help visible
+    help.style.display = "block";
+    console.log("help container found");
+  }
   updateStats() {
     let stats = document.getElementById("stats");
     if (!stats) {

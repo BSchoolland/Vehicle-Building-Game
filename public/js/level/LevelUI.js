@@ -164,6 +164,8 @@ class LevelUI {
           }
           // set the stats to be invisible
           document.getElementById("stats").style.display = "none";
+          // set teh help button to be invisible
+          document.getElementById("help-container").style.display = "none";
           // set the survival time to 0
           this.parent.secondsSurvived = 0;
           //open the level selector

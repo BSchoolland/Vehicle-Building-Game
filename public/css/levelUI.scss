@@ -70,7 +70,6 @@
 /* Style for the build menu container */
 .build-menu {
     position: absolute;
-    // top: 90%;
     left: 50%;
     margin: 15px;
     transform: translateX(-50%); 
@@ -155,6 +154,27 @@
 
 .menu-action-button:hover {
     background-color: #1a3a5f;
+}
+@media screen and (max-width: 1024px) {
+    .build-menu {
+        margin: 0px;
+        padding: 10px;
+        overflow-x: scroll;
+    }
+    .build-menu-button {
+        padding: 2px 4px;
+        margin: 0 10px;
+        font-size: 1em;
+    
+    }
+    .build-menu-button-img {
+        width: 20px;
+        height: 20px;
+        padding: 3px 10px;
+    }
+    .tutorial-text {
+        font-size: 1rem;
+    }
 }
 
 // mobile styles

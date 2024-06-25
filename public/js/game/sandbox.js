@@ -51,17 +51,23 @@ window.screen.orientation.addEventListener("change", () => {
   }
 });
 
-let gameStarted = false;
-function clickHandler() {
-  if (gameStarted) {
+let musicPlaying = false;
+function clickHandler(event) {
+  if (!event.isTrusted) {
     return;
   }
-  gameStarted = true;
+  console.log('clickHandler')
+  if (musicPlaying) {
+    return;
+  }
   // remove the event listener
   document.removeEventListener("click", clickHandler);
-  // start the game
-  startGame();
+  // play the music
+  setSong("mainTheme");
+
+  console.log("Music playing");
 }
+
 
 function createHTML() {
   const container = document.getElementById("container");
@@ -107,6 +113,7 @@ levelObject.init();
 // tell the level object that this is a sandbox
 levelObject.LevelUI.isSandbox = true;
 document.addEventListener("click", clickHandler);
+startGame();
 
 function checkMusicLoaded() {
   // try to play the music

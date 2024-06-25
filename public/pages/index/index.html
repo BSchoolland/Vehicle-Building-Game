@@ -90,7 +90,8 @@
         <p class="signature">Made by: <a href="https://bschoolland.com" target="_blank">Benjamin Schoolland</a></p>
     </div>
     <div class="top-bar-right">
-        <button id="login" class="login-button">Login</button>
+        <button id="login" class="login-button hidden" 
+        >Login</button>
         <button id="settings-button" class="settings-button">
             <img class="settings-image" src="/img/settings.png" alt="settings">
         </button>
@@ -103,7 +104,7 @@
     <a id="play" class="main-button" href="/levels">
         <img class="main-button-image" src="/img/Play.png" alt="play">
     </a>
-    <a id="changelog" class="main-button" href="/changelog">
+    <a id="changelog" class="main-button hidden" href="/changelog">
         <img class="main-button-image" src="/img/Community.png" alt="change-log">
     </a>
 </div>
@@ -179,7 +180,16 @@
     </div>
 </div>
 </div>
-
+<script>
+    window.onload = function() {
+    if (window.self === window.top) {
+        // The page is not in an iframe so remove the hidden class from the login button
+        document.getElementById("login").classList.remove("hidden");
+        //  remove the hidden class from the changelog button
+        document.getElementById("changelog").classList.remove("hidden");
+    }
+};
+</script>
 </body>
 
 </html>

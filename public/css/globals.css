@@ -907,6 +907,7 @@ a {
   }
   .tutorial-text {
     font-size: 1rem;
+    max-width: 35%;
   }
 }
 @media screen and (max-width: 768px) {

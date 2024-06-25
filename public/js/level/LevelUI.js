@@ -153,7 +153,7 @@ class LevelUI {
           // prevent build mode
           this.parent.building.canEnterBuildMode = false;
           // clear the level
-          this.parent.LevelLoader.clear();
+          this.parent.LevelLoader.clear(true);
           // remove the tutorial text
           document.getElementById("tutorial-text").style.display = "none";
           // clear the player contraption
@@ -227,11 +227,11 @@ class LevelUI {
     medalsBox.style.top = "0px";
     medalsBox.style.right = "0px";
     // if the medals blox is clicked, start the level
-    medalsBox.addEventListener("click", () => {
-      this.createBackArrow();
-      this.parent.LevelLoader.load(i);
-      levelSelector.remove();
-    });
+    // medalsBox.addEventListener("click", () => {
+    //   this.createBackArrow();
+    //   this.parent.LevelLoader.load(i);
+    //   levelSelector.remove();
+    // });
     // display from right to left
     let crown = new Medal(
       "Beat the Level",
@@ -329,11 +329,11 @@ class LevelUI {
     image.className = "level-select-image";
     image.src = `../../img/levelImages/world${this.parent.worldSelected}/level${i + 1}.png`;
     imageContainer.appendChild(image);
-    image.addEventListener("click", () => {
-      this.createBackArrow();
-      this.parent.LevelLoader.load(i);
-      levelSelector.remove();
-    });
+    // image.addEventListener("click", () => {
+    //   this.createBackArrow();
+    //   this.parent.LevelLoader.load(i);
+    //   levelSelector.remove();
+    // });
     box.appendChild(imageContainer);
     box.appendChild(this.createMedalIcons(levelSelector, i, box));
     let levelNumber = document.createElement("p");

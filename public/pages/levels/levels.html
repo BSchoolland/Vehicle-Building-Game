@@ -24,6 +24,8 @@
             }
         }
     </script>
+    <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
+
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V15BD9CZKN"></script>
@@ -154,6 +156,21 @@
 
     <!-- runs the matter.js simulation -->
     <script type="module" src="js/game/campaign.js"></script>
+    <script>
+        window.onload = async function() {
+        if (window.self === window.top) {
+            // The page is not in an iframe so remove the hidden class from the login button
+            document.getElementById("login").classList.remove("hidden");
+            //  remove the hidden class from the changelog button
+            document.getElementById("changelog").classList.remove("hidden");
+        }
+        else {
+            // the page is in an iframe (likely on crazygames)
+            // init the sdk
+            await window.CrazyGames.SDK.init();
+        }
+    };
+    </script>
 </body>
 
 </html>

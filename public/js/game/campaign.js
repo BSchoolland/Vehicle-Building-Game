@@ -51,16 +51,21 @@ window.screen.orientation.addEventListener("change", () => {
   }
 });
 
-let gameStarted = false;
-function clickHandler() {
-  if (gameStarted) {
+let musicPlaying = false;
+function clickHandler(event) {
+  if (!event.isTrusted) {
     return;
   }
-  gameStarted = true;
+  console.log('clickHandler')
+  if (musicPlaying) {
+    return;
+  }
   // remove the event listener
   document.removeEventListener("click", clickHandler);
-  // start the game
-  startGame();
+  // play the music
+  setSong("mainTheme");
+
+  console.log("Music playing");
 }
 
 function createHTML() {
@@ -106,6 +111,7 @@ building.init();
 const levelObject = new LevelManager(engine, building, progressBar);
 levelObject.init();
 document.addEventListener("click", clickHandler);
+startGame();
 
 function checkMusicLoaded() {
   // try to play the music

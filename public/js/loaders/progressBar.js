@@ -42,7 +42,7 @@ export default class ProgressBar {
         this.text.innerHTML = this.steps[this.currentStep];
         if (this.currentStep === this.steps.length) {
             this.loaded = true;
-            this.text.innerHTML = "Click to start!";
+            this.text.innerHTML = "Done!";
 
         }
     }

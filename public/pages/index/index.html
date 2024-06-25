@@ -31,6 +31,7 @@
             }
         }
     </script>
+    <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V15BD9CZKN"></script>
@@ -181,12 +182,19 @@
 </div>
 </div>
 <script>
-    window.onload = function() {
+    window.onload = async function() {
     if (window.self === window.top) {
         // The page is not in an iframe so remove the hidden class from the login button
         document.getElementById("login").classList.remove("hidden");
         //  remove the hidden class from the changelog button
         document.getElementById("changelog").classList.remove("hidden");
+    }
+    else {
+        // the page is in an iframe (likely on crazygames)
+        // init the sdk
+        await window.CrazyGames.SDK.init();
+        // call gameplay stop function  because we are on the homepage
+        window.CrazyGames.SDK.game.gameplayStop();
     }
 };
 </script>

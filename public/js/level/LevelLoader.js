@@ -22,7 +22,6 @@ function createCompoundBody(blocks) {
           blockLists.push([block]);
       }
   });
-
   // For each list of blocks with the same y coordinate, merge horizontally adjacent blocks
   let rectangles = [];
   blockLists.forEach(blockList => {
@@ -106,6 +105,7 @@ class LevelLoader {
     this.playable = true;
     this.blockList = [];
     this.compoundBody = null;
+    this.loading = false;
   }
   loadEnemyContraption(blockJson) {
     let enemyType = blockJson.enemyType;
@@ -134,6 +134,14 @@ class LevelLoader {
   // load a Level from a JSON object
   async load(levelIndex, optionalJson = null, playable = true) {
     this.playable = playable;
+    if (playable) {
+      try {
+        window.CrazyGames.SDK.game.gameplayStart();
+      }
+      catch (e) {
+        console.log("CrazyGames SDK not found");
+      }
+    }
     // clear the enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {
       enemyContraption[0].destroy();
@@ -364,6 +372,7 @@ class LevelLoader {
         }
       }
     });
+    this.loading = false;
   }
 
   findLowestBlocks() {
@@ -445,7 +454,17 @@ class LevelLoader {
     });
   }
   
-  clear() {
+  clear(stop = false) {
+    // stop the level
+    if (stop) {
+      try {
+        window.CrazyGames.SDK.game.gameplayStop();
+      }
+      catch (e) {
+        console.log("CrazyGames SDK not found");
+      }
+    }
+    
     // Make a copy of the blocks array and iterate over it
     [...this.parent.blocks].forEach((block) => {
       this.removeBlock(block);

@@ -453,11 +453,23 @@ class Contraption {
   }
   // press a key
   pressKey(key) {
+    if (key === "ArrowRight") {
+      key = "d";
+    }
+    if (key === "ArrowLeft") {
+      key = "a";
+    }
     key = key.toLowerCase();
     this.keysPressed[key] = true;
   }
   // release a key
   releaseKey(key) {
+    if (key === "ArrowRight") {
+      key = "d";
+    }
+    if (key === "ArrowLeft") {
+      key = "a";
+    }
     key = key.toLowerCase();
     this.keysPressed[key] = false;
   }

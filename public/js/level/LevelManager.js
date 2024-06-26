@@ -43,7 +43,7 @@ class LevelManager {
     // handles loading and saving levels
     this.LevelHandler = new LevelHandler(progressBar);
     // handles loading and saving enemies
-    this.EnemyHandler = new EnemyHandler(progressBar);
+    this.EnemyHandler = new EnemyHandler(progressBar, false);
     // handles level editing
     this.LevelEditor = new LevelEditor(this, blockTypes);
     // handles loading levels
@@ -59,11 +59,12 @@ class LevelManager {
     this.loaded = false;
   }
 
-  init(string='normal') {
+  async init(string='normal') {
     if (string === 'testLevel') {
       this.test = true;
     }
     this.loaded = true;
+    await this.EnemyHandler.preLoadEnemies();
   }
 }
 

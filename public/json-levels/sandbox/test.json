@@ -1,0 +1,39 @@
+{
+    "blocks": [
+        { "type": "GrassBlock", "x": 1500, "y": 1200 },
+        { "type": "GrassBlock", "x": 1600, "y": 1200 },
+        { "type": "GrassBlock", "x": 1700, "y": 1200 },
+        { "type": "GrassBlock", "x": 1800, "y": 1200 },
+        { "type": "GrassBlock", "x": 2000, "y": 1200 },
+        { "type": "GrassBlock", "x": 2100, "y": 1200 },
+        { "type": "GrassBlock", "x": 2200, "y": 1200 },
+        { "type": "GrassBlock", "x": 2300, "y": 1200 },
+        { "type": "GrassBlock", "x": 2400, "y": 1200 },
+        { "type": "GrassBlock", "x": 2500, "y": 1200 },
+        { "type": "GrassBlock", "x": 2600, "y": 1200 },
+        { "type": "GrassBlock", "x": 2700, "y": 1200 },
+        { "type": "GrassBlock", "x": 1900, "y": 1200 },
+        { "type": "CoinBlock", "x": 2300, "y": 1100 },
+        { "type": "BuildingAreaBlock", "x": 1600, "y": 1100 },
+        { "type": "BuildingAreaBlock", "x": 1700, "y": 1100 },
+        { "type": "BuildingAreaBlock", "x": 1800, "y": 1100 },
+        { "type": "BuildingAreaBlock", "x": 1900, "y": 1100 },
+        { "type": "BuildingAreaBlock", "x": 1800, "y": 1000 },
+        { "type": "BuildingAreaBlock", "x": 1700, "y": 1000 },
+        { "type": "BuildingAreaBlock", "x": 1600, "y": 1000 },
+        { "type": "BuildingAreaBlock", "x": 1900, "y": 1000 }
+    ],
+    "objectives": [
+        { "name": "Destroy", "value": 0 },
+        { "name": "Collect", "value": 1 },
+        { "name": "Survive", "value": 0 },
+        { "name": "BeforeTime", "value": 0 }
+    ],
+    "buildingBlockTypes": [
+        { "name": "BasicBlock", "key": "1", "type": "BasicBlock", "limit": 3 },
+        { "name": "WheelBlock", "key": "2", "type": "WheelBlock", "limit": 4 },
+        { "name": "SeatBlock", "key": "3", "type": "SeatBlock", "limit": 1 }
+    ],
+    "title": "test",
+    "tutorialText": "This is a test hint for the level"
+}

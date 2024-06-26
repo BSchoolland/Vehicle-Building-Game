@@ -43,6 +43,18 @@ a {
   border-radius: 10px;
 }
 
+.loading-screen {
+  background: #1A3A5F;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 40px;
+  color: #ffffff;
+  opacity: 0.8;
+  border-radius: 10px;
+}
+
 .index-body {
   background: linear-gradient(rgba(157, 157, 157, 0.8), rgba(157, 157, 157, 0.8)), url("/img/index-bg.png");
   background-size: cover;
@@ -409,6 +421,19 @@ a {
   flex-direction: column;
 }
 
+.help-popup-content {
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  background-color: #1A3A5F;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  max-height: 90%;
+  overflow-y: scroll;
+}
+
 .settings-popup-header {
   margin: 0;
   padding: 20px;
@@ -471,6 +496,12 @@ a {
 @media screen and (max-width: 768px) {
   .settings-popup-content {
     width: 70%;
+    margin: 2px;
+    max-height: 90%;
+    overflow: scroll;
+  }
+  .help-popup-content {
+    width: 90%;
     margin: 2px;
     max-height: 90%;
     overflow: scroll;
@@ -775,32 +806,61 @@ a {
   cursor: pointer;
 }
 
-.tutorial-text {
+.level-top-bar {
   position: absolute;
-  left: 150px;
-  padding: 20px;
-  background-color: rgba(92, 116, 142, 0.5);
-  border-radius: 20px;
-  max-width: 60%;
-  font-size: 1.5em;
+  top: 0;
+  left: 20%;
+  width: 80%;
+  display: flex;
+  justify-content: right;
+  align-items: top;
+  padding: 0 20px;
 }
 
-.stat-container {
-  position: absolute;
-  top: 15px;
-  right: 40px;
+.tutorial-text {
+  margin-top: 1rem;
   padding: 20px;
+  margin-right: 2rem;
   background-color: rgba(92, 116, 142, 0.5);
   border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center items horizontally */
+  font-size: 1.5em;
+  height: fit-content;
 }
 
 .stat-container h1 {
   margin: 0;
   padding: 0;
   font-size: 1.75em;
+}
+
+.stat-container {
+  margin-right: 2rem;
+  margin-top: 1rem;
+  padding: 20px;
+  background-color: rgba(92, 116, 142, 0.5);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center items horizontally */
+  height: fit-content;
+}
+
+.help-container {
+  margin-top: 20px;
+  margin-right: 2rem;
+  padding: 20px;
+  background-color: rgba(92, 116, 142, 0.5);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center items horizontally */
+  height: fit-content;
+}
+
+.help-container button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 /* Style for the build menu container */
@@ -907,7 +967,6 @@ a {
   }
   .tutorial-text {
     font-size: 1rem;
-    max-width: 35%;
   }
 }
 @media screen and (max-width: 768px) {
@@ -989,6 +1048,27 @@ a {
   font-weight: 900;
   text-decoration: none;
   font-family: "Roboto", sans-serif;
+}
+
+.edit-popup-selector {
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(92, 116, 142, 0.5);
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.edit-popup-selector button {
+  margin: 5px;
+  padding: 5px;
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=globals.css.map */

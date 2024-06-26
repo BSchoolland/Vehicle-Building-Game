@@ -142,6 +142,46 @@ class Block {
     // clear the welds array
     this.welds = [];
   }
+showWarning() {
+  // get the position of the block
+  let x = this.originalX;
+  let y = this.originalY;
+  
+
+  // Blinking effect
+  let isVisible = true;
+  let warning = Matter.Bodies.rectangle(x, y, 50, 50, {
+    render: { strokeStyle: '#ffffff', sprite: { texture: './img/textures/warning.png' }, opacity: 1 },
+    collisionFilter: { mask: 0x0002 }
+  });
+  Matter.Body.setStatic(warning, true);
+  // add the warning to the world
+  Matter.World.add(this.contraption.engine.world, warning);
+
+  let blinkInterval = setInterval(() => {
+    isVisible = !isVisible;
+    if (isVisible) {
+      // create a warning image
+      warning = Matter.Bodies.rectangle(x, y, 50, 50, {
+        render: { strokeStyle: '#ffffff', sprite: { texture: './img/textures/warning.png' }, opacity: 1 },
+        collisionFilter: { mask: 0x0002 }
+      });
+      Matter.Body.setStatic(warning, true);
+      // add the warning to the world
+      Matter.World.add(this.contraption.engine.world, warning);
+    } else {
+      // remove the warning from the world
+      Matter.World.remove(this.contraption.engine.world, warning)
+    }
+  }, 502); // Toggle visibility every 250ms
+
+  // remove the warning after 2 seconds and clear the interval
+  setTimeout(() => {
+    clearInterval(blinkInterval);
+    Matter.World.remove(this.contraption.engine.world, warning);
+  }, 4000);
+}
+
   damage(amount, typeOfDamage = "normal") {
     // subtract the amount from the hitpoints
     playSound("blockTakesDamage");
@@ -328,6 +368,10 @@ class Block {
     this.setRotation(this.rotatedTimes);
   }
   setRotation(rotatedTimes) {
+    if (rotatedTimes === 0) {
+      this.rotatedWeldableFaces = this.weldableFaces;
+      return;
+    }
     // reset the rotation
     this.rotatedWeldableFaces = this.weldableFaces;
     // this.removeFromWorld(this.contraption.engine.world);

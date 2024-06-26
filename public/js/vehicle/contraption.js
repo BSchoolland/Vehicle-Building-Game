@@ -94,6 +94,8 @@ class Contraption {
     this.lastTime = 0;
     this.maxSparks = 100;
     this.currentSparks = 0;
+    // kill this contraption if it goes out of bounds
+    this.killBelow = 2500;
   }
   getControls() {
     // Use flatMap to get all controls from all blocks
@@ -187,6 +189,35 @@ class Contraption {
       block.checkConnected();
     })
   }
+  showDisconnectedBlocks(){
+    // make welds for all blocks
+    this.blocks.forEach((block) => {
+      block.makeWelds();
+    });
+    // check how many blocks have health and are in the contraption
+    const intialBlockCount = this.blocks.filter((block) => block.hitPoints > 0).length;
+    // run checkConnected on all blocks
+    this.checkConnected();
+
+    // check how many blocks have health and are in the contraption
+    const finalBlockCount = this.blocks.filter((block) => block.hitPoints > 0).length;
+    // log the number of disconnected blocks
+    console.log(`Disconnected blocks: ${intialBlockCount - finalBlockCount}`);
+    // return a list of blocks that are disconnected
+    // wait for each block to be destroyed, when it is, reset it
+
+    const disconnectedBlocks = this.blocks.filter((block) => block.hitPoints <= 0)
+    // put a warning symbol on each disconnected block
+    disconnectedBlocks.forEach((block) => {
+      block.showWarning();
+    });
+    setTimeout(() => {
+      disconnectedBlocks.forEach((block) => {
+        block.reset();
+      });
+    }, 1000);
+    return disconnectedBlocks;
+  }
   flipX(block, addToActionStack = true) {
     block.flipX();
     // add the action to the action stack
@@ -215,12 +246,16 @@ class Contraption {
       if (BlockType) {
         // Create a new block instance
         let newBlock = new BlockType(blockJson.x, blockJson.y, this);
+        // rotate the block if necessary        
+        newBlock.rotatedTimes = blockJson.rotatedTimes
+
         // flip the block if necessary
         // Add the block to the contraption
         this.addBlock(newBlock);
         if (blockJson.flippedX) {
           newBlock.flipX();
         }
+
       } else {
         console.error(`Unknown block type: ${blockJson.type} using BasicWoodenBlock instead`);
         // Create a new block instance

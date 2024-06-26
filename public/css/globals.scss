@@ -58,9 +58,23 @@ a {
     border-radius: 10px;
 }
 
+.loading-screen {
+    background: $ui-background-color;
+    position: absolute;
+    // centered in the middle of the screen
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px;
+    color: $text-color;
+    opacity: 0.8;
+    border-radius: 10px;
+}
+
 @import "index.scss";
 @import "login.scss";
 @import "settings.scss";
 @import "levelMenu.scss";
 @import "levelUI.scss";
 @import "community.scss";
+@import "editor.scss";

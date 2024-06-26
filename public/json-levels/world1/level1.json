@@ -69,7 +69,7 @@
     {
       "name": "Basic Block",
       "key": "1",
-      "type": "BasicWoodenBlock",
+      "type": "BasicBlock",
       "limit": 3
     },
     { "name": "Wheel Block", "key": "2", "type": "WheelBlock", "limit": 2 },

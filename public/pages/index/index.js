@@ -143,7 +143,7 @@ var camera = new Camera(render, mouse, render.canvas);
 let building = new Building(engine, camera);
 building.init();
 const levelObject = new LevelManager(engine, building);
-levelObject.init();
+await levelObject.init();
 
 // play the sound as soon as the user interacts with anything
 document.addEventListener("click", function playSound() {
@@ -214,7 +214,13 @@ if (response.ok) {
   let intervalId;
 
   function startInterval() {
+    // if the interval is already running, clear it
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+    
     console.log("starting interval");
+
     intervalId = setInterval(() => {
       levelObject.LevelLoader.respawnEnemies(); 
     }, 9000);
@@ -222,6 +228,7 @@ if (response.ok) {
 
   startInterval(); // Start the interval when the page loads
 
+  // stop the interval when the window is not focused
   window.addEventListener("blur", (event) => {
     clearInterval(intervalId);
     console.log("cleared interval");
@@ -233,6 +240,9 @@ if (response.ok) {
 import LevelHandler from "/js/loaders/levelHandler.js";
 // start the level handler (required for syncing data with the server)
 const levelHandler = new LevelHandler();
+
+// hide the loading screen
+document.getElementById("loading-screen").style.display = "none";
 
 const loginForm = document.getElementById("login-form");
 const messageBox = document.getElementById("message");

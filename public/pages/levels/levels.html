@@ -78,24 +78,27 @@
     <script src="js/easter-eggs/funText.js"></script>
 
     <div id="blur">
+        <div id="level-top-bar" class="level-top-bar">
+            <div id="tutorial-text" class="tutorial-text" style="display: none;">Press B to toggle build mode!</div>
 
+            <div class="help-container" id="help-container" style="display: none;">
+                <button id="help-button" class="help-button">
+                    <img src="img/help.png" alt="Help" style="width: 30px; height: 30px;"/>
+                </button>
+            </div>
 
-        <h1 id="tutorial-text" class="tutorial-text" style="display: none;">Press B to toggle build mode!</h1>
+            <div class="stat-container" id="stats" style="display: none;">
+                <h1>Coins: 0/1</h1>
+                <h1>Destroyed: 0/1</h1>
+                <h1>Survived: 0/30</h1>
+            </div>
+
+        </div>
 
         <div id="game-container"></div>
         <!-- a div for keeping track of win conditions -->
 
-        <div class="stat-container" id="stats" style="display: none;">
-            <h1>Coins: 0/1</h1>
-            <h1>Destroyed: 0/1</h1>
-            <h1>Survived: 0/30</h1>
-        </div>
-
-        <div class="help-container" id="help-container" style="display: none;">
-            <button id="help-button" class="help-button">
-                <img src="img/help.png" alt="Help" style="width: 50px; height: 50px;"/>
-            </button>
-        </div>
+        
 
         <div id="container">
             <div class="progress-bar-parent">

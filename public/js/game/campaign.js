@@ -217,3 +217,18 @@ soundSlider.addEventListener("input", () => {
   
   setSoundEffectVolume(volume);
 });
+
+// if the help button is pressed, show the help popup
+let helpButton = document.getElementById("help-button");
+
+helpButton.addEventListener("click", () => {
+  let helpPopup = document.getElementById("help-popup");
+  helpPopup.classList.remove("hidden");
+});
+
+// if the close help button is pressed, close the help popup
+let closeHelp = document.getElementById("close-help");
+closeHelp.addEventListener("click", () => {
+  let helpPopup = document.getElementById("help-popup");
+  helpPopup.classList.add("hidden");
+});

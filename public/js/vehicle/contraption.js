@@ -94,6 +94,8 @@ class Contraption {
     this.lastTime = 0;
     this.maxSparks = 100;
     this.currentSparks = 0;
+    // kill this contraption if it goes out of bounds
+    this.killBelow = 2500;
   }
   getControls() {
     // Use flatMap to get all controls from all blocks
@@ -215,12 +217,16 @@ class Contraption {
       if (BlockType) {
         // Create a new block instance
         let newBlock = new BlockType(blockJson.x, blockJson.y, this);
+        // rotate the block if necessary        
+        newBlock.rotatedTimes = blockJson.rotatedTimes
+
         // flip the block if necessary
         // Add the block to the contraption
         this.addBlock(newBlock);
         if (blockJson.flippedX) {
           newBlock.flipX();
         }
+
       } else {
         console.error(`Unknown block type: ${blockJson.type} using BasicWoodenBlock instead`);
         // Create a new block instance

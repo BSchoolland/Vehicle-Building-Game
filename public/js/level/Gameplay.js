@@ -52,6 +52,17 @@ class Gameplay {
       coin.reset();
     });
   }
+  updateHelpText() {
+    console.log("updating help text");
+    let help = document.getElementById("help-container");
+    // if the help container is not found, return
+    if (!help) {
+      return;
+    }
+    // make the help visible
+    help.style.display = "block";
+    console.log("help container found");
+  }
   updateStats() {
     let stats = document.getElementById("stats");
     if (!stats) {
@@ -128,6 +139,8 @@ class Gameplay {
     this.parent.LevelHandler.syncLevelsBeat();
     // hide the tutorial text
     document.getElementById("tutorial-text").style.display = "none";
+    // hide the help container
+    document.getElementById("help-container").style.display = "none";
     // play the level complete sound
     playSound("win");
     // make a bunch of confetti all over the top of the screen

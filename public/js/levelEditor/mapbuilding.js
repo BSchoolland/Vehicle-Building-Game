@@ -1,180 +1,26 @@
 // Import the block classes from public/js/world/mapBlocks.js
-import { slightRampBlockRUpsideDown, slightRampBlockLUpsideDown, GrassBlock, RampBlockL, RampBlockR, slightRampBlockL, slightRampBlockR, CoinBlock, BuildingAreaBlock, EnemySpawnBlock, DirtBlock } from '../world/mapBlocks.js';
-import LevelManager from '../level/LevelManager.js'; 
+import { 
+    slightRampBlockRUpsideDown, 
+    slightRampBlockLUpsideDown, 
+    GrassBlock,
+     RampBlockL, 
+     RampBlockR, 
+     slightRampBlockL, 
+     slightRampBlockR, 
+     CoinBlock, 
+     BuildingAreaBlock, 
+     EnemySpawnBlock, 
+     DirtBlock 
+} from '../world/mapBlocks.js';
+import LevelManager from '../level/LevelManager.js';
 // import the enemyHandler class
 import EnemyHandler from '../loaders/enemyHandler.js';
 // contraption blocks
-import {
-    RemoteBlock,
-    BasicWoodenBlock,
-    BasicIronBlock,
-    BasicDiamondBlock,
-    SeatBlock,
-    WheelBlock,
-    rocketBoosterBlock,
-    SpikeBlock,
-    TNTBlock,
-    GrappleBlock,
-    PoweredHingeBlock,
-  } from "../vehicle/blocks.js";
-
-class ObjectivesMenu { // creates objectives for the level
-    constructor(building) {
-        this.building = building;
-        // create the menu
-        this.menu = document.createElement('div');
-        this.menu.classList.add('objectives-menu');
-        this.menu.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-        // create a selector for each objective 
-        this.objectiveTypes = [ // different types of levels have different objectives
-            { name: 'Destroy', value: 0 }, // destroy x enemies
-            { name: 'Collect', value: 0 }, // collect x coins
-            { name: 'Survive', value: 0 }, // survive for x seconds
-            { name: 'BeforeTime', value: 0 }, // reach the end before x seconds
-        ];
-        this.createObjectivesSelectors();
-    }
-    createObjectivesSelectors() {
-        this.objectivesSelectors = {};
-        this.objectiveTypes.forEach(objectiveType => {
-            // add a label for the objective type
-            let label = document.createElement('label');
-            // in uppercase
-            label.innerText = objectiveType.name.toUpperCase();
-            this.menu.appendChild(label);
-            // selectors that allow for the numbers 0-15
-            let selector = document.createElement('select');
-            selector.classList.add('menu-button', 'build-menu-button');
-            // add the options
-            for (let i = 0; i < 31; i++) {
-                // add the option
-                let option = document.createElement('option');
-                option.value = i;
-                option.innerText = i;
-                selector.appendChild(option);
-                // set the default value
-                if (i === objectiveType.value) {
-                    selector.value = i;
-                }
-            }
-            // when the selector changes, update the objective value
-            selector.onchange = () => {
-                objectiveType.value = Number(selector.value);
-            }
-            this.menu.appendChild(selector);
-            this.objectivesSelectors[objectiveType.name] = selector;
-        });
-        // get the container
-        let gameContainer = document.getElementById('container');
-        //add the menu to the container
-        gameContainer.appendChild(this.menu);
-    }
-    setObjectiveTypes(objectiveTypes) {
-        this.objectiveTypes = objectiveTypes;
-        // clear the menu
-        this.menu.innerHTML = '';
-        // create the objective selectors
-        this.createObjectivesSelectors();
-    }
-}
-            
+import { playSound, setSong } from "../sounds/playSound.js";
 
 
-class allowedBlockMenu {
-    constructor(building) {
-        this.building = building;
-        // create the menu
-        this.menu = document.createElement('div');
-        this.menu.classList.add('allowed-block-menu');
-        // create a selector for each block type
-        this.blockTypes = [
-            { name: 'Basic Block', type: BasicWoodenBlock, allowed: 0 },
-            { name: 'Wheel Block', type: WheelBlock, allowed: 0 },
-            { name: 'Seat Block', type: SeatBlock, allowed: 1 }, // only one seat block is allowed
-            { name: 'Spike Block', type: SpikeBlock, allowed: 0 },
-            { name: 'TNT Block', type: TNTBlock, allowed: 0 },
-            { name: 'Rocket Booster', type: rocketBoosterBlock, allowed: 0 },
-            { name: 'Remote Block', type: RemoteBlock, allowed: 0 },
-        ];
-        this.createBlockSelectors();
-    }
-    createBlockSelectors() {
-        this.blockSelectors = {};
-        this.blockTypes.forEach(blockType => {
-            // add a label for the block type
-            let label = document.createElement('label');
-            // in uppercase
-            label.innerText = blockType.name.toUpperCase();
-            this.menu.appendChild(label);
-            // selectors that allow for the numbers 0-15
-            let selector = document.createElement('select');
-            selector.classList.add('menu-button', 'build-menu-button');
-            // add the options
-            for (let i = 0; i < 31; i++) {
-                // add the option
-                let option = document.createElement('option');
-                option.value = i;
-                option.innerText = i;
-                selector.appendChild(option);
-                // set the default value
-                if (i === blockType.allowed) {
-                    selector.value = i;
-                }
-            }
-            // when the selector changes, update the allowed number of blocks
-            selector.onchange = () => {
-                blockType.allowed = Number(selector.value);
-            }
-            this.menu.appendChild(selector);
-            this.blockSelectors[blockType.type.name] = selector;
-        });
-        // get the container
-        let gameContainer = document.getElementById('container');
-        //add the menu to the container
-        gameContainer.appendChild(this.menu);
-    }
-    setBuildingBlockTypes(buildingBlockTypes) {
-        // set the block types
-        this.blockTypes = [
-            { name: 'Basic Block', type: BasicWoodenBlock, allowed: 0 },
-            { name: 'Wheel Block', type: WheelBlock, allowed: 0 },
-            { name: 'Seat Block', type: SeatBlock, allowed: 1 }, // only one seat block is allowed
-            { name: 'Spike Block', type: SpikeBlock, allowed: 0 },
-            { name: 'TNT Block', type: TNTBlock, allowed: 0 },
-            { name: 'Rocket Booster', type: rocketBoosterBlock, allowed: 0 },
-            { name: 'Remote Block', type: RemoteBlock, allowed: 0 },
-        ];
-        let length = buildingBlockTypes.length;
-        for (let i = 0; i < length; i++) {
-            let blockType = {};
 
-            // get the block type
-            try {
-                blockType.type = eval(buildingBlockTypes[i].type);
-            } catch (error) {
-                console.error(`Unknown block type: ${buildingBlockTypes[i].name} using BasicWoodenBlock instead`);
-                blockType.type = BasicWoodenBlock;
-            }
-            // set the allowed number of blocks
-            blockType.allowed = buildingBlockTypes[i].limit;
-            // check if the block type is already in the list
-            let index = this.blockTypes.findIndex(block => block.type.name === blockType.type.name);
-            if (index > -1) {
-                // update the allowed number of blocks
-                this.blockTypes[index].allowed = blockType.allowed;
-            }
-            else {
-                // add the block type to the list
-                blockType.name = buildingBlockTypes[i].name;
-                this.blockTypes.push(blockType);
-            }
-        }
-        // clear the menu
-        this.menu.innerHTML = '';
-        // create the block selectors
-        this.createBlockSelectors();
-    }
-}
+
 
 // a build menu class, for the bottom of the screen.
 // the build menu will contain buttons for each block type, a button to save the level, a button to load a level, a button to clear the level, and a button to toggle build mode.
@@ -187,16 +33,13 @@ class BuildMenu {
         // create a button for each block type
         this.blockTypes = [
             { name: 'Grass Block', key: '1', type: GrassBlock },
-            { name: 'Ramp Block (L)', key: '2', type: RampBlockL },
-            { name: 'Ramp Block (R)', key: '3', type: RampBlockR },
-            { name: 'Slight Ramp Block (L)', key: '4', type: slightRampBlockL },
-            { name: 'Slight Ramp Block (R)', key: '5', type: slightRampBlockR },
-            { name: 'Coin', key: '6', type: CoinBlock },
-            { name: 'Building Area Block', key: '7', type: BuildingAreaBlock },
-            { name: 'Enemy Spawn Block', key: '8', type: EnemySpawnBlock },
-            { name: 'upsidedown slight ramp', key: '9', type: slightRampBlockLUpsideDown},
-            { name: 'upsidedown slight ramp R', key: '0', type: slightRampBlockRUpsideDown},
-            { name: 'Dirt Block', key: 'q', type: DirtBlock}
+            { name: 'Ramp Block', key: '2', type: RampBlockR },
+            { name: 'Slight Ramp Block (R)', key: '3', type: slightRampBlockL },
+            { name: 'Slight Ramp Block (L)', key: '4', type: slightRampBlockR },
+            { name: 'Coin', key: '5', type: CoinBlock },
+            { name: 'Building Area Block', key: '6', type: BuildingAreaBlock },
+            { name: 'Enemy Spawn Block', key: '7', type: EnemySpawnBlock },
+            { name: 'Dirt Block', key: '8', type: DirtBlock }
         ];
         this.createBlockButtons();
         // create a button to save the level
@@ -239,7 +82,7 @@ class BuildMenu {
         gameContainer.appendChild(this.menu);
         // initialize the menu
         this.init(building);
-        
+
     }
     createBlockButtons() {
         this.blockButtons = {};
@@ -268,33 +111,7 @@ class BuildMenu {
                 return;
             }
             // save the level to a JSON object
-            let LevelManagerJson = building.level.LevelEditor.save();
-            let key = 0;
-            // remove the block types that are not allowed
-            this.building.blockSelectors.blockTypes = this.building.blockSelectors.blockTypes.filter(blockType => blockType.allowed > 0);
-            const buildingBlockTypes = this.building.blockSelectors.blockTypes.map(blockType => {
-                key ++;
-                return {
-                    name: blockType.name,
-                    key: key.toString(),
-                    type: blockType.type.name,
-                    limit: blockType.allowed
-                };
-            });
-            // save the block types to the JSON object
-            LevelManagerJson.buildingBlockTypes = buildingBlockTypes;
-            // save the objective types to the JSON object
-            LevelManagerJson.objectives = this.building.objectivesSelectors.objectiveTypes;
-            // add tutorial text
-            LevelManagerJson.tutorialText = document.getElementById('tutorial-text').value;
-            // download the JSON object as a file
-            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(LevelManagerJson));
-            let dlAnchorElem = document.createElement('a');
-            dlAnchorElem.setAttribute("href", dataStr);
-            dlAnchorElem.setAttribute("download", "level.json");
-            dlAnchorElem.click();
-            // also save the level to the local storage
-            localStorage.setItem('level', JSON.stringify(LevelManagerJson));
+            building.level.LevelEditor.save();
         };
         this.loadButton.onclick = () => {
             if (!building.buildInProgress) {
@@ -310,13 +127,14 @@ class BuildMenu {
                 let reader = new FileReader();
                 reader.readAsText(file);
                 reader.onload = () => {
+                    building.level.LevelEditor.load()
                     let LevelManagerJson = JSON.parse(reader.result);
 
                     this.loadLevel(LevelManagerJson);
                 };
             };
         };
-        
+
         this.clearButton.onclick = () => {
             if (!building.buildInProgress) {
                 return;
@@ -325,28 +143,7 @@ class BuildMenu {
         };
         this.testButton.onclick = () => {
             // save the level to the local storage
-            let LevelManagerJson = building.level.LevelEditor.save();
-            let key = 0;
-            // remove the block types that are not allowed
-            this.building.blockSelectors.blockTypes = this.building.blockSelectors.blockTypes.filter(blockType => blockType.allowed > 0);
-            const buildingBlockTypes = this.building.blockSelectors.blockTypes.map(blockType => {
-                key ++;
-
-                return {
-                    name: blockType.name,
-                    key: key.toString(),
-                    type: blockType.type.name,
-                    limit: blockType.allowed
-                };
-            });
-            // save the block types to the JSON object
-            LevelManagerJson.buildingBlockTypes = buildingBlockTypes;
-            // save the objective types to the JSON object
-            LevelManagerJson.objectives = this.building.objectivesSelectors.objectiveTypes;
-            // add tutorial text
-            LevelManagerJson.tutorialText = document.getElementById('tutorial-text').value;
-            // save the level to the local storage
-            localStorage.setItem('level', JSON.stringify(LevelManagerJson));
+            building.level.LevelEditor.save(false);
             // set the href of the page to the mylevel.html
             window.location.href = 'mylevel.html';
         };
@@ -363,9 +160,8 @@ class BuildMenu {
                 // get rid of the camera target
                 building.camera.removeTarget();
                 // set the camera viewport to the size of the build area
-                building.camera.setViewport(building.buildArea.width * 3, building.buildArea.height * 1.75);
+                building.camera.setViewport(building.buildArea.width * 0.3, building.buildArea.height * 0.3);
                 // set the camera position to the center of the build area
-
                 building.camera.setCenterPosition(building.buildArea.x + building.buildArea.width / 2, building.buildArea.y + building.buildArea.height / 2);
             } else {
                 // remove the active class from all the block type buttons
@@ -393,20 +189,10 @@ class BuildMenu {
         menu.style.left = 500; //`${rect.left + (rect.width / 2) - (menu.offsetWidth / 2)}px`; // Center horizontally
     }
     loadLevel(LevelManagerJson) {
-        // clear the existing level
-        this.building.level.LevelLoader.clear();
         // load the level from the JSON object
         this.building.level.LevelEditor.loadForEditing(LevelManagerJson);
-        // get the block types from the JSON object
-        let buildingBlockTypes = LevelManagerJson.buildingBlockTypes;
-        // set the block types
-        this.building.blockSelectors.setBuildingBlockTypes(buildingBlockTypes);
-        // set the objective types
-        this.building.objectivesSelectors.setObjectiveTypes(LevelManagerJson.objectives);
-        // set the tutorial text
-        document.getElementById('tutorial-text').value = LevelManagerJson.tutorialText;
     }
-}       
+}
 
 // a refactored version of the building class for level editing
 class Building {
@@ -416,29 +202,29 @@ class Building {
         this.currentBlockType = GrassBlock;
         this.buildInProgress = false;
         this.level = new LevelManager(this.engine, this.camera);
+        this.level.LevelEditor.init(); // activate the level editor
         this.enemyHandler = new EnemyHandler();
         this.buildArea = {
             x: 0,
             y: 0,
-            width: 800*6,
-            height: 600*3
+            width: 100 * 150,
+            height: 100 * 75,
         };
         this.grid = 100;
         this.gridLines = [];
+        this.ghostBlocks = [];
 
         // build menu
         this.buildMenu = new BuildMenu(this);
-        this.blockSelectors = new allowedBlockMenu(this);
-        this.objectivesSelectors = new ObjectivesMenu(this);
         // if level is in local storage, load it
         if (localStorage.getItem('level')) {
             try {
                 let LevelManagerJson = JSON.parse(localStorage.getItem('level'));
                 setTimeout(() => { // FIXME: This is a workaround for a bug where the level is not loaded properly due to vehicle contraptions not being loaded
                     this.buildMenu.loadLevel(LevelManagerJson);
-                },1000);
+                }, 1000);
 
-                
+
             } catch (error) {
                 console.error('Failed to load level from local storage');
             }
@@ -447,6 +233,18 @@ class Building {
 
     setCurrentBlockType(blockType) {
         this.currentBlockType = blockType;
+    }
+
+    removeGhostBlocks() {
+
+        // remove the ghost blocks
+        this.ghostBlocks.forEach((block) => {
+            Matter.World.remove(this.engine.world, block);
+        });
+        // clear the ghost blocks array
+        this.ghostBlocks = [];
+        // clear the selected block
+        this.selectedBlock = null;
     }
 
     init() {
@@ -464,7 +262,7 @@ class Building {
         });
 
         canvas.addEventListener('mousemove', (event) => {
-            if(isMouseDown && event.button === 0) {
+            if (isMouseDown && event.button === 0) {
                 this.handleCanvasClick(event);
             }
         });
@@ -493,7 +291,7 @@ class Building {
         // Round the position to the nearest grid line
         let x = Math.round(pos.x / this.grid) * this.grid;
         let y = Math.round(pos.y / this.grid) * this.grid;
-        
+
         // make sure the position is within the build area
         if (x < this.buildArea.x || x > this.buildArea.x + this.buildArea.width) {
             // console.log('Cannot place block here');
@@ -512,6 +310,8 @@ class Building {
                 // if the block is an enemy spawn block, show the right click menu
                 if (this.level.blocks[i].constructor.name === 'EnemySpawnBlock') {
                     this.showRightClickMenu(this.level.blocks[i], _event);
+                } else {
+                    this.selectBlock(this.level.blocks[i]);
                 }
                 return;
             }
@@ -523,6 +323,44 @@ class Building {
         }
         // Add the block to the level
         this.level.LevelLoader.addBlock(newBlock);
+        // remove the ghost blocks
+        this.removeGhostBlocks();
+        // select the new block
+        this.selectBlock(newBlock);
+    }
+    selectBlock(block) {
+
+        // remove the ghost blocks
+        this.removeGhostBlocks();
+        // add a ghost block, a large blue square, to show that the block is selected
+        let ghostBlock = Matter.Bodies.rectangle(
+            block.x,
+            block.y,
+            this.grid + 2,
+            this.grid + 2,
+            {
+                isStatic: true,
+                render: {
+                    fillStyle: "rgba(0, 0, 255, 0)",
+                    strokeStyle: "rgba(17, 90, 209, 0.7)",
+                    lineWidth: 2,
+                },
+            }
+        );
+        this.ghostBlocks.push(ghostBlock);
+        Matter.World.add(this.engine.world, ghostBlock);
+        // refresh the block, so it displays over the new blocks
+        block.bodies.forEach((body) => {
+            Matter.World.remove(this.engine.world, body);
+            Matter.World.add(this.engine.world, body);
+        });
+        // make the selected block the block that was clicked
+        this.selectedBlock = block;
+        // if the user is on a mobile device, show the right click menu
+        if (this.mobile) {
+            this.showRightClickMenu(block);
+        }
+        return;
     }
     showRightClickMenu(block, event) { // for when the user places an enemy spawn block
 
@@ -553,7 +391,7 @@ class Building {
                     block.enemyContraption.destroy();
                 };
                 // create a new enemy contraption
-                block.enemyContraption = this.level.LevelLoader.loadEnemyContraption({enemyType: enemy, x: block.x, y: block.y});
+                block.enemyContraption = this.level.LevelLoader.loadEnemyContraption({ enemyType: enemy, x: block.x, y: block.y });
                 // remove the popup
                 popup.remove();
             };
@@ -571,7 +409,7 @@ class Building {
         }
         //get the mouse position from the camera
         let pos = this.camera.getMousePosition();
-        
+
         // Round the position to the nearest grid line
         let x = Math.round(pos.x / this.grid) * this.grid;
         let y = Math.round(pos.y / this.grid) * this.grid;
@@ -580,6 +418,8 @@ class Building {
         if (block) {
             // delete the block
             this.level.LevelLoader.removeBlock(block);
+            // remove the ghost blocks
+            this.removeGhostBlocks();
         }
     }
 
@@ -597,21 +437,57 @@ class Building {
         if (event.keyCode === 88) {
             this.level.redo();
         }
+        // if there is a block selected, allow rotation and deletion keybinds
+        if (this.selectedBlock && this.buildInProgress) {
+            // if R is pressed, rotate
+            if (event.keyCode === 82) {
+                this.selectedBlock.rotate90();
+                // play the rotate block sound
+                playSound("rotateBlock");
+            }
+            // if backspace, remove the block
+            if (event.keyCode === 8) {
+                this.contraption.removeBlock(this.selectedBlock);
+                this.buildMenu.updateButtonLimits();
+                this.removeGhostBlocks();
+            }
+        }
+        // if it is the w key or the up arrow key, move the camera up
+        if (event.keyCode === 87 || event.keyCode === 38) {
+            this.camera.position.y = this.camera.position.y - 100;
+
+        }
+        // if it is the s key or the down arrow key, move the camera down
+        if (event.keyCode === 83 || event.keyCode === 40) {
+            this.camera.position.y = this.camera.position.y + 100;
+        }
+        // if it is the a key or the left arrow key, move the camera left
+        if (event.keyCode === 65 || event.keyCode === 37) {
+            this.camera.position.x = this.camera.position.x - 100;
+        }
+        // if it is the d key or the right arrow key, move the camera right
+        if (event.keyCode === 68 || event.keyCode === 39) {
+            this.camera.position.x = this.camera.position.x + 100;
+        }
+        // if the b key is pressed, return the camera to the center of the build area
+        if (event.keyCode === 66) {
+            this.camera.setCenterPosition(this.buildArea.x + this.buildArea.width / 2, this.buildArea.y + this.buildArea.height / 2);
+        }
     }
     displayGrid() {
         const buildArea = this.buildArea;
         const gridSpacing = this.grid;
-    
+
         // Vertical lines
         for (let x = buildArea.x; x <= buildArea.x + buildArea.width + gridSpacing; x += gridSpacing) {
-            let line = Matter.Bodies.rectangle(x - gridSpacing / 2, buildArea.y + buildArea.height / 2, 1, buildArea.height + gridSpacing, { isStatic: true, render: { visible: true }});
+            let line = Matter.Bodies.rectangle(x - gridSpacing / 2, buildArea.y + buildArea.height / 2, 1, buildArea.height + gridSpacing, { isStatic: true, render: { visible: true } });
             Matter.World.add(this.engine.world, line);
             this.gridLines.push(line);
         }
-    
+
         // Horizontal lines
         for (let y = buildArea.y; y <= buildArea.y + buildArea.height + gridSpacing; y += gridSpacing) {
-            let line = Matter.Bodies.rectangle(buildArea.x + buildArea.width / 2, y - gridSpacing / 2, buildArea.width + gridSpacing, 1, { isStatic: true, render: { visible: true }});
+            let line = Matter.Bodies.rectangle(buildArea.x + buildArea.width / 2, y - gridSpacing / 2, buildArea.width + gridSpacing, 1, { isStatic: true, render: { visible: true } });
             Matter.World.add(this.engine.world, line);
             this.gridLines.push(line);
         }

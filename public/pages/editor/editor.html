@@ -25,9 +25,69 @@
     
     <div id="game-container"></div>
     <div id="container"></div>
-    <!-- an input for tutorial text -->
-    <input type="text" id="tutorial-text" placeholder="Tutorial Text">
-
+    <!-- selectors to bring up various popups -->
+    <div class="edit-popup-selector">
+        <button id="open-objective">Edit Objectives</button>
+        <button id="open-details">Edit Details</button>
+        <button id="open-block">Edit Blocks</button>
+    </div>
+    <!-- input for objectives -->
+    <div id="objective-popup" class="login-popup hidden" hidden>
+        <div class="login-popup-content">
+            <div class="login-popup-header">
+                <h2 class="login-title">Objectives</h2>
+                <span class="close" id="close-objective">&times;</span>
+            </div>
+    
+            <form class="login-form" id="objective-form">
+                <label for="coins">Coins:</label>
+                <input type="number" id="coins" name="coins" required>
+                <label for="destroy">Destroy:</label>
+                <input type="number" id="destroy" name="destroy" required>
+                <label for="time">Time:</label>
+                <input type="number" id="time" name="time" required>
+                <label for="survive">Survive:</label>
+                <input type="number" id="survive" name="survive" required>
+                <button type="submit">UPDATE</button>
+            </form>
+            <p id="objective-message" style="color: red; text-align: center;"></p>
+        </div>
+    </div>
+    <!-- input for level details (name, hint) -->
+    <div id="details-popup" class="login-popup hidden" hidden>
+        <div class="login-popup-content">
+            <div class="login-popup-header">
+                <h2 class="login-title">Level Details</h2>
+                <span class="close" id="close-details">&times;</span>
+            </div>
+            
+            <form class="login-form" id="details-form">
+                <label for="details-name">Level Name:</label>
+                <input type="text" id="details-name" name="level-name" required>
+                <label for="hint">Hint:</label>
+                <input type="text" id="details-hint" name="hint" required>
+                <button type="submit">UPDATE</button>
+            </form>
+            <p id="details-message" style="color: red; text-align: center;"></p>
+        </div>
+    </div>
+    <!-- input for allowed building blocks -->
+    <div id="block-popup" class="login-popup hidden" hidden>
+        <div class="login-popup-content">
+            <div class="login-popup-header">
+                <h2 class="login-title">Blocks</h2>
+                <span class="close" id="close-block">&times;</span>
+            </div>
+    
+            <form class="login-form" id="block-form">
+                <label for="blocks">Blocks</label>
+                <textarea type="text" id="block-text" name="blocks" required>basic: 3, wheel: 2, seat: 1</textarea>
+                <button type="submit">UPDATE</button>
+            </form>
+            <p id="block-message" style="color: red; text-align: center;"></p>
+        </div>
+    </div>
+    
     <!-- runs the matter.js simulation -->
     <script type="module" src = "js/levelEditor/editor.js"></script>
 </body>

@@ -1,0 +1,20 @@
+.edit-popup-selector {
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(92, 116, 142, 0.5);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.edit-popup-selector button {
+    margin: 5px;
+    padding: 5px;
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

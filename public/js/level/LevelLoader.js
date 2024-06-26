@@ -122,6 +122,10 @@ class LevelLoader {
     // load the enemy contraption
     const EnemyContraption = new Contraption(this.parent.engine, "AI", this.parent);
     EnemyContraption.load(enemyContraptionJson);
+    // find the lowest block in the level
+    let lowestBlock = this.findLowestBlocks()[0];
+    // set the kill below to 500 pixels below the lowest block
+    EnemyContraption.killBelow = lowestBlock.y + 500;
     // load the commands
     EnemyContraption.AiLoadCommands(enemyContraptionJson.commands);
     // move the enemy contraption to the spawn point
@@ -251,8 +255,12 @@ class LevelLoader {
 
         // Create a new block instance
         let newBlock = new BlockType(blockJson.x, blockJson.y, this);
+        newBlock.rotatedTimes = blockJson.rotatedTimes;
+        console.log("rotatedTimes", blockJson.rotatedTimes);
         // Add the block to the Level
-        this.addBlock(newBlock);        
+        this.addBlock(newBlock);    
+
+    
 
         if (blockJson.flippedX) {
           newBlock.flipX();
@@ -270,9 +278,16 @@ class LevelLoader {
       let lowestBlocks = this.findLowestBlocks();
       // add a line of n dirtBlocks below each lowest block
       this.addDirtBlocks(lowestBlocks);
+      // set the building's contraption's "kill below" to the lowest block
+      this.parent.building.contraption.killBelow = lowestBlocks[0].y + 500;
+      console.log("lowest block", lowestBlocks[0].y);
     }
     else {
       console.log("Floating level");
+      let lowestBlock = this.findLowestBlocks()[0];
+      console.log("Lowest block", lowestBlock.y);
+      // a bit of extra space for floating levels
+      this.parent.building.contraption.killBelow = lowestBlock.y + 1000;
     }
     // turn the blockList into a Matter.js body
     let compoundBody = createCompoundBody(this.blockList);
@@ -325,6 +340,7 @@ class LevelLoader {
     this.parent.GameplayHandler.mustCompleteBefore = 0; // 0 means there is no time limit
     }
     this.parent.GameplayHandler.updateStats();
+    this.parent.GameplayHandler.updateHelpText();
     this.parent.building.camera.doingTour = true;
     // do a quick tour of the level to show the player what it looks like
     this.parent.building.camera.levelTour(LevelJson, this.parent.building.buildArea);
@@ -402,6 +418,8 @@ class LevelLoader {
         }
       }
     });
+    // order with the lowest blocks first
+    lowestBlocks.sort((a, b) => b.y - a.y);
     return lowestBlocks;
   }
 
@@ -417,6 +435,8 @@ class LevelLoader {
         } else {
           newBlock = new this.blockTypes["DirtBlock"](block.x, block.y + i * 100, this);
         }
+
+
         this.addBlock(newBlock);
       }
     });

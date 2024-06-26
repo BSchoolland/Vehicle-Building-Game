@@ -78,18 +78,27 @@
     <script src="js/easter-eggs/funText.js"></script>
 
     <div id="blur">
+        <div id="level-top-bar" class="level-top-bar">
+            <div id="tutorial-text" class="tutorial-text" style="display: none;">Press B to toggle build mode!</div>
 
+            <div class="help-container" id="help-container" style="display: none;">
+                <button id="help-button" class="help-button">
+                    <img src="img/help.png" alt="Help" style="width: 30px; height: 30px;"/>
+                </button>
+            </div>
 
-        <h1 id="tutorial-text" class="tutorial-text" style="display: none;">Press B to toggle build mode!</h1>
+            <div class="stat-container" id="stats" style="display: none;">
+                <h1>Coins: 0/1</h1>
+                <h1>Destroyed: 0/1</h1>
+                <h1>Survived: 0/30</h1>
+            </div>
+
+        </div>
 
         <div id="game-container"></div>
         <!-- a div for keeping track of win conditions -->
 
-        <div class="stat-container" id="stats" style="display: none;">
-            <h1>Coins: 0/1</h1>
-            <h1>Destroyed: 0/1</h1>
-            <h1>Survived: 0/30</h1>
-        </div>
+        
 
         <div id="container">
             <div class="progress-bar-parent">
@@ -128,6 +137,40 @@
             </div>
         </div>
     </div>
+    <!-- help popup (borrows styles from settings) -->
+    <div id="help-popup" class="settings-popup hidden">
+        <div class="help-popup-content">
+            <div class="settings-popup-header">
+                <h2 class="settings-title">Help</h2>
+                <span class="close" id="close-help">&times;</span>
+            </div>
+            <div class="settings-content">
+                <div class="settings-option">
+                    <h2>Building Controls:</h2>
+                    <ul>
+                    <li><b>Place:</b> Select a block from the menu at the bottom of the screen and click on a space in the grid.</li>
+                    <li><b>Remove:</b> Right click on a block to remove it. (or press backspace while a block is selected)</li>
+                    <li><b>Rotate:</b> Click on a block to select it, then press "R" to rotate it.</li>
+                </ul>
+                    <h2>Driving Controls:</h2>
+                    <ul>
+                    <li><b>Moving:</b> Use "A" and "D" to spin the car's wheels.</li>
+                    <li><b>Booster:</b> Use Left Shift to activate the rocket booster. (Unlocked in world 2)</li>
+                    <li><b>Drop:</b> Press "X" to drop items using the disconnect block. (Unlocked midway through world 2)</li>
+                </ul>
+                <h2>Shortcuts:</h2>
+                <ul>
+                    <li><b>Rapid Place/Remove</b> Hold left click and drag to rapidly place, or right click and drag to rapidly remove.</li>
+                    <li><b>Start or Reset Level Quickly:</b> Press B to move between building and driving</li>
+                    <li><b>Shift Contraption:</b> Click on the grey arrows around the grid to shift all blocks in that direction.</li>
+                    <li><b>Quickly Select Building Blocks:</b> Use the number keys to quickly select building blocks, or use the scroll wheel to cycle through them.</li>
+                </ul>
+                </div>
+            </div>
+        </div>
+
+
+
     <!-- runs the matter.js simulation -->
     <script type="module" src="js/game/campaign.js"></script>
     <script>

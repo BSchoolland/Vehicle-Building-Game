@@ -1,11 +1,13 @@
 // EnemyHandler.js
 
 class EnemyHandler {
-    constructor(progressBar) {
+    constructor(progressBar, preLoadEnemies = true) {
         this.enemyContraptionsJSON = {};
         this.progressBar = progressBar;
         this.enemies = {};
-        this.preLoadEnemies();
+        if (preLoadEnemies){
+            this.preLoadEnemies();
+        }
     }
 
     async preLoadEnemies() {

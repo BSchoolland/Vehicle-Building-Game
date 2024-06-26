@@ -139,6 +139,8 @@ class Gameplay {
     this.parent.LevelHandler.syncLevelsBeat();
     // hide the tutorial text
     document.getElementById("tutorial-text").style.display = "none";
+    // hide the help container
+    document.getElementById("help-container").style.display = "none";
     // play the level complete sound
     playSound("win");
     // make a bunch of confetti all over the top of the screen

@@ -64,12 +64,27 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // Debounce function
+    function debounce(func, wait) {
+        var timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                func.apply(context, args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.type === "attributes" && mutation.attributeName === "style") {
                 var displayStyle = window.getComputedStyle(mutation.target).display;
                 if (displayStyle === "block" && index === 0) {
-                    displayNextParagraph();
+                    // Call the debounced version of displayNextParagraph
+                    debouncedDisplayNextParagraph();
                 }
             }
         });
@@ -77,6 +92,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Start observing changes in style attribute
     observer.observe(warningDiv, { attributes: true });
+
+    // Debounced version of displayNextParagraph with a 250ms wait
+    var debouncedDisplayNextParagraph = debounce(displayNextParagraph, 250);
 
     // Check initial state and act accordingly
     if (window.getComputedStyle(warningDiv).display === "block") {

@@ -464,12 +464,7 @@ class Contraption {
   }
   // release a key
   releaseKey(key) {
-    if (key === "ArrowRight") {
-      key = "d";
-    }
-    if (key === "ArrowLeft") {
-      key = "a";
-    }
+    key = key === "ArrowRight" ? "d" : key === "ArrowLeft" ? "a" : key;
     key = key.toLowerCase();
     this.keysPressed[key] = false;
   }

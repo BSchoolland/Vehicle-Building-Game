@@ -492,6 +492,24 @@ class BuildMenu {
             return;
           }
         }
+        // check if blocks are disconnected
+        let disconnected = building.contraption.showDisconnectedBlocks();
+        console.log(disconnected);
+        if (disconnected.length > 0) {
+          if (!this.buildModeForce) { // force gets past the no seat check
+            playSound("error");
+            let toast = document.createElement("div");
+            toast.classList.add("toast-err");
+            toast.innerText = "The highlighted blocks are disconnected! Make sure everything connects to your seat!";
+            document.getElementById("game-container").appendChild(toast);
+
+            setTimeout(() => {
+              toast.remove();
+            }, 5000);
+            building.buildInProgress = true;
+            return;
+          }
+        }
 
         // call levelMode to hide the menu
         this.levelMode();

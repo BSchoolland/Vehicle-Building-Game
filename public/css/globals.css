@@ -409,6 +409,19 @@ a {
   flex-direction: column;
 }
 
+.help-popup-content {
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  background-color: #1A3A5F;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  max-height: 90%;
+  overflow: scroll;
+}
+
 .settings-popup-header {
   margin: 0;
   padding: 20px;
@@ -471,6 +484,12 @@ a {
 @media screen and (max-width: 768px) {
   .settings-popup-content {
     width: 70%;
+    margin: 2px;
+    max-height: 90%;
+    overflow: scroll;
+  }
+  .help-popup-content {
+    width: 90%;
     margin: 2px;
     max-height: 90%;
     overflow: scroll;

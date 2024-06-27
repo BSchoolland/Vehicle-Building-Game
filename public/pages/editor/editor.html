@@ -73,7 +73,7 @@
     </div>
     <!-- input for allowed building blocks -->
     <div id="block-popup" class="login-popup hidden" hidden>
-        <div class="login-popup-content">
+        <div class="block-popup-content">
             <div class="login-popup-header">
                 <h2 class="login-title">Blocks</h2>
                 <span class="close" id="close-block">&times;</span>
@@ -81,7 +81,9 @@
     
             <form class="login-form" id="block-form">
                 <label for="blocks">Blocks</label>
-                <textarea type="text" id="block-text" name="blocks" required>basic: 3, wheel: 2, seat: 1</textarea>
+                <div id="block-selectors">
+                    <!-- to be filled by javascript -->
+                </div>
                 <button type="submit">UPDATE</button>
             </form>
             <p id="block-message" style="color: red; text-align: center;"></p>

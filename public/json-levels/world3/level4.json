@@ -241,5 +241,6 @@
     }
   ],
   "tutorialText": "",
-  "title": "All downhill from here"
+  "title": "All downhill from here",
+  "groundDepth": 30
 }

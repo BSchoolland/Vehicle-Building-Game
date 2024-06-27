@@ -277,7 +277,8 @@ class LevelLoader {
       // loop through the blocks to find all the lowest blocks in their column
       let lowestBlocks = this.findLowestBlocks();
       // add a line of n dirtBlocks below each lowest block
-      this.addDirtBlocks(lowestBlocks);
+      console.log("groundDepth", LevelJson.groundDepth)
+      this.addDirtBlocks(lowestBlocks, LevelJson.groundDepth || 10);
       // set the building's contraption's "kill below" to the lowest block
       this.parent.building.contraption.killBelow = lowestBlocks[0].y + 500;
       console.log("lowest block", lowestBlocks[0].y);
@@ -423,7 +424,7 @@ class LevelLoader {
     return lowestBlocks;
   }
 
-  addDirtBlocks(lowestBlocks, n = 10) {
+  addDirtBlocks(lowestBlocks, n = 50) {
     lowestBlocks.forEach((block) => {
       // determine the number of GrassBlocks to add
       const grassBlocks = Math.floor(Math.random() * 3) + 1;

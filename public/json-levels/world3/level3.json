@@ -1836,5 +1836,7 @@
   ],
     
     "title": "Wall Crawler",
-    "tutorialText": "If you have trouble sticking to walls, try to control your speed"
+    "tutorialText": "If you have trouble sticking to walls, try to control your speed",
+    "groundDepth": 30
+
 }

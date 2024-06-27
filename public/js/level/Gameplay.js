@@ -38,7 +38,7 @@ class Gameplay {
 
     // spawn in the enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {
-      enemyContraption[0].spawn(enemyContraption[1], enemyContraption[2]);
+      enemyContraption.spawn();
     });
 
     // reset the win conditions

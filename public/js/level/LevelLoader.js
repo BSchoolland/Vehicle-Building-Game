@@ -121,6 +121,7 @@ class LevelLoader {
     }
     // load the enemy contraption
     const EnemyContraption = new Contraption(this.parent.engine, "AI", this.parent);
+    console.log("enemyContraptionJson", enemyContraptionJson);
     EnemyContraption.load(enemyContraptionJson);
     // find the lowest block in the level
     let lowestBlock = this.findLowestBlocks()[0];
@@ -131,7 +132,7 @@ class LevelLoader {
     // move the enemy contraption to the spawn point
     EnemyContraption.moveTo(blockJson.x, blockJson.y);
     // add the enemy contraption to the enemy contraptions array
-    this.parent.enemyContraptions.push([EnemyContraption, blockJson.x, blockJson.y]);
+    this.parent.enemyContraptions.push(EnemyContraption);
     return EnemyContraption;
   }
 
@@ -148,7 +149,7 @@ class LevelLoader {
     }
     // clear the enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {
-      enemyContraption[0].destroy();
+      enemyContraption.destroy();
     });
     this.parent.enemyContraptions = [];
     // clear the coins
@@ -249,14 +250,13 @@ class LevelLoader {
           }
           this.enemySpawnPoints.push(blockJson);
           // load the enemy contraption
-          const EnemyContraption = this.loadEnemyContraption(blockJson);
+          this.loadEnemyContraption(blockJson);
           return;
         }
 
         // Create a new block instance
         let newBlock = new BlockType(blockJson.x, blockJson.y, this);
         newBlock.rotatedTimes = blockJson.rotatedTimes;
-        console.log("rotatedTimes", blockJson.rotatedTimes);
         // Add the block to the Level
         this.addBlock(newBlock);    
 
@@ -442,11 +442,10 @@ class LevelLoader {
     });
   }
 
-  despawnEnemyContraptions(perminant = false) {
+  despawnEnemyContraptions() {
     // kill all enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {
-      enemyContraption[0].despawn();
-      enemyContraption[0].moveTo(enemyContraption[1], enemyContraption[2]);
+      enemyContraption.despawn();
     });
   }
   respawnEnemies() { // spawns an enemy at each enemy spawn point
@@ -501,7 +500,7 @@ class LevelLoader {
     this.undoStack = [];
     // clear the enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {
-      enemyContraption[0].destroy();
+      enemyContraption.destroy();
     });
   }
   addBlock(block, addToActionStack = true) {

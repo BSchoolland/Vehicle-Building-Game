@@ -55,7 +55,7 @@ function startGame() {
   container.style.display = "block";
 
   // set the background to a solid color
-  render.options.background = "blue";
+  render.options.background = "skyblue";
     // "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0, 0.5) 50%, rgba(135, 206, 235) 100%)";
 
   // play the background music

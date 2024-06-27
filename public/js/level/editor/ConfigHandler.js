@@ -11,8 +11,33 @@ import {
     GrappleBlock,
     PoweredHingeBlock,
 } from "../../vehicle/blocks.js";
+import Block from "../../vehicle/blocks/baseBlockClass.js";
 
+let blockTypes = {
+    RemoteBlock,
+    BasicWoodenBlock,
+    SeatBlock,
+    WheelBlock,
+    rocketBoosterBlock,
+    SpikeBlock,
+    TNTBlock,
+    GrappleBlock,
+    PoweredHingeBlock
+};
 
+const buildClassesToImages = {
+    "BasicWoodenBlock": "/img/build-buttons/basic-block.png",
+    "BasicIronBlock": "/img/build-buttons/iron-block.png",
+    "BasicDiamondBlock": "img/build-buttons/diamond-block.png",
+    "WheelBlock": "img/build-buttons/wheel-block.png",
+    "TNTBlock": "img/build-buttons/tnt-block.png",
+    "rocketBoosterBlock": "img/build-buttons/rocket-booster-block.png",
+    "SpikeBlock": "img/build-buttons/spike-block.png",
+    "GrappleBlock": "img/build-buttons/grapple-block.png",
+    "SeatBlock": "img/build-buttons/seat-block.png",
+    "PoweredHingeBlock": "img/build-buttons/powered-hinge-block.png",
+    "RemoteBlock": "img/build-buttons/remote-block.png",
+  };
 
 
 // handles all popups for configuring levels (e.g. setting the level name, objectives, and allowed blocks)
@@ -26,14 +51,41 @@ class ConfigHandler {
         this.time_objective = 0;
         this.survive_objective = 0;
         this.allowedBlocks = {
-            BasicBlock: 3,
+            BasicWoodenBlock: 3,
             WheelBlock: 2,
             SeatBlock: 1,
         };
         
     }
     init() {
+        this.createBlockPopup();
         this.handlePopups();
+    }
+    createBlockPopup() {
+        // creates all block types in the popup, with a limit input
+        let blockSelectorContainer = document.getElementById("block-selectors");
+        // for each block type, create a selector
+        for (const blockType in blockTypes) {
+            console.log(blockType);
+            let block = 
+            {
+                "name": blockType,
+                "image": buildClassesToImages[blockType],
+            };
+            console.log(block);
+            let blockSelector = document.createElement("div");
+            blockSelector.classList.add("block-selector");
+            blockSelector.innerHTML = `
+            <div class="block-selector-header">
+                <h3>${block.name}</h3>
+            </div>
+            <div class="block-selector-content">
+                <img src="${block.image}" alt="${block.name}" class="block-image">
+                <input type="number" value="0" min="0" max="100">
+            </div>
+            `;
+            blockSelectorContainer.appendChild(blockSelector);
+        }
     }
     handlePopups() {
         // set up listeners for all the popups
@@ -144,22 +196,27 @@ class ConfigHandler {
 
         // block form
         const blockForm = document.getElementById("block-form");
-        // preset the text area
-        const blockTextArea = document.getElementById("block-text");
-        blockTextArea.value = JSON.stringify(this.allowedBlocks);
+        // preset block selector values
+        const blockSelectors = document.querySelectorAll(".block-selector");
+        blockSelectors.forEach((blockSelector) => {
+            const input = blockSelector.querySelector("input");
+            const blockType = blockSelector.querySelector("h3").innerText;
+            input.value = this.allowedBlocks[blockType];
+        });
         // listen for the form submission
         blockForm.addEventListener("submit", (event) => {
             event.preventDefault();
+            this.allowedBlocks = {};
             // get the values from the form
-            const blockText = blockTextArea.value;
-            // set the values
-            try {
-                JSON.parse(blockText);
-            } catch (error) {
-                alert("Invalid JSON");
-                return;
-            }
-            this.allowedBlocks = JSON.parse(blockText);
+            const blockSelectors = document.querySelectorAll(".block-selector");
+            blockSelectors.forEach((blockSelector) => {
+                if (!blockSelector.querySelector("input").value) {
+                    return;
+                }
+                const input = blockSelector.querySelector("input");
+                const blockType = blockSelector.querySelector("h3").innerText;
+                this.allowedBlocks[blockType] = parseInt(input.value);
+            });
             // close the popup
             allowedBlocksPopup.classList.add("hidden");
         });
@@ -221,7 +278,11 @@ class ConfigHandler {
 
         for (const key in this.allowedBlocks) {
             num++;
-
+            console.log(key);
+            // if a limit is not set, don't include it
+            if (!this.allowedBlocks[key]) {
+                continue;
+            }
             buildingBlockTypes.push({
                 name: key.replace(/([A-Z])/g, ' $1').trim(),
                 key: num.toString(),
@@ -238,9 +299,12 @@ class ConfigHandler {
             this.allowedBlocks[block.type] = block.limit;
         }
         // update the form values
-        document.getElementById("block-text").value = JSON.stringify(
-            this.allowedBlocks
-        );
+        const blockSelectors = document.querySelectorAll(".block-selector");
+        blockSelectors.forEach((blockSelector) => {
+            const input = blockSelector.querySelector("input");
+            const blockType = blockSelector.querySelector("h3").innerText;
+            input.value = this.allowedBlocks[blockType];
+        });
     }
 }
 

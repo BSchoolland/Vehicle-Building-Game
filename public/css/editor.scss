@@ -18,3 +18,34 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.block-image {
+    width: 20px;
+    height: 20px;
+}
+
+#block-selectors {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Adjust as needed */
+}
+
+.block-selector {
+    width: 48%; /* Adjust the width to fit two columns */
+    box-sizing: border-box;
+    margin-bottom: 20px; /* Space between rows */
+}
+
+.block-popup-content {
+    position: relative;
+    background-color: $ui-background-color;
+    // padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    width: 70%;
+    // min-height: 60%; 
+    overflow: hidden;
+    // center content
+    display: flex;
+    flex-direction: column;
+}

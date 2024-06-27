@@ -248,6 +248,7 @@ class Contraption {
         let newBlock = new BlockType(blockJson.x, blockJson.y, this);
         // rotate the block if necessary        
         newBlock.rotatedTimes = blockJson.rotatedTimes
+        console.log('rotatedTimes: ' + newBlock.rotatedTimes)
 
         // flip the block if necessary
         // Add the block to the contraption
@@ -289,12 +290,12 @@ class Contraption {
     x -= centerX;
     y -= centerY;
     this.blocks.forEach((block) => {
-      block.x += x;
-      block.y += y;
+      block.originalX += x;
+      block.originalY += y;
     });
     // reset all blocks to update their positions
     this.blocks.forEach((block) => {
-      block.reset(false);
+      block.reset(true);
     });
   }
   clear() {
@@ -350,6 +351,7 @@ class Contraption {
     this.blocks.forEach((block) => {
       block.reset(false);
     });
+    // set the rotation of each block
     // weld all blocks
     this.blocks.forEach((block) => {
       block.makeWelds();
@@ -359,7 +361,7 @@ class Contraption {
     this.calculateHitPoints();
     // make all blocks movable
     this.blocks.forEach((block) => {
-      block.makeMovable();
+      block.makeMovable(); 
     });
     // reset the undo stack and action stack
     this.actionStack = [];
@@ -464,12 +466,7 @@ class Contraption {
   }
   // release a key
   releaseKey(key) {
-    if (key === "ArrowRight") {
-      key = "d";
-    }
-    if (key === "ArrowLeft") {
-      key = "a";
-    }
+    key = key === "ArrowRight" ? "d" : key === "ArrowLeft" ? "a" : key;
     key = key.toLowerCase();
     this.keysPressed[key] = false;
   }

@@ -253,30 +253,36 @@ class Building {
         // Add event listener for placing blocks
         // canvas.addEventListener('click', (event) => this.handleCanvasClick(event));
         let isMouseDown = false;
+        let isMouse2Down = false;
 
         canvas.addEventListener('mousedown', (event) => {
             if (event.button === 0) {
                 isMouseDown = true;
                 this.handleCanvasClick(event);
+            } else if (event.button === 2) {
+                isMouse2Down = true;
+                this.handleRightClick(event);
             }
         });
 
         canvas.addEventListener('mousemove', (event) => {
             if (isMouseDown && event.button === 0) {
                 this.handleCanvasClick(event);
+            } else if (isMouse2Down) {
+                this.handleRightClick(event);
             }
         });
 
         document.addEventListener('mouseup', (event) => {
             if (event.button === 0) {
                 isMouseDown = false;
+            } else if (event.button === 2) {
+                isMouse2Down = false;
             }
         });
 
         // Add event listener for keys
         document.addEventListener('keydown', (event) => this.handleKeyDown(event));
-        // Add event listener for block editing
-        canvas.addEventListener('contextmenu', (event) => this.handleRightClick(event));
         // ckick the build mode button to enable build mode
         this.buildMenu.buildModeButton.click();
     }

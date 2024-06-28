@@ -9,7 +9,7 @@ class GrappleBlock extends Block {
         this.secondaryColor = '#3d3d3d';
         this.makeBodies();
         this.makeConstraints();
-        this.maxRopeLength = 500;  // Maximum length of the rope
+        this.maxRopeLength = 700;  // Maximum length of the rope
         this.currentRopeLength = 0;  // Current length of the rope
         this.ropeStiffness = 0.000001;  // Initial low stiffness
         this.rope = null;
@@ -25,6 +25,7 @@ class GrappleBlock extends Block {
         // by default, the activation key is 'r' and the reverse activation key is 'f'
         this.activationKey = 'r';
         this.reverseActivationKey = 'f';
+        this.firing = false;
     }
     makeBodies(){
         // create a flat surface on the left side of the block
@@ -37,10 +38,13 @@ class GrappleBlock extends Block {
         let vertices ='50 20 15 36 15 4';
         this.bodies.push(Matter.Bodies.fromVertices(this.x+10, this.y, Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.secondaryColor }}));
         this.bodies[2].block = this;
+                this.invincibleParts.push(this.bodies[2]);
         // a rectangle for the joint
         this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, 30, 10, { render: { fillStyle: this.secondaryColor }}));
         this.bodies[3].collisionFilter = { mask: 0x0002 };
         this.bodies[3].block = this;
+
+
     }
     makeConstraints(){
         // constrain the joint and the grappling hook, allowing rotation
@@ -89,14 +93,22 @@ class GrappleBlock extends Block {
         // check if the right mouse button is pressed
         if (this.contraption.keysPressed[this.activationKey]) {
             this.shootGrapplingHook();
+        } else {
+            this.firing = false;
         }
         if (this.contraption.keysPressed[this.reverseActivationKey]) {
-            this.reelGrapple();
+            // unused for now
+            // this.reelGrapple();
         }
     }
     shootGrapplingHook() {
-        if (!this.readyToShoot) {
+        if (this.firing) {
             return;
+        }
+        this.firing = true;
+
+        if (!this.readyToShoot) {
+            this.resetRope();
         }
         this.readyToShoot = false;
         // play the grappling hook sound
@@ -165,11 +177,17 @@ class GrappleBlock extends Block {
         if (!this.readyToHook) {
             return;
         }
+        this.reelGrapple();
         // if the grappling hook is this body
         if (thisBody === this.bodies[2]) {
             // if the other body is not in this contraption
             // check if the other body is a block
-            if (otherBody.block !== undefined) {
+            if (otherBody.block === "ground") {
+                // make the hook static
+                Matter.Body.setStatic(this.bodies[2], true);
+                this.readyToHook = false;
+            }
+            else if (otherBody.block !== undefined) {
                 if (otherBody.block.contraption !== this.contraption) { 
                     // create a weld constraint between the grappling hook and the other body
                     const weld = Matter.Constraint.create({
@@ -225,6 +243,7 @@ class GrappleBlock extends Block {
         return Math.sqrt(dx * dx + dy * dy);
     }
     resetValues() {
+        super.resetValues();
         this.destroyRope();
         this.readyToShoot = true;
         // set the stiffness of grapple constraints back to their original values
@@ -232,6 +251,24 @@ class GrappleBlock extends Block {
         this.grappleAimConstraint.stiffness = 0.1;
         // make the hook unable to grab onto blocks
         this.readyToHook = false;
+    }
+    async resetRope() {
+        this.destroyRope();
+        // make the hook not static
+        Matter.Body.setStatic(this.bodies[2], false);
+        // destroy the welds between the hook and the block it is attached to
+        this.hookWelds.forEach(weld => {
+            Matter.World.remove(this.contraption.engine.world, weld);
+        });
+        this.hookWelds = [];
+        // bring the grappling hook back to the block
+        let x = this.bodies[3].position.x;
+        let y = this.bodies[3].position.y;
+        Matter.Body.setPosition(this.bodies[2], { x: x + 10, y: y });
+        setTimeout(() => {
+            this.resetValues();
+        }, 5);
+        return;
     }
 }
 

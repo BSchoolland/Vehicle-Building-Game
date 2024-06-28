@@ -8,6 +8,8 @@ const worldGradients = [
   "linear-gradient(to bottom, #87CEEB 50%, #FF6347)",
   // world 3, ominous purple
   "linear-gradient(0deg, rgba(162,97,113,1) -35%, rgba(64,101,148,1) 59%, rgba(44,38,88,1) 125%)",
+  // world 4, night sky
+  "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%)",
 ];
 
 // a class for managing medals players earn for completing levels or bunus challenges
@@ -185,7 +187,6 @@ class LevelUI {
       // set the body gradient to the world gradient
       document.body.style.background = worldGradients[i];
       // make sure the gradient is applied to the whole body
-      
     } else {
       button.addEventListener("click", () => {
         levelSelector.remove();

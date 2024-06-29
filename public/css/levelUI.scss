@@ -186,6 +186,23 @@
 .menu-action-button:hover {
     background-color: #1a3a5f;
 }
+
+#inventory-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* Creates a responsive grid with square items at least 50px wide */
+    gap: 10px; /* Adjust the gap between items */
+    list-style-type: none; /* Removes default list styling */
+    padding: 0; /* Removes default padding */
+}
+
+#inventory-list li {
+    width: 50px; 
+    height: 50px;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
 @media screen and (max-width: 1024px) {
     .build-menu {
         margin: 0px;

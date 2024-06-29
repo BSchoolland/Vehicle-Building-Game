@@ -64,6 +64,13 @@ function limitedBlocks(gameplayObject, objective) {
           gameplayObject.parent.LevelHandler.getLevelIndex(),
           objective.name
       );
+      for (let key in gameplayObject.reward) {
+        gameplayObject.parent.building.ResourceHandler.addBlockToResources(
+          gameplayObject.parent.worldSelected,
+          key,
+          gameplayObject.reward[key]
+        );
+      }
     }
   }
   else {
@@ -95,6 +102,13 @@ function unarmedAndDangerous(gameplayObject, objective) {
         gameplayObject.parent.LevelHandler.getLevelIndex(),
         objective.name
     );
+    for (let key in gameplayObject.reward) {
+      gameplayObject.parent.building.ResourceHandler.addBlockToResources(
+        gameplayObject.parent.worldSelected,
+        key,
+        gameplayObject.reward[key]
+      );
+    }
   }
 
 }
@@ -125,6 +139,13 @@ function noDamage(gameplayObject, objective) {
         gameplayObject.parent.LevelHandler.getLevelIndex(),
         objective.name
     );
+    for (let key in gameplayObject.reward) {
+      gameplayObject.parent.building.ResourceHandler.addBlockToResources(
+        gameplayObject.parent.worldSelected,
+        key,
+        gameplayObject.reward[key]
+      );
+    }
   }
 }
 
@@ -140,6 +161,13 @@ function DestroyAllEnemies(gameplayObject, objective) {
         gameplayObject.parent.LevelHandler.getLevelIndex(),
         objective.name
     );
+    for (let key in gameplayObject.reward) {
+      gameplayObject.parent.building.ResourceHandler.addBlockToResources(
+        gameplayObject.parent.worldSelected,
+        key,
+        gameplayObject.reward[key]
+      );
+    }
   }
   else {
       console.log("Not enough enemies destroyed");
@@ -171,6 +199,13 @@ function noWheels(gameplayObject, objective) {
         gameplayObject.parent.LevelHandler.getLevelIndex(),
         objective.name
     );
+    for (let key in gameplayObject.reward) {
+      gameplayObject.parent.building.ResourceHandler.addBlockToResources(
+        gameplayObject.parent.worldSelected,
+        key,
+        gameplayObject.reward[key]
+      );
+    }
   }
 }
 
@@ -182,6 +217,13 @@ function noTNT(gameplayObject, objective) {
     if (block instanceof TNTBlock) {
       console.log("TNT block found! Objective failed.");
       return;
+    }
+    for (let key in gameplayObject.reward) {
+      gameplayObject.parent.building.ResourceHandler.addBlockToResources(
+        gameplayObject.parent.worldSelected,
+        key,
+        gameplayObject.reward[key]
+      );
     }
   }
   // make sure the objective hasn't already been completed
@@ -199,6 +241,13 @@ function noTNT(gameplayObject, objective) {
         gameplayObject.parent.LevelHandler.getLevelIndex(),
         objective.name
     );
+    for (let key in gameplayObject.reward) {
+      gameplayObject.parent.building.ResourceHandler.addBlockToResources(
+        gameplayObject.parent.worldSelected,
+        key,
+        gameplayObject.reward[key]
+      );
+    }
   }
 }
 
@@ -227,6 +276,13 @@ function noRemote(gameplayObject, objective) {
         gameplayObject.parent.LevelHandler.getLevelIndex(),
         objective.name
     );
+    for (let key in gameplayObject.reward) {
+      gameplayObject.parent.building.ResourceHandler.addBlockToResources(
+        gameplayObject.parent.worldSelected,
+        key,
+        gameplayObject.reward[key]
+      );
+    }
   }
 }
 
@@ -242,6 +298,7 @@ function checkBonusObjectives(gameplayObject) {
       }
       for (let i = 0; i < bonusObjectives.length; i++) {
         let objective = bonusObjectives[i];
+        let found = true
         if (objective.name === "Who needs blocks?") {
           limitedBlocks(gameplayObject, objective);
         }
@@ -262,6 +319,8 @@ function checkBonusObjectives(gameplayObject) {
         }
         else if (objective.name === "No Remote Blocks") {
           noRemote(gameplayObject, objective);
+        } else {
+          found = false;
         }
       }
 }

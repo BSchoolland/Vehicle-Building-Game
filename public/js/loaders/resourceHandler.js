@@ -149,7 +149,20 @@ class ResourceHandler {
     
         requestAnimationFrame(animate);
     }
-    
+    generateInventoryList(worldNum){
+        // from te resources, return an array of objects with the src and the count
+        let inventory = [];
+        let resources = this.resources[worldNum];
+        for (let key in resources) {
+            
+            inventory.push({
+                src: `img/build-buttons/${resourceImages[key]}`,
+                number: resources[key],
+                color: key === "Coins" ? "black" : "white"
+            });
+        }
+        return inventory;
+    }
     
     
 }

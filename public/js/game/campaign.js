@@ -200,6 +200,12 @@ closeSettings.addEventListener("click", () => {
   let settingsPopup = document.getElementById("settings-popup");
   settingsPopup.classList.add("hidden");
 });
+// if close inventory is pressed, close the inventory popup
+let closeInventory = document.getElementById("close-inventory");
+closeInventory.addEventListener("click", () => {
+  let inventoryPopup = document.getElementById("inventory-popup");
+  inventoryPopup.classList.add("hidden");
+});
 // watch for the "music" slider to change
 let musicSlider = document.getElementById("music-slider");
 // set the music slider to the current volume in local storage

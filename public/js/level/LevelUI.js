@@ -12,6 +12,36 @@ const worldGradients = [
   "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%)",
 ];
 
+function generateInventoryList(images) {
+  const ul = document.createElement('ul');
+  ul.id = 'inventory-list';
+
+  images.forEach(image => {
+      const li = document.createElement('li');
+      
+      const img = document.createElement('img');
+      img.src = image.src;
+      img.alt = 'Image';
+      img.style.width = '50px';
+      img.style.height = '50px';
+
+      li.appendChild(img);
+
+      if (image.number !== 1) {
+          const h3 = document.createElement('h3');
+          h3.style.position = 'absolute';
+          h3.style.zIndex = '200';
+          h3.style.color = image.color || 'black'; // Use the provided color or default to black
+          h3.textContent = `x ${image.number}`;
+          li.appendChild(h3);
+      }
+
+      ul.appendChild(li);
+  });
+
+  return ul;
+}
+
 // a class for managing medals players earn for completing levels or bunus challenges
 class Medal {
   constructor(name, value, description, parent, levelNum) {
@@ -413,7 +443,15 @@ class LevelUI {
       inventoryButton.id = "inventory-button";
       inventoryButton.className = "settings-button";
       inventoryButton.addEventListener("click", () => {
-        this.parent.inventory.toggleInventory();
+        // create the inventory list
+        let inventoryArray = this.parent.building.ResourceHandler.generateInventoryList(this.parent.worldSelected);
+        let inventoryList = generateInventoryList(inventoryArray);
+        // add the inventory list to the inventory container
+        let inventoryContainer = document.getElementById("inventory-list");
+        inventoryContainer.innerHTML = "";
+        inventoryContainer.appendChild(inventoryList);
+        let InventoryPopup = document.getElementById("inventory-popup");
+        InventoryPopup.classList.remove("hidden");
       });
       inventoryButton.style.position = "absolute";
       inventoryButton.style.right = "70px";

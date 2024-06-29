@@ -115,6 +115,8 @@ class BuildMenu {
         console.log('Entering Boss Level! Number of parts determined by player resources.')
         // get the blocks from the Resources object
         this.blockTypes = ResourceHandler.getWorldResources(blockTypes);
+        // remove "Coins" from the block types
+        this.blockTypes = this.blockTypes.filter((block) => block.name !== "Coins");
       }
       console.log(this.blockTypes);
 

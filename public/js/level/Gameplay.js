@@ -23,6 +23,7 @@ class Gameplay {
     this.mustSurvive = 0;
     this.startTime = 0;
     this.baseTimeScale = 1;
+    this.reward = {};
   }
   setBaseTimeScale(baseTimeScale) {
     this.baseTimeScale = baseTimeScale;
@@ -128,6 +129,14 @@ class Gameplay {
     if (this.parent.LevelHandler.isLevelCompleted(world, level)) {
       checkBonusObjectives(this);
     } else {
+      // add each reward to the player's resources
+      for (let key in this.reward) {
+        this.parent.building.ResourceHandler.addBlockToResources(
+          world,
+          key,
+          this.reward[key]
+        );
+      }
       displayObjective("First win", 1);
       // update the player's local storage to show that the level has been completed
       this.parent.LevelHandler.completeLevel(

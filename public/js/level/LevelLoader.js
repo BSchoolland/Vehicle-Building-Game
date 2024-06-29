@@ -395,6 +395,8 @@ class LevelLoader {
         }
       }
     });
+    // set the reward for the level
+    this.parent.GameplayHandler.reward = LevelJson.reward;
     this.loading = false;
   }
 

@@ -176,10 +176,7 @@
     <script>
         window.onload = async function() {
         if (window.self === window.top) {
-            // The page is not in an iframe so remove the hidden class from the login button
-            document.getElementById("login").classList.remove("hidden");
-            //  remove the hidden class from the changelog button
-            document.getElementById("changelog").classList.remove("hidden");
+            // the page is not on crazygames
         }
         else {
             // the page is in an iframe (likely on crazygames)

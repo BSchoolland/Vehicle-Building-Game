@@ -38,7 +38,9 @@ class ResourceHandler {
         let resourcesArray = [];
         let n = 0;
         for (let key in resources) {
-            n++;
+            if (!(key === "Coins")){
+                n++;
+            }
             resourcesArray.push(
                 {
                     name: key,
@@ -51,6 +53,7 @@ class ResourceHandler {
         return resourcesArray;
     }
     addBlockToResources(worldNum, blockName, count = 1) {
+        console.log(`Adding ${count} ${blockName} to world ${worldNum}`);
         let resources = this.resources[worldNum];
         if (resources[blockName]) {
             resources[blockName] += count;

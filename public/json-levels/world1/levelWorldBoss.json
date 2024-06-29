@@ -150,6 +150,11 @@
     { "type": "BuildingAreaBlock", "x": 900, "y": 500 }
   ],
   "commands": [],
+  "objectives": [
+    { "name": "Destroy", "value": 1 },
+    { "name": "Collect", "value": 0 },
+    { "name": "Survive", "value": 0 }
+  ],
   "buildingBlockTypes": "collected1",
   "bonusChallenges": [],
   "tutorialText": "Defeat the boss using the blocks you've collected!  If you're having trouble, try going back to previous levels to collect more parts.",

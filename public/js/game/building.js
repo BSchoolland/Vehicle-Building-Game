@@ -610,24 +610,20 @@ class BuildMenu {
     
     // if it is the w key or the up arrow key, move the camera up
     if (event.keyCode === 87 || event.keyCode === 38) {
-        this.building.camera.position.y = this.building.camera.position.y - 50;
+        this.building.camera.position.y = this.building.camera.position.y - 25;
 
     }
     // if it is the s key or the down arrow key, move the camera down
     if (event.keyCode === 83 || event.keyCode === 40) {
-        this.building.camera.position.y = this.building.camera.position.y + 50;
+        this.building.camera.position.y = this.building.camera.position.y + 25;
     }
     // if it is the a key or the left arrow key, move the camera left
     if (event.keyCode === 65 || event.keyCode === 37) {
-        this.building.camera.position.x = this.building.camera.position.x - 50;
+        this.building.camera.position.x = this.building.camera.position.x - 25;
     }
     // if it is the d key or the right arrow key, move the camera right
     if (event.keyCode === 68 || event.keyCode === 39) {
-        this.building.camera.position.x = this.building.camera.position.x + 50;
-    }
-    // if the b key is pressed, return the camera to the center of the build area
-    if (event.keyCode === 66) {
-        this.building.camera.setCenterPosition(this.building.buildArea.x + this.building.buildArea.width / 2, this.building.buildArea.y + this.building.buildArea.height / 2);
+        this.building.camera.position.x = this.building.camera.position.x + 25;
     }
   }
 }
@@ -965,6 +961,7 @@ class Building {
     // if the B key is pressed, toggle build mode
     if (event.keyCode === 66) {
       this.buildMenu.buildModeButton.click();
+      this.viewMode = false;
     }
     // if there is a block selected, allow rotation and deletion keybinds
     if (this.selectedBlock && this.buildInProgress) {

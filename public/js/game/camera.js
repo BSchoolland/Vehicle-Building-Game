@@ -55,7 +55,7 @@ class Camera {
         this.tourCancelled = false; // whether the current tour has been cancelled
         this.tourNumber = 0; // the current tour number
     }
-    
+
     update() {
         // Calculate the new viewport bounds based on the camera's position and size
         let newBounds = {
@@ -64,7 +64,7 @@ class Camera {
         };
 
         // Update the renderer's bounds to match the new viewport
-        Matter.Render.lookAt(this.Renderer, newBounds);    
+        Matter.Render.lookAt(this.Renderer, newBounds);
     }
     levelTour(levelJson, buildArea) { // make a set of camera positions to tour the level
         // levelJson is a json object that contain all the blocs in the level 
@@ -94,10 +94,10 @@ class Camera {
         orderedTourPoints = generateSmoothPath(orderedTourPoints, 100);
         this.doLevelTour(orderedTourPoints, buildArea); // do the tour
     }
-    doLevelTour(orderedTourPoints, buildArea){
+    doLevelTour(orderedTourPoints, buildArea) {
         // set the camera's viewport
         const canvas = document.querySelector("canvas");
-        this.setViewport(canvas.width*2, canvas.height*2);
+        this.setViewport(canvas.width * 2, canvas.height * 2);
         this.setCenterPosition(orderedTourPoints[0].x, orderedTourPoints[0].y);
         // immediately update the camera to the first point
         this.update();
@@ -143,40 +143,51 @@ class Camera {
     }
 
     smoothUpdate() {
-      // move the camera twards the targetBounds smoothly
-      let targetBounds = {
-        min: { x: this.position.x, y: this.position.y },
-        max: {
-          x: this.position.x + this.size.x,
-          y: this.position.y + this.size.y,
-        },
-      };
-      // get the current bounds
-      let currentBounds = this.Renderer.bounds;
-      // calculate the new bounds
-      let newBounds = {
-        min: {
-          x:
-            currentBounds.min.x +
-            ((targetBounds.min.x - currentBounds.min.x) / 10) * this.strength,
-          y:
-            currentBounds.min.y +
-            ((targetBounds.min.y - currentBounds.min.y) / 10) * this.strength,
-        },
-        max: {
-          x:
-            currentBounds.max.x +
-            ((targetBounds.max.x - currentBounds.max.x) / 10) * this.strength,
-          y:
-            currentBounds.max.y +
-            ((targetBounds.max.y - currentBounds.max.y) / 10) * this.strength,
-        },
-      };
-      // update the renderer's bounds
-      Matter.Render.lookAt(this.Renderer, newBounds);
+        // move the camera towards the targetBounds smoothly
+        let targetBounds = {
+            min: { x: this.position.x, y: this.position.y },
+            max: {
+                x: this.position.x + this.size.x,
+                y: this.position.y + this.size.y,
+            },
+        };
+        // get the current bounds
+        let currentBounds = this.Renderer.bounds;
+        // calculate the new bounds
+        let newBounds = {
+            min: {
+                x:
+                    currentBounds.min.x +
+                    ((targetBounds.min.x - currentBounds.min.x) / 10) * this.strength,
+                y:
+                    currentBounds.min.y +
+                    ((targetBounds.min.y - currentBounds.min.y) / 10) * this.strength,
+            },
+            max: {
+                x:
+                    currentBounds.max.x +
+                    ((targetBounds.max.x - currentBounds.max.x) / 10) * this.strength,
+                y:
+                    currentBounds.max.y +
+                    ((targetBounds.max.y - currentBounds.max.y) / 10) * this.strength,
+            },
+        };
+        // if the camera is too far from the target, snap to the target
+        if (
+            Math.abs(newBounds.min.x - targetBounds.min.x) > 5000 ||
+            Math.abs(newBounds.min.y - targetBounds.min.y) > 5000 ||
+            Math.abs(newBounds.max.x - targetBounds.max.x) > 5000 ||
+            Math.abs(newBounds.max.y - targetBounds.max.y) > 5000
+        ) {
+            console.warn('Camera too far from target, snapping to target');
+            newBounds = targetBounds;
+        }
+
+        // update the renderer's bounds
+        Matter.Render.lookAt(this.Renderer, newBounds);
     }
 
-    
+
     setViewport(width, height) {
         this.size.x = width;
         this.size.y = height;
@@ -218,20 +229,20 @@ class Camera {
         // Get the mouse position relative to the canvas
         const canvasMouseX = this.mouse.position.x;
         const canvasMouseY = this.mouse.position.y;
-    
+
         // Get the bounds of the current view from the renderer
         const viewBounds = this.Renderer.bounds;
-    
+
         // Calculate the scale factor between the canvas and the view
         const viewWidth = viewBounds.max.x - viewBounds.min.x;
         const viewHeight = viewBounds.max.y - viewBounds.min.y;
         const scaleX = viewWidth / this.Renderer.canvas.width;
         const scaleY = viewHeight / this.Renderer.canvas.height;
-    
+
         // Translate the mouse position to world coordinates
         const correctedX = viewBounds.min.x + canvasMouseX * scaleX;
         const correctedY = viewBounds.min.y + canvasMouseY * scaleY;
-    
+
         // Return the corrected mouse position
         return new Vector2(correctedX, correctedY);
     }
@@ -261,7 +272,7 @@ class Camera {
 
     toggleFullScreen() {
         let container = document.getElementById('game-container');
-    
+
         if (!document.fullscreenElement) {
             // If not in fullscreen mode, enter fullscreen mode with a white background
             container.style.backgroundColor = "white"; // Set the background color to white

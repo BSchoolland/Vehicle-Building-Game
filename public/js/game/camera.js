@@ -169,7 +169,7 @@ class Camera {
                     ((targetBounds.max.x - currentBounds.max.x) / 10) * this.strength,
                 y:
                     currentBounds.max.y +
-                    ((twargetBounds.max.y - currentBounds.max.y) / 10) * this.strength,
+                    ((targetBounds.max.y - currentBounds.max.y) / 10) * this.strength,
             },
         };
         // if the camera is too far from the target, snap to the target

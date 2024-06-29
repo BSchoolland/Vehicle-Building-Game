@@ -151,6 +151,11 @@ class LevelUI {
           this.parent.building.camera.doingTour = false;
           this.parent.building.camera.tourCancelled = true;
         }
+        // if we're in view mode, disable it then return to the level selector
+        if (this.parent.building.viewMode) {
+          this.parent.building.buildMenu.buildModeButton.click();
+          this.parent.building.viewMode = false;
+        }
         setTimeout(() => {
           // prevent build mode
           this.parent.building.canEnterBuildMode = false;

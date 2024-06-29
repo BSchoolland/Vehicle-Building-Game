@@ -303,6 +303,11 @@ class BuildMenu {
     this.clearButton.classList.add("menu-action-button");
     this.clearButton.innerText = "Clear";
     this.menu.appendChild(this.clearButton);
+    // a button to view the full level
+    this.viewLevelButton = document.createElement("button");
+    this.viewLevelButton.classList.add("menu-action-button");
+    this.viewLevelButton.innerText = "View Level";
+    this.menu.appendChild(this.viewLevelButton);
 
     // style the menu
     this.menu.classList.add("build-menu");
@@ -390,6 +395,21 @@ class BuildMenu {
       // update the button limits
       this.updateButtonLimits();
     };
+
+    this.viewLevelButton.onclick = () => {
+      // activate view mode
+      building.activateViewMode();
+    };
+
+    // while in view mode, allow looking around with wasd and arrow keys
+    document.addEventListener("keydown", (event) => {
+      if (building.viewMode) {
+        console.log(event.keyCode);
+        this.allowMovement(event);
+      }
+    });
+    
+
     this.buildModeButton.onclick = () => {
       // prevent the button from being spammed
       if (this.buildModeForce)  {
@@ -586,6 +606,30 @@ class BuildMenu {
     menu.style.bottom = "0px"; // Distance from the bottom of the canvas
     menu.style.left = 500; //`${rect.left + (rect.width / 2) - (menu.offsetWidth / 2)}px`; // Center horizontally
   }
+  allowMovement(event) {
+    
+    // if it is the w key or the up arrow key, move the camera up
+    if (event.keyCode === 87 || event.keyCode === 38) {
+        this.building.camera.position.y = this.building.camera.position.y - 50;
+
+    }
+    // if it is the s key or the down arrow key, move the camera down
+    if (event.keyCode === 83 || event.keyCode === 40) {
+        this.building.camera.position.y = this.building.camera.position.y + 50;
+    }
+    // if it is the a key or the left arrow key, move the camera left
+    if (event.keyCode === 65 || event.keyCode === 37) {
+        this.building.camera.position.x = this.building.camera.position.x - 50;
+    }
+    // if it is the d key or the right arrow key, move the camera right
+    if (event.keyCode === 68 || event.keyCode === 39) {
+        this.building.camera.position.x = this.building.camera.position.x + 50;
+    }
+    // if the b key is pressed, return the camera to the center of the build area
+    if (event.keyCode === 66) {
+        this.building.camera.setCenterPosition(this.building.buildArea.x + this.building.buildArea.width / 2, this.building.buildArea.y + this.building.buildArea.height / 2);
+    }
+  }
 }
 
 // a refactored version of the building class
@@ -618,6 +662,15 @@ class Building {
     this.selectedBlock = null;
     this.mobile = screen.width < 600;
     this.controlMenu = null;
+    this.viewMode = false;
+    // if the user clicks while in view mode, return to build mode
+    this.camera.canvas.addEventListener("click", () => {
+      if (this.viewMode) {
+        // click the build mode button
+        this.buildMenu.buildModeButton.click();
+        this.viewMode = false;
+      }
+    });
   }
   setCamera(camera) {
     this.camera = camera;
@@ -627,6 +680,30 @@ class Building {
     // click the build mode button
     this.buildMenu.buildModeForce = force;
     this.buildMenu.buildModeButton.click();
+  }
+  activateViewMode() {
+    // only allowed if in build mode
+    if (!this.buildInProgress) {
+      return;
+    }
+    // remove the ghost blocks
+    this.removeGhostBlocks();
+    // activate the view mode
+    this.viewMode = true;
+    this.buildMenu.levelMode();
+    const canvas = document.querySelector("canvas");
+    // make the view the size it would be when doing the level
+    this.camera.setViewport(canvas.width * 2, canvas.height * 2);
+
+    // center the camera on the build area
+    this.camera.setCenterPosition(
+      this.buildArea.x + this.buildArea.width / 2,
+      this.buildArea.y + this.buildArea.height / 2
+    );
+    this.buildMenu.hide();
+    // disable building 
+    this.buildInProgress = false;
+
   }
   setCurrentBlockType(blockType, limit) {
     this.currentBlockType = blockType;

@@ -7,7 +7,9 @@ const worldCount = 4; // FIXME: this should be dynamic based on the number of wo
 class ResourceHandler {
     constructor() {
         this.resources = {};
-        this.loadResources();
+    }
+    async init() {
+        await this.loadResources();
     }
     async loadResources() {
         for (let i = 1; i <= worldCount; i++) {
@@ -20,16 +22,33 @@ class ResourceHandler {
         } else {
             // create a new resource object with only a seat and a wheel
             let resources = {
-                seat: 1,
-                wheel: 1
+                SeatBlock: 1,
+                WheelBlock: 1
             };
             // save this to local storage
             localStorage.setItem(`world${worldNum}Resources`, JSON.stringify(resources));
-            return resources; 
+            return resources;
         }
     }
-    getWorldResources(worldNum) {
-        return this.resources[worldNum];
+    getWorldResources(worldString) {
+        // strip the "collected" from the string
+        let worldNum = parseInt(worldString.replace("collected", ""));
+        let resources = this.resources[worldNum];
+        // convert the resources object into an array of objects
+        let resourcesArray = [];
+        let n = 0;
+        for (let key in resources) {
+            n++;
+            resourcesArray.push(
+                {
+                    name: key,
+                    key: n.toString(),
+                    type: key,
+                    limit: resources[key]
+                });
+        }
+        console.log(resourcesArray);
+        return resourcesArray;
     }
     addBlockToResources(worldNum, blockName, count = 1) {
         let resources = this.resources[worldNum];

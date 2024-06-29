@@ -2,7 +2,7 @@ import Building from "./building.js";
 import { Camera } from "./camera.js";import LevelManager from "../level/LevelManager.js";
 import { setSong, setMusicVolume, setSoundEffectVolume } from "../sounds/playSound.js";
 import ProgressBar from "../loaders/progressBar.js";
-
+import ResourceHandler from "../loaders/resourceHandler.js";
 
 // if the user is on mobile, warn them that the game may not work well
 if (window.innerWidth < 800 || window.innerHeight < 600) {
@@ -105,8 +105,11 @@ var render = Matter.Render.create({
 var mouse = Matter.Mouse.create(render.canvas);
 // create the camera
 var camera = new Camera(render, mouse, render.canvas);
+// create the ResourceHandler
+let resourceHandler = new ResourceHandler();
+await resourceHandler.init();
 // allow the player to build blocks
-let building = new Building(engine, camera);
+let building = new Building(engine, camera, resourceHandler);
 building.init();
 const levelObject = new LevelManager(engine, building, progressBar);
 levelObject.init();

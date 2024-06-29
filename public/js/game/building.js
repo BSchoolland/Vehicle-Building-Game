@@ -100,16 +100,25 @@ class RightClickMenu {
 // a build menu class, for the bottom of the screen.
 // the build menu will contain buttons for each block type, a button to save the contraption, a button to load a contraption, a button to clear the contraption, and a button to toggle build mode.
 class BuildMenu {
-  constructor(building, blockTypes = false, enemyEditor = true) {
+  constructor(building, ResourceHandler = null, blockTypes = false, enemyEditor = true) {
     this.building = building;
     // create the build menu
     this.menu = document.createElement("div");
     this.menu.classList.add("menu");
     this.enemyEditor = enemyEditor;
+    this
     // create a button for each block type
     if (blockTypes) {
       this.blockTypes = blockTypes;
-      // for each "type" replace the string with the actual class
+      // if the block types is a single string, do something else
+      if (typeof blockTypes === "string") {
+        console.log('Entering Boss Level! Number of parts determined by player resources.')
+        // get the blocks from the Resources object
+        this.blockTypes = ResourceHandler.getWorldResources(blockTypes);
+      }
+      console.log(this.blockTypes);
+
+      
       this.blockTypes.forEach((blockType, index) => {
         try {
           this.blockTypes[index].type = eval(blockType.type);
@@ -120,6 +129,8 @@ class BuildMenu {
           this.blockTypes[index].image = "img/build-buttons/basic-block.png";
         }
       });
+      
+
     } else {
       this.blockTypes = [
         {
@@ -630,10 +641,11 @@ class BuildMenu {
 
 // a refactored version of the building class
 class Building {
-  constructor(engine, camera, keybinds = true, isEnemyEditor = false) {
+  constructor(engine, camera, ResourceHandler = null, keybinds = true, isEnemyEditor = false) {
     this.engine = engine;
     this.camera = camera;
     this.keybinds = keybinds;
+    this.ResourceHandler = ResourceHandler;
 
     this.currentBlockType = BasicWoodenBlock; // Default block type
     this.currentBlockTypeLimit = 100; // Default limit for each block type
@@ -650,7 +662,7 @@ class Building {
     // right click menu
     this.RightClickMenu = new RightClickMenu(this);
     // build menu
-    this.buildMenu = new BuildMenu(this, false, isEnemyEditor);
+    this.buildMenu = new BuildMenu(this, ResourceHandler, false, isEnemyEditor);
     this.isEnemyEditor = isEnemyEditor;
     this.buildMenu.hide();
     this.canEnterBuildMode = false;
@@ -711,7 +723,7 @@ class Building {
     // makes a new build menu with the given block types (for levels that limit the blocks that can be used)
     // remove the old build menu
     this.buildMenu.menu.remove();
-    this.buildMenu = new BuildMenu(this, blockTypes, this.isEnemyEditor);
+    this.buildMenu = new BuildMenu(this, this.ResourceHandler, blockTypes, this.isEnemyEditor);
   }
   init() {
     // Add event listener for canvas click

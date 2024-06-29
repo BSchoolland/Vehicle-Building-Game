@@ -152,7 +152,7 @@
   "commands": [],
   "buildingBlockTypes": "collected1",
   "bonusChallenges": [],
-  "tutorialText": "Defeat the boss using the parts you've collected!  If you're having trouble, try going back to previous levels to collect more parts.",
-  "title": "Boss Battle",
+  "tutorialText": "Defeat the boss using the blocks you've collected!  If you're having trouble, try going back to previous levels to collect more parts.",
+  "title": "Spike Boss",
   "reward": "unlockWorld2"
 }

@@ -18,8 +18,11 @@ class ResourceHandler {
         if (localStorage.getItem(`world${worldNum}Resources`)) {
             return JSON.parse(localStorage.getItem(`world${worldNum}Resources`));
         } else {
-            // create a new resource object with nothing loaded
-            let resources = {};
+            // create a new resource object with only a seat and a wheel
+            let resources = {
+                seat: 1,
+                wheel: 1
+            };
             // save this to local storage
             localStorage.setItem(`world${worldNum}Resources`, JSON.stringify(resources));
             return resources; 

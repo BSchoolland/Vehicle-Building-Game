@@ -95,51 +95,56 @@ class Camera {
         this.doLevelTour(orderedTourPoints, buildArea); // do the tour
     }
     doLevelTour(orderedTourPoints, buildArea) {
-        // set the camera's viewport
+        const context = this;
+
+        async function keyHandler(event) {
+            console.log(event);
+            if (event.key === 'b') {
+                console.log('Tour cancelled');
+                context.doingTour = false;
+                context.tourNumber += 1;
+                this.strength = 1;
+                context.setViewport(buildArea.width * 2, buildArea.height * 2);
+                context.setCenterPosition(buildArea.x + buildArea.width / 2, buildArea.y + buildArea.height / 2);
+                document.removeEventListener('keydown', keyHandler);
+            }
+        }
+
+        document.addEventListener('keydown', keyHandler);
+
         const canvas = document.querySelector("canvas");
         this.setViewport(canvas.width * 2, canvas.height * 2);
         this.setCenterPosition(orderedTourPoints[0].x, orderedTourPoints[0].y);
-        // immediately update the camera to the first point
         this.update();
-        // set the strength to 0.1 for extra smoothness
         this.strength = 0.1;
-        // go to each point for 1/2 a second 
-        const timePerPoint = 10; // milliseconds
-        let numPoints = orderedTourPoints.length;
-        // use the setTimoout function to go to each point in the orderedTourPoints array
-        // record the current tour number so that the tour can be stopped if the tour number changes
+
+        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         let tourNumber = this.tourNumber + 1;
         this.tourNumber = tourNumber;
-        for (let i = 0; i < numPoints; i++) {
-            setTimeout(() => {
+
+        (async () => {
+            for (let i = 0; i < orderedTourPoints.length; i++) {
                 if (this.tourNumber !== tourNumber) {
-                    return; // if the tour number has changed, stop the tour
+                    console.log('Tour number changed, stopping tour');
+                    this.strength = 1;
+                    return;
                 }
                 this.setCenterPosition(orderedTourPoints[i].x, orderedTourPoints[i].y);
-            }, i * timePerPoint);
-        }
-        // after the tour is done, slowly return the strength to 1
-        setTimeout(() => {
-            if (this.tourNumber !== tourNumber) {
-                return; // if the tour number has changed, stop the tour
+                await sleep(10); // Adjust time per point as needed
             }
-            // focus the camera on the build area
-            this.setViewport(
-                buildArea.width * 2,
-                buildArea.height * 2
-            );
-            this.setCenterPosition(
-                buildArea.x + buildArea.width / 2,
-                buildArea.y + buildArea.height / 2
-            );
-            console.log('center:', this.position.x, this.position.y);
 
-            this.strength = 1;
-            this.tourCancelled = false;
-            this.doingTour = false;
+            if (this.tourNumber === tourNumber) {
+                this.setViewport(buildArea.width * 2, buildArea.height * 2);
+                this.setCenterPosition(buildArea.x + buildArea.width / 2, buildArea.y + buildArea.height / 2);
+                console.log('center:', this.position.x, this.position.y);
+                this.strength = 1;
+                this.tourCancelled = false;
+                this.doingTour = false;
+            }
+            document.removeEventListener('keydown', keyHandler);
 
+        })().catch(console.error);
 
-        }, numPoints * timePerPoint);
     }
 
     smoothUpdate() {
@@ -174,10 +179,10 @@ class Camera {
         };
         // if the camera is too far from the target, snap to the target
         if (
-            Math.abs(newBounds.min.x - targetBounds.min.x) > 5000 ||
-            Math.abs(newBounds.min.y - targetBounds.min.y) > 5000 ||
-            Math.abs(newBounds.max.x - targetBounds.max.x) > 5000 ||
-            Math.abs(newBounds.max.y - targetBounds.max.y) > 5000
+            Math.abs(newBounds.min.x - targetBounds.min.x) > 10000 ||
+            Math.abs(newBounds.min.y - targetBounds.min.y) > 10000 ||
+            Math.abs(newBounds.max.x - targetBounds.max.x) > 10000 ||
+            Math.abs(newBounds.max.y - targetBounds.max.y) > 10000
         ) {
             console.warn('Camera too far from target, snapping to target');
             newBounds = targetBounds;

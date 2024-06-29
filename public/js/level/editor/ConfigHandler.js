@@ -1,8 +1,6 @@
 import {
     RemoteBlock,
     BasicWoodenBlock,
-    BasicIronBlock,
-    BasicDiamondBlock,
     SeatBlock,
     WheelBlock,
     rocketBoosterBlock,
@@ -11,24 +9,21 @@ import {
     GrappleBlock,
     PoweredHingeBlock,
 } from "../../vehicle/blocks.js";
-import Block from "../../vehicle/blocks/baseBlockClass.js";
 
 let blockTypes = {
-    RemoteBlock,
     BasicWoodenBlock,
-    SeatBlock,
     WheelBlock,
-    rocketBoosterBlock,
+    SeatBlock,
     SpikeBlock,
     TNTBlock,
+    rocketBoosterBlock,
+    RemoteBlock,
     GrappleBlock,
     PoweredHingeBlock
 };
 
 const buildClassesToImages = {
     "BasicWoodenBlock": "/img/build-buttons/basic-block.png",
-    "BasicIronBlock": "/img/build-buttons/iron-block.png",
-    "BasicDiamondBlock": "img/build-buttons/diamond-block.png",
     "WheelBlock": "img/build-buttons/wheel-block.png",
     "TNTBlock": "img/build-buttons/tnt-block.png",
     "rocketBoosterBlock": "img/build-buttons/rocket-booster-block.png",

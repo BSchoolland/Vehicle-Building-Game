@@ -439,7 +439,7 @@ class LevelUI {
     game.appendChild(levelSelector);
     // add a button for each level
     if (this.isSandbox) {
-      this.parent.worldSelected = 4; // this is not ideal, but it works
+      this.parent.worldSelected = 5; // this is not ideal, but it works
       // currently, the sandbox is the last world, adding more worlds will break this
     }
       

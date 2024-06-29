@@ -107,7 +107,7 @@ class LevelLoader {
     this.compoundBody = null;
     this.loading = false;
   }
-  loadEnemyContraption(blockJson) {
+  async loadEnemyContraption(blockJson) {
     let enemyType = blockJson.enemyType;
     if (enemyType === undefined) {
       console.error("No enemy type defined for enemy spawn block");
@@ -123,21 +123,27 @@ class LevelLoader {
     const EnemyContraption = new Contraption(this.parent.engine, "AI", this.parent);
     console.log("enemyContraptionJson", enemyContraptionJson);
     EnemyContraption.load(enemyContraptionJson);
-    // find the lowest block in the level
-    let lowestBlock = this.findLowestBlocks()[0];
-    // set the kill below to 500 pixels below the lowest block
-    EnemyContraption.killBelow = lowestBlock.y + 500;
+    
     // load the commands
     EnemyContraption.AiLoadCommands(enemyContraptionJson.commands);
     // move the enemy contraption to the spawn point
     EnemyContraption.moveTo(blockJson.x, blockJson.y);
     // add the enemy contraption to the enemy contraptions array
     this.parent.enemyContraptions.push(EnemyContraption);
+    // wait for the level to load (this means we can be sure that all blocks are loaded before we try to find the lowest block)
+    while (this.loading) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    // find the lowest block in the level
+    let lowestBlock = this.findLowestBlocks()[0];
+    // set the kill below to 500 pixels below the lowest block
+    EnemyContraption.killBelow = lowestBlock.y + 500;
     return EnemyContraption;
   }
 
   // load a Level from a JSON object
   async load(levelIndex, optionalJson = null, playable = true) {
+    this.loading = true;
     this.playable = playable;
     if (playable) {
       try {

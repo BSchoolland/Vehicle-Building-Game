@@ -127,7 +127,7 @@ class BuildMenu {
                 let reader = new FileReader();
                 reader.readAsText(file);
                 reader.onload = () => {
-                    building.level.LevelEditor.load()
+                    building.level.LevelEditor.loadForEditing(JSON.parse(reader.result));
                     let LevelManagerJson = JSON.parse(reader.result);
 
                     this.loadLevel(LevelManagerJson);

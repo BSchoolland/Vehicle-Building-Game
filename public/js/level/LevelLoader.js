@@ -131,7 +131,7 @@ class LevelLoader {
     // add the enemy contraption to the enemy contraptions array
     this.parent.enemyContraptions.push(EnemyContraption);
     // wait for the level to load (this means we can be sure that all blocks are loaded before we try to find the lowest block)
-    while (this.loading) {
+    while (this.loading) {          
       await new Promise(resolve => setTimeout(resolve, 100));
     }
     // find the lowest block in the level

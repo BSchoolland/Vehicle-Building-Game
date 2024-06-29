@@ -403,8 +403,6 @@ class LevelUI {
       worldSelector.appendChild(worldTitle);
       // use the forward arrow function to create the forward arrow
       this.createForwardArrow(levelSelector, worldSelector, worldCount);
-      
-      
     }
     // add the settings button
     let settingsButton = document.createElement("button");

@@ -408,6 +408,23 @@ class LevelUI {
       worldSelector.appendChild(worldTitle);
       // use the forward arrow function to create the forward arrow
       this.createForwardArrow(levelSelector, worldSelector, worldCount);
+      // add a button to open player inventory
+      let inventoryButton = document.createElement("button");
+      inventoryButton.id = "inventory-button";
+      inventoryButton.className = "settings-button";
+      inventoryButton.addEventListener("click", () => {
+        this.parent.inventory.toggleInventory();
+      });
+      inventoryButton.style.position = "absolute";
+      inventoryButton.style.right = "70px";
+      let inventoryImage = document.createElement("img");
+      inventoryImage.className = "settings-image";
+      inventoryImage.src = "/img/inventory.png";
+      inventoryImage.alt = "inventory";
+      inventoryButton.appendChild(inventoryImage);
+      inventoryButton.style.maxWidth = "50px"; // workaround for mobile css bug I didn't want to track down
+
+      worldSelector.appendChild(inventoryButton);
     }
     // add the settings button
     let settingsButton = document.createElement("button");

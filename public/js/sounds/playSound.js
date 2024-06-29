@@ -30,6 +30,8 @@ const effects = {
   selectLevel: "./js/sounds/level/selectLevel.mp3",
 };
 
+const unlimitedSounds = ["coin", "win", "error", "placeBlock", "removeBlock", "rotateBlock", "selectBlock", "selectLevel"];
+
 async function loadSound(url) {
   try {
     const response = await fetch(url);
@@ -67,7 +69,9 @@ soundGainNode.connect(audioContext.destination);
 function playSound(name) {
     // if the sound is already playing x times, don't play it again
     if (playingSounds[name] >= 2) {
+      if (!unlimitedSounds.includes(name)){
         return;
+      }
     }
     // add the sound to the playingSounds object
     playingSounds[name] = (playingSounds[name] || 0) + 1;

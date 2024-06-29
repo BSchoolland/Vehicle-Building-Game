@@ -104,7 +104,6 @@
   "reward": {
     "BasicWoodenBlock": 3,
     "SpikeBlock": 2,
-    "WheelBlock": 1,
-    "Coins": 3
+    "WheelBlock": 1
   }
 }

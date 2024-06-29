@@ -100,5 +100,11 @@
     }
   ],
   "tutorialText": "",
-  "title": "The horde"
+  "title": "The horde",
+  "reward": {
+    "BasicWoodenBlock": 3,
+    "SpikeBlock": 2,
+    "WheelBlock": 1,
+    "Coins": 3
+  }
 }

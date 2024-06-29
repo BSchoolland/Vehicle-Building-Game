@@ -73,5 +73,10 @@
     }
   ],
   "tutorialText": "",
-  "title": "There and back again"
+  "title": "There and back again",
+  "reward": {
+    "BasicWoodenBlock": 1,
+    "WheelBlock": 1,
+    "Coins": 3
+  }
 }

@@ -82,5 +82,10 @@
   ],
 
   "tutorialText": "Build a car with wheels and a seat, then press 'b' to begin. Use 'a' and 'd' to collect the coins!",
-  "title": "The Beginning"
+  "title": "The Beginning",
+  "reward": {
+    "BasicWoodenBlock": 1,
+    "WheelBlock": 1,
+    "Coins": 3
+  }
 }

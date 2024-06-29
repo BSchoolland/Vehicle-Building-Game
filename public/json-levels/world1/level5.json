@@ -105,5 +105,10 @@
     }
   ],
   "tutorialText": "",
-  "title": "High Ground"
+  "title": "High Ground",
+  "reward": {
+    "BasicWoodenBlock": 2,
+    "SpikeBlock": 1,
+    "Coins": 3
+  }
 }

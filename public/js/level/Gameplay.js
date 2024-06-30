@@ -128,6 +128,16 @@ class Gameplay {
     // if the player has completed the level before, they are able to achieve bonus objectives
     if (this.parent.LevelHandler.isLevelCompleted(world, level)) {
       checkBonusObjectives(this);
+    } else if (typeof this.reward === "string") {
+      // split unlocksWorld to get the number of the world to unlock
+      let unlocksWorld = parseInt(this.reward.split("unlocksWorld")[0]);
+      
+      displayObjective("First win", 1);
+      // update the player's local storage to show that the level has been completed
+      this.parent.LevelHandler.completeLevel(
+        this.parent.worldSelected,
+        this.parent.LevelHandler.getLevelIndex() + 1
+      );
     } else {
       // add each reward to the player's resources
       for (let key in this.reward) {

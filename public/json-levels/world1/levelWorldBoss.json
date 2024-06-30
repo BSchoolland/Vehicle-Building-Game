@@ -156,8 +156,37 @@
     { "name": "Survive", "value": 0 }
   ],
   "buildingBlockTypes": "collected1",
+  "maxBlocks": 
+    [
+      {
+          "name": "Basic Wooden Block",
+          "key": "1",
+          "type": "BasicWoodenBlock",
+          "limit": 14
+      },
+      {
+          "name": "Wheel Block",
+          "key": "2",
+          "type": "WheelBlock",
+          "limit": 10
+      },
+      {
+          "name": "Seat Block",
+          "key": "3",
+          "type": "SeatBlock",
+          "limit": 1
+      },
+      {
+          "name": "Spike Block",
+          "key": "4",
+          "type": "SpikeBlock",
+          "limit": 6
+      }
+    ],
+  
   "bonusChallenges": [],
-  "tutorialText": "Defeat the boss using the blocks you've collected!  If you're having trouble, try going back to previous levels to collect more parts.",
+  "tutorialText": "The spike boss stands between you and world 2. Collect enough blocks in previous levels to build a vehicle that can defeat it!",
+  "importantTutorialText": "This level uses the parts from your inventory! If you have trouble, try collecting more by beating more levels or completing bonus objectives!",
   "title": "Spike Boss",
   "reward": "unlockWorld2"
 }

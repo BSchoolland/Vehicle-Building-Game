@@ -79,7 +79,7 @@ class ResourceHandler {
                 for (let i = 0; i < count; i++) {
                     // wait random between 0 and 1 seconds
                     setTimeout(() => {
-                        this.collectionAnimation(blockName);   
+                        this.collectionAnimation(blockName, inventory);   
                     }, Math.random() * 1000); 
                 }
                 clearInterval(interval);
@@ -87,7 +87,7 @@ class ResourceHandler {
         }, 100);
 
     }
-    collectionAnimation(blockName) {
+    collectionAnimation(blockName,  to = null, from='auto', fromRandom = 200, toRandom = 0) {
         // Create the resource element
         let resource = document.createElement("div");
         resource.classList.add("resource");
@@ -104,19 +104,31 @@ class ResourceHandler {
         document.body.appendChild(resource);
     
         // Get the position of the resource and the inventory button
-        let inventory = document.getElementById("inventory-button");
+        let inventory = to || document.getElementById("inventory-button");
         let inventoryRect = inventory.getBoundingClientRect();
-    
+        
+        // random offset for the to position
+        let randomOffsetXto = (Math.random() - 0.5) * toRandom; 
+        let randomOffsetYto = (Math.random() - 0.5) * toRandom; 
         // Calculate the end position
-        let endX = inventoryRect.x + inventoryRect.width / 2;
-        let endY = inventoryRect.y + inventoryRect.height / 2;
+        let endX = inventoryRect.x + inventoryRect.width / 2 + randomOffsetXto;
+        let endY = inventoryRect.y + inventoryRect.height / 2 + randomOffsetYto;
     
         // Calculate the distance to move per frame
         let frames = 100;
-        let randomOffsetX = (Math.random() - 0.5) * 200; // Random offset between -100 and 100
-        let randomOffsetY = (Math.random() - 0.5) * 200; // Random offset between -100 and 100
-        let startX = window.innerWidth / 2 + randomOffsetX;
-        let startY = window.innerHeight / 2 + randomOffsetY;
+        let randomOffsetX = (Math.random() - 0.5) * fromRandom; 
+        let randomOffsetY = (Math.random() - 0.5) * fromRandom; 
+        let startX, startY;
+        if (from === 'auto'){
+            startX = window.innerWidth / 2 + randomOffsetX;
+            startY = window.innerHeight / 2 + randomOffsetY;
+        } else {
+            // start from the hitbox of the block
+            let block = from;
+            let blockRect = block.getBoundingClientRect();
+            startX = blockRect.x + blockRect.width / 2 + randomOffsetX;
+            startY = blockRect.y + blockRect.height / 2 + randomOffsetY;
+        }
         let totalDx = endX - startX;
         let totalDy = endY - startY;
     
@@ -163,7 +175,23 @@ class ResourceHandler {
         }
         return inventory;
     }
-    
+    bossAnimation(target, worldNum) {
+        // animate sending the resources to the boss level (target)
+        // Create the resource element
+        let inventory = document.getElementById("inventory-button");
+        for (let key in this.resources[worldNum]) {
+            // ignore coins
+            if (key === "Coins") continue;
+            let count = this.resources[worldNum][key];
+            for (let i = 0; i < count; i++) {
+                // wait random between 0 and 1 seconds
+                setTimeout(() => {
+                    this.collectionAnimation(key, target, inventory, 50, 200);   
+                }, Math.random() * 1000); 
+            }
+            
+        }
+    }
     
 }
 

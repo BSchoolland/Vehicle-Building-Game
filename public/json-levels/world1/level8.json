@@ -703,6 +703,7 @@
     "tutorialText": "",
     "reward": {
         "BasicWoodenBlock": 1,
-        "SpikeBlock": 2
+        "SpikeBlock": 1,
+        "Coins": 2
       }
 }

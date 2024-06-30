@@ -346,7 +346,7 @@ class LevelUI {
     }
   }
 
-  createLevelSelectButton(levelSelector, i) {
+  createLevelSelectButton(levelSelector, i, boss = false) {
     let box = document.createElement("div");
     box.className = "level-select-box";
     box.style.position = "relative";
@@ -367,11 +367,7 @@ class LevelUI {
     image.className = "level-select-image";
     image.src = `../../img/levelImages/world${this.parent.worldSelected}/level${i + 1}.png`;
     imageContainer.appendChild(image);
-    // image.addEventListener("click", () => {
-    //   this.createBackArrow();
-    //   this.parent.LevelLoader.load(i);
-    //   levelSelector.remove();
-    // });
+
     box.appendChild(imageContainer);
     box.appendChild(this.createMedalIcons(levelSelector, i, box));
     let levelNumber = document.createElement("p");
@@ -381,10 +377,23 @@ class LevelUI {
     box.appendChild(levelNumber);
     // when the box is clicked, load the level
     box.addEventListener("click", () => {
-      this.createBackArrow();
-      // create the back arrow
-      this.parent.LevelLoader.load(i);
-      levelSelector.remove();
+      // if it's a boss level, load the boss level
+      if (boss) {
+        console.log("loading boss level");
+        this.parent.building.ResourceHandler.bossAnimation(box, this.parent.worldSelected)
+        setTimeout(() => {
+          this.createBackArrow();
+          // create the back arrow
+          this.parent.LevelLoader.load(i);
+          levelSelector.remove();
+        }, 2500);
+      } else {
+        this.createBackArrow();
+        // create the back arrow
+        this.parent.LevelLoader.load(i);
+        levelSelector.remove();
+      }
+      
     });
     // add the box to the element with the id level-container
     document.getElementById("level-container").appendChild(box);
@@ -438,6 +447,7 @@ class LevelUI {
       worldSelector.appendChild(worldTitle);
       // use the forward arrow function to create the forward arrow
       this.createForwardArrow(levelSelector, worldSelector, worldCount);
+
       // add a button to open player inventory
       let inventoryButton = document.createElement("button");
       inventoryButton.id = "inventory-button";
@@ -505,7 +515,13 @@ class LevelUI {
       this.parent.worldSelected
     );
     for (let i = 0; i < count; i++) {
-      this.createLevelSelectButton(levelSelector, i);
+      // if it's the last one, make it a boss level
+      if (i === count - 1) {
+        this.createLevelSelectButton(levelSelector, i, true);
+      }
+      else {
+        this.createLevelSelectButton(levelSelector, i);
+      }
     }
     
   }

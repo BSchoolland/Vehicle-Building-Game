@@ -110,7 +110,6 @@
   "title": "Clash of Spikes",
   "reward": {
     "BasicWoodenBlock": 1,
-    "SpikeBlock": 1,
     "WheelBlock": 1,
     "Coins": 3
   }

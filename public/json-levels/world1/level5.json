@@ -107,7 +107,7 @@
   "tutorialText": "",
   "title": "High Ground",
   "reward": {
-    "BasicWoodenBlock": 2,
+    "BasicWoodenBlock": 1,
     "SpikeBlock": 1,
     "Coins": 3
   }

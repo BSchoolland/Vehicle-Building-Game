@@ -699,6 +699,13 @@
             "limit": 4
         }
     ],
+    "bonusChallenges": [
+    {
+      "name": "No Wheels",
+      "description": "Complete the level without using any wheels.",
+      "value": 0
+    }
+  ],
     "title": "surrounded",
     "tutorialText": "",
     "reward": {

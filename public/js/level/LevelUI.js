@@ -333,13 +333,9 @@ class LevelUI {
       // if the message is clicked, start the boss level
       lockMessage.addEventListener("click", () => {
         let box = document.querySelector(".level-select-box:last-child");
-        this.parent.building.ResourceHandler.bossAnimation(box, this.parent.worldSelected)
-        setTimeout(() => {
-          this.createBackArrow();
-          // create the back arrow
-          this.parent.LevelLoader.load(lastLevel - 1);
-          levelSelector.remove();
-        }, 2500);
+        // scroll to the last level and click it
+        box.scrollIntoView({ behavior: 'smooth' });
+        box.click();
       });
     }
 
@@ -363,15 +359,10 @@ class LevelUI {
         this.updateArrowState(forwardArrow, worldCount);
       } else {
         // if the last level has not been completed, start the last level as a boss level        
-        console.log("loading boss level");
         let box = document.querySelector(".level-select-box:last-child");
-        this.parent.building.ResourceHandler.bossAnimation(box, this.parent.worldSelected)
-        setTimeout(() => {
-          this.createBackArrow();
-          // create the back arrow
-          this.parent.LevelLoader.load(lastLevel - 1);
-          levelSelector.remove();
-        }, 2500);
+        // scroll to the last level and click it
+        box.scrollIntoView({ behavior: 'smooth' });
+        box.click();
 
       }
      

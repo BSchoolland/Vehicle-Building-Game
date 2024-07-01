@@ -207,8 +207,12 @@ closeSettings.addEventListener("click", () => {
 // watch for the "music" slider to change
 let musicSlider = document.getElementById("music-slider");
 // set the music slider to the current volume in local storage
-musicSlider.value = localStorage.getItem("musicVolume") * musicSlider.max || 0.5 * musicSlider.max;
-musicSlider.addEventListener("input", () => {
+try {
+  musicSlider.value = parseFloat(localStorage.getItem("musicVolume")) * musicSlider.max
+}
+catch {
+  musicSlider.value = 0.5 * musicSlider.max;
+}musicSlider.addEventListener("input", () => {
   let volume = musicSlider.value / musicSlider.max;
   console.log("Music volume:", volume);
   // set the volume of the music
@@ -217,7 +221,11 @@ musicSlider.addEventListener("input", () => {
 // watch for the "sound" slider to change
 let soundSlider = document.getElementById("sound-slider");
 // set the sound slider to the current volume in local storage
-soundSlider.value = localStorage.getItem("soundEffectVolume") * soundSlider.max || 0.5 * soundSlider.max;
+try {
+  soundSlider.value = parseFloat(localStorage.getItem("soundEffectVolume")) * soundSlider.max;
+} catch {
+  soundSlider.value = 0.5 * soundSlider.max;
+}
 soundSlider.addEventListener("input", () => {
   let volume = soundSlider.value / soundSlider.max;
   console.log("Sound volume:", volume);

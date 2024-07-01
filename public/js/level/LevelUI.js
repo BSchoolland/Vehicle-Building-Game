@@ -10,7 +10,7 @@ const worldGradients = [
   "linear-gradient(0deg, rgba(162,97,113,1) -35%, rgba(64,101,148,1) 59%, rgba(44,38,88,1) 125%)",
 ];
 
-// a class for managing medals players earn for completing levels or bunus challenges
+// a class for managing medals players earn for completing levels or bonus challenges
 class Medal {
   constructor(name, value, description, parent, levelNum) {
     this.name = name;

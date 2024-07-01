@@ -365,8 +365,6 @@ class LevelUI {
         box.click();
 
       }
-     
-      
     });
     
     this.updateArrowState(forwardArrow, worldCount);
@@ -405,7 +403,11 @@ class LevelUI {
 
   createLevelSelectButton(levelSelector, i, boss = false) {
     let box = document.createElement("div");
-    box.className = "level-select-box";
+    if (boss) {
+      box.className = "level-select-box boss";
+    } else {
+      box.className = "level-select-box";
+    }
     box.style.position = "relative";
 
     // add the level's title

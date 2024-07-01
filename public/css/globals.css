@@ -653,6 +653,22 @@ a {
   cursor: pointer;
 }
 
+.level-select-box.boss {
+  background-color: red;
+}
+
+.level-select-box-boss {
+  width: 23%;
+  margin: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #2b5572;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
 .level-select-box:hover {
   transform: scale(1.1);
   transition: transform 0.5s;
@@ -951,12 +967,10 @@ a {
 
 #inventory-list {
   display: grid;
-  grid-auto-flow: column; /* Ensures items are laid out horizontally */
-  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* Adjusts columns to fill available space */
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* Creates a responsive grid with square items at least 50px wide */
   gap: 10px; /* Adjust the gap between items */
   list-style-type: none; /* Removes default list styling */
   padding: 0; /* Removes default padding */
-  overflow-x: wrap;
 }
 
 #inventory-list li {

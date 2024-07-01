@@ -305,12 +305,7 @@ class LevelUI {
     let lastLevel = this.parent.LevelHandler.getLevelCount(
       this.parent.worldSelected
     );
-    if (
-      this.parent.LevelHandler.isLevelCompleted(
-        this.parent.worldSelected,
-        lastLevel
-      )
-    ) {
+    if (this.parent.LevelHandler.isLevelCompleted(this.parent.worldSelected, lastLevel) || override) {
       forwardImg.style.transform = "rotate(180deg)";
 
       forwardArrow.appendChild(forwardImg);
@@ -344,13 +339,7 @@ class LevelUI {
       let lastLevel = this.parent.LevelHandler.getLevelCount(
         this.parent.worldSelected
       );
-      if (
-        this.parent.LevelHandler.isLevelCompleted(
-          this.parent.worldSelected,
-          lastLevel
-        )
-      ) {
-
+      if (this.parent.LevelHandler.isLevelCompleted(this.parent.worldSelected, lastLevel)) {
         // if the last level has been completed, move to the next world
         levelSelector.remove();
 

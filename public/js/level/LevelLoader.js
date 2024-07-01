@@ -389,6 +389,7 @@ class LevelLoader {
           // if the percentage is less than 50, send a strong warning
           if (percentage < 50) {
             this.parent.LevelUI.dialogBox(
+              `STOP!`,
               `You have not collected nearly enough blocks to even stand a chance against the boss. Try completing some earlier levels to get more blocks!`,
               "Continue anyway", 
               'Go back',
@@ -399,7 +400,8 @@ class LevelLoader {
             );
           } else if (percentage < 100) {
             this.parent.LevelUI.dialogBox(
-              `You may not have enough blocks to complete this level. Try going back and completing some levels or bonus objectives to get more blocks!`,
+              `Careful`,
+              `You may not have enough blocks to defeat the boss. Try going back and completing some levels or bonus objectives to get more blocks!`,
               "Continue",
               'Go back',
               () => {
@@ -409,6 +411,7 @@ class LevelLoader {
             );
           } else {
             this.parent.LevelUI.dialogBox(
+              `Boss Level`,
               `This level uses the blocks you've collected so far. Good luck!`,
               'Okay'
             );

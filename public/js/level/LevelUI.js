@@ -622,7 +622,7 @@ class LevelUI {
     console.log("game over");
   }
 
-  dialogBox(message, confirm, cancel = null, cancelFunction = null) {
+  dialogBox(title, message, confirm, cancel = null, cancelFunction = null) {
     console.log('message:', message);
     // Create backdrop
     let backdrop = document.createElement("div");
@@ -632,22 +632,34 @@ class LevelUI {
     // Create dialog box
     let dialogBox = document.createElement("div");
     dialogBox.classList.add("dialog-box");
+    // create the title
+    let dialogTitle = document.createElement("h2");
+    dialogTitle.innerText = title;
+    dialogBox.appendChild(dialogTitle);
+    // create the message
     let dialogText = document.createElement("p");
     dialogText.innerText = message;
     dialogBox.appendChild(dialogText);
 
+    // a button container
+    let buttonContainer = document.createElement("div");
+    buttonContainer.className = "dialog-box-button-container";
     // Confirm button
     let confirmButton = document.createElement("button");
+    if (!cancel) {
+      confirmButton.className = "preferred";
+    }
     confirmButton.innerText = confirm;
     confirmButton.addEventListener("click", () => {
       backdrop.remove(); // Remove backdrop
       dialogBox.remove();
     });
-    dialogBox.appendChild(confirmButton);
+    buttonContainer.appendChild(confirmButton);
 
     // Cancel button (optional)
     if (cancel) {
       let cancelButton = document.createElement("button");
+      cancelButton.className = "preferred";
       cancelButton.innerText = cancel;
       cancelButton.addEventListener("click", () => {
         backdrop.remove(); // Remove backdrop
@@ -656,8 +668,10 @@ class LevelUI {
           cancelFunction(); // call the cancel function
         }
       });
-      dialogBox.appendChild(cancelButton);
+      buttonContainer.appendChild(cancelButton);
     }
+
+    dialogBox.appendChild(buttonContainer);
 
     document.body.appendChild(dialogBox);
 

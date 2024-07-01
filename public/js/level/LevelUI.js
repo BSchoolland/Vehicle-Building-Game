@@ -17,26 +17,26 @@ function generateInventoryList(images) {
   ul.id = 'inventory-list';
 
   images.forEach(image => {
-      const li = document.createElement('li');
-      
-      const img = document.createElement('img');
-      img.src = image.src;
-      img.alt = 'Image';
-      img.style.width = '50px';
-      img.style.height = '50px';
+    const li = document.createElement('li');
 
-      li.appendChild(img);
+    const img = document.createElement('img');
+    img.src = image.src;
+    img.alt = 'Image';
+    img.style.width = '50px';
+    img.style.height = '50px';
 
-      if (image.number !== 1) {
-          const h3 = document.createElement('h3');
-          h3.style.position = 'absolute';
-          h3.style.zIndex = '200';
-          h3.style.color = image.color || 'black'; // Use the provided color or default to black
-          h3.textContent = `x ${image.number}`;
-          li.appendChild(h3);
-      }
+    li.appendChild(img);
 
-      ul.appendChild(li);
+    if (image.number !== 1) {
+      const h3 = document.createElement('h3');
+      h3.style.position = 'absolute';
+      h3.style.zIndex = '200';
+      h3.style.color = image.color || 'black'; // Use the provided color or default to black
+      h3.textContent = `x ${image.number}`;
+      li.appendChild(h3);
+    }
+
+    ul.appendChild(li);
   });
 
   return ul;
@@ -115,7 +115,7 @@ class Medal {
       }
       // add the description to the medal
       box.appendChild(description);
-      
+
     });
     // if the user moves the mouse off the medal, remove the description
     medal.addEventListener("mouseout", () => {
@@ -300,7 +300,7 @@ class LevelUI {
     forwardArrow.className = "world-arrow";
 
     let forwardImg = document.createElement("img");
-    forwardImg.src = "/img/Arrow.png"; 
+    forwardImg.src = "/img/Arrow.png";
     // rotate the arrow 180 degrees
     let lastLevel = this.parent.LevelHandler.getLevelCount(
       this.parent.worldSelected
@@ -308,7 +308,7 @@ class LevelUI {
     if (
       this.parent.LevelHandler.isLevelCompleted(
         this.parent.worldSelected,
-        lastLevel 
+        lastLevel
       )
     ) {
       forwardImg.style.transform = "rotate(180deg)";
@@ -347,7 +347,7 @@ class LevelUI {
       if (
         this.parent.LevelHandler.isLevelCompleted(
           this.parent.worldSelected,
-          lastLevel 
+          lastLevel
         )
       ) {
 
@@ -366,7 +366,7 @@ class LevelUI {
 
       }
     });
-    
+
     this.updateArrowState(forwardArrow, worldCount);
   }
 
@@ -375,7 +375,7 @@ class LevelUI {
     backwardArrow.className = "world-arrow";
 
     let backwardImg = document.createElement("img");
-    backwardImg.src = "/img/Arrow.png"; 
+    backwardImg.src = "/img/Arrow.png";
     backwardArrow.appendChild(backwardImg);
 
     backwardArrow.addEventListener("click", () => {
@@ -452,7 +452,7 @@ class LevelUI {
         this.parent.LevelLoader.load(i);
         levelSelector.remove();
       }
-      
+
     });
     // add the box to the element with the id level-container
     document.getElementById("level-container").appendChild(box);
@@ -494,7 +494,7 @@ class LevelUI {
     });
     worldSelector.appendChild(returnArrow);
     if (!this.isSandbox) {
-      
+
       // add a button for each world
       let worldCount = this.parent.LevelHandler.getWorldCount();
 
@@ -547,7 +547,7 @@ class LevelUI {
     settingsImage.src = "/img/settings.png";
     settingsImage.alt = "settings";
     settingsButton.appendChild(settingsImage);
-    
+
     // this is a temporary (who am I kidding it will probably stay) solution to the settings button
     // works very similarly to the settings button on the index page, but changed to work with this settings button that does not always exist
     settingsButton.addEventListener("click", () => {
@@ -569,7 +569,7 @@ class LevelUI {
       this.parent.worldSelected = 5; // this is not ideal, but it works
       // currently, the sandbox is the last world, adding more worlds will break this
     }
-      
+
     let count = this.parent.LevelHandler.getLevelCount(
       this.parent.worldSelected
     );
@@ -582,11 +582,11 @@ class LevelUI {
         this.createLevelSelectButton(levelSelector, i);
       }
     }
-    
+
   }
   gameOver() {
     let gameOver = document.createElement("div");
-    gameOver.classList.add("toast-game-over"); 
+    gameOver.classList.add("toast-game-over");
     gameOver.innerText = "Click to return to build mode";
     // define the listener as a named function
     const clickListener = () => {
@@ -620,6 +620,62 @@ class LevelUI {
     // add the game over message to the body so it's on top of everything
     document.body.appendChild(gameOver);
     console.log("game over");
+  }
+
+  dialogBox(message, confirm, cancel = null, cancelFunction = null) {
+    console.log('message:', message);
+    // Create backdrop
+    let backdrop = document.createElement("div");
+    backdrop.classList.add("backdrop");
+    document.body.appendChild(backdrop);
+
+    // Create dialog box
+    let dialogBox = document.createElement("div");
+    dialogBox.classList.add("dialog-box");
+    let dialogText = document.createElement("p");
+    dialogText.innerText = message;
+    dialogBox.appendChild(dialogText);
+
+    // Confirm button
+    let confirmButton = document.createElement("button");
+    confirmButton.innerText = confirm;
+    confirmButton.addEventListener("click", () => {
+      backdrop.remove(); // Remove backdrop
+      dialogBox.remove();
+    });
+    dialogBox.appendChild(confirmButton);
+
+    // Cancel button (optional)
+    if (cancel) {
+      let cancelButton = document.createElement("button");
+      cancelButton.innerText = cancel;
+      cancelButton.addEventListener("click", () => {
+        backdrop.remove(); // Remove backdrop
+        dialogBox.remove();
+        if (cancelFunction) {
+          cancelFunction(); // call the cancel function
+        }
+      });
+      dialogBox.appendChild(cancelButton);
+    }
+
+    document.body.appendChild(dialogBox);
+
+    // Center dialog box
+    dialogBox.style.position = "fixed";
+    dialogBox.style.top = "50%";
+    dialogBox.style.left = "50%";
+    dialogBox.style.transform = "translate(-50%, -50%)";
+    dialogBox.style.zIndex = "1001"; // Ensure it's above the backdrop
+
+    // Style backdrop
+    backdrop.style.position = "fixed";
+    backdrop.style.top = "0";
+    backdrop.style.left = "0";
+    backdrop.style.width = "100%";
+    backdrop.style.height = "100%";
+    backdrop.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Semi-transparent black
+    backdrop.style.zIndex = "1000"; // Ensure it's below the dialog box
   }
 }
 

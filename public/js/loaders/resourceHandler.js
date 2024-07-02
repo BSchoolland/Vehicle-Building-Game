@@ -1,5 +1,6 @@
 // handles recording and loading player resources from local storage
-// FIXME: integrate teh crazy games SDK for storing resources to player accounts instead of just local storage
+// FIXME: integrate the crazy games SDK for storing resources to player accounts instead of just local storage
+// FIXME: sync the resources with the player's account on the server
 import { playSound, setSong } from "../sounds/playSound.js";
 const worldCount = 4; // FIXME: this should be dynamic based on the number of worlds in the game
 // each world has its own set of obtainable resources
@@ -15,12 +16,26 @@ const resourceImages = {
     "Coins": "coin.png"
 }
 
+function checkUserCookie() {
+    // Split document.cookie into an array of cookies
+    const cookies = document.cookie.split(';');
+    // Look for a cookie named "user"
+    const userCookie = cookies.find(cookie => cookie.trim().startsWith('user='));
+    // Check if the "user" cookie was found
+    if (userCookie) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 class ResourceHandler {
     constructor() {
         this.resources = {};
     }
     async init() {
         await this.loadResources();
+        await this.syncResources(1);
     }
     async loadResources() {
         for (let i = 1; i <= worldCount; i++) {
@@ -28,14 +43,34 @@ class ResourceHandler {
         }
     }
     async loadWorldResources(worldNum) {
-        if (localStorage.getItem(`world${worldNum}Resources`)) {
+        
+        if (checkUserCookie()) {
+            // sync the resources with the server
+
+            // fetch the resources from the server
+            let response = await fetch(`/api/getResources?world=${worldNum}`);
+            let resources = await response.json();
+            console.log('resources', resources);
+            if (!resources) {
+                // if the user has no resources, create a new resource object with only a seat and a wheel
+                resources = {
+                    SeatBlock: 1,
+                    WheelBlock: 1
+                };
+            }
+            // save the resources to local storage
+            localStorage.setItem(`world${worldNum}Resources`, JSON.stringify(resources));
+            return resources;
+        } else if (localStorage.getItem(`world${worldNum}Resources`)) {
             return JSON.parse(localStorage.getItem(`world${worldNum}Resources`));
-        } else {
+        } // if the user is logged in with a cookie
+        else {
             // create a new resource object with only a seat and a wheel
             let resources = {
                 SeatBlock: 1,
                 WheelBlock: 1
             };
+            
             // save this to local storage
             localStorage.setItem(`world${worldNum}Resources`, JSON.stringify(resources));
             return resources;
@@ -87,6 +122,40 @@ class ResourceHandler {
         }, 100);
 
     }
+
+    async syncResources(worldNum) {
+        if (checkUserCookie()) {
+            // get resources from local storage
+            let resources = JSON.parse(localStorage.getItem(`world${worldNum}Resources`));
+            // get resources from the server
+            let response = await fetch(`/api/getResources?world=${worldNum}`);
+            let serverResources = await response.json();
+            // compare the resources, and always give the player the benefit of the doubt
+            let combinedResources = {}
+            for (let key in resources) {
+                if (resources[key] > serverResources[key]) {
+                    combinedResources[key] = resources[key];
+                } else {
+                    combinedResources[key] = serverResources[key];
+                }
+            }
+            // send a post request to the server with the new resources
+            fetch('/api/updateResources', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    world: worldNum,
+                    resources: resources
+                })
+            });
+        }
+        else {
+            console.log("User not logged in, cannot sync resources");
+        }
+    }
+
     collectionAnimation(blockName,  to = null, from='auto', fromRandom = 200, toRandom = 0) {
         // Create the resource element
         let resource = document.createElement("div");

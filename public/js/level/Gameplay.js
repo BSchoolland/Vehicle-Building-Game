@@ -221,6 +221,8 @@ class Gameplay {
       document.getElementById("stats").style.display = "none";
       // set the survival time to 0
       this.secondsSurvived = 0;
+      // sync resources with the server
+      this.parent.building.ResourceHandler.syncResources(this.parent.worldSelected);
     }, 3000);
   }
   update() {

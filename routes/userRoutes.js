@@ -91,6 +91,102 @@ router.post("/api/beat-level", (req, res) => {
   }
 });
 
+// api for getting the resources for a world
+router.get("/api/getResources", (req, res) => {
+  try {
+    // get the world number from the query
+    const world = req.query.world;
+    // get the user's cookie
+    const userCookie = req.cookies.user;
+    // if the user is not logged in, send them a default set of resources
+    if (!userCookie) {
+      res.status(200).send({
+        SeatBlock: 1,
+        WheelBlock: 1,
+      });
+      console.warn("User not logged in");
+      return;
+    }
+    // get the user's id from the cookie
+    const userId = getUserIdFromCookie(userCookie);
+    // create the sql query to get the user's resources
+    const sql = `SELECT * FROM resources WHERE user_id = ? AND world = ?`;
+    db.get(sql, [userId, world], (err, row) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      // if the user has no resources, send them a default set
+      if (!row) {
+        res.status(200).send({
+          SeatBlock: 1,
+          WheelBlock: 1,
+        });
+        return;
+      }
+      // send the user their resources
+      res.status(200).send(row.resources);
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Error getting resources");
+  }
+});
+
+// api for updating the user's resources
+router.post("/api/updateResources", (req, res) => {
+  console.log("Updating resources");
+  try {
+    // get the world number from the query
+    const world = req.body.world;
+    console.log("World:", world);
+    // get the user's cookie
+    const userCookie = req.cookies.user;
+    // if the user is not logged in, tell the client
+    if (!userCookie) {
+      res.status(401).send("User not logged in");
+      console.warn("User not logged in");
+      return;
+    }
+    console.log("User cookie:", userCookie);
+    // get the user's id from the cookie
+    const userId = getUserIdFromCookie(userCookie);
+    // get the resources and convert them to a string
+    const resources = JSON.stringify(req.body.resources);
+    // First, check if the user's resources already exist
+const checkSql = `SELECT COUNT(*) AS count FROM resources WHERE user_id = ? AND world = ?`;
+db.get(checkSql, [userId, world], (err, row) => {
+  if (err) {
+    return console.error(err.message);
+  }
+  if (row.count > 0) {
+    // If resources exist, update them
+    const updateSql = `UPDATE resources SET resources = ? WHERE user_id = ? AND world = ?`;
+    db.run(updateSql, [resources, userId, world], (updateErr) => {
+      if (updateErr) {
+        return console.error(updateErr.message);
+      }
+      res.status(200).send("Resources updated");
+      console.log("Resources updated");
+
+    });
+  } else {
+    // If resources do not exist, create them
+    const insertSql = `INSERT INTO resources (resources, user_id, world) VALUES (?, ?, ?)`;
+    db.run(insertSql, [resources, userId, world], (insertErr) => {
+      if (insertErr) {
+        return console.error(insertErr.message);
+      }
+      res.status(201).send("Resources created");
+      console.log("Resources created");
+    });
+  }
+});
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Error updating resources");
+  }
+});
+
 router.get("/api/getLevelsBeat", (req, res) => {
   try {
     // get the user's cookie

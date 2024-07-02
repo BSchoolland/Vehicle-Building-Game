@@ -32,6 +32,13 @@ db.serialize(() => {
     FOREIGN KEY (user_id) REFERENCES users(id)
   );
 `)
+    db.run(`CREATE TABLE IF NOT EXISTS resources (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    world INTEGER NOT NULL,
+    resources TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  );`);
   
 });
 

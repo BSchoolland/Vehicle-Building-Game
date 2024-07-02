@@ -3,7 +3,7 @@ const path = require('path');
 const userRoutes = require('./routes/userRoutes'); // Import your routes
 const fs = require('fs');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 // environment variables
 require("dotenv").config();

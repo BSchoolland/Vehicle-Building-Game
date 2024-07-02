@@ -63,7 +63,15 @@ Promise.all(
 let playingSounds = {}; // track the sounds that are currently playing, so that the same sound can't be played twice at the same time
 
 const soundGainNode = audioContext.createGain();
-soundGainNode.gain.value = localStorage.getItem("soundEffectVolume") / 2 || 0.25;
+try {
+  soundGainNode.gain.value = parseFloat(localStorage.getItem("soundEffectVolume")) / 2;
+} catch
+{
+  soundGainNode.gain.value = 0.25;
+  // create a new item in local storage
+  localStorage.setItem("soundEffectVolume", 0.5);
+
+}
 soundGainNode.connect(audioContext.destination);
 
 function playSound(name) {
@@ -111,7 +119,14 @@ function playSound(name) {
 
 let currentSong = null;
 const musicGainNode = audioContext.createGain();
-musicGainNode.gain.value = localStorage.getItem("musicVolume") || 0.5;
+try {
+  musicGainNode.gain.value = parseFloat(localStorage.getItem("musicVolume"))
+}
+catch {
+  musicGainNode.gain.value = 0.5;
+  // create a new item in local storage
+  localStorage.setItem("musicVolume", 0.5);
+}
 musicGainNode.connect(audioContext.destination);
 
 function setSong(songName) {

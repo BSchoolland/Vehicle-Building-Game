@@ -43,7 +43,7 @@ function generateInventoryList(images) {
   return ul;
 }
 
-// a class for managing medals players earn for completing levels or bunus challenges
+// a class for managing medals players earn for completing levels or bonus challenges
 class Medal {
   constructor(name, value, description, parent, levelNum) {
     this.name = name;

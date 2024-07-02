@@ -47,7 +47,8 @@ class Block {
     this.flameDuration = 0; // the time the block will be on fire for
     this.flameDamage = 0; // the damage the block will take per second while on fire
 
-    // image for use by the build menu
+    // a flag to tell if the block is deleted (permanent deletion)
+    this.deleted = false;
   }
   getControls() {
     // to be defined in subclasses
@@ -97,6 +98,9 @@ class Block {
   }
 
   addToWorld(world, rotate = true) {
+    if (this.deleted) {
+      return;
+    }
     // make all bodies static
     this.bodies.forEach((body) => {
       Matter.Body.setStatic(body, true);

@@ -653,6 +653,22 @@ a {
   cursor: pointer;
 }
 
+.level-select-box.boss {
+  background-color: red;
+}
+
+.level-select-box-boss {
+  width: 23%;
+  margin: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #2b5572;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
 .level-select-box:hover {
   transform: scale(1.1);
   transition: transform 0.5s;
@@ -947,6 +963,69 @@ a {
 
 .menu-action-button:hover {
   background-color: #1a3a5f;
+}
+
+#inventory-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* Creates a responsive grid with square items at least 50px wide */
+  gap: 10px; /* Adjust the gap between items */
+  list-style-type: none; /* Removes default list styling */
+  padding: 0; /* Removes default padding */
+}
+
+#inventory-list li {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  max-width: 500px;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: rgba(92, 116, 142, 0.8);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+  height: fit-content;
+}
+
+.dialog-box p {
+  font-size: 1.25em;
+  text-align: center;
+}
+
+.dialog-box-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dialog-box button {
+  color: white;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2rem;
+}
+
+.dialog-box button.preferred {
+  background-color: #14273C;
+  font-size: 1.25em;
+  border-radius: 10px;
 }
 
 @media screen and (max-width: 1024px) {

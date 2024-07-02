@@ -23,6 +23,7 @@ class Gameplay {
     this.mustSurvive = 0;
     this.startTime = 0;
     this.baseTimeScale = 1;
+    this.reward = {};
   }
   setBaseTimeScale(baseTimeScale) {
     this.baseTimeScale = baseTimeScale;
@@ -127,7 +128,25 @@ class Gameplay {
     // if the player has completed the level before, they are able to achieve bonus objectives
     if (this.parent.LevelHandler.isLevelCompleted(world, level)) {
       checkBonusObjectives(this);
+    } else if (typeof this.reward === "string") {
+      // split unlocksWorld to get the number of the world to unlock
+      let unlocksWorld = parseInt(this.reward.split("unlocksWorld")[0]);
+      
+      displayObjective("First win", 1);
+      // update the player's local storage to show that the level has been completed
+      this.parent.LevelHandler.completeLevel(
+        this.parent.worldSelected,
+        this.parent.LevelHandler.getLevelIndex() + 1
+      );
     } else {
+      // add each reward to the player's resources
+      for (let key in this.reward) {
+        this.parent.building.ResourceHandler.addBlockToResources(
+          world,
+          key,
+          this.reward[key]
+        );
+      }
       displayObjective("First win", 1);
       // update the player's local storage to show that the level has been completed
       this.parent.LevelHandler.completeLevel(
@@ -154,17 +173,17 @@ class Gameplay {
       ];
       let x =
         this.parent.playerContraption.seat.bodies[0].position.x +
-        Math.random() * 2000 -
-        1000;
-      let y = this.parent.playerContraption.seat.bodies[0].position.y - 500;
+        Math.random() * 4000 -
+        2000;
+      let y = this.parent.playerContraption.seat.bodies[0].position.y - 1000;
       let color =
         confettiColors[Math.floor(Math.random() * confettiColors.length)];
       let confetti = Matter.Bodies.rectangle(x, y, 20, 16, {
         render: { fillStyle: color },
       });
       Matter.Body.setVelocity(confetti, {
-        x: Math.random() * 20 - 10,
-        y: Math.random() * 20 - 10,
+        x: Math.random() * 40 - 20,
+        y: Math.random() * 40 - 20,
       });
       // randomly set the confetti's angular velocity
       Matter.Body.setAngularVelocity(confetti, Math.random() * 0.5 - 0.25);

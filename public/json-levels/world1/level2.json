@@ -103,5 +103,10 @@
     }
   ],
   "tutorialText": "Spikes can damage and destroy enemy contraptions!  If you ever need to remove your own blocks, just right click, it's less painful than spikes.",
-  "title": "Attack!"
+  "title": "Attack!",
+  "reward": {
+    "BasicWoodenBlock": 1,
+    "SpikeBlock": 1,
+    "Coins": 2
+  }
 }

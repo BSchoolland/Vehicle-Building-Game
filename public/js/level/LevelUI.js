@@ -1,5 +1,6 @@
 import { bonusObjectives } from "./bonusObjectives.js";
 
+const override = true; // set to true to override the level completion requirement for the last level
 
 const worldGradients = [
   // world 1, a nice blue
@@ -8,7 +9,39 @@ const worldGradients = [
   "linear-gradient(to bottom, #87CEEB 50%, #FF6347)",
   // world 3, ominous purple
   "linear-gradient(0deg, rgba(162,97,113,1) -35%, rgba(64,101,148,1) 59%, rgba(44,38,88,1) 125%)",
+  // world 4, night sky
+  "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%)",
 ];
+
+function generateInventoryList(images) {
+  const ul = document.createElement('ul');
+  ul.id = 'inventory-list';
+
+  images.forEach(image => {
+    const li = document.createElement('li');
+
+    const img = document.createElement('img');
+    img.src = image.src;
+    img.alt = 'Image';
+    img.style.width = '50px';
+    img.style.height = '50px';
+
+    li.appendChild(img);
+
+    if (image.number !== 1) {
+      const h3 = document.createElement('h3');
+      h3.style.position = 'absolute';
+      h3.style.zIndex = '200';
+      h3.style.color = image.color || 'black'; // Use the provided color or default to black
+      h3.textContent = `x ${image.number}`;
+      li.appendChild(h3);
+    }
+
+    ul.appendChild(li);
+  });
+
+  return ul;
+}
 
 // a class for managing medals players earn for completing levels or bonus challenges
 class Medal {
@@ -83,7 +116,7 @@ class Medal {
       }
       // add the description to the medal
       box.appendChild(description);
-      
+
     });
     // if the user moves the mouse off the medal, remove the description
     medal.addEventListener("mouseout", () => {
@@ -149,6 +182,11 @@ class LevelUI {
           this.parent.building.camera.doingTour = false;
           this.parent.building.camera.tourCancelled = true;
         }
+        // if we're in view mode, disable it then return to the level selector
+        if (this.parent.building.viewMode) {
+          this.parent.building.buildMenu.buildModeButton.click();
+          this.parent.building.viewMode = false;
+        }
         setTimeout(() => {
           // prevent build mode
           this.parent.building.canEnterBuildMode = false;
@@ -185,7 +223,6 @@ class LevelUI {
       // set the body gradient to the world gradient
       document.body.style.background = worldGradients[i];
       // make sure the gradient is applied to the whole body
-      
     } else {
       button.addEventListener("click", () => {
         levelSelector.remove();
@@ -264,18 +301,62 @@ class LevelUI {
     forwardArrow.className = "world-arrow";
 
     let forwardImg = document.createElement("img");
-    forwardImg.src = "/img/Arrow.png"; 
+    forwardImg.src = "/img/Arrow.png";
     // rotate the arrow 180 degrees
-    forwardImg.style.transform = "rotate(180deg)";
-    forwardArrow.appendChild(forwardImg);
+    let lastLevel = this.parent.LevelHandler.getLevelCount(
+      this.parent.worldSelected
+    );
+    if (this.parent.LevelHandler.isLevelCompleted(this.parent.worldSelected, lastLevel) || override) {
+      forwardImg.style.transform = "rotate(180deg)";
+
+      forwardArrow.appendChild(forwardImg);
+      worldSelector.appendChild(forwardArrow);
+
+    }
+    else {
+      // show the lock icon if the last level has not been completed
+      let lock = document.createElement("img");
+      lock.src = "/img/lock.png";
+      lock.className = "lock-icon";
+      forwardArrow.appendChild(lock);
+      worldSelector.appendChild(forwardArrow);
+      // add a message explaining that the next world is locked until the last level is completed
+      let lockMessage = document.createElement("p");
+      lockMessage.style.cursor = "pointer";
+      lockMessage.style.maxWidth = "200px";
+      lockMessage.innerHTML = "Defeat the boss to unlock the next world!";
+      worldSelector.appendChild(lockMessage);
+      // if the message is clicked, start the boss level
+      lockMessage.addEventListener("click", () => {
+        let box = document.querySelector(".level-select-box:last-child");
+        // scroll to the last level and click it
+        box.scrollIntoView({ behavior: 'smooth' });
+        box.click();
+      });
+    }
 
     forwardArrow.addEventListener("click", () => {
-      levelSelector.remove();
-      this.parent.worldSelected++;
-      this.loadLevelSelector();
-      this.updateArrowState(forwardArrow, worldCount);
+      // check if the last level in the current world has been completed
+      let lastLevel = this.parent.LevelHandler.getLevelCount(
+        this.parent.worldSelected
+      );
+      if (this.parent.LevelHandler.isLevelCompleted(this.parent.worldSelected, lastLevel) || override) {
+        // if the last level has been completed, move to the next world
+        levelSelector.remove();
+
+        this.parent.worldSelected++;
+        this.loadLevelSelector();
+        this.updateArrowState(forwardArrow, worldCount);
+      } else {
+        // if the last level has not been completed, start the last level as a boss level        
+        let box = document.querySelector(".level-select-box:last-child");
+        // scroll to the last level and click it
+        box.scrollIntoView({ behavior: 'smooth' });
+        box.click();
+
+      }
     });
-    worldSelector.appendChild(forwardArrow);
+
     this.updateArrowState(forwardArrow, worldCount);
   }
 
@@ -284,7 +365,7 @@ class LevelUI {
     backwardArrow.className = "world-arrow";
 
     let backwardImg = document.createElement("img");
-    backwardImg.src = "/img/Arrow.png"; 
+    backwardImg.src = "/img/Arrow.png";
     backwardArrow.appendChild(backwardImg);
 
     backwardArrow.addEventListener("click", () => {
@@ -310,9 +391,13 @@ class LevelUI {
     }
   }
 
-  createLevelSelectButton(levelSelector, i) {
+  createLevelSelectButton(levelSelector, i, boss = false) {
     let box = document.createElement("div");
-    box.className = "level-select-box";
+    if (boss) {
+      box.className = "level-select-box boss";
+    } else {
+      box.className = "level-select-box";
+    }
     box.style.position = "relative";
 
     // add the level's title
@@ -331,11 +416,7 @@ class LevelUI {
     image.className = "level-select-image";
     image.src = `../../img/levelImages/world${this.parent.worldSelected}/level${i + 1}.png`;
     imageContainer.appendChild(image);
-    // image.addEventListener("click", () => {
-    //   this.createBackArrow();
-    //   this.parent.LevelLoader.load(i);
-    //   levelSelector.remove();
-    // });
+
     box.appendChild(imageContainer);
     box.appendChild(this.createMedalIcons(levelSelector, i, box));
     let levelNumber = document.createElement("p");
@@ -345,10 +426,23 @@ class LevelUI {
     box.appendChild(levelNumber);
     // when the box is clicked, load the level
     box.addEventListener("click", () => {
-      this.createBackArrow();
-      // create the back arrow
-      this.parent.LevelLoader.load(i);
-      levelSelector.remove();
+      // if it's a boss level, load the boss level
+      if (boss) {
+        console.log("loading boss level");
+        this.parent.building.ResourceHandler.bossAnimation(box, this.parent.worldSelected)
+        setTimeout(() => {
+          this.createBackArrow();
+          // create the back arrow
+          this.parent.LevelLoader.load(i);
+          levelSelector.remove();
+        }, 2500);
+      } else {
+        this.createBackArrow();
+        // create the back arrow
+        this.parent.LevelLoader.load(i);
+        levelSelector.remove();
+      }
+
     });
     // add the box to the element with the id level-container
     document.getElementById("level-container").appendChild(box);
@@ -390,7 +484,7 @@ class LevelUI {
     });
     worldSelector.appendChild(returnArrow);
     if (!this.isSandbox) {
-      
+
       // add a button for each world
       let worldCount = this.parent.LevelHandler.getWorldCount();
 
@@ -402,8 +496,32 @@ class LevelUI {
       worldSelector.appendChild(worldTitle);
       // use the forward arrow function to create the forward arrow
       this.createForwardArrow(levelSelector, worldSelector, worldCount);
-      
-      
+
+      // add a button to open player inventory
+      let inventoryButton = document.createElement("button");
+      inventoryButton.id = "inventory-button";
+      inventoryButton.className = "settings-button";
+      inventoryButton.addEventListener("click", () => {
+        // create the inventory list
+        let inventoryArray = this.parent.building.ResourceHandler.generateInventoryList(this.parent.worldSelected);
+        let inventoryList = generateInventoryList(inventoryArray);
+        // add the inventory list to the inventory container
+        let inventoryContainer = document.getElementById("inventory-list");
+        inventoryContainer.innerHTML = "";
+        inventoryContainer.appendChild(inventoryList);
+        let InventoryPopup = document.getElementById("inventory-popup");
+        InventoryPopup.classList.remove("hidden");
+      });
+      inventoryButton.style.position = "absolute";
+      inventoryButton.style.right = "70px";
+      let inventoryImage = document.createElement("img");
+      inventoryImage.className = "settings-image";
+      inventoryImage.src = "/img/inventory.png";
+      inventoryImage.alt = "inventory";
+      inventoryButton.appendChild(inventoryImage);
+      inventoryButton.style.maxWidth = "50px"; // workaround for mobile css bug I didn't want to track down
+
+      worldSelector.appendChild(inventoryButton);
     }
     // add the settings button
     let settingsButton = document.createElement("button");
@@ -419,7 +537,7 @@ class LevelUI {
     settingsImage.src = "/img/settings.png";
     settingsImage.alt = "settings";
     settingsButton.appendChild(settingsImage);
-    
+
     // this is a temporary (who am I kidding it will probably stay) solution to the settings button
     // works very similarly to the settings button on the index page, but changed to work with this settings button that does not always exist
     settingsButton.addEventListener("click", () => {
@@ -438,21 +556,27 @@ class LevelUI {
     game.appendChild(levelSelector);
     // add a button for each level
     if (this.isSandbox) {
-      this.parent.worldSelected = 4; // this is not ideal, but it works
+      this.parent.worldSelected = 5; // this is not ideal, but it works
       // currently, the sandbox is the last world, adding more worlds will break this
     }
-      
+
     let count = this.parent.LevelHandler.getLevelCount(
       this.parent.worldSelected
     );
     for (let i = 0; i < count; i++) {
-      this.createLevelSelectButton(levelSelector, i);
+      // if it's the last one, make it a boss level
+      if (i === count - 1) {
+        this.createLevelSelectButton(levelSelector, i, true);
+      }
+      else {
+        this.createLevelSelectButton(levelSelector, i);
+      }
     }
-    
+
   }
   gameOver() {
     let gameOver = document.createElement("div");
-    gameOver.classList.add("toast-game-over"); 
+    gameOver.classList.add("toast-game-over");
     gameOver.innerText = "Click to return to build mode";
     // define the listener as a named function
     const clickListener = () => {
@@ -486,6 +610,76 @@ class LevelUI {
     // add the game over message to the body so it's on top of everything
     document.body.appendChild(gameOver);
     console.log("game over");
+  }
+
+  dialogBox(title, message, confirm, cancel = null, cancelFunction = null) {
+    console.log('message:', message);
+    // Create backdrop
+    let backdrop = document.createElement("div");
+    backdrop.classList.add("backdrop");
+    document.body.appendChild(backdrop);
+
+    // Create dialog box
+    let dialogBox = document.createElement("div");
+    dialogBox.classList.add("dialog-box");
+    // create the title
+    let dialogTitle = document.createElement("h2");
+    dialogTitle.innerText = title;
+    dialogBox.appendChild(dialogTitle);
+    // create the message
+    let dialogText = document.createElement("p");
+    dialogText.innerText = message;
+    dialogBox.appendChild(dialogText);
+
+    // a button container
+    let buttonContainer = document.createElement("div");
+    buttonContainer.className = "dialog-box-button-container";
+    // Confirm button
+    let confirmButton = document.createElement("button");
+    if (!cancel) {
+      confirmButton.className = "preferred";
+    }
+    confirmButton.innerText = confirm;
+    confirmButton.addEventListener("click", () => {
+      backdrop.remove(); // Remove backdrop
+      dialogBox.remove();
+    });
+    buttonContainer.appendChild(confirmButton);
+
+    // Cancel button (optional)
+    if (cancel) {
+      let cancelButton = document.createElement("button");
+      cancelButton.className = "preferred";
+      cancelButton.innerText = cancel;
+      cancelButton.addEventListener("click", () => {
+        backdrop.remove(); // Remove backdrop
+        dialogBox.remove();
+        if (cancelFunction) {
+          cancelFunction(); // call the cancel function
+        }
+      });
+      buttonContainer.appendChild(cancelButton);
+    }
+
+    dialogBox.appendChild(buttonContainer);
+
+    document.body.appendChild(dialogBox);
+
+    // Center dialog box
+    dialogBox.style.position = "fixed";
+    dialogBox.style.top = "50%";
+    dialogBox.style.left = "50%";
+    dialogBox.style.transform = "translate(-50%, -50%)";
+    dialogBox.style.zIndex = "1001"; // Ensure it's above the backdrop
+
+    // Style backdrop
+    backdrop.style.position = "fixed";
+    backdrop.style.top = "0";
+    backdrop.style.left = "0";
+    backdrop.style.width = "100%";
+    backdrop.style.height = "100%";
+    backdrop.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Semi-transparent black
+    backdrop.style.zIndex = "1000"; // Ensure it's below the dialog box
   }
 }
 

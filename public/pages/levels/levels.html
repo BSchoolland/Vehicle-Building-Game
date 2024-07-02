@@ -168,6 +168,31 @@
                 </div>
             </div>
         </div>
+    </div>
+    
+    <!-- an inventory popup (borrows styles from settings) -->
+    <div id="inventory-popup" class="settings-popup hidden">
+        <div class="help-popup-content">
+            <div class="settings-popup-header">
+                <h2 class="settings-title">Inventory</h2>
+                <span class="close" id="close-inventory">&times;</span>
+            </div>
+            <div class="settings-content">
+                <div class="settings-option">
+                    <h2>Collect coins and blocks by beating levels!</h2>
+                    <p>You can use these blocks in the boss fight!</p>
+                </div>
+                <div class="settings-option">
+                    <h2>Blocks:</h2>
+                    <ul id="inventory-list">
+                        <li><img src="img/build-buttons/basic-block.png" alt="Wood" style="width: 50px; height: 50px;"/>
+                        <h4 style="position: absolute; z-index: 200;"
+                        >x 0</h4></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -176,10 +201,7 @@
     <script>
         window.onload = async function() {
         if (window.self === window.top) {
-            // The page is not in an iframe so remove the hidden class from the login button
-            document.getElementById("login").classList.remove("hidden");
-            //  remove the hidden class from the changelog button
-            document.getElementById("changelog").classList.remove("hidden");
+            // the page is not on crazygames
         }
         else {
             // the page is in an iframe (likely on crazygames)

@@ -100,16 +100,27 @@ class RightClickMenu {
 // a build menu class, for the bottom of the screen.
 // the build menu will contain buttons for each block type, a button to save the contraption, a button to load a contraption, a button to clear the contraption, and a button to toggle build mode.
 class BuildMenu {
-  constructor(building, blockTypes = false, enemyEditor = true) {
+  constructor(building, ResourceHandler = null, blockTypes = false, enemyEditor = true) {
     this.building = building;
     // create the build menu
     this.menu = document.createElement("div");
     this.menu.classList.add("menu");
     this.enemyEditor = enemyEditor;
+    this
     // create a button for each block type
     if (blockTypes) {
       this.blockTypes = blockTypes;
-      // for each "type" replace the string with the actual class
+      // if the block types is a single string, do something else
+      if (typeof blockTypes === "string") {
+        console.log('Entering Boss Level! Number of parts determined by player resources.')
+        // get the blocks from the Resources object
+        this.blockTypes = ResourceHandler.getWorldResources(blockTypes);
+        // remove "Coins" from the block types
+        this.blockTypes = this.blockTypes.filter((block) => block.name !== "Coins");
+      }
+      console.log(this.blockTypes);
+
+      
       this.blockTypes.forEach((blockType, index) => {
         try {
           this.blockTypes[index].type = eval(blockType.type);
@@ -120,6 +131,8 @@ class BuildMenu {
           this.blockTypes[index].image = "img/build-buttons/basic-block.png";
         }
       });
+      
+
     } else {
       this.blockTypes = [
         {
@@ -303,6 +316,11 @@ class BuildMenu {
     this.clearButton.classList.add("menu-action-button");
     this.clearButton.innerText = "Clear";
     this.menu.appendChild(this.clearButton);
+    // a button to view the full level
+    this.viewLevelButton = document.createElement("button");
+    this.viewLevelButton.classList.add("menu-action-button");
+    this.viewLevelButton.innerText = "View Level";
+    this.menu.appendChild(this.viewLevelButton);
 
     // style the menu
     this.menu.classList.add("build-menu");
@@ -390,6 +408,21 @@ class BuildMenu {
       // update the button limits
       this.updateButtonLimits();
     };
+
+    this.viewLevelButton.onclick = () => {
+      // activate view mode
+      building.activateViewMode();
+    };
+
+    // while in view mode, allow looking around with wasd and arrow keys
+    document.addEventListener("keydown", (event) => {
+      if (building.viewMode) {
+        console.log(event.keyCode);
+        this.allowMovement(event);
+      }
+    });
+    
+
     this.buildModeButton.onclick = () => {
       // prevent the button from being spammed
       if (this.buildModeForce)  {
@@ -586,14 +619,35 @@ class BuildMenu {
     menu.style.bottom = "0px"; // Distance from the bottom of the canvas
     menu.style.left = 500; //`${rect.left + (rect.width / 2) - (menu.offsetWidth / 2)}px`; // Center horizontally
   }
+  allowMovement(event) {
+    
+    // if it is the w key or the up arrow key, move the camera up
+    if (event.keyCode === 87 || event.keyCode === 38) {
+        this.building.camera.position.y = this.building.camera.position.y - 25;
+
+    }
+    // if it is the s key or the down arrow key, move the camera down
+    if (event.keyCode === 83 || event.keyCode === 40) {
+        this.building.camera.position.y = this.building.camera.position.y + 25;
+    }
+    // if it is the a key or the left arrow key, move the camera left
+    if (event.keyCode === 65 || event.keyCode === 37) {
+        this.building.camera.position.x = this.building.camera.position.x - 25;
+    }
+    // if it is the d key or the right arrow key, move the camera right
+    if (event.keyCode === 68 || event.keyCode === 39) {
+        this.building.camera.position.x = this.building.camera.position.x + 25;
+    }
+  }
 }
 
 // a refactored version of the building class
 class Building {
-  constructor(engine, camera, keybinds = true, isEnemyEditor = false) {
+  constructor(engine, camera, ResourceHandler = null, keybinds = true, isEnemyEditor = false) {
     this.engine = engine;
     this.camera = camera;
     this.keybinds = keybinds;
+    this.ResourceHandler = ResourceHandler;
 
     this.currentBlockType = BasicWoodenBlock; // Default block type
     this.currentBlockTypeLimit = 100; // Default limit for each block type
@@ -610,7 +664,7 @@ class Building {
     // right click menu
     this.RightClickMenu = new RightClickMenu(this);
     // build menu
-    this.buildMenu = new BuildMenu(this, false, isEnemyEditor);
+    this.buildMenu = new BuildMenu(this, ResourceHandler, false, isEnemyEditor);
     this.isEnemyEditor = isEnemyEditor;
     this.buildMenu.hide();
     this.canEnterBuildMode = false;
@@ -618,6 +672,15 @@ class Building {
     this.selectedBlock = null;
     this.mobile = screen.width < 600;
     this.controlMenu = null;
+    this.viewMode = false;
+    // if the user clicks while in view mode, return to build mode
+    this.camera.canvas.addEventListener("click", () => {
+      if (this.viewMode) {
+        // click the build mode button
+        this.buildMenu.buildModeButton.click();
+        this.viewMode = false;
+      }
+    });
   }
   setCamera(camera) {
     this.camera = camera;
@@ -627,6 +690,30 @@ class Building {
     // click the build mode button
     this.buildMenu.buildModeForce = force;
     this.buildMenu.buildModeButton.click();
+  }
+  activateViewMode() {
+    // only allowed if in build mode
+    if (!this.buildInProgress) {
+      return;
+    }
+    // remove the ghost blocks
+    this.removeGhostBlocks();
+    // activate the view mode
+    this.viewMode = true;
+    this.buildMenu.levelMode();
+    const canvas = document.querySelector("canvas");
+    // make the view the size it would be when doing the level
+    this.camera.setViewport(canvas.width * 2, canvas.height * 2);
+
+    // center the camera on the build area
+    this.camera.setCenterPosition(
+      this.buildArea.x + this.buildArea.width / 2,
+      this.buildArea.y + this.buildArea.height / 2
+    );
+    this.buildMenu.hide();
+    // disable building 
+    this.buildInProgress = false;
+
   }
   setCurrentBlockType(blockType, limit) {
     this.currentBlockType = blockType;
@@ -638,7 +725,7 @@ class Building {
     // makes a new build menu with the given block types (for levels that limit the blocks that can be used)
     // remove the old build menu
     this.buildMenu.menu.remove();
-    this.buildMenu = new BuildMenu(this, blockTypes, this.isEnemyEditor);
+    this.buildMenu = new BuildMenu(this, this.ResourceHandler, blockTypes, this.isEnemyEditor);
   }
   init() {
     // Add event listener for canvas click
@@ -888,6 +975,7 @@ class Building {
     // if the B key is pressed, toggle build mode
     if (event.keyCode === 66) {
       this.buildMenu.buildModeButton.click();
+      this.viewMode = false;
     }
     // if there is a block selected, allow rotation and deletion keybinds
     if (this.selectedBlock && this.buildInProgress) {

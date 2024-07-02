@@ -50,6 +50,15 @@ class World {
                 break;
             }
         }
+        // load the boss.json file if it exists as the last level
+        try {
+            let boss = new Level(worldNum, 'WorldBoss');
+            await boss.loadLevel();
+            this.levels.push(boss);
+        } catch (error) {
+            // do nothing
+        }
+            
         console.log(`World ${worldNum} loaded with ${this.levels.length} levels`);
         // if there are no levels, throw an error
         if (this.levels.length === 0) {

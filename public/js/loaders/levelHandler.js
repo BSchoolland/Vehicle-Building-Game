@@ -151,7 +151,25 @@ class LevelHandler {
                     if (localStorage.getItem(key)) {
                         let level = this.worlds[i].getLevel(j);
                         if (!level.bonusChallenges) {
-                            continue;
+                            // check if the level has been synced with the server
+                            let existingLevel = data.find(level => level.world === i + 1 && level.level === j + 1);
+                            if (existingLevel) {
+                                console.log(`Level ${j + 1} in world ${i + 1} already synced with server`);
+                                continue;
+                            }
+                            fetch('/api/beat-level', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ level: j + 1, world: i + 1, medals: ''}),
+                            })
+                            .then(response => response.json())
+                            .then(data => console.log(data))
+                            .catch((error) => {
+                                console.error('Error:', error);
+                            });
+                            continue
                         }
                         let medals = level.bonusChallenges.map(challenge => challenge.name);
                         // figure out which medals the player has earned
@@ -197,7 +215,6 @@ class LevelHandler {
             // update the progress bar
             this.progressBar.update();
         }
-        
     }
     getLevel(worldNum, levelNum) {
         this.levelIndex = levelNum;

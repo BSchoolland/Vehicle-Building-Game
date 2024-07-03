@@ -94,7 +94,7 @@ router.post("/api/beat-level", (req, res) => {
 });
 
 // api for getting the resources for a world
-router.get("/api/getResources", (req, res) => {
+router.get("/api/getResources", async (req, res) => {
   try {
     // get the world number from the query
     const world = req.query.world;
@@ -112,13 +112,15 @@ router.get("/api/getResources", (req, res) => {
     // get the user's id from the cookie
     const userId = getUserIdFromCookie(userCookie);
     // check the user's version
-    handleUserGameVersion(userId);
+    await handleUserGameVersion(userId);
+    console.log('version handled')
     // create the sql query to get the user's resources
     const sql = `SELECT * FROM resources WHERE user_id = ? AND world = ?`;
     db.get(sql, [userId, world], (err, row) => {
       if (err) {
         return console.error(err.message);
       }
+      console.log("Resources:", row);
       // if the user has no resources, send them a default set
       if (!row) {
         res.status(200).send({

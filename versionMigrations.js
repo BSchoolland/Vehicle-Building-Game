@@ -1,25 +1,32 @@
 const { db } = require("./db/dbConfig");
 // function that handles any migration that needs to happen when a user logs in from an older version
 function handleUserGameVersion(user_id) {
-    try {
-        // get the user's last played version
-        let version = null;
-        db.get(`SELECT lastPlayedVersion FROM users WHERE id = ?`, [user_id], (err, row) => {
+    return new Promise((resolve, reject) => {
+        db.get(`SELECT lastPlayedVersion FROM users WHERE id = ?`, [user_id], async (err, row) => {
             if (err) {
                 console.error("Could not get user's last played version:", err.message);
-                migrateVersion(user_id, null);
+                try {
+                    await migrateVersion(user_id, null);
+                    resolve();
+                } catch (migrateError) {
+                    console.error("An error occurred while migrating version:", migrateError.message);
+                    reject(migrateError);
+                }
             } else {
-                version = row.lastPlayedVersion;
-                // migrate the user's version if needed
-                migrateVersion(user_id, version);
+                try {
+                    const version = row ? row.lastPlayedVersion : null;
+                    await migrateVersion(user_id, version);
+                    resolve();
+                } catch (migrateError) {
+                    console.error("An error occurred while migrating version:", migrateError.message);
+                    reject(migrateError);
+                }
             }
         });
-    } catch (error) {
-        console.error("An error occurred while handling user game version:", error.message);
-    }
+    });
 }
 
-function migrateVersion(user_id, version) {
+async function migrateVersion(user_id, version) {
     console.log(version)
     // null -> 1.2.1
     // MAIN CHANGES:
@@ -29,7 +36,6 @@ function migrateVersion(user_id, version) {
         // record that the user first played in version 1.2.1
         recordUserFirstPlayedVersion(user_id, "1.2.1");
     }
-
     // 1.2.1 -> 1.3.0
     // MAIN CHANGES:
     // - Added a resource system which awards the player with resources for beating levels.  
@@ -37,88 +43,101 @@ function migrateVersion(user_id, version) {
     // - Added a new level in world 1 (level 8) the current level 8 has now been moved to level 9, so players who beat the old level 9 should be awarded completion of the new level 9 instead.
 
     if (version === "1.2.1") {
+        console.log('awarding resources for old levels')
         // award resources for levels beaten before the update
-        awardResourcesForOldLevels(user_id);
+        await awardResourcesForOldLevels(user_id);
         // update the user's version to version 1.3.0
         updateUserGameVersion(user_id, "1.3.0");
         // increment the version
         version = "1.3.0";
+        console.log('updated to 1.3.0')
     }
 
     // perform additional migrations as needed here
-
-    // return the user's version
-    return version;
 }
 
 // award resources for levels beaten before 1.3.0
 function awardResourcesForOldLevels(user_id) {
-    db.all(`SELECT * FROM levelsBeat WHERE user_id = ?`, [user_id], (err, rows) => {
-        if (err) {
-            console.error("Could not get levels beaten by user:", err.message);
-        } else {
-            world1Resources = { seatBlock: 1, wheelBlock: 1 };
-            world2Resources = { seatBlock: 1, wheelBlock: 1 };
-            world3Resources = { seatBlock: 1, wheelBlock: 1 };
-            // world 4 added in 1.3.0
-            rows.forEach((row) => {
-                // figure out the world and level number
-                let world = row.world;
-                let level = row.level;
-                // find the json file for the level in public/json-levels/world{world}/level{level}.json
-                let levelData = require(`../public/json-levels/world${world}/level${level}.json`);
-                // get the reward for beating the level. Looks like:
-                //   "reward": {
-                //     "BasicWoodenBlock": 1,
-                //     "WheelBlock": 1,
-                //     "Coins": 3
-                //   }
-                let reward = levelData.reward;
-                let resourcesAdded = {}
-                for (let resource in reward) {
-                    resourcesAdded[resource] = reward[resource];
-                }
-                // add the resources to that world's resources
-                if (world === 1) {
-                    world1Resources = addResources(world1Resources, resourcesAdded);
-                }
+    return new Promise((resolve, reject) => {
+        db.all(`SELECT * FROM levelsBeat WHERE user_id = ?`, [user_id], (err, rows) => {
+            if (err) {
+                console.error("Could not get levels beaten by user:", err.message);
+                return reject(err);
+            } else {
+                let world1Resources = { SeatBlock: 1, WheelBlock: 1 };
+                let world2Resources = { SeatBlock: 1, WheelBlock: 1 };
+                let world3Resources = { SeatBlock: 1, WheelBlock: 1 };
+                // world 4 added in 1.3.0
+                rows.forEach((row) => {
+                    console.log(row);
+                    // figure out the world and level number
+                    let world = row.world;
+                    let level = row.level;
+                    let levelData;
+                    try {
+                        // find the json file for the level in public/json-levels/world{world}/level{level}.json
+                        levelData = require(`./public/json-levels/world${world}/level${level}.json`);
+                    } catch (error) {
+                        console.log("Could not find level data for world", world, "level", level, ":", error.message);
+                        return;
+                    }
+                    
+                    // get the reward for beating the level
+                    let reward = levelData.reward;
+                    let resourcesAdded = {};
+                    for (let resource in reward) {
+                        resourcesAdded[resource] = reward[resource];
+                    }
+                    // add the resources to that world's resources
+                    if (world === 1) {
+                        world1Resources = addResources(world1Resources, resourcesAdded);
+                    }
 
-                if (world === 2) {
-                    world2Resources = addResources(world2Resources, resourcesAdded);
-                }
+                    if (world === 2) {
+                        world2Resources = addResources(world2Resources, resourcesAdded);
+                    }
 
-                if (world === 3) {
-                    world3Resources = addResources(world3Resources, resourcesAdded);
-                }
+                    if (world === 3) {
+                        world3Resources = addResources(world3Resources, resourcesAdded);
+                    }
 
-            });
-            // update the resources in the database
+                });
 
-            // world 1
-            const insertSql = `INSERT INTO resources (resources, user_id, world) VALUES (?, ?, ?)`;
-            db.run(insertSql, [world1Resources, user_id, 1], (insertErr) => {
-                if (insertErr) {
-                    console.error(insertErr.message);
-                }
-                console.log("World 1 resources migrated successfully.");
-            });
+                // convert all resource objects into strings
+                world1Resources = JSON.stringify(world1Resources);
+                world2Resources = JSON.stringify(world2Resources);
+                world3Resources = JSON.stringify(world3Resources);
 
-            // world 2
-            db.run(insertSql, [world2Resources, user_id, 2], (insertErr) => {
-                if (insertErr) {
-                    console.error(insertErr.message);
-                }
-                console.log("World 2 resources migrated successfully.");
-            });
+                // helper function to insert resources into the database
+                const insertResources = (resources, user_id, world) => {
+                    return new Promise((resolve, reject) => {
+                        const insertSql = `INSERT INTO resources (resources, user_id, world) VALUES (?, ?, ?)`;
+                        db.run(insertSql, [resources, user_id, world], (insertErr) => {
+                            if (insertErr) {
+                                console.error(insertErr.message);
+                                reject(insertErr);
+                            } else {
+                                console.log(`World ${world} resources migrated successfully.`);
+                                resolve();
+                            }
+                        });
+                    });
+                };
 
-            // world 3
-            db.run(insertSql, [world3Resources, user_id, 3], (insertErr) => {
-                if (insertErr) {
-                    console.error(insertErr.message);
-                }
-                console.log("World 3 resources migrated successfully.");
-            });
-        }
+                // insert resources for all worlds
+                Promise.all([
+                    insertResources(world1Resources, user_id, 1),
+                    insertResources(world2Resources, user_id, 2),
+                    insertResources(world3Resources, user_id, 3)
+                ])
+                .then(() => {
+                    resolve();
+                })
+                .catch((insertErr) => {
+                    reject(insertErr);
+                });
+            }
+        });
     });
 }
 

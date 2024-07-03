@@ -34,13 +34,15 @@ class ResourceHandler {
         this.resources = {};
     }
     async init() {
-        await this.loadResources();
+        console.log("INIT RESOURCE HANDLER");
+        console.log(await this.loadResources());
         await this.syncResources(1);
     }
     async loadResources() {
         for (let i = 1; i <= worldCount; i++) {
             this.resources[i] = await this.loadWorldResources(i);
         }
+        return this.resources;
     }
     async loadWorldResources(worldNum) {
         
@@ -139,6 +141,7 @@ class ResourceHandler {
                     combinedResources[key] = serverResources[key];
                 }
             }
+            console.log("combined resources", combinedResources);
             // send a post request to the server with the new resources
             fetch('/api/updateResources', {
                 method: 'POST',

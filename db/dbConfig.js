@@ -7,8 +7,27 @@ db.serialize(() => {
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT NOT NULL,
     username TEXT NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    lastPlayedVersion TEXT,
+    firstPlayedVersion TEXT
   )`);
+  db.run(`ALTER TABLE users ADD COLUMN lastPlayedVersion TEXT`, [], (err) => {
+    if (err) {
+      // If an error occurs, it's likely because the column already exists
+      // You can log this error or handle it as needed
+      console.error("Could not add lastPlayedVersion column to users table:", err.message);
+    } else {
+      // If no error, the column was successfully added
+      console.log("lastPlayedVersion column added to users table successfully.");
+    }
+  });
+  db.run(`ALTER TABLE users ADD COLUMN firstPlayedVersion TEXT`, [], (err) => {
+    if (err) {
+      // If an error occurs, it's likely because the column already exists
+      // You can log this error or handle it as needed
+      console.error("Could not add firstPlayedVersion column to users table:", err.message);
+    }
+  });
   db.run(`CREATE TABLE IF NOT EXISTS levelsBeat (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     level INTEGER NOT NULL,

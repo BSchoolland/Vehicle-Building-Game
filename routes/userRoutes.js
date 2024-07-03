@@ -6,6 +6,8 @@ const saltRounds = 10; // for bcrypt password hashing
 const jwt = require("jsonwebtoken");
 // get dotenv to load the environment variables
 require("dotenv").config();
+
+const handleUserGameVersion = require("../versionMigrations").handleUserGameVersion;
 // get the secret from the environment variables
 let secret = process.env.JWT;
 if (!secret) {
@@ -109,6 +111,8 @@ router.get("/api/getResources", (req, res) => {
     }
     // get the user's id from the cookie
     const userId = getUserIdFromCookie(userCookie);
+    // check the user's version
+    handleUserGameVersion(userId);
     // create the sql query to get the user's resources
     const sql = `SELECT * FROM resources WHERE user_id = ? AND world = ?`;
     db.get(sql, [userId, world], (err, row) => {
@@ -153,34 +157,34 @@ router.post("/api/updateResources", (req, res) => {
     // get the resources and convert them to a string
     const resources = JSON.stringify(req.body.resources);
     // First, check if the user's resources already exist
-const checkSql = `SELECT COUNT(*) AS count FROM resources WHERE user_id = ? AND world = ?`;
-db.get(checkSql, [userId, world], (err, row) => {
-  if (err) {
-    return console.error(err.message);
-  }
-  if (row.count > 0) {
-    // If resources exist, update them
-    const updateSql = `UPDATE resources SET resources = ? WHERE user_id = ? AND world = ?`;
-    db.run(updateSql, [resources, userId, world], (updateErr) => {
-      if (updateErr) {
-        return console.error(updateErr.message);
+    const checkSql = `SELECT COUNT(*) AS count FROM resources WHERE user_id = ? AND world = ?`;
+    db.get(checkSql, [userId, world], (err, row) => {
+      if (err) {
+        return console.error(err.message);
       }
-      res.status(200).send("Resources updated");
-      console.log("Resources updated");
+      if (row.count > 0) {
+        // If resources exist, update them
+        const updateSql = `UPDATE resources SET resources = ? WHERE user_id = ? AND world = ?`;
+        db.run(updateSql, [resources, userId, world], (updateErr) => {
+          if (updateErr) {
+            return console.error(updateErr.message);
+          }
+          res.status(200).send("Resources updated");
+          console.log("Resources updated");
 
-    });
-  } else {
-    // If resources do not exist, create them
-    const insertSql = `INSERT INTO resources (resources, user_id, world) VALUES (?, ?, ?)`;
-    db.run(insertSql, [resources, userId, world], (insertErr) => {
-      if (insertErr) {
-        return console.error(insertErr.message);
+        });
+      } else {
+        // If resources do not exist, create them
+        const insertSql = `INSERT INTO resources (resources, user_id, world) VALUES (?, ?, ?)`;
+        db.run(insertSql, [resources, userId, world], (insertErr) => {
+          if (insertErr) {
+            return console.error(insertErr.message);
+          }
+          res.status(201).send("Resources created");
+          console.log("Resources created");
+        });
       }
-      res.status(201).send("Resources created");
-      console.log("Resources created");
     });
-  }
-});
   } catch (e) {
     console.error(e);
     res.status(500).send("Error updating resources");
@@ -235,7 +239,7 @@ router.post("/api/register", async (req, res) => {
 
         // Insert new user
         db.run(
-          `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`,
+          `INSERT INTO users (username, email, password, ) VALUES (?, ?, ?, ?)`,
           [username, email, hashedPassword],
           function (err) {
             if (err) {
@@ -278,7 +282,7 @@ router.post("/api/login", (req, res) => {
         if (match) {
           // send the user a cookie signed with the secret
           const token = jwt.sign({ user_id: user.id }, secret, { expiresIn: '10y' }); // Token set to expire in 10 years
-            res.cookie("user", token, { httpOnly: false, maxAge: 10 * 365 * 24 * 60 * 60 * 1000 }); // Cookie set to expire in 10 years
+          res.cookie("user", token, { httpOnly: false, maxAge: 10 * 365 * 24 * 60 * 60 * 1000 }); // Cookie set to expire in 10 years
 
           res.status(200).json({ message: "Login successful", success: true });
         } else {
@@ -330,8 +334,8 @@ router.post("/api/voteFeature", (req, res) => {
               }
             }
           );
-        } 
-          // Record new vote
+        }
+        // Record new vote
         db.run(
           `INSERT INTO featureVotes (user_id, feature_id) VALUES (?, ?)`,
           [userId, featureId],
@@ -347,7 +351,7 @@ router.post("/api/voteFeature", (req, res) => {
           }
         );
       }
-      
+
     );
   } catch (error) {
     return res.status(401).json({ message: "Invalid token" });

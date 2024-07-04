@@ -17,6 +17,11 @@ class EnemyHandler {
             'largeSpikeCar',
             'world1Boss',
             'rocketCar',
+            'volley',
+            'volley',
+            'volley'
+
+
         ];
         this.LeftFacingEnemies = [
             'largeSpikeCarL',

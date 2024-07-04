@@ -120,7 +120,7 @@ class TNTBlock extends Block {
             // check if the body is a block
             if (body.block) {
                 // make sure the body is not an invincible part of the block
-                if (body.block.invincipleParts && body.block.invincipleParts.includes(body)) {
+                if (body.block.invincibleParts && body.block.invincibleParts.includes(body)) {
                     return;
                 }
                 // damage the block

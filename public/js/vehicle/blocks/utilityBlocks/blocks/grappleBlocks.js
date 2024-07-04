@@ -38,7 +38,7 @@ class GrappleBlock extends Block {
         let vertices ='50 20 15 36 15 4';
         this.bodies.push(Matter.Bodies.fromVertices(this.x+10, this.y, Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.secondaryColor }}));
         this.bodies[2].block = this;
-                this.invincibleParts.push(this.bodies[2]);
+        this.invincibleParts.push(this.bodies[2]);
         // a rectangle for the joint
         this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, 30, 10, { render: { fillStyle: this.secondaryColor }}));
         this.bodies[3].collisionFilter = { mask: 0x0002 };

@@ -368,7 +368,13 @@
       "type": "rocketBoosterBlock",
       "limit": 100
     },
-    { "name": "Remote Block", "key": "7", "type": "RemoteBlock", "limit": 100 }
+    { "name": "Remote Block", "key": "7", "type": "RemoteBlock", "limit": 100 },
+    {
+      "name": "Grapple Block",
+      "key": "4",
+      "type": "GrappleBlock",
+      "limit": 100
+  }
   ],
   "objectives": [
     { "name": "Destroy", "value": 0 },

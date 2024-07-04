@@ -173,6 +173,11 @@
       "value": 0
     }
   ],
+  "reward": {
+    "WheelBlock": 2,
+    "SpikeBlock": 1,
+    "Coins": 4
+  },
   "tutorialText": "Finish the level before the time runs out!",
   "title": "Twin Chasms"
 }

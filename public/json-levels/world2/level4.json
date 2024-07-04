@@ -147,6 +147,11 @@
       "value": 0
     }
   ],
+  "reward": {
+    "BasicWoodenBlock": 1,
+    "WheelBlock": 1,
+    "Coins": 3
+  },
   "tutorialText": "Why are there tire tracks on the ceiling?",
   "floating": true,
   "title": "Upside Down"

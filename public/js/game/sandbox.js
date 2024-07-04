@@ -106,7 +106,7 @@ var mouse = Matter.Mouse.create(render.canvas);
 // create the camera
 var camera = new Camera(render, mouse, render.canvas);
 // allow the player to build blocks
-let building = new Building(engine, camera, true, true);
+let building = new Building(engine, camera, true, true, true);
 building.init();
 const levelObject = new LevelManager(engine, building, progressBar);
 levelObject.init();

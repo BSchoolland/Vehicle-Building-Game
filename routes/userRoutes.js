@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 // get dotenv to load the environment variables
 require("dotenv").config();
 
+const version = "1.3.0";
+
 const handleUserGameVersion = require("../versionMigrations").handleUserGameVersion;
 // get the secret from the environment variables
 let secret = process.env.JWT;
@@ -241,8 +243,8 @@ router.post("/api/register", async (req, res) => {
 
         // Insert new user
         db.run(
-          `INSERT INTO users (username, email, password, ) VALUES (?, ?, ?, ?)`,
-          [username, email, hashedPassword],
+          `INSERT INTO users (username, email, password, lastPlayedVersion, firstPlayedVersion) VALUES (?, ?, ?, ?, ?)`,
+          [username, email, hashedPassword, version, version],
           function (err) {
             if (err) {
               console.error("Error registering user:", err);

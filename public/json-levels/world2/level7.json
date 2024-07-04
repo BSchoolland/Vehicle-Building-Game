@@ -85,6 +85,12 @@
       "value": 0
     }
   ],
+  "reward": {
+    "BasicWoodenBlock": 1,
+    "rocketBoosterBlock": 1,
+    "TNTBlock": 1,
+    "Coins": 3
+  },
   "tutorialText": "TNT is dangerous if you're too close.  Use the remote and rocket to make it close to the enemy instead!",
   "title": "Woosh, Boom!"
 }

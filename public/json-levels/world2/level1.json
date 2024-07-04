@@ -191,6 +191,12 @@
       "value": 1
     }
   ],
+  "reward": {
+    "BasicWoodenBlock": 1,
+    "WheelBlock": 1,
+    "rocketBoosterBlock": 1,
+    "Coins": 3
+  },
   "tutorialText": "Press SHIFT to activate the rocket booster!",
   "title": "Jump"
 }

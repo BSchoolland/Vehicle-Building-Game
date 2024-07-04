@@ -67,6 +67,11 @@
       "value": 4
     }
   ],
+  "reward": {
+    "BasicWoodenBlock": 1,
+    "rocketBoosterBlock": 1,
+    "Coins": 2
+  },
   "tutorialText": "The rocket booster can also be rotated for toasting marshmallows and/or enemies!",
   "title": "Flamethrower"
 }

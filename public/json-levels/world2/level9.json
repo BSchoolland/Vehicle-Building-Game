@@ -159,6 +159,13 @@
       "value": 0
     }
   ],
+  "reward": {
+    "WheelBlock": 1,
+    "BasicWoodenBlock": 1,
+    "spikeBlock": 1,
+    "RemoteBlock": 1,
+    "Coins": 3
+  },
   "tutorialText": "",
   "title": "Ejector Seat"
 }

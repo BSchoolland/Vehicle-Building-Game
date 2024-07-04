@@ -119,6 +119,14 @@
       "value": 0
     }
   ],
+  "reward": {
+    "WheelBlock": 1,
+    "BasicWoodenBlock": 1,
+    "spikeBlock": 1,
+    "TNTBlock": 1,
+    "RemoteBlock": 1,
+    "Coins": 1
+  },
   "tutorialText": "Press X to disconnect the remote block. Spikes are dangerous enough on the front of your vehicle, but they're even more dangerous falling from the sky.",
   "title": "Death from Above"
 }

@@ -206,6 +206,13 @@
       "value": 6
     }
   ],
+  "reward": {
+    "WheelBlock": 1,
+    "rocketBoosterBlock": 1,
+    "BasicWoodenBlock": 1,
+    "spikeBlock": 1,
+    "Coins": 3
+  },
   "tutorialText": "",
   "title": "Leapfrog"
 }

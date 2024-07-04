@@ -90,6 +90,10 @@ class GrappleBlock extends Block {
     }
     update() { // shoot the grappling hook, or reel it in
         super.update();
+        // as long as health is not 0
+        if (this.hitPoints <= 0) {
+            return;
+        }
         // check if the right mouse button is pressed
         if (this.contraption.keysPressed[this.activationKey]) {
             this.shootGrapplingHook();
@@ -276,6 +280,12 @@ class GrappleBlock extends Block {
             this.resetValues();
         }, 5);
         return;
+    }
+    damage(damage) {
+        super.damage(damage);
+        if (this.hitPoints <= 0) {
+            this.destroyRope();
+        }
     }
 }
 

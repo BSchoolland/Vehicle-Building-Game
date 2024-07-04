@@ -195,7 +195,7 @@
     "BasicWoodenBlock": 1,
     "WheelBlock": 1,
     "rocketBoosterBlock": 1,
-    "Coins": 3
+    "Coins": 5
   },
   "tutorialText": "Press SHIFT to activate the rocket booster!",
   "title": "Jump"

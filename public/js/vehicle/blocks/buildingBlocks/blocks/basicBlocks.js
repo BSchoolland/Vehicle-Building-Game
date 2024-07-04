@@ -23,11 +23,49 @@ class BasicWoodenBlock extends BasicBlock {
     constructor (x, y, contraption) {
         super(x, y, contraption, 100, '#4d2902');
     }
+
 }
 
 class BasicIronBlock extends BasicBlock {
     constructor (x, y, contraption) { 
-        super(x, y, contraption, 200, "#984A3C");
+        super(x, y, contraption, 300, "#3b3b3b");
+    }
+    damage(amount){
+        let previousHealth = this.hitPoints;
+        super.damage(amount);
+        if (this.hitPoints < 150 && previousHealth >= 150){
+            // the steel plating breaks, and the color changes to 4d2902
+            this.color = "#4d2902";
+            // add a bunch of grey sparks
+            for (let i = 0; i < 20; i++) {
+                // create a spark with a random position and velocity
+                let spark = Matter.Bodies.rectangle(this.bodies[0].position.x + Math.random() * 10 - 5, this.bodies[0].position.y + Math.random() * 10 - 5, 15, 15, { render: { fillStyle: '#3b3b3b' }});
+                Matter.Body.setVelocity(spark, { x: Math.random() * 10 - 5, y: Math.random() * 10 - 10});
+                // make the spark unable to collide with other blocks
+                spark.collisionFilter = { mask: 0x0002 };
+                // add the spark to the world
+                Matter.World.add(this.contraption.engine.world, spark);
+                // remove the spark after 2 seconds
+                setTimeout(() => {
+                    Matter.World.remove(this.contraption.engine.world, spark);
+                }, 2000);
+            }
+            // as a workaround because the color will be changed by the super.damage() method, repeadedly set the color of the body
+            let count = 0
+            const interval = setInterval(() => {
+                this.bodies[0].render.fillStyle = this.color;
+                count++;
+                if (count >= 20){
+                    clearInterval(interval);
+                }
+            }, 50);
+        }
+    }
+    resetValues(){
+        super.resetValues();
+        // the steel plating is restored
+        this.bodies[0].render.fillStyle = "#3b3b3b";
+        this.color = "#3b3b3b";
     }
 }
 

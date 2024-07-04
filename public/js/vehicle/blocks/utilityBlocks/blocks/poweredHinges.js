@@ -33,23 +33,44 @@ class PoweredHingeBlock extends Block {
         // constrain the bearing and the left side of the block rigidly using constrainBodyToBody
         let bodyA = this.bodies[0];
         let bodyB = this.bodies[2];
-        let constraints = constrainBodyToBody(bodyA, bodyB, 0.5, true);
+        let constraints = constrainBodyToBody(bodyA, bodyB, 1);
         this.constraints.push(...constraints);
         // constrain the bearing and the right side of the block rigidly using constrainBodyToBody (for now)
         bodyA = this.bodies[1];
         bodyB = this.bodies[2];
-        let constraint = constrainBodyToBody(bodyA, bodyB, 0.5, true);
+        let constraint = constrainBodyToBody(bodyA, bodyB, 1);
         // make the second constraint red
         constraint[0].render.strokeStyle = '#ff0000';
         this.angleConstraint = constraint[0];
         this.constraints.push(...constraint);
     }
-    getWeldBody(direction = 'right') { // this is redefining the function from the base class
-        if (direction === 'right') {
-            return this.bodies[0];
-        } else if (direction === 'left') {
-            return this.bodies[1];
+    getWeldBody(direction = 'top') { // this is redefining the function from the base class
+        if (this.rotatedTimes === 3) {
+            if (direction === 'top') {
+                return this.bodies[1];
+            } else if (direction === 'bottom') {
+                return this.bodies[0];
+            }
+        } else if (this.rotatedTimes === 0) {
+            if (direction === 'right') {
+                return this.bodies[0];
+            } else if (direction === 'left') {
+                return this.bodies[1];
+            }
+        } else if (this.rotatedTimes === 1) {
+            if (direction === 'bottom') {
+                return this.bodies[1];
+            } else if (direction === 'top') {
+                return this.bodies[0];
+            }
+        } else if (this.rotatedTimes === 2) {
+            if (direction === 'left') {
+                return this.bodies[0];
+            } else if (direction === 'right') {
+                return this.bodies[1];
+            }
         }
+        
     }
     update() { // rotate the block
         super.update();

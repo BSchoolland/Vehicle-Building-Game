@@ -10,7 +10,7 @@ class TNTBlock extends Block {
         this.simetricalX = true;
         this.exploded = false;
         this.blastRadius = 200; // the radius of the explosion
-        this.blastDamage = 100; // the damage of the explosion
+        this.blastDamage = 200; // the damage of the explosion
         // damage cooldown
         this.damageCooldown = 0.5; // seconds
         this.lastHit = 0; // the last time the block hit something

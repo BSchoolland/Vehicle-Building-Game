@@ -1,0 +1,228 @@
+{
+    "blocks": [
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2025,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2075,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1975,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1925,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "PoweredHingeBlock",
+            "x": 2125,
+            "y": 1275,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 2075,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 2025,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 1975,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 1925,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2125,
+            "y": 1225,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2125,
+            "y": 1175,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2125,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "SpikeBlock",
+            "x": 2125,
+            "y": 1075,
+            "rotatedTimes": 3,
+            "flippedX": false
+        },
+        {
+            "type": "SpikeBlock",
+            "x": 2175,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2025,
+            "y": 1275,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1925,
+            "y": 1275,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "SeatBlock",
+            "x": 1975,
+            "y": 1275,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 2125,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1975,
+            "y": 1225,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "SpikeBlock",
+            "x": 2075,
+            "y": 1275,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 1875,
+            "y": 1325,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 1875,
+            "y": 1275,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 2175,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2025,
+            "y": 1225,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 2175,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 2125,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        }
+    ],
+"commands": [
+{
+    "key": "d",
+    "start": 0,
+    "end": 99999999
+},
+{
+    "key": "q",
+    "start": 1,
+    "end": 2.5
+},
+{
+    "key": "e",
+    "start": 2.5,
+    "end": 4.0
+},
+{
+    "key": "q",
+    "start": 4.0,
+    "end": 6
+},
+{
+    "key": "e",
+    "start": 6,
+    "end": 7.5
+},
+{
+    "key": "q",
+    "start": 7.5,
+    "end": 9
+},
+{
+    "key": "e",
+    "start": 9,
+    "end": 10.5
+},
+{
+    "key": "q",
+    "start": 10.5,
+    "end": 12
+}
+]
+}

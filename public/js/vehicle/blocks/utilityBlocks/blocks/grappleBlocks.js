@@ -189,6 +189,13 @@ class GrappleBlock extends Block {
             }
             else if (otherBody.block !== undefined) {
                 if (otherBody.block.contraption !== this.contraption) { 
+                    // damage the other block (if it's not invincible)
+                    if (otherBody.block.invincibleParts && otherBody.block.invincibleParts.includes(otherBody)) {
+                        // do nothing
+                    } else {
+                        otherBody.block.damage(30);
+                    } 
+
                     // create a weld constraint between the grappling hook and the other body
                     const weld = Matter.Constraint.create({
                         bodyA: this.bodies[2],

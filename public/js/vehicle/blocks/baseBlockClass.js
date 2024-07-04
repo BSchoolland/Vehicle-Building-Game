@@ -1,6 +1,40 @@
 import { LocalToWorld, WorldToLocal, rotateBodyAroundPoint, rotateConstraintAroundPoint } from "../utils.js";
 import { playSound } from "../../sounds/playSound.js";
 
+function adjustHexColor(hex, changeFactor) {
+  // Ensure the input hex color is valid
+  if (!/^#([0-9A-F]{3}){1,2}$/i.test(hex)) {
+    throw new Error('Invalid hex color');
+  }
+
+  // Normalize the hex to 6 digits if it's in shorthand form
+  let hexColor = hex.slice(1);
+  if (hexColor.length === 3) {
+    hexColor = hexColor.split('').map(char => char + char).join('');
+  }
+
+  // Convert hex to RGB
+  let r = parseInt(hexColor.slice(0, 2), 16);
+  let g = parseInt(hexColor.slice(2, 4), 16);
+  let b = parseInt(hexColor.slice(4, 6), 16);
+
+  // Adjust each color component randomly based on the changeFactor
+  function adjustComponent(component) {
+    const adjustment = Math.floor((Math.random() - 0.5) * 2 * changeFactor);
+    return Math.min(255, Math.max(0, component + adjustment));
+  }
+
+  r = adjustComponent(r);
+  g = adjustComponent(g);
+  b = adjustComponent(b);
+
+  // Convert RGB back to hex
+  const toHex = n => n.toString(16).padStart(2, '0');
+  const newHexColor = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+
+  return newHexColor;
+}
+
 const constraintsVisible = false; // whether or not the constraints are visible
 // the base class for all blocks, may be made of multiple bodies and constraints depending on subclass
 class Block {
@@ -190,7 +224,10 @@ showWarning() {
     // subtract the amount from the hitpoints
     playSound("blockTakesDamage");
     this.hitPoints -= amount;
-    let numSparks = amount;
+    let numSparks = amount / 100;
+    if (numSparks > 10) {
+      numSparks = 10;
+    }
     // add a shower of sparks
     for (var i = 0; i < numSparks; i++) {
       if (this.contraption.currentSparks >= this.contraption.maxSparks) {
@@ -198,9 +235,9 @@ showWarning() {
         break;
       }
       this.contraption.currentSparks++;
-      // create a spark with a random position and velocity
+      // create a particle with a random position and velocity
       let spark;
-      // if the typeOfDamage is fire, make the spark bigger
+      // if the typeOfDamage is fire, make it a red spark
       if (typeOfDamage === "fire") {
         spark = Matter.Bodies.circle(
           this.bodies[0].position.x + Math.random() * 10 - 5,
@@ -212,22 +249,42 @@ showWarning() {
           x: Math.random() * 10 - 5,
           y: Math.random() * 10 - 15,
         });
+        // change the color by a random amount
+      spark.render.fillStyle =
+      "#ff" + Math.floor(Math.random() * 100).toString(16) + "00";
       }
+      // otherwise, it should be a square the color of the block
       else {
-        spark = Matter.Bodies.circle(
+        spark = Matter.Bodies.rectangle(
           this.bodies[0].position.x + Math.random() * 10 - 5,
           this.bodies[0].position.y + Math.random() * 10 - 5,
-          2,
-          { render: { fillStyle: "#ff0000" } }
+          10,
+          10,
+          { render: { fillStyle: this.color } }
         );
+        // Generate a random angle between 0 and 2π radians
+        const angle = Math.random() * Math.PI * 2;
+
+        // Choose a random speed between a min and max value
+        const minSpeed = 5; // Minimum speed
+        const maxSpeed = 10; // Maximum speed
+        const speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
+
+        // Convert polar coordinates (angle, speed) to Cartesian coordinates (x, y)
+        const velocityX = speed * Math.cos(angle);
+        let velocityY = speed * Math.sin(angle);
+        // prefer sparks to go up
+        velocityY -= 5;
+
+        // Set the velocity of the spark
         Matter.Body.setVelocity(spark, {
-          x: Math.random() * 10 - 5,
-          y: Math.random() * 10 - 10,
+          x: velocityX,
+          y: velocityY,
         });
+        // change the color by a random amount
+      spark.render.fillStyle = adjustHexColor(this.color, 10);
       }
-      // change the color by a random amount
-      spark.render.fillStyle =
-        "#ff" + Math.floor(Math.random() * 100).toString(16) + "00";
+
       // make the spark unable to collide with other blocks
       spark.collisionFilter = { mask: 0x0002 };
       // add the spark to the world

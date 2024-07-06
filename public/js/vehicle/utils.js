@@ -81,7 +81,7 @@ function rotateBodyAroundPoint(body, point, angle) {
 }
 
 function rotateConstraintAroundPoint(constraint, point, angle) {
-    // no need to do anything
+    // no need to rotate
 }
 
 export {

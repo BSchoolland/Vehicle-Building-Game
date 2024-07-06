@@ -150,14 +150,7 @@ class Block {
           90
         );
       });
-      // rotate the constraints using the rotateConstraintAroundPoint function and the original position of the block
-      this.constraints.forEach((constraint) => {
-        rotateConstraintAroundPoint(
-            constraint,
-            { x: this.originalX, y: this.originalY },
-            90
-            );
-      });
+
     }
 
     this.setRotation(this.rotatedTimes);
@@ -368,6 +361,10 @@ showWarning() {
     // to be defined in subclasses
     // called when the block is hit by another body
   }
+  // called when the block is spawned in the world
+  spawn() {
+    // method to be defined in subclasses 
+  }
   flipX(firstTime = true) {
     // make sure the block is not simetrical in the x direction
     if (this.simetricalX) {
@@ -406,7 +403,7 @@ showWarning() {
         this.weldableFaces[this.weldableFaces.indexOf("right")] = "left";
       }
       // record that the block has been flipped
-      this.flippedX = !this.flippedX;1
+      this.flippedX = !this.flippedX;
     }
   }
   rotate90() {
@@ -417,16 +414,9 @@ showWarning() {
     // rotate the bodies using the rotateBodyAroundPoint function and the original position of the block
     this.bodies.forEach((body) => {
       rotateBodyAroundPoint(body, { x: this.originalX, y: this.originalY }, 90);
-    });
-    // rotate the constraints using the rotateConstraintAroundPoint function and the original position of the block
-    this.constraints.forEach((constraint) => {
-        rotateConstraintAroundPoint(
-            constraint,
-            { x: this.originalX, y: this.originalY },
-            90
-            );
-    });
+    });    
     this.setRotation(this.rotatedTimes);
+    this.reset();
   }
   setRotation(rotatedTimes) {
     if (rotatedTimes === 0) {

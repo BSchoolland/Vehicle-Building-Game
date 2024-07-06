@@ -366,7 +366,9 @@ class Contraption {
     // make all blocks movable
     this.blocks.forEach((block) => {
       block.makeMovable(); 
+      block.spawn();
     });
+    
     // reset the undo stack and action stack
     this.actionStack = [];
     this.undoStack = [];

@@ -17,6 +17,22 @@ class WheelBlock extends Block {
         this.activationKey = 'd';
         this.reverseActivationKey = 'a';
     }
+    spawn() {
+        // Sorry future me!  This is probably the worst code I've written in this project, but I can't figure out what the real problem is.
+        // make the constraints invisible
+        this.constraints.forEach(constraint => {
+            constraint.render.visible = false;
+        });
+        // make the real constraints visible
+        this.constraints[3].render.visible = true;
+        this.constraints[4].render.visible = true;
+        this.constraints[3].render.strokeStyle = this.secondaryColor;
+        this.constraints[4].render.strokeStyle = this.secondaryColor;
+        // set the stiffness of the first 3 constraints to 0
+        this.constraints[0].stiffness = 0;
+        this.constraints[1].stiffness = 0;
+        this.constraints[2].stiffness = 0;
+    }
     getControls() {
         return [
             {
@@ -43,11 +59,32 @@ class WheelBlock extends Block {
         this.bodies[1].block = this;
     }
     makeConstraints() {
+        // the following is a workaround to get the constraints to display correctly in building mode
+        let cX = 20
+        let cY = 0
+        let bX = 0;
+        let bY = 25;
+        if (this.rotatedTimes === 1) {
+            cX = 0;
+            cY = 20;
+            bX = -25;
+            bY = 0;
+        } else if (this.rotatedTimes === 2) {
+            cX = -20;
+            cY = 0;
+            bX = 0;
+            bY = -25;
+        } else if (this.rotatedTimes === 3) {
+            cX = 0;
+            cY = -20;
+            bX = 25;
+            bY = 0;
+        }
         // two spring constraints
         this.constraints.push(Matter.Constraint.create({
             bodyA: this.bodies[0], // the rectangle
             bodyB: this.bodies[1], // the circle
-            pointA: { x: 20, y: 0 },
+            pointA: { x: cX, y: cY },
             pointB: { x: 0, y: 0 },
             stiffness: this.stiffness,
             length: 35,
@@ -59,7 +96,7 @@ class WheelBlock extends Block {
         this.constraints.push(Matter.Constraint.create({
             bodyA: this.bodies[0], // the rectangle
             bodyB: this.bodies[1], // the circle
-            pointA: { x: -20, y: 0 },
+            pointA: { x: -cX, y: -cY },
             pointB: { x: 0, y: 0 },
             stiffness: this.stiffness,
             length: 35,
@@ -72,12 +109,53 @@ class WheelBlock extends Block {
         this.constraints.push(Matter.Constraint.create({
             bodyA: this.bodies[0], // the rectangle
             bodyB: this.bodies[1], // the circle
-            pointA: { x: 0, y: 25 },
+            pointA: { x: bX, y: bY },
             pointB: { x: 0, y: 0 },
             stiffness: this.stiffness,
             length: 0,
             render: {
-                strokeStyle: this.secondaryColor
+                visible: false
+            }
+        }));
+        cX = 20
+        cY = 0
+        bX = 0;
+        bY = 25;
+        // two spring constraints
+        this.constraints.push(Matter.Constraint.create({
+            bodyA: this.bodies[0], // the rectangle
+            bodyB: this.bodies[1], // the circle
+            pointA: { x: cX, y: cY },
+            pointB: { x: 0, y: 0 },
+            stiffness: this.stiffness,
+            length: 35,
+            render: {
+                visible: false
+            }
+        }));
+
+        this.constraints.push(Matter.Constraint.create({
+            bodyA: this.bodies[0], // the rectangle
+            bodyB: this.bodies[1], // the circle
+            pointA: { x: -cX, y: -cY },
+            pointB: { x: 0, y: 0 },
+            stiffness: this.stiffness,
+            length: 35,
+            render: {
+                visible: false
+            }
+        }));
+
+        // a backup constraint to keep the circle in place
+        this.constraints.push(Matter.Constraint.create({
+            bodyA: this.bodies[0], // the rectangle
+            bodyB: this.bodies[1], // the circle
+            pointA: { x: bX, y: bY },
+            pointB: { x: 0, y: 0 },
+            stiffness: this.stiffness,
+            length: 0,
+            render: {
+                visible: false
             }
         }));
     }   

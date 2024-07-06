@@ -60,8 +60,8 @@ class WheelBlock extends Block {
         this.bodies[1].block = this;
         this.bodies[1].collisionFilter = {category: 0x0003, mask: 0x0001};
 
-        // to prevent the wheel from glitching into the ground, we need an invisible rectangle
-        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, 30, 20, { render: { visible: false }}));
+        // to prevent the wheel from glitching into the ground, we need an invisible, nearly massless rectangle
+        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, 40, 20, { render: { visible: false }, density: 0.000001}));
         this.bodies[2].collisionFilter = {category: 0x0002, mask: 0x0001};
 
 

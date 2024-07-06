@@ -3,20 +3,21 @@ import Block from '../../baseBlockClass.js';
 
 // a basic square block
 class BasicBlock extends Block {
-    constructor (x, y, contraption, health = 100, color = '#4d2902') {
+    constructor(x, y, contraption, health = 100, color = '#4d2902', density = 1) {
         super(x, y, contraption, 10, 'A basic block', health, color, [], [], ['top', 'bottom', 'left', 'right']);
+        this.density = density;
         this.makeBodies();
-        this.makeConstraints(); 
+        this.makeConstraints();
 
     }
     makeBodies() {
         // a square that is the color of the block
-        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, 50, 50, { render: { fillStyle: this.color } }));
+        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, 50, 50, { render: { fillStyle: this.color }, density: this.density * 0.001}));
         this.bodies[0].block = this;
     }
     makeConstraints() {
         // no constraints
-    }    
+    }
 }
 
 class BasicWoodenBlock extends BasicBlock {
@@ -28,7 +29,7 @@ class BasicWoodenBlock extends BasicBlock {
 
 class BasicIronBlock extends BasicBlock {
     constructor (x, y, contraption) { 
-        super(x, y, contraption, 300, "#3b3b3b");
+        super(x, y, contraption, 300, "#3b3b3b", 3); // 3 times the density of a wooden block
     }
     damage(amount){
         let previousHealth = this.hitPoints;
@@ -69,14 +70,24 @@ class BasicIronBlock extends BasicBlock {
     }
 }
 
+class LightBlock extends BasicBlock {
+    constructor (x, y, contraption) {
+        super(x, y, contraption, 200, "#000000", 0.25); // 1/4 the density of a wooden block, and 2 times the health
+    }
+}
+
+// this is ununsed, but it could be used to make a block that is even stronger than iron
 class BasicDiamondBlock extends BasicBlock {
     constructor (x, y, contraption) {
         super(x, y, contraption, 300, "#00FFFF");
     }
 }
 
+
+
 export {
     BasicWoodenBlock,
     BasicIronBlock,
-    BasicDiamondBlock
+    BasicDiamondBlock,
+    LightBlock
 }

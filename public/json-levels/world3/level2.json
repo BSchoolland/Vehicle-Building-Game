@@ -133,5 +133,10 @@
     }
   ],
   "tutorialText": "",
-  "title": "Low Clearance"
+  "title": "Low Clearance",
+  "reward": {
+    "BasicWoodenBlock": 1,
+    "WheelBlock": 1,
+    "Coins": 3
+  }
 }

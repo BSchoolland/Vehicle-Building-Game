@@ -10,7 +10,8 @@ import {
   TNTBlock,
   GrappleBlock,
   PoweredHingeBlock,
-  flameThrower
+  flameThrower,
+  LightBlock
 } from "./blocks.js";
 const blockTypes = {
   RemoteBlock,
@@ -24,7 +25,8 @@ const blockTypes = {
   SeatBlock,
   GrappleBlock,
   PoweredHingeBlock,
-  flameThrower
+  flameThrower,
+  LightBlock
 };
 
 // This file contains the Contraption class which is used to represent a contraption in the game.

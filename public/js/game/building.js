@@ -12,6 +12,7 @@ import {
   PoweredHingeBlock,
   TNTBlock,
   flameThrower,
+  LightBlock
 } from "../vehicle/blocks.js";
 import { Contraption } from "../vehicle/contraption.js";
 import { playSound, setSong } from "../sounds/playSound.js";

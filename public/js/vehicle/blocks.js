@@ -2,6 +2,7 @@ import {
   BasicWoodenBlock,
   BasicIronBlock,
   BasicDiamondBlock,
+  LightBlock,
   SeatBlock,
 } from "./blocks/buildingBlocks/contents.js";
 import {
@@ -27,5 +28,6 @@ export {
   PoweredHingeBlock,
   TNTBlock,
   RemoteBlock,
-  flameThrower
+  flameThrower,
+  LightBlock,
 };

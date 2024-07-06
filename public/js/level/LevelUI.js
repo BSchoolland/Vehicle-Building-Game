@@ -1,5 +1,5 @@
 import { bonusObjectives } from "./bonusObjectives.js";
-
+import { playSound } from "../sounds/playSound.js";
 const override = true; // set to true to override the level completion requirement for the last level
 
 const worldGradients = [
@@ -426,6 +426,8 @@ class LevelUI {
     box.appendChild(levelNumber);
     // when the box is clicked, load the level
     box.addEventListener("click", () => {
+      // play the selectLevel sound
+      playSound("selectLevel");
       // if it's a boss level, load the boss level
       if (boss) {
         console.log("loading boss level");
@@ -575,6 +577,7 @@ class LevelUI {
 
   }
   gameOver() {
+    playSound("gameOver");
     let gameOver = document.createElement("div");
     gameOver.classList.add("toast-game-over");
     gameOver.innerText = "Click to return to build mode";

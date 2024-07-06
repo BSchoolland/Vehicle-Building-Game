@@ -28,9 +28,10 @@ const effects = {
   rotateBlock: "./js/sounds/level/rotateBlock.mp3",
   selectBlock: "./js/sounds/level/selectBlock.mp3",
   selectLevel: "./js/sounds/level/selectLevel.mp3",
+  gameOver: "./js/sounds/longEffects/gameOver.mp3",
 };
 
-const unlimitedSounds = ["coin", "win", "error", "placeBlock", "removeBlock", "rotateBlock", "selectBlock", "selectLevel"];
+const unlimitedSounds = ["coin", "win", "error", "placeBlock", "removeBlock", "rotateBlock", "selectBlock", "selectLevel", "gameOver"];
 
 async function loadSound(url) {
   try {
@@ -114,7 +115,7 @@ function playSound(name) {
         if (playingSounds[name] <= 0) {
             delete playingSounds[name];
         }
-    }, duration * 1000);
+    }, duration * 950);
 }
 
 let currentSong = null;

@@ -218,5 +218,6 @@
     { "name": "Survive", "value": 0 },
     { "name": "BeforeTime", "value": 0 }
   ],
+  "title": "Sky Islands",
   "tutorialText": ""
 }

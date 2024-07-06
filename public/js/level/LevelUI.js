@@ -430,6 +430,7 @@ class LevelUI {
       playSound("placeBlock");
       // if it's a boss level, load the boss level
       if (boss) {
+        try {
         console.log("loading boss level");
         this.parent.building.ResourceHandler.bossAnimation(box, this.parent.worldSelected)
         setTimeout(() => {
@@ -438,6 +439,13 @@ class LevelUI {
           this.parent.LevelLoader.load(i);
           levelSelector.remove();
         }, 2500);
+        } catch {
+          this.createBackArrow();
+          // create the back arrow
+          this.parent.LevelLoader.load(i);
+          levelSelector.remove();
+        }
+        
       } else {
         this.createBackArrow();
         // create the back arrow

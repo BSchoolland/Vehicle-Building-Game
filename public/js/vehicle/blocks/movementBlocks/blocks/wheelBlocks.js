@@ -53,10 +53,18 @@ class WheelBlock extends Block {
     makeBodies() {
         this.bodies.push(Matter.Bodies.rectangle(this.x, this.y-20, 50, 10, { render: { fillStyle: this.color }}));
         this.bodies[0].block = this;
+        this.bodies[0].collisionFilter = {category: 0x0003, mask: 0x0001};
         this.bodies.push(Matter.Bodies.circle(this.x, this.y, 15, { render: { fillStyle: this.secondaryColor }}));
         // set the friction of the circle very high so it has grip
         this.bodies[1].friction = 100;
         this.bodies[1].block = this;
+        this.bodies[1].collisionFilter = {category: 0x0003, mask: 0x0001};
+
+        // to prevent the wheel from glitching into the ground, we need an invisible rectangle
+        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, 30, 20, { render: { visible: false }}));
+        this.bodies[2].collisionFilter = {category: 0x0002, mask: 0x0001};
+
+
     }
     makeConstraints() {
         // the following is a workaround to get the constraints to display correctly in building mode
@@ -153,6 +161,30 @@ class WheelBlock extends Block {
             pointA: { x: bX, y: bY },
             pointB: { x: 0, y: 0 },
             stiffness: this.stiffness,
+            length: 0,
+            render: {
+                visible: false
+            }
+        }));
+
+        // constrain the invisible rectangle to the other rectangle in two places
+        this.constraints.push(Matter.Constraint.create({
+            bodyA: this.bodies[0], // the rectangle
+            bodyB: this.bodies[2], // the invisible rectangle
+            pointA: { x: -20, y: 15 },
+            pointB: { x: -20, y: 0 },
+            stiffness: 0.5,
+            length: 0,
+            render: {
+                visible: false
+            }
+        }));
+        this.constraints.push(Matter.Constraint.create({
+            bodyA: this.bodies[0], // the rectangle
+            bodyB: this.bodies[2], // the invisible rectangle
+            pointA: { x: 20, y: 15 },
+            pointB: { x: 20, y: 0 },
+            stiffness: 0.5,
             length: 0,
             render: {
                 visible: false

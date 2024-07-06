@@ -427,7 +427,7 @@ class LevelUI {
     // when the box is clicked, load the level
     box.addEventListener("click", () => {
       // play the selectLevel sound
-      playSound("selectLevel");
+      playSound("placeBlock");
       // if it's a boss level, load the boss level
       if (boss) {
         console.log("loading boss level");

@@ -380,6 +380,18 @@
       "key": "8",
       "type": "PoweredHingeBlock",
       "limit": 100
+    },
+    {
+      "name": "Basic Iron Block",
+      "key": "9",
+      "type": "BasicIronBlock",
+      "limit": 100
+    },
+    {
+      "name": "Flame Thrower",
+      "key": "9",
+      "type": "flameThrower",
+      "limit": 100
     }
 
   ],

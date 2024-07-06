@@ -72,7 +72,15 @@ class BasicIronBlock extends BasicBlock {
 
 class LightBlock extends BasicBlock {
     constructor (x, y, contraption) {
-        super(x, y, contraption, 200, "#000000", 0.25); // 1/4 the density of a wooden block, and 2 times the health
+        super(x, y, contraption, 50, "#00000", 0.25);
+        this.density = 0.25
+    }
+
+    makeBodies() {
+        // a square with this block's sprite
+        this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, 50, 50, { render: { strokeStyle: '#ffffff', sprite: { texture: './img/textures/lightBlock.png' }}, density: this.density * 0.001}));
+        this.bodies[0].block = this;
+
     }
 }
 

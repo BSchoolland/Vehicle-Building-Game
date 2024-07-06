@@ -8,6 +8,7 @@ import {
     TNTBlock,
     GrappleBlock,
     PoweredHingeBlock,
+    LightBlock,
 } from "../../vehicle/blocks.js";
 
 let blockTypes = {
@@ -19,7 +20,8 @@ let blockTypes = {
     rocketBoosterBlock,
     RemoteBlock,
     GrappleBlock,
-    PoweredHingeBlock
+    PoweredHingeBlock,
+    LightBlock,
 };
 
 const buildClassesToImages = {

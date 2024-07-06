@@ -555,16 +555,16 @@
             "limit": 1
         },
         {
-            "name": "Grapple Block",
+            "name": "Powered Hinge Block",
             "key": "5",
-            "type": "GrappleBlock",
+            "type": "PoweredHingeBlock",
             "limit": 1
         },
         {
-            "name": "Powered Hinge Block",
+            "name": "Light Block",
             "key": "6",
-            "type": "PoweredHingeBlock",
-            "limit": 1
+            "type": "LightBlock",
+            "limit": 3
         }
     ],
     "title": "Robot Arm",

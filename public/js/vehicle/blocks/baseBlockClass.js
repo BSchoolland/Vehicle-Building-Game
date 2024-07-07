@@ -217,6 +217,7 @@ showWarning() {
     // subtract the amount from the hitpoints
     playSound("blockTakesDamage");
     this.hitPoints -= amount;
+    // the rest is for visual effects
     let numSparks = amount / 100;
     if (numSparks > 10) {
       numSparks = 10;
@@ -637,8 +638,6 @@ showWarning() {
     } else if (this.contraption.seat === this) {
       this.blocksFromSeat = 0;
       return;
-    } else if (this.bodies[0].isStatic) {
-      return;
     }
     let heap = new PriorityQueue();
     let priority = heuristic([this.originalX, this.originalY], [this.contraption.seat.originalX, this.contraption.seat.originalY]);
@@ -667,6 +666,7 @@ showWarning() {
       }
     }
     this.damage(this.maxHitPoints);
+    this.hitPoints = 0;
     return false;
   }  
 

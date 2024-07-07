@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Node.js Server",
+        "program": "/home/ben/Projects/Vehicle-Building-Game/server.js",
+        "cwd": "/home/ben/Projects/Vehicle-Building-Game",
+        "sourceMaps": true,
+        "outFiles": [
+          "/home/ben/Projects/Vehicle-Building-Game/dist/**/*.js"
+        ]
+      },
+      {
+        "type": "chrome",
+        "request": "launch",
+        "name": "Launch Chrome to Debug Client",
+        "url": "http://localhost:3001",  // Adjust this to your server URL
+        "webRoot": "/home/ben/Projects/Vehicle-Building-Game/public",  // Adjust this to your client-side code directory
+        "sourceMaps": true
+      }
+    ]
+  }
+  

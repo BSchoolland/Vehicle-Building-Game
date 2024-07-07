@@ -192,41 +192,48 @@ class Contraption {
   }
   checkConnected(instant = false) {
     if (instant) { // no batches, do everything now
+      let destroyed = [];
       this.blocks.forEach((block) => {
-        if (block.hitPoints > 0) {
           block.checkConnected();
-        }
+          if (block.hitPoints <= 0) {
+            destroyed.push(block);
+          }
       });
-      return;
-    }
-    // Define the batch size
-    const batchSize = 5; // Adjust based on performance
-    let currentBatch = 0;
-  
-    const processBatch = () => {
-      // Calculate the start and end indices for the current batch
-      const start = currentBatch * batchSize;
-      const end = Math.min(start + batchSize, this.blocks.length);
-  
-      // Process each block in the current batch
-      for (let i = start; i < end; i++) {
-        const block = this.blocks[i];
-        if (block.hitPoints > 0) {
-          block.checkConnected();
+      return destroyed;
+    } else {
+      // Define the batch sizeb
+      const batchSize = 5; 
+      let currentBatch = 0;
+    
+      const processBatch = () => {
+        if (!this.spawned) {
+          // end if the contraption despawned
+          return;
         }
-      }
-  
-      // Prepare the next batch
-      currentBatch++;
-  
-      // If there are more blocks to process, schedule the next batch
-      if (start + batchSize < this.blocks.length) {
-        requestAnimationFrame(processBatch);
-      }
-    };
-  
-    // Start processing the first batch
-    requestAnimationFrame(processBatch);
+        // Calculate the start and end indices for the current batch
+        const start = currentBatch * batchSize;
+        const end = Math.min(start + batchSize, this.blocks.length);
+    
+        // Process each block in the current batch
+        for (let i = start; i < end; i++) {
+          const block = this.blocks[i];
+          if (block.hitPoints > 0) {
+            block.checkConnected();
+          }
+        }
+    
+        // Prepare the next batch
+        currentBatch++;
+    
+        // If there are more blocks to process, schedule the next batch
+        if (start + batchSize < this.blocks.length) {
+          requestAnimationFrame(processBatch);
+        }
+      };
+    
+      // Start processing the first batch
+      requestAnimationFrame(processBatch);
+    }
   }
 
   showDisconnectedBlocks(){
@@ -234,19 +241,11 @@ class Contraption {
     this.blocks.forEach((block) => {
       block.makeWelds();
     });
-    // check how many blocks have health and are in the contraption
-    const intialBlockCount = this.blocks.filter((block) => block.hitPoints > 0).length;
     // run checkConnected on all blocks without waiting
-    this.checkConnected(true);
-
-    // check how many blocks have health and are in the contraption
-    const finalBlockCount = this.blocks.filter((block) => block.hitPoints > 0).length;
-    // log the number of disconnected blocks
-    console.log(`Disconnected blocks: ${intialBlockCount - finalBlockCount}`);
+    let disconnectedBlocks = this.checkConnected(true);
     // return a list of blocks that are disconnected
     // wait for each block to be destroyed, when it is, reset it
 
-    const disconnectedBlocks = this.blocks.filter((block) => block.hitPoints <= 0)
     // put a warning symbol on each disconnected block
     disconnectedBlocks.forEach((block) => {
       block.showWarning();
@@ -419,7 +418,7 @@ class Contraption {
     // set time to now
     this.lastTime = Date.now();
     // check connected
-    this.checkConnected(true);
+    // this.checkConnected(true);
   }
   // despawn the contraption by making all blocks static
   despawn(fancy = false) {

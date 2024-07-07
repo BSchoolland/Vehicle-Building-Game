@@ -93,7 +93,7 @@
     }
   ],
   "commands": [
-    { "key": "a", "start": 0, "end": 60.0},
+    { "key": "a", "start": 1, "end": 60.0},
     { "key": "SHIFT", "start": 2, "end": 60}
   ]
 }

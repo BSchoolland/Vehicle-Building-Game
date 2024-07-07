@@ -629,67 +629,108 @@ showWarning() {
     // this function can be overwritten in subclasses
     return this.bodies[0];
   }
-  // function for making sure the block is connected to the seat
+
+  // function to check if the block is connected to the seat using a best first search
   checkConnected() {
-    // If the block is destroyed, exit the function
     if (this.hitPoints <= 0) {
       return;
+    } else if (this.contraption.seat === this) {
+      this.blocksFromSeat = 0;
+      return;
+    } else if (this.bodies[0].isStatic) {
+      return;
     }
-    if (this.blocksFromSeat === 0) {
-      // to optimize very large contraptions, on the first pass we'll initialize the blocks from seat to the physical distance from the seat / 50
-      // (using a less computationally expensive method than the distance formula)
-      this.blocksFromSeat = Math.floor(
-        Math.abs(this.bodies[0].position.x - this.contraption.seat.bodies[0].position.x) / 50 + Math.abs(this.bodies[0].position.y - this.contraption.seat.bodies[0].position.y) / 50
-      );
-      console.log('preliminary blocks from seat: ' + this.blocksFromSeat);
-    }
+    let heap = new PriorityQueue();
+    let priority = heuristic([this.originalX, this.originalY], [this.contraption.seat.originalX, this.contraption.seat.originalY]);
+    heap.enqueue(priority, this);
+    let visited = new Set();
 
-  
-    // Array to store connected blocks
-    let connectedBlocks = [];
-  
-    // Find adjacent blocks that are welded to the current block
+    while (!heap.isEmpty()) {
+      let nodeBlock = heap.dequeue();
+      let x = nodeBlock.originalX;
+      let y = nodeBlock.originalY;
+      if (x === this.contraption.seat.originalX && y === this.contraption.seat.originalY) {
+        return true;
+      }
+      if (visited.has(`${x},${y}`)) {
+        continue;
+      }
+      visited.add(`${x},${y}`);
+
+      for (const neighbor of nodeBlock.getNeighbors()) {
+        let nx = neighbor.originalX;
+        let ny = neighbor.originalY;
+        if (!visited.has(`${nx},${ny}`)) {
+          let priority = heuristic([nx, ny], [this.contraption.seat.originalX, this.contraption.seat.originalY]);
+          heap.enqueue(priority, neighbor);
+        }
+      }
+    }
+    this.damage(this.maxHitPoints);
+    return false;
+  }  
+
+  getNeighbors() {
+    let neighbors = [];
+    // Find adjacent blocks that are welded to the given block
     this.contraption.blocks.forEach((block) => {
       block.welds.forEach((weld) => {
         let attachedThisBlock = this.bodies.some(body => weld.bodyA === body || weld.bodyB === body);
         if (attachedThisBlock) {
-          connectedBlocks.push(block);
+          neighbors.push(block);
         }
       });
     });
-  
-    // Determine the closest block to the seat
-    let closestBlock = null;
-    let closestDistance = Infinity;
-  
-    connectedBlocks.forEach((block) => {
-      if (block.blocksFromSeat < closestDistance) {
-        closestBlock = block;
-        closestDistance = block.blocksFromSeat;
-      }
-    });
-  
-    this.previousBlocksFromSeat = this.blocksFromSeat;
-  
-    // Update the blocksFromSeat
-    if (closestBlock) {
-      this.blocksFromSeat = closestBlock.blocksFromSeat + 1;
-    } else {
-      // Block is disconnected from all other blocks, destroy it
-      this.damage(this.maxHitPoints);
-    }
-  
-    // Destroy the block if it's too far from the seat
-    if (this.blocksFromSeat > this.contraption.blocks.length) {
-      this.damage(this.maxHitPoints);
-    }
-  
-    // Recheck connectivity if the block has moved further from the seat
-    if (this.previousBlocksFromSeat < this.blocksFromSeat) {
-      this.contraption.checkConnected();
-    }
+    return neighbors;
   }
+}
+
+class PriorityQueue {
+  constructor() {
+      this.elements = [];
+  }
+
+  enqueue(priority, element) {
+      this.elements.push({ priority, element });
+      this.elements.sort((a, b) => a.priority - b.priority);
+  }
+
+  dequeue() {
+      return this.elements.shift().element;
+  }
+
+  isEmpty() {
+      return this.elements.length === 0;
+  }
+}
+
+function greedyBestFirstSearch(maze, start, end) {
+  const heap = new PriorityQueue();
+  heap.enqueue(heuristic(start, end), start);
+  const visited = new Set();
   
+  while (!heap.isEmpty()) {
+      const [x, y] = heap.dequeue();
+      if (x === end[0] && y === end[1]) {
+          return true;
+      }
+      if (visited.has(`${x},${y}`)) {
+          continue;
+      }
+      visited.add(`${x},${y}`);
+      
+      for (const [nx, ny] of neighbors(x, y, maze)) {
+          if (!visited.has(`${nx},${ny}`)) {
+              heap.enqueue(heuristic([nx, ny], end), [nx, ny]);
+          }
+      }
+  }
+  return false;
+}
+
+function heuristic(a, b) {
+  // Using Manhattan distance as the heuristic
+  return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
 }
 
 export default Block;

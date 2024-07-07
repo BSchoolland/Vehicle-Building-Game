@@ -190,16 +190,45 @@ class Contraption {
       this.seat = null;
     }
   }
-  checkConnected(){ // check each block to make sure it is connected
-    try {
-      this.blocks.forEach((block)=> {
-        block.checkConnected();
+  checkConnected(instant = false) {
+    if (instant) { // no batches, do everything now
+      this.blocks.forEach((block) => {
+        if (block.hitPoints > 0) {
+          block.checkConnected();
+        }
       });
-    } catch (error) {
-      // if we hit a recursion error, we've at least made progress in calculating the connected blocks, so just go again
-      this.checkConnected();
+      return;
     }
+    // Define the batch size
+    const batchSize = 5; // Adjust based on performance
+    let currentBatch = 0;
+  
+    const processBatch = () => {
+      // Calculate the start and end indices for the current batch
+      const start = currentBatch * batchSize;
+      const end = Math.min(start + batchSize, this.blocks.length);
+  
+      // Process each block in the current batch
+      for (let i = start; i < end; i++) {
+        const block = this.blocks[i];
+        if (block.hitPoints > 0) {
+          block.checkConnected();
+        }
+      }
+  
+      // Prepare the next batch
+      currentBatch++;
+  
+      // If there are more blocks to process, schedule the next batch
+      if (start + batchSize < this.blocks.length) {
+        requestAnimationFrame(processBatch);
+      }
+    };
+  
+    // Start processing the first batch
+    requestAnimationFrame(processBatch);
   }
+
   showDisconnectedBlocks(){
     // make welds for all blocks
     this.blocks.forEach((block) => {
@@ -207,8 +236,8 @@ class Contraption {
     });
     // check how many blocks have health and are in the contraption
     const intialBlockCount = this.blocks.filter((block) => block.hitPoints > 0).length;
-    // run checkConnected on all blocks
-    this.checkConnected();
+    // run checkConnected on all blocks without waiting
+    this.checkConnected(true);
 
     // check how many blocks have health and are in the contraption
     const finalBlockCount = this.blocks.filter((block) => block.hitPoints > 0).length;
@@ -390,7 +419,7 @@ class Contraption {
     // set time to now
     this.lastTime = Date.now();
     // check connected
-    this.checkConnected();
+    this.checkConnected(true);
   }
   // despawn the contraption by making all blocks static
   despawn(fancy = false) {

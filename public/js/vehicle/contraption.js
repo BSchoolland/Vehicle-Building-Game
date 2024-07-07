@@ -191,9 +191,14 @@ class Contraption {
     }
   }
   checkConnected(){ // check each block to make sure it is connected
-    this.blocks.forEach((block)=> {
-      block.checkConnected();
-    })
+    try {
+      this.blocks.forEach((block)=> {
+        block.checkConnected();
+      });
+    } catch (error) {
+      // if we hit a recursion error, we've at least made progress in calculating the connected blocks, so just go again
+      this.checkConnected();
+    }
   }
   showDisconnectedBlocks(){
     // make welds for all blocks

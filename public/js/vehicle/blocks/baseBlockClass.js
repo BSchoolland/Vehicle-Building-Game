@@ -631,62 +631,65 @@ showWarning() {
   }
   // function for making sure the block is connected to the seat
   checkConnected() {
-    // if the block is destroyed, don't check if it is connected
+    // If the block is destroyed, exit the function
     if (this.hitPoints <= 0) {
       return;
     }
-    // find the adjacent blocks
+    if (this.blocksFromSeat === 0) {
+      // to optimize very large contraptions, on the first pass we'll initialize the blocks from seat to the physical distance from the seat / 50
+      // (using a less computationally expensive method than the distance formula)
+      this.blocksFromSeat = Math.floor(
+        Math.abs(this.bodies[0].position.x - this.contraption.seat.bodies[0].position.x) / 50 + Math.abs(this.bodies[0].position.y - this.contraption.seat.bodies[0].position.y) / 50
+      );
+      console.log('preliminary blocks from seat: ' + this.blocksFromSeat);
+    }
+
+  
     // Array to store connected blocks
     let connectedBlocks = [];
-
-    // Iterate over all blocks in the contraption
+  
+    // Find adjacent blocks that are welded to the current block
     this.contraption.blocks.forEach((block) => {
-      // Check if the block has welds
-      if (block.welds.length > 0) {
-        // Check if the weld is attached to the target block
-        block.welds.forEach((weld) => {
-          // since welds can now be attached to any body in the block, check if the weld is attached to any of this block's bodies
-          let attachedThisBlock = false;
-          this.bodies.forEach((body) => {
-            if (weld.bodyA === body || weld.bodyB === body) {
-              attachedThisBlock = true;
-            }
-          });
-          if (attachedThisBlock) {
-            // Add the block to the connected blocks array
-            connectedBlocks.push(block);
-          }
-        });
-      }
+      block.welds.forEach((weld) => {
+        let attachedThisBlock = this.bodies.some(body => weld.bodyA === body || weld.bodyB === body);
+        if (attachedThisBlock) {
+          connectedBlocks.push(block);
+        }
+      });
     });
-    // check how far each adjacent block is from the seat, choose the closest one, and set this block's blocksFromSeat to 1 more than that
+  
+    // Determine the closest block to the seat
     let closestBlock = null;
-    let closestDistance = 1000000;
+    let closestDistance = Infinity;
+  
     connectedBlocks.forEach((block) => {
-      // find the distance between the block and the seat
-      let distance = block.blocksFromSeat;
-      if (distance < closestDistance) {
+      if (block.blocksFromSeat < closestDistance) {
         closestBlock = block;
-        closestDistance = distance;
+        closestDistance = block.blocksFromSeat;
       }
     });
+  
     this.previousBlocksFromSeat = this.blocksFromSeat;
-    // set the blocksFromSeat to 1 more than the closest block
+  
+    // Update the blocksFromSeat
     if (closestBlock) {
       this.blocksFromSeat = closestBlock.blocksFromSeat + 1;
     } else {
-      // this has been disconnected from all other blocks, destroy it
+      // Block is disconnected from all other blocks, destroy it
       this.damage(this.maxHitPoints);
     }
-    // if this is too far from the seat, destroy it
-    if (this.blocksFromSeat > 25) {
+  
+    // Destroy the block if it's too far from the seat
+    if (this.blocksFromSeat > this.contraption.blocks.length) {
       this.damage(this.maxHitPoints);
     }
-    // if the block has gotten further away, we aren't done here and need to check connected on the contraption again
+  
+    // Recheck connectivity if the block has moved further from the seat
     if (this.previousBlocksFromSeat < this.blocksFromSeat) {
       this.contraption.checkConnected();
     }
   }
+  
 }
 
 export default Block;

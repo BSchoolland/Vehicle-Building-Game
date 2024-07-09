@@ -16,14 +16,16 @@ class EnemyHandler {
             'largeSpikeCar',
             'world1Boss',
             'rocketCar',
-            'volley',
+            'smackerR',
+            'mortar',
         ];
         this.LeftFacingEnemies = [
-            'largeSpikeCarL',
             'largeSpikeCarL',
             'tankL',
             'flierL',
             'whackerL',
+            'porcupine',
+            'yeet',
         ];
         // Fetch the list of enemies from the API
         const response = await fetch('/api/enemies');

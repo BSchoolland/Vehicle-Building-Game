@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "type": "BasicWoodenBlock",
+      "type": "TNTBlock",
       "x": 225,
       "y": 775,
       "rotatedTimes": 0,

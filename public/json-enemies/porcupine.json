@@ -1,0 +1,166 @@
+{
+    "blocks": [
+        {
+            "type": "WheelBlock",
+            "x": 1225,
+            "y": 1225,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 1325,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 1375,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1275,
+            "y": 1225,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1325,
+            "y": 1225,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1325,
+            "y": 1275,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1375,
+            "y": 1275,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1375,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "SeatBlock",
+            "x": 1375,
+            "y": 1225,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 1275,
+            "y": 1275,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "SpikeBlock",
+            "x": 1425,
+            "y": 1275,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "SpikeBlock",
+            "x": 1425,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "RemoteBlock",
+            "x": 1375,
+            "y": 1175,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "RemoteBlock",
+            "x": 1425,
+            "y": 1175,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "RemoteBlock",
+            "x": 1475,
+            "y": 1175,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1325,
+            "y": 1175,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "RemoteBlock",
+            "x": 1525,
+            "y": 1175,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "SpikeBlock",
+            "x": 1575,
+            "y": 1175,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "rocketBoosterBlock",
+            "x": 1275,
+            "y": 1175,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "rocketBoosterBlock",
+            "x": 1325,
+            "y": 1125,
+            "rotatedTimes": 1,
+            "flippedX": false
+        }
+    ],
+"commands": [
+    {
+        "key": "d",
+        "start": 1,
+        "end": 5.0
+    },
+    {
+        "key": "SHIFT",
+        "start": 2,
+        "end": 5
+    },
+    {
+        "key": "d",
+        "start": 8,
+        "end": 999999
+    },
+    {
+        "key": "SHIFT",
+        "start": 8,
+        "end": 99999
+    }
+]
+}

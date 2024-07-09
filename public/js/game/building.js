@@ -295,7 +295,17 @@ class BuildMenu {
       // Calculate new index
       currentIndex = (currentIndex + direction + blockTypesArray.length) % blockTypesArray.length;
       // Simulate a click on the new block button
-      this.blockButtons[blockTypesArray[currentIndex].type.name].click();
+      let clickEvent = new MouseEvent('click', {
+        bubbles: true, // Event bubbles up through the DOM
+        cancelable: true, // Event can be canceled
+        view: window, // Event's abstract view
+      });
+
+      // Add custom property to indicate it's not a real click
+      clickEvent.synthetic = true;
+
+      // Dispatch the event on the first block button
+      this.blockButtons[blockTypesArray[currentIndex].type.name].dispatchEvent(clickEvent);   
     });
   }
   createMenuButtons() {

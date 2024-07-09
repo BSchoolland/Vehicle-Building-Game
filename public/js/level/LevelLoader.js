@@ -191,7 +191,7 @@ class LevelLoader {
     const tutorialArrayCopy = tutorialArray.map((popup) => {
       return { ...popup };
     });
-    this.parent.LevelTutorial.setPopups(tutorialArrayCopy);
+    this.parent.LevelTutorial.setPopups(tutorialArrayCopy, this.parent.worldSelected, levelIndex + 1);
     // Clear existing blocks in the Level
     this.clear(); // remove all blocks from the Level
     // Load new blocks from JSON

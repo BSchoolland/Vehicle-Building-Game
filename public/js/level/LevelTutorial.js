@@ -2,9 +2,13 @@ class LevelTutorial{
     constructor(parent) {
         this.parent = parent;
         this.popups = [];
+        this.world = null;
+        this.level = null;
     }
 
-    setPopups(popups) {
+    setPopups(popups, world, level) {
+        this.world = world;
+        this.level = level;
         console.log(popups);
         this.popups = popups;
     }
@@ -15,9 +19,9 @@ class LevelTutorial{
         let tutorialText = document.querySelector("#tutorial-content p");
         tutorialText.innerHTML = test;
         // fill the image
-        let image = this.popups[popupNumber].image;
         let tutorialImage = document.querySelector("#tutorial-content img");
-        tutorialImage.src = image;
+        let fullSrc = `/img/tutorial/world${this.world}/level${this.level}/${this.popups[popupNumber].image}`
+        tutorialImage.src = fullSrc;
         // show the popup
         let tutorialPopup = document.querySelector("#tutorial-popup");
         tutorialPopup.classList.remove("hidden");

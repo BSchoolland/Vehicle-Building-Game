@@ -34,11 +34,13 @@ class LevelTutorial{
         }
     }
 
-    checkInteract() {
+    checkInteract(type = "interact") { // could use type to determine what kind of interaction
         // check if any of the popups should show when the player interacts with something
         for (let i = 0; i < this.popups.length; i++) {
-            if (this.popups[i].activates === "interact") {
+            if (this.popups[i].activates === type) {
+                setTimeout(() => {
                 this.showTutorial(i);
+                }, 1000);
                 this.popups[i].activates = "none";
                 break;
             }

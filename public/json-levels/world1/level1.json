@@ -89,17 +89,17 @@
     },
     {
       "text": "You can remove blocks by right clicking on them.  Try it out!",
-      "activates": "interact",
+      "activates": "placeBlock",
       "image": "2.png"
     },
     {
       "text": "You can switch which block you are using by clicking on it in this Build Menu",
-      "activates": "interact",
+      "activates": "removeBlock",
       "image": "3.png"
     },
     {
       "text": "Build your first car, then press Start  or B to drive it!",
-      "activates": "interact",
+      "activates": "selectBlock",
       "image": "4.png"
     },
     {

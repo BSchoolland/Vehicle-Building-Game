@@ -266,8 +266,16 @@ class BuildMenu {
       button.appendChild(buttonImg);
       button.appendChild(buttonText);
       button.setAttribute("data-keycode", blockType.key.charCodeAt(0));
-      button.onclick = () => {
+      button.onclick = (event) => {
         this.building.setCurrentBlockType(blockType.type, blockType.limit);
+        // tell the tutorial that the block has been selected
+        try {
+          if (!event.synthetic) {
+            this.building.levelManager.LevelTutorial.checkInteract("selectBlock");
+          }
+        } catch (e) {
+          console.error("No tutorial found");
+        }
         // Remove the active class from all the block type buttons
         Object.values(this.blockButtons).forEach((button) =>
           button.classList.remove("active")
@@ -472,7 +480,19 @@ class BuildMenu {
         // set this button's class to active
         // this.buildModeButton.classList.add("active");
         // activate the first block type button
-        Object.values(this.blockButtons)[0].click();
+        // Create a new click event
+        let event = new MouseEvent('click', {
+          bubbles: true, // Event bubbles up through the DOM
+          cancelable: true, // Event can be canceled
+          view: window, // Event's abstract view
+        });
+
+        // Add custom property to indicate it's not a real click
+        event.synthetic = true;
+
+        // Dispatch the event on the first block button
+        Object.values(this.blockButtons)[0].dispatchEvent(event);   
+
         console.log("Build mode enabled");
         // display a grid over the build area
         building.displayGrid();
@@ -685,6 +705,7 @@ class Building {
         this.viewMode = false;
       }
     });
+    this.levelManager = null; // will be set by the level manager
   }
   setCamera(camera) {
     this.camera = camera;
@@ -747,9 +768,9 @@ class Building {
       isMouseDown = true;
       this.handleCanvasClick()
     });
-    canvas.addEventListener("touchend", (event) => this.handleCanvasClick(event)); // for mobile
+    document.addEventListener("touchend", (event) => this.handleCanvasClick(event)); // for mobile
     // wait for the mouse to be released
-    canvas.addEventListener("mouseup", () => {
+    document.addEventListener("mouseup", () => {
       isMouseDown = false;
       isRightClick = false;
     });
@@ -879,6 +900,8 @@ class Building {
     this.contraption.addBlock(newBlock);
     // play the place block sound
     playSound("placeBlock");
+    // tell the tutorial that an interaction has occurred
+    this.levelManager.LevelTutorial.checkInteract("placeBlock");
     // update the button limits
     // make the new block selected
     this.selectBlock(newBlock);
@@ -951,6 +974,8 @@ class Building {
       this.removeGhostBlocks();
       // play the remove block sound
       playSound("removeBlock");
+      // tell the tutorial that an interaction has occurred
+      this.levelManager.LevelTutorial.checkInteract('removeBlock');
     }
   }
 
@@ -988,6 +1013,8 @@ class Building {
         this.selectedBlock.rotate90();
         // play the rotate block sound
         playSound("rotateBlock");
+        // tell the tutorial that an interaction has occurred
+        this.levelManager.LevelTutorial.checkInteract("rotateBlock");
       }
       // if backspace, remove the block
       if (event.keyCode === 8) {

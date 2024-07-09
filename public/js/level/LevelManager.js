@@ -38,6 +38,7 @@ class LevelManager {
     this.engine = engine;
     this.playerContraption = building.contraption;
     this.building = building;
+    building.levelManager = this;
     this.isEnemyEditor = isEnemyEditor;
     // handles gameplay mechanics for the level (objectives, level completion, etc.)
     this.GameplayHandler = new Gameplay(this); 

@@ -225,6 +225,8 @@ class Gameplay {
       this.secondsSurvived = 0;
       // sync resources with the server
       this.parent.building.ResourceHandler.syncResources(this.parent.worldSelected);
+      // tell the tutorial that the level has been completed
+      this.parent.LevelTutorial.checkVictory();
     }, 3000);
   }
   update() {

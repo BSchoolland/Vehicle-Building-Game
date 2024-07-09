@@ -102,7 +102,13 @@
       "value": 6
     }
   ],
-  "tutorialText": "Spikes can damage and destroy enemy contraptions!  If you ever need to remove your own blocks, just right click, it's less painful than spikes.",
+  "tutorial": [
+    {
+      "text": "This is your <b>Build Area</b>. Click on a space here to place a block.",
+      "activates": "load",
+      "image": "1.png"
+    }
+  ],
   "title": "Attack!",
   "reward": {
     "BasicWoodenBlock": 1,

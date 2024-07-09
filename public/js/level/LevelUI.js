@@ -175,7 +175,6 @@ class LevelUI {
       }
       // if the level selector is not open, quit the level, and return to the level selector
       else {
-        let wait = 0;
         if (this.parent.building.camera.doingTour) {
           console.log("tour cancelled!");
           // if the camera is doing a tour, stop it, and notify that the tour has been cancelled
@@ -187,28 +186,29 @@ class LevelUI {
           this.parent.building.buildMenu.buildModeButton.click();
           this.parent.building.viewMode = false;
         }
-        setTimeout(() => {
-          // prevent build mode
-          this.parent.building.canEnterBuildMode = false;
-          // clear the level
-          this.parent.LevelLoader.clear(true);
-          // remove the tutorial text
-          document.getElementById("tutorial-text").style.display = "none";
-          // clear the player contraption
-          this.parent.playerContraption.clear();
-          // deactivate build mode if it is active
-          if (this.parent.building.buildInProgress) {
-            this.parent.building.toggleBuildingMode(true);
-          }
-          // set the stats to be invisible
-          document.getElementById("stats").style.display = "none";
-          // set the help button to be invisible
-          document.getElementById("help-container").style.display = "none";
-          // set the survival time to 0
-          this.parent.secondsSurvived = 0;
-          //open the level selector
-          this.loadLevelSelector();
-        }, wait);
+        // prevent build mode
+        this.parent.building.canEnterBuildMode = false;
+        // clear the level
+        this.parent.LevelLoader.clear(true);
+        // remove the tutorial text
+        document.getElementById("tutorial-text").style.display = "none";
+        // clear the player contraption
+        this.parent.playerContraption.clear();
+        // deactivate build mode if it is active
+        if (this.parent.building.buildInProgress) {
+          // remove the tutorial so it does not get triggered accidentally
+          this.parent.LevelTutorial.setPopups([], 1, 1)
+          this.parent.building.toggleBuildingMode(true);
+        }
+        // set the stats to be invisible
+        document.getElementById("stats").style.display = "none";
+        // set the help button to be invisible
+        document.getElementById("help-container").style.display = "none";
+        // set the survival time to 0
+        this.parent.secondsSurvived = 0;
+        //open the level selector
+        this.loadLevelSelector();
+
       }
     }
   }

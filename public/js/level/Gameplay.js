@@ -37,7 +37,6 @@ class Gameplay {
     // set time to normal speed
     this.parent.engine.timing.timeScale = this.baseTimeScale;
     this.won = false;
-    // despawn all enemy contraptions
 
     // spawn in the enemy contraptions
     this.parent.enemyContraptions.forEach((enemyContraption) => {

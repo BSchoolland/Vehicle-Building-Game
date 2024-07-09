@@ -32,6 +32,8 @@ class Gameplay {
   }
 
   startLevel() {
+    // tell the tutorial that the level has started
+    this.parent.LevelTutorial.checkStart();
     // set time to normal speed
     this.parent.engine.timing.timeScale = this.baseTimeScale;
     this.won = false;

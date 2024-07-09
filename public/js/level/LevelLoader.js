@@ -182,6 +182,11 @@ class LevelLoader {
     if (!tutorialArray) {
       tutorialArray = [];
     }
+    // if the level has already been completed, set tutorialArray to an empty array
+    console.log("Level completed", this.parent.LevelHandler.isLevelCompleted(this.parent.worldSelected, levelIndex + 1));
+    if (this.parent.LevelHandler.isLevelCompleted(this.parent.worldSelected, levelIndex + 1)) {
+      tutorialArray = [];
+    }
     // make a copy of the array to avoid modifying the original
     const tutorialArrayCopy = tutorialArray.map((popup) => {
       return { ...popup };

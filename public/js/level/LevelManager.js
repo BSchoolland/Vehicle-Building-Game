@@ -31,6 +31,7 @@ import LevelUI from "./LevelUI.js";
 import Gameplay from "./Gameplay.js";
 import LevelEditor from "./LevelEditing.js";
 import LevelLoader from "./LevelLoader.js";
+import LevelTutorial from "./LevelTutorial.js";
 // A Level is a collection of blocks that can be saved and loaded
 class LevelManager {
   constructor(engine, building, progressBar, isEnemyEditor = false) {
@@ -57,6 +58,9 @@ class LevelManager {
     this.coins = [];
     this.test = false;
     this.loaded = false;
+
+    // the tutorial
+    this.LevelTutorial = new LevelTutorial(this);
   }
 
   async init(string='normal') {

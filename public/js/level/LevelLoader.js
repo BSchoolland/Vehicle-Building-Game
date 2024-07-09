@@ -177,21 +177,16 @@ class LevelLoader {
     else { // if optionalJson is not provided, load from the LevelHandler
       LevelJson = this.parent.LevelHandler.getLevel(this.parent.worldSelected, levelIndex); // world 1, level levelIndex
     }
-    let tutorial = document.getElementById("tutorial-text");
 
-    let string = LevelJson.tutorialText;
-    if (string === "") {
-      // set the string to the level name
-      string = "Level: " + LevelJson.title;
+    let tutorialArray = LevelJson.tutorial;
+    if (!tutorialArray) {
+      tutorialArray = [];
     }
-    let sentences = string.split(/(?<=[\.!])/).map(sentence => {
-      let trimmedSentence = sentence.trim();
-      if (trimmedSentence) {
-        return `<p>${trimmedSentence}</p>`;
-      }
-    }).join('');
-    tutorial.innerHTML = sentences;
-    tutorial.style.display = "block";
+    // make a copy of the array to avoid modifying the original
+    const tutorialArrayCopy = tutorialArray.map((popup) => {
+      return { ...popup };
+    });
+    this.parent.LevelTutorial.setPopups(tutorialArrayCopy);
     // Clear existing blocks in the Level
     this.clear(); // remove all blocks from the Level
     // Load new blocks from JSON
@@ -360,8 +355,12 @@ class LevelLoader {
           // clear the level
           this.clear();
           clearInterval(interval);
+          // tell the tutorial to check if it should show any popups
+          this.parent.LevelTutorial.checkLoad();
           return;
         }
+        // tell the tutorial to check if it should show any popups
+        this.parent.LevelTutorial.checkLoad();
         console.log("Tour done");
         clearInterval(interval);
         this.parent.building.camera.doingTour = false;

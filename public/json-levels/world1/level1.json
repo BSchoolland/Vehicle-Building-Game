@@ -81,7 +81,38 @@
     { "name": "Survive", "value": 0 }
   ],
 
-  "tutorialText": "Build a car with wheels and a seat, then press 'b' to begin. Use 'a' and 'd' to collect the coins!",
+  "tutorial": [
+    {
+      "text": "This is your <b>Build Area</b>. Click on a space here to place a block.",
+      "activates": "load",
+      "image": "1.png"
+    },
+    {
+      "text": "You can remove blocks by right clicking on them.  Try it out!",
+      "activates": "interact",
+      "image": "2.png"
+    },
+    {
+      "text": "You can switch which block you are using by clicking on it in this Build Menu",
+      "activates": "interact",
+      "image": "3.png"
+    },
+    {
+      "text": "Build your first car, then press Start  or B to drive it!",
+      "activates": "interact",
+      "image": "4.png"
+    },
+    {
+      "text": "Wheels spin when you press A or D you can also use the arrow keys if you want.",
+      "activates": "start",
+      "image": "5.png"
+    },
+    {
+      "text": "Great job! Beating a level provides resources which you'll need to take down the Spike Boss and unlock more worlds and parts",
+      "activates": "victory",
+      "image": "6.png"
+    }
+  ],
   "title": "The Beginning",
   "reward": {
     "BasicWoodenBlock": 1,

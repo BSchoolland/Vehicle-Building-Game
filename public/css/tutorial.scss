@@ -1,0 +1,33 @@
+.okay-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#okay-button {
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px;
+    margin-right: 5%;
+    cursor: pointer;
+}
+
+.tutorial-content { 
+    margin: 10px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    text-align: center;
+}
+
+.tutorial-content p {
+    margin-top: 1rem;
+    font-size: 1.5em;
+}

@@ -257,7 +257,18 @@
       "value": 6
     }
   ],
-  "tutorialText": "Blocks can be rotated with the R key. No need to destroy all enemies, just survive and collect the coins!",
+  "tutorial": [
+    {
+      "text": "Blocks can be Rotated by pressing the <b>R</b> key.  Try it by adding a spike to the back of your car, to help you escape and collect the coins!",
+      "activates": "load",
+      "image": "1.png"
+    },
+    {
+      "text": "Looks like you've got this!  Collect more parts by completing more levels and Bonus Objectives I'll see you again when you think you're ready to face the Spike Boss.",
+      "activates": "victory",
+      "image": "2.png"
+    }
+  ],
   "title": "The Great Escape",
   "reward": {
     "BasicWoodenBlock": 1,

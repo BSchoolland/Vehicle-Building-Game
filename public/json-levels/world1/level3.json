@@ -106,7 +106,13 @@
       "value": 0
     }
   ],
-  "tutorialText": "The bad guys have spikes now, watch out!",
+  "tutorial": [
+    {
+      "text": "If you want to get an idea of what you'll be up against before building, you can use the <b>View Level</b> Button, then use <b>WASD</b> or the arrow keys to move around.  Try it out, then press <b>B</b> once you're done.",
+      "activates": "load",
+      "image": "1.png"
+    }
+  ],
   "title": "Clash of Spikes",
   "reward": {
     "BasicWoodenBlock": 1,

@@ -158,7 +158,17 @@
   "buildingBlockTypes": "collected1",
   "suggestedBlocks": 25,
   "bonusChallenges": [],
-  "tutorialText": "The spike boss stands between you and world 2. Collect enough blocks in previous levels to build a vehicle that can defeat it!",
+  "tutorial": [{
+    "text": "You made it!  This level uses the resources you've been collecting. I hope you brought enough because this guy's tough.  If you decide you need more blocks, you can always go back and attempt some <b>Bonus Objectives</b>!",
+    "activates": "load",
+    "image": "1.png"
+  },
+  {
+    "text": "Amazing!  He won't be bothering us again any time soon.  Now that you've beaten the Spike Boss the path is clear to advance to <b>world 2</b>.  New blocks and challenges await!",
+    "activates": "victory",
+    "image": "2.png"
+  }
+],
   "importantTutorialText": "This level uses the parts from your inventory! If you have trouble, try collecting more by beating more levels or completing bonus objectives!",
   "title": "Spike Boss",
   "reward": "unlockWorld2"

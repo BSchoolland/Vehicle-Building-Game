@@ -104,9 +104,14 @@
   ],
   "tutorial": [
     {
-      "text": "This is your <b>Build Area</b>. Click on a space here to place a block.",
+      "text": "The <b>Spike Block</b> damages enemies when it hits them.  Add it to the front of your car to help take down your opponent!",
       "activates": "load",
       "image": "1.png"
+    },
+    {
+      "text": "After you beat most levels, they will reveal <b>Bonus Objectives</b> in the top right corner of the level.  Hovering over the icon will reveal more information about them. Bonus Objectives can be very challenging, but they also provide extra resources.  I suggest trying them only after beating a couple other levels.",
+      "activates": "victory",
+      "image": "3.png"
     }
   ],
   "title": "Attack!",

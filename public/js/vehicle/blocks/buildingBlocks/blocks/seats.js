@@ -80,6 +80,7 @@ class SeatBlock extends Block {
         this.makeConstraints();
         this.simetricalX = false;
         this.destroyed = true;
+        // this.flippedX = true;
     }
     makeBodies() {
         // create a flat surface on the left side of the block
@@ -163,7 +164,7 @@ class SeatBlock extends Block {
         this.constraints.push(Matter.Constraint.create({
             bodyA: this.bodies[0], // the rectangle
             bodyB: this.bodies[6], // the stickman's left leg
-            pointA: { x: 30, y: 5 },
+            pointA: { x: 20, y: 25 },
             pointB: { x: 20, y: 2 },
             stiffness: 0.002,
             length: 0,

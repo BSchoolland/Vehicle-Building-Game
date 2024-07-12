@@ -127,7 +127,7 @@ class LevelLoader {
     // load the commands
     EnemyContraption.AiLoadCommands(enemyContraptionJson.commands);
     // move the enemy contraption to the spawn point
-    EnemyContraption.moveTo(blockJson.x, blockJson.y);
+    EnemyContraption.moveTo(blockJson.x, blockJson.y, enemyContraptionJson.spawnHeight || 0);
     // add the enemy contraption to the enemy contraptions array
     this.parent.enemyContraptions.push(EnemyContraption);
     // wait for the level to load (this means we can be sure that all blocks are loaded before we try to find the lowest block)

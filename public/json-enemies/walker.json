@@ -1,0 +1,588 @@
+{
+    "blocks": [
+        {
+            "type": "PoweredHingeBlock",
+            "x": 1675,
+            "y": 1175,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "PoweredHingeBlock",
+            "x": 2075,
+            "y": 1175,
+            "rotatedTimes": 3,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 2025,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 2075,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 2125,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2075,
+            "y": 1275,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2075,
+            "y": 1225,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1625,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1675,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1725,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1775,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1825,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1875,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1975,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2025,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2075,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "rocketBoosterBlock",
+            "x": 2175,
+            "y": 1325,
+            "rotatedTimes": 2,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1675,
+            "y": 1075,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1725,
+            "y": 1025,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1725,
+            "y": 1075,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "GrappleBlock",
+            "x": 1625,
+            "y": 1075,
+            "rotatedTimes": 2,
+            "flippedX": false
+        },
+        {
+            "type": "GrappleBlock",
+            "x": 1575,
+            "y": 1125,
+            "rotatedTimes": 2,
+            "flippedX": false
+        },
+        {
+            "type": "GrappleBlock",
+            "x": 1675,
+            "y": 1025,
+            "rotatedTimes": 2,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1775,
+            "y": 1025,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1775,
+            "y": 975,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "GrappleBlock",
+            "x": 1725,
+            "y": 975,
+            "rotatedTimes": 2,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1825,
+            "y": 975,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2075,
+            "y": 1025,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2125,
+            "y": 1025,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1875,
+            "y": 1075,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1975,
+            "y": 1075,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1825,
+            "y": 1025,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1825,
+            "y": 1075,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2025,
+            "y": 1025,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2025,
+            "y": 1075,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "SeatBlock",
+            "x": 2075,
+            "y": 975,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1925,
+            "y": 1075,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "TNTBlock",
+            "x": 2125,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "TNTBlock",
+            "x": 2125,
+            "y": 1075,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "TNTBlock",
+            "x": 1925,
+            "y": 1125,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "RemoteBlock",
+            "x": 1875,
+            "y": 975,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "TNTBlock",
+            "x": 1925,
+            "y": 975,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "rocketBoosterBlock",
+            "x": 1925,
+            "y": 1025,
+            "rotatedTimes": 3,
+            "flippedX": false
+        },
+        {
+            "type": "RemoteBlock",
+            "x": 1975,
+            "y": 975,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 2025,
+            "y": 975,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "TNTBlock",
+            "x": 1625,
+            "y": 1175,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1675,
+            "y": 1225,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicWoodenBlock",
+            "x": 1675,
+            "y": 1275,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1675,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1625,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "rocketBoosterBlock",
+            "x": 1775,
+            "y": 1325,
+            "rotatedTimes": 2,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1725,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "SpikeBlock",
+            "x": 1775,
+            "y": 1075,
+            "rotatedTimes": 2,
+            "flippedX": false
+        }
+    ],
+    "commands": [
+        {
+            "key": "SHIFT",
+            "start": 1,
+            "end": 99999999
+        },
+        {
+            "key": "x",
+            "start": 4.75,
+            "end": 5.75
+        },
+        {
+            "key": "q",
+            "start": 1,
+            "end": 2.5
+        },
+        {
+            "key": "r",
+            "start": 2.75,
+            "end": 3.75
+        },
+        {
+            "key": "e",
+            "start": 3,
+            "end": 4.5
+        },
+        {
+            "key": "r",
+            "start": 4.75,
+            "end": 5.75
+        },
+        {
+            "key": "q",
+            "start": 5,
+            "end": 6.5
+        },
+        {
+            "key": "r",
+            "start": 6.75,
+            "end": 7.75
+        },
+        {
+            "key": "e",
+            "start": 7,
+            "end": 8.5
+        },
+        {
+            "key": "r",
+            "start": 8.75,
+            "end": 9.75
+        },
+        {
+            "key": "q",
+            "start": 9,
+            "end": 10.5
+        },
+        {
+            "key": "r",
+            "start": 10.75,
+            "end": 11.75
+        },
+        {
+            "key": "e",
+            "start": 11,
+            "end": 12.5
+        },
+        {
+            "key": "r",
+            "start": 12.75,
+            "end": 13.75
+        },
+        {
+            "key": "q",
+            "start": 13,
+            "end": 14.5
+        },
+        {
+            "key": "r",
+            "start": 14.75,
+            "end": 15.75
+        },
+        {
+            "key": "e",
+            "start": 15,
+            "end": 16.5
+        },
+        {
+            "key": "r",
+            "start": 16.75,
+            "end": 17.75
+        },
+        {
+            "key": "q",
+            "start": 17,
+            "end": 18.5
+        },
+        {
+            "key": "r",
+            "start": 18.75,
+            "end": 19.75
+        },
+        {
+            "key": "e",
+            "start": 19,
+            "end": 20.5
+        },
+        {
+            "key": "r",
+            "start": 20.75,
+            "end": 21.75
+        },
+        {
+            "key": "q",
+            "start": 21,
+            "end": 22.5
+        },
+        {
+            "key": "r",
+            "start": 22.75,
+            "end": 23.75
+        },
+        {
+            "key": "e",
+            "start": 23,
+            "end": 24
+        },
+        {
+            "key": "r",
+            "start": 24.25,
+            "end": 25.25
+        },
+        {
+            "key": "q",
+            "start": 25.5,
+            "end": 26.5
+        },
+        {
+            "key": "r",
+            "start": 26.75,
+            "end": 27.75
+        },
+        {
+            "key": "e",
+            "start": 27,
+            "end": 28
+        },
+        {
+            "key": "r",
+            "start": 28.25,
+            "end": 29.25
+        },
+        {
+            "key": "q",
+            "start": 29.5,
+            "end": 30.5
+        },
+        {
+            "key": "r",
+            "start": 30.75,
+            "end": 31.75
+        },
+        {
+            "key": "e",
+            "start": 31,
+            "end": 32
+        },
+        {
+            "key": "r",
+            "start": 32.25,
+            "end": 33.25
+        },
+        {
+            "key": "q",
+            "start": 33.5,
+            "end": 34.5
+        },
+        {
+            "key": "r",
+            "start": 34.75,
+            "end": 35.75
+        },
+        {
+            "key": "e",
+            "start": 35,
+            "end": 36
+        },
+        {
+            "key": "r",
+            "start": 36.25,
+            "end": 37.25
+        },
+        {
+            "key": "q",
+            "start": 37.5,
+            "end": 38.5
+        },
+        {
+            "key": "r",
+            "start": 38.75,
+            "end": 39.75
+        },
+        {
+            "key": "e",
+            "start": 39,
+            "end": 40
+        },
+        {
+            "key": "r",
+            "start": 40.25,
+            "end": 41.25
+        }
+    ],
+    "spawnHeight": 100
+}

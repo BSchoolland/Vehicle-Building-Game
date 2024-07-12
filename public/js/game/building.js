@@ -738,7 +738,7 @@ class Building {
     this.buildMenu.levelMode();
     const canvas = document.querySelector("canvas");
     // make the view the size it would be when doing the level
-    this.camera.setViewport(canvas.width * 2, canvas.height * 2);
+    this.camera.setViewport(canvas.width * 6, canvas.height * 6);
 
     // center the camera on the build area
     this.camera.setCenterPosition(

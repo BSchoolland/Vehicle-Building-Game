@@ -1894,5 +1894,7 @@
         }
     ],
     "title": "On all Sides",
-    "tutorialText": ""
+    "tutorialText": "",
+    "groundDepth": 20
+
 }

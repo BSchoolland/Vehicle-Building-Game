@@ -309,7 +309,8 @@ class Contraption {
       }
     });
   }
-  moveTo(x, y) {
+  moveTo(x, y, yOffset = 0) {
+    console.log('Y offset: ' + yOffset)
     // figure out the center of the contraption
     var centerX = 0;
     var centerY = 0;
@@ -327,7 +328,7 @@ class Contraption {
     centerY -= 5;
     // move the contraption so that the center is at x and y
     x -= centerX;
-    y -= centerY;
+    y -= centerY + yOffset;
     this.blocks.forEach((block) => {
       block.originalX += x;
       block.originalY += y;

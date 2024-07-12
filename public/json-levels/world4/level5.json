@@ -2464,5 +2464,7 @@
         }
     ],
     "title": "Stowaway",
-    "tutorialText": ""
+    "tutorialText": "",
+    "groundDepth": 30
+
 }

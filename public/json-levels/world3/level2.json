@@ -82,7 +82,7 @@
       "type": "EnemySpawnBlock",
       "x": 4800,
       "y": 1300,
-      "enemyType": "spikeCar"
+      "enemyType": "spikeCarUnbalanced"
     },
     { "type": "GrassBlock", "x": 5000, "y": 1400 },
     { "type": "GrassBlock", "x": 5100, "y": 1400 },

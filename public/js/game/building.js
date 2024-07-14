@@ -19,7 +19,7 @@ import { playSound, setSong } from "../sounds/playSound.js";
 
 const buildClassesToImages = {
   "BasicWoodenBlock": "/img/build-buttons/basic-block.png",
-  "BasicIronBlock": "/img/build-buttons/iron-block.png",
+  "BasicIronBlock": "/img/build-buttons/basic-iron-block.png",
   "BasicDiamondBlock": "img/build-buttons/diamond-block.png",
   "WheelBlock": "img/build-buttons/wheel-block.png",
   "TNTBlock": "img/build-buttons/tnt-block.png",

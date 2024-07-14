@@ -192,7 +192,7 @@
     ],
     "commands": [
         { "key": "a", "start": 0, "end": 2},
-        { "key": "q", "start": 2.2, "end": 3},
+        { "key": "q", "start": 2.2, "end": 3.5},
         { "key": "x", "start": 4.3, "end": 99999},
         { "key": "SHIFT", "start": 4.5, "end": 609999},
         { "key": "a", "start": 5, "end": 99999}

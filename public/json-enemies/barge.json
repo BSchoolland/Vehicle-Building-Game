@@ -13,8 +13,6 @@
       { "type": "BasicWoodenBlock", "x": 125, "y": 675, "flippedX": false },
       { "type": "BasicWoodenBlock", "x": 75, "y": 675, "flippedX": false },
       { "type": "BasicWoodenBlock", "x": 125, "y": 725, "flippedX": false },
-      { "type": "SpikeBlock", "x": 75, "y": 775, "flippedX": true },
-      { "type": "SpikeBlock", "x": 75, "y": 725, "flippedX": true },
       { "type": "SeatBlock", "x": 225, "y": 725, "flippedX": false },
       { "type": "WheelBlock", "x": 275, "y": 825, "flippedX": false },
       { "type": "WheelBlock", "x": 175, "y": 825, "flippedX": false },

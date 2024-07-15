@@ -89,5 +89,10 @@
     }
   ],
   "tutorialText": "",
+  "reward": {
+    "TNTBlock": 1,
+    "BasicWoodenBlock": 1,
+    "Coins": 3
+  },
   "title": "Goliath"
 }

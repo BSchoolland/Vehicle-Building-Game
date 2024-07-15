@@ -310,6 +310,12 @@
         "value": 0
       }
     ],
+    "reward": {
+        "BasicWoodenBlock": 1,
+        "rocketBoosterBlock": 1,
+        "RemoteBlock": 1,
+        "Coins": 3
+        },
   "title": "missile Defense",
   "tutorialText": "Intercept the incoming missile!"
 }

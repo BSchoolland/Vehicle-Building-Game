@@ -13,7 +13,9 @@ const resourceImages = {
     "BasicWoodenBlock": "basic-block.png",
     "RemoteBlock": "remote-block.png",
     "SpikeBlock": "spike-block.png",
-    "Coins": "coin.png"
+    "Coins": "coin.png",
+    "rocketBoosterBlock": "rocket-booster-block.png",
+    "TNTBlock": "tnt-block.png"
 }
 
 function checkUserCookie() {

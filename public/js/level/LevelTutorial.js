@@ -44,7 +44,7 @@ class LevelTutorial{
             if (this.popups[i].activates === type) {
                 setTimeout(() => {
                 this.showTutorial(i);
-                }, 1000);
+                }, 600);
                 this.popups[i].activates = "none";
                 break;
             }

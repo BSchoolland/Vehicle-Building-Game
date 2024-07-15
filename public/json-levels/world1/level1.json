@@ -93,22 +93,22 @@
       "image": "2.png"
     },
     {
-      "text": "You can switch which block you are using by clicking on it in this Build Menu",
+      "text": "You can switch which block you are using by clicking on it in the <b>Build Menu</b>.",
       "activates": "removeBlock",
       "image": "3.png"
     },
     {
-      "text": "Build your first car, then press Start  or B to drive it!",
+      "text": "Build your first car, then press <b>Start</b> or <b>B</b> to drive it!",
       "activates": "selectBlock",
       "image": "4.png"
     },
     {
-      "text": "Wheels spin when you press A or D you can also use the arrow keys if you want.",
+      "text": "Your wheels spin when you press <b>A</b> or <b>D</b>. you can also use the arrow keys if you want.",
       "activates": "start",
       "image": "5.png"
     },
     {
-      "text": "Great job! Beating a level provides resources which you'll need to take down the Spike Boss and unlock more worlds and parts",
+      "text": "Great job! Beating a level provides resources which you'll need to take down the <b>Spike Boss</b> and unlock more worlds and parts",
       "activates": "victory",
       "image": "6.png"
     }

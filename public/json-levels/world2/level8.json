@@ -217,8 +217,9 @@
   ],
   "reward": {
     "WheelBlock": 1,
-    "spikeBlock": 1,
+    "SpikeBlock": 1,
     "RemoteBlock": 1,
+    "BasicWoodenBlock": 2,
     "Coins": 3
   },
   "tutorialText": "",

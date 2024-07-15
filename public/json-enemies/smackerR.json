@@ -1,37 +1,23 @@
 {
     "blocks": [
         {
-            "type": "GrappleBlock",
-            "x": 1875,
-            "y": 1325,
-            "rotatedTimes": 2,
-            "flippedX": false
-        },
-        {
             "type": "BasicIronBlock",
-            "x": 1925,
-            "y": 1325,
-            "rotatedTimes": 0,
-            "flippedX": false
-        },
-        {
-            "type": "BasicIronBlock",
-            "x": 1975,
-            "y": 1325,
-            "rotatedTimes": 0,
-            "flippedX": false
-        },
-        {
-            "type": "BasicIronBlock",
-            "x": 1975,
-            "y": 1275,
+            "x": 2025,
+            "y": 1375,
             "rotatedTimes": 0,
             "flippedX": false
         },
         {
             "type": "BasicIronBlock",
             "x": 2025,
-            "y": 1275,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 2075,
+            "y": 1325,
             "rotatedTimes": 0,
             "flippedX": false
         },
@@ -43,143 +29,157 @@
             "flippedX": false
         },
         {
-            "type": "BasicIronBlock",
-            "x": 2075,
-            "y": 1225,
-            "rotatedTimes": 0,
+            "type": "GrappleBlock",
+            "x": 1975,
+            "y": 1325,
+            "rotatedTimes": 2,
             "flippedX": false
         },
         {
-            "type": "BasicIronBlock",
-            "x": 2125,
-            "y": 1225,
-            "rotatedTimes": 0,
+            "type": "GrappleBlock",
+            "x": 2025,
+            "y": 1275,
+            "rotatedTimes": 2,
             "flippedX": false
         },
         {
-            "type": "BasicIronBlock",
-            "x": 2175,
-            "y": 1225,
+            "type": "WheelBlock",
+            "x": 2025,
+            "y": 1425,
             "rotatedTimes": 0,
             "flippedX": false
         },
         {
             "type": "WheelBlock",
-            "x": 1975,
+            "x": 2075,
             "y": 1375,
             "rotatedTimes": 0,
             "flippedX": false
         },
         {
             "type": "WheelBlock",
-            "x": 2025,
-            "y": 1325,
-            "rotatedTimes": 0,
-            "flippedX": false
-        },
-        {
-            "type": "WheelBlock",
-            "x": 2075,
-            "y": 1325,
-            "rotatedTimes": 0,
-            "flippedX": false
-        },
-        {
-            "type": "WheelBlock",
             "x": 2125,
-            "y": 1275,
+            "y": 1325,
+            "rotatedTimes": 3,
+            "flippedX": false
+        },
+        {
+            "type": "RemoteBlock",
+            "x": 1975,
+            "y": 1375,
+            "rotatedTimes": 1,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1925,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1875,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1825,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1875,
+            "y": 1325,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "SpikeBlock",
+            "x": 1825,
+            "y": 1325,
+            "rotatedTimes": 2,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 1825,
+            "y": 1425,
             "rotatedTimes": 0,
             "flippedX": false
         },
         {
             "type": "WheelBlock",
-            "x": 2175,
-            "y": 1275,
+            "x": 1875,
+            "y": 1425,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 1925,
+            "y": 1425,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1775,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "BasicIronBlock",
+            "x": 1725,
+            "y": 1375,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 1725,
+            "y": 1425,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "WheelBlock",
+            "x": 1775,
+            "y": 1425,
+            "rotatedTimes": 0,
+            "flippedX": false
+        },
+        {
+            "type": "SpikeBlock",
+            "x": 1675,
+            "y": 1375,
+            "rotatedTimes": 2,
+            "flippedX": false
+        },
+        {
+            "type": "SeatBlock",
+            "x": 1925,
+            "y": 1325,
             "rotatedTimes": 0,
             "flippedX": false
         },
         {
             "type": "PoweredHingeBlock",
-            "x": 1975,
-            "y": 1225,
-            "rotatedTimes": 3,
-            "flippedX": false
-        },
-        {
-            "type": "BasicWoodenBlock",
-            "x": 1975,
-            "y": 1175,
-            "rotatedTimes": 0,
-            "flippedX": false
-        },
-        {
-            "type": "BasicWoodenBlock",
-            "x": 1975,
-            "y": 1125,
-            "rotatedTimes": 0,
-            "flippedX": false
-        },
-        {
-            "type": "BasicWoodenBlock",
-            "x": 1975,
-            "y": 1075,
-            "rotatedTimes": 0,
-            "flippedX": false
-        },
-        {
-            "type": "SpikeBlock",
-            "x": 1925,
-            "y": 1075,
-            "rotatedTimes": 2,
-            "flippedX": false
-        },
-        {
-            "type": "SpikeBlock",
-            "x": 1925,
-            "y": 1125,
-            "rotatedTimes": 2,
-            "flippedX": false
-        },
-        {
-            "type": "SpikeBlock",
-            "x": 1975,
-            "y": 1025,
-            "rotatedTimes": 3,
-            "flippedX": false
-        },
-        {
-            "type": "BasicIronBlock",
-            "x": 2025,
-            "y": 1225,
-            "rotatedTimes": 0,
-            "flippedX": false
-        },
-        {
-            "type": "SeatBlock",
-            "x": 2075,
-            "y": 1175,
-            "rotatedTimes": 0,
-            "flippedX": false
-        },
-        {
-            "type": "SpikeBlock",
-            "x": 2025,
-            "y": 1175,
-            "rotatedTimes": 3,
+            "x": 1875,
+            "y": 1275,
+            "rotatedTimes": 1,
             "flippedX": false
         },
         {
             "type": "GrappleBlock",
-            "x": 1925,
-            "y": 1275,
-            "rotatedTimes": 2,
-            "flippedX": false
-        },
-        {
-            "type": "WheelBlock",
-            "x": 1925,
-            "y": 1375,
-            "rotatedTimes": 0,
+            "x": 1875,
+            "y": 1225,
+            "rotatedTimes": 3,
             "flippedX": false
         }
     ],
@@ -191,178 +191,223 @@
     },
     {
         "key": "q",
-        "start": 1,
+        "start": 0,
         "end": 2.5
     },
     {
-        "key": "r",
-        "start": 2,
-        "end": 3
-    },
-    {
-        "key": "r",
-        "start": 4,
+        "key": "e",
+        "start": 2.5,
         "end": 5
     },
     {
         "key": "r",
-        "start": 6,
-        "end": 7
-    },
-    {
-        "key": "r",
-        "start": 10,
-        "end": 11
-    },
-    {
-        "key": "r",
-        "start": 13,
-        "end": 14
-    },
-    {
-        "key": "r",
-        "start": 16,
-        "end": 17
-    },
-    {
-        "key": "r",
-        "start": 18,
-        "end": 19
-    },
-    {
-        "key": "e",
-        "start": 3,
+        "start": 4,
         "end": 4.5
     },
     {
         "key": "q",
         "start": 5,
+        "end": 7.5
+    },
+    {
+        "key": "r",
+        "start": 6,
         "end": 6.5
     },
     {
         "key": "e",
-        "start": 7,
-        "end": 8.5
+        "start": 7.5,
+        "end": 10
+    },
+    {
+        "key": "r",
+        "start": 9,
+        "end": 9.5
     },
     {
         "key": "q",
-        "start": 9,
-        "end": 10.5
-    },
-    {
-        "key": "e",
-        "start": 11,
+        "start": 10,
         "end": 12.5
     },
     {
-        "key": "q",
-        "start": 13,
+        "key": "r",
+        "start": 11,
+        "end": 11.5
+    },
+    {
+        "key": "e",
+        "start": 12.5,
+        "end": 15
+    },
+    {
+        "key": "r",
+        "start": 14,
         "end": 14.5
     },
     {
-        "key": "e",
+        "key": "q",
         "start": 15,
+        "end": 17.5
+    },
+    {
+        "key": "r",
+        "start": 16,
         "end": 16.5
     },
     {
-        "key": "q",
-        "start": 17,
-        "end": 18.5
-    },
-    {
         "key": "e",
+        "start": 17.5,
+        "end": 20
+    },
+    {
+        "key": "r",
         "start": 19,
-        "end": 20.5
+        "end": 19.5
     },
     {
         "key": "q",
-        "start": 21,
+        "start": 20,
         "end": 22.5
     },
     {
+        "key": "r",
+        "start": 21,
+        "end": 21.5
+    },
+    {
         "key": "e",
-        "start": 23,
+        "start": 22.5,
+        "end": 25
+    },
+    {
+        "key": "r",
+        "start": 24,
         "end": 24.5
     },
     {
         "key": "q",
         "start": 25,
+        "end": 27.5
+    },
+    {
+        "key": "r",
+        "start": 26,
         "end": 26.5
     },
     {
         "key": "e",
-        "start": 27,
-        "end": 28.5
+        "start": 27.5,
+        "end": 30
+    },
+    {
+        "key": "r",
+        "start": 29,
+        "end": 29.5
     },
     {
         "key": "q",
-        "start": 29,
-        "end": 30.5
-    },
-    {
-        "key": "e",
-        "start": 31,
+        "start": 30,
         "end": 32.5
     },
     {
-        "key": "q",
-        "start": 33,
+        "key": "r",
+        "start": 31,
+        "end": 31.5
+    },
+    {
+        "key": "e",
+        "start": 32.5,
+        "end": 35
+    },
+    {
+        "key": "r",
+        "start": 34,
         "end": 34.5
     },
     {
-        "key": "e",
+        "key": "q",
         "start": 35,
+        "end": 37.5
+    },
+    {
+        "key": "r",
+        "start": 36,
         "end": 36.5
     },
     {
-        "key": "q",
-        "start": 37,
-        "end": 38.5
-    },
-    {
         "key": "e",
+        "start": 37.5,
+        "end": 40
+    },
+    {
+        "key": "r",
         "start": 39,
-        "end": 40.5
+        "end": 39.5
     },
     {
         "key": "q",
-        "start": 41,
+        "start": 40,
         "end": 42.5
     },
     {
+        "key": "r",
+        "start": 41,
+        "end": 41.5
+    },
+    {
         "key": "e",
-        "start": 43,
+        "start": 42.5,
+        "end": 45
+    },
+    {
+        "key": "r",
+        "start": 44,
         "end": 44.5
     },
     {
         "key": "q",
         "start": 45,
+        "end": 47.5
+    },
+    {
+        "key": "r",
+        "start": 46,
         "end": 46.5
     },
     {
         "key": "e",
-        "start": 47,
-        "end": 48.5
+        "start": 47.5,
+        "end": 50
+    },
+    {
+        "key": "r",
+        "start": 49,
+        "end": 49.5
     },
     {
         "key": "q",
-        "start": 49,
-        "end": 50.5
-    },
-    {
-        "key": "e",
-        "start": 51,
+        "start": 50,
         "end": 52.5
     },
     {
-        "key": "q",
-        "start": 53,
-        "end": 54.5
+        "key": "r",
+        "start": 51,
+        "end": 51.5
     },
     {
         "key": "e",
+        "start": 52.5,
+        "end": 55
+    },
+    {
+        "key": "r",
+        "start": 54,
+        "end": 54.5
+    },
+    {
+        "key": "q",
         "start": 55,
-        "end": 56.5
+        "end": 57.5
     }
 ]
 }

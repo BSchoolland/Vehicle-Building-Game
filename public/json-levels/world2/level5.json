@@ -209,8 +209,8 @@
   "reward": {
     "WheelBlock": 1,
     "rocketBoosterBlock": 1,
-    "BasicWoodenBlock": 1,
-    "spikeBlock": 1,
+    "BasicWoodenBlock": 2,
+    "SpikeBlock": 1,
     "Coins": 3
   },
   "tutorialText": "",

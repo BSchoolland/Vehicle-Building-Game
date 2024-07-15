@@ -390,36 +390,36 @@ class LevelLoader {
           console.log("suggestedBlockCount", suggestedBlockCount);
           // get the percentage of the suggested blocks that are in the inventory
           let percentage = Math.round((inventoryCount / suggestedBlockCount) * 100);
-          // if the percentage is less than 50, send a strong warning
-          if (percentage < 50) {
-            this.parent.LevelUI.dialogBox(
-              `STOP!`,
-              `You have not collected nearly enough blocks to even stand a chance against the boss. Try completing some earlier levels to get more blocks!`,
-              "Continue anyway", 
-              'Go back',
-              () => {
-                // click the button that leaves the level
-                document.getElementById("back-button").click();
-              }
-            );
-          } else if (percentage < 100) {
-            this.parent.LevelUI.dialogBox(
-              `Careful`,
-              `You may not have enough blocks to defeat the boss. Try going back and completing some levels or bonus objectives to get more blocks!`,
-              "Continue",
-              'Go back',
-              () => {
-                // click the button that leaves the level
-                document.getElementById("back-button").click();
-              }
-            );
-          } else {
-            this.parent.LevelUI.dialogBox(
-              `Boss Level`,
-              `This level uses the blocks you've collected so far. Good luck!`,
-              'Okay'
-            );
-          }
+          // // if the percentage is less than 50, send a strong warning
+          // if (percentage < 50) {
+          //   this.parent.LevelUI.dialogBox(
+          //     `STOP!`,
+          //     `You have not collected nearly enough blocks to even stand a chance against the boss. Try completing some earlier levels to get more blocks!`,
+          //     "Continue anyway", 
+          //     'Go back',
+          //     () => {
+          //       // click the button that leaves the level
+          //       document.getElementById("back-button").click();
+          //     }
+          //   );
+          // } else if (percentage < 100) {
+          //   this.parent.LevelUI.dialogBox(
+          //     `Careful`,
+          //     `You may not have enough blocks to defeat the boss. Try going back and completing some levels or bonus objectives to get more blocks!`,
+          //     "Continue",
+          //     'Go back',
+          //     () => {
+          //       // click the button that leaves the level
+          //       document.getElementById("back-button").click();
+          //     }
+          //   );
+          // } else {
+          //   this.parent.LevelUI.dialogBox(
+          //     `Boss Level`,
+          //     `This level uses the blocks you've collected so far. Good luck!`,
+          //     'Okay'
+          //   );
+          // }
         };
 
         // bind the startLevel function to the building

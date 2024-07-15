@@ -120,10 +120,8 @@
     }
   ],
   "reward": {
-    "WheelBlock": 1,
     "BasicWoodenBlock": 1,
-    "spikeBlock": 1,
-    "TNTBlock": 1,
+    "SpikeBlock": 1,
     "RemoteBlock": 1,
     "Coins": 1
   },

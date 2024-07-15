@@ -318,7 +318,7 @@ class knockBackBlock extends Block {
             // create a circle explosion
             let explosion = Matter.Bodies.circle(x + Math.random() * blastFactor - blastFactor/2, y + Math.random() * blastFactor - blastFactor/2, 30 + Math.random() * blastFactor/2, { render: { fillStyle: '#ff00ff' }});
             // change the color by a random amount
-            explosion.render.fillStyle = '#ff' + Math.floor(Math.random() * 100).toString(16) + '70'; // purple hue
+            explosion.render.fillStyle = '#00' + Math.floor(Math.random() * 100).toString(16) + 'ff'; // blue
             // make it static
             explosion.isStatic = true;
             // make the explosion unable to collide with other blocks

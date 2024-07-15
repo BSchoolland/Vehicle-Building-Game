@@ -1,5 +1,7 @@
 const level1 = fetch('')
 
+import migrateVersion from "./versionMigrationFrontend.js";
+
 class Level {
     constructor(worldNum, levelNum) {
         this.worldNum = worldNum;
@@ -83,6 +85,8 @@ class LevelHandler {
         this.progressBar = progressBar || new FakeProgressBar();
         this.loadWorlds();
         this.isLoaded = false;
+        // now that all levels are loaded, migrate the user's progress to the latest version
+        migrateVersion(this);
     }
     async loadWorlds() {
         let i = 0;
@@ -216,6 +220,7 @@ class LevelHandler {
             this.progressBar.update();
         }
     }
+
     getLevel(worldNum, levelNum) {
         this.levelIndex = levelNum;
         return this.worlds[worldNum - 1].getLevel(levelNum);

@@ -1,6 +1,7 @@
 // functionality for upgrading the user's game version if they don't have an account on the backend
 import ResourceHandler from "./resourceHandler.js";
 const resourceHandler = new ResourceHandler();
+resourceHandler.init();
 
 const currentVersion = '1.3.0';
 
@@ -22,7 +23,7 @@ async function migrateVersion(levelHandler){
 
     // set the current version
     localStorage.setItem('version', currentVersion);
-    console.log('Fully updated to', currentVersion)
+    console.log('Fully updated to', currentVersion);
 }
 
 // award resources for levels beaten before 1.3.0
@@ -31,18 +32,20 @@ async function awardResourcesForOldLevels(levelHandler) {
 
     // get all completed levels
     const worldCount = levelHandler.getWorldCount();
+    console.log('world count', worldCount)
     for (let world = 0; world < worldCount; world++) {
-        const levelCount = levelHandler.getLevelCount(world);
+        const levelCount = levelHandler.getLevelCount(world + 1);
         for (let level = 0; level < levelCount; level++) {
             if (levelHandler.isLevelCompleted(world, level)) {
+                console.log('awarding resources for old level', world, level)
                 // award resources for the level
-                awardResources(world, level);
+                awardResources(world, level, levelHandler);
             }
         }
     }
 }
 
-async function awardResources(world, level) {
+async function awardResources(world, level, levelHandler) {
     const levelData = levelHandler.getLevel(world, level);
     const reward = levelData.reward;
     for (let resource in reward) {
@@ -51,6 +54,5 @@ async function awardResources(world, level) {
         console.log('awarded', reward[resource], resource)
     }
 }
-
 
 export default migrateVersion;

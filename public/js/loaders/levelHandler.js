@@ -84,9 +84,6 @@ class LevelHandler {
         this.levelIndex = 0;
         this.progressBar = progressBar || new FakeProgressBar();
         this.loadWorlds();
-        this.isLoaded = false;
-        // now that all levels are loaded, migrate the user's progress to the latest version
-        migrateVersion(this);
     }
     async loadWorlds() {
         let i = 0;
@@ -107,7 +104,9 @@ class LevelHandler {
         this.worlds.push(sandbox);
         // once all the worlds are loaded, sync the levels the player has beaten with the server
         this.syncLevelsBeat();
-        this.isLoaded = true;
+        this.isLoaded = false;
+        // now that all levels are loaded, migrate the user's progress to the latest version
+        migrateVersion(this);
     }
     // get the levels the player has beaten from the server and tell the server of any levels in local storage
     async syncLevelsBeat() {

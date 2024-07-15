@@ -117,10 +117,13 @@ class BuildMenu {
       // if the block types is a single string, do something else
       if (typeof blockTypes === "string") {
         console.log('Entering Boss Level! Number of parts determined by player resources.')
+        this.building.bossLevel = true;
         // get the blocks from the Resources object
         this.blockTypes = ResourceHandler.getWorldResources(blockTypes);
         // remove "Coins" from the block types
         this.blockTypes = this.blockTypes.filter((block) => block.name !== "Coins");
+      } else {
+        this.building.bossLevel = false;
       }
       console.log(this.blockTypes);
 
@@ -477,8 +480,13 @@ class BuildMenu {
           this.controlMenu.remove();
           this.controlMenu = null;
         }
-        // set the song to the build theme
-        setSong("buildTheme");
+        // if the level is a boss level, play the boss theme
+        if (building.bossLevel) {
+          setSong("bossTheme");
+        } else {
+          // set the song to the build theme
+          setSong("buildTheme");
+        }
         // show the build menu
         this.show();
         // alert the level that we have entered build mode
@@ -636,8 +644,10 @@ class BuildMenu {
         
         // start the level
         building.startLevel();
-        // set the song to the level theme
-        setSong("levelTheme");
+        // set the song to the level theme if it is not a boss level
+        if (!building.bossLevel) {
+          setSong("levelTheme");
+        }
         // set the camera viewport to the size of the canvas
         const canvas = document.querySelector("canvas");
         // building.camera.setViewport(canvas.width*2.5, canvas.height*2.5);
@@ -716,6 +726,9 @@ class Building {
       }
     });
     this.levelManager = null; // will be set by the level manager
+
+    // is boss level
+    this.bossLevel = false;
   }
   setCamera(camera) {
     this.camera = camera;

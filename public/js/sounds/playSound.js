@@ -5,7 +5,8 @@ let audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const music = {
   mainTheme: "./js/sounds/music/mainTheme.mp3",
   buildTheme: "./js/sounds/music/buildTheme.mp3",
-  levelTheme: "./js/sounds/music/mainTheme.mp3", // FIXME: make a level theme
+  levelTheme: "./js/sounds/music/mainTheme.mp3", // level theme is the same as the main theme
+  bossTheme: "./js/sounds/music/bossTheme.mp3",
 };
 // sound effects
 const effects = {

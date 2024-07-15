@@ -251,6 +251,9 @@ import LevelHandler from "/js/loaders/levelHandler.js";
 // start the level handler (required for syncing data with the server)
 const levelHandler = new LevelHandler();
 
+import ResourceHandler from "../../js/loaders/resourceHandler.js";
+const resourceHandler = new ResourceHandler();
+
 // hide the loading screen
 document.getElementById("loading-screen").style.display = "none";
 
@@ -284,6 +287,7 @@ loginForm.addEventListener("submit", function (e) {
             clearInterval(checkInterval);
             // sync the levels with the server
             levelHandler.syncLevelsBeat();
+            resourceHandler.syncResources("all");
             // Redirect to the home page
             window.location.href = "/";
           }

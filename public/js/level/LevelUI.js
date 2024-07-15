@@ -186,6 +186,7 @@ class LevelUI {
           this.parent.building.buildMenu.buildModeButton.click();
           this.parent.building.viewMode = false;
         }
+        this.parent.building.bossLevel = false;
         // prevent build mode
         this.parent.building.canEnterBuildMode = false;
         // clear the level

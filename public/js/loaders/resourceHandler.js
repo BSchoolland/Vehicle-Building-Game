@@ -128,6 +128,12 @@ class ResourceHandler {
     }
 
     async syncResources(worldNum) {
+        if (worldNum === 'all') {
+            for (let i = 1; i <= worldCount; i++) {
+                await this.syncResources(i);
+            }
+            return;
+        }
         if (checkUserCookie()) {
             // get resources from local storage
             let resources = JSON.parse(localStorage.getItem(`world${worldNum}Resources`));

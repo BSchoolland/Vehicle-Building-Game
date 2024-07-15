@@ -12,7 +12,8 @@ import {
   PoweredHingeBlock,
   TNTBlock,
   flameThrower,
-  LightBlock
+  LightBlock,
+  knockBackBlock
 } from "../vehicle/blocks.js";
 import { Contraption } from "../vehicle/contraption.js";
 import { playSound, setSong } from "../sounds/playSound.js";
@@ -32,6 +33,7 @@ const buildClassesToImages = {
   "GrappleBlock": "img/build-buttons/grapple-block.png",
   "PoweredHingeBlock": "img/build-buttons/powered-hinge-block.png",
   "LightBlock": "img/build-buttons/light-block.png",
+  "KnockBackBlock": "img/build-buttons/knockback.png",
 };
 
 class RightClickMenu {

@@ -7,6 +7,7 @@ import {
     rocketBoosterBlock,
     SpikeBlock,
     TNTBlock,
+    knockBackBlock,
     GrappleBlock,
     PoweredHingeBlock,
     LightBlock,
@@ -18,18 +19,20 @@ let blockTypes = {
     SeatBlock,
     SpikeBlock,
     TNTBlock,
+    knockBackBlock,
     rocketBoosterBlock,
     RemoteBlock,
     GrappleBlock,
     PoweredHingeBlock,
     LightBlock,
-    BasicIronBlock,
+    BasicIronBlock
 };
 
 const buildClassesToImages = {
     "BasicWoodenBlock": "/img/build-buttons/basic-block.png",
     "WheelBlock": "img/build-buttons/wheel-block.png",
     "TNTBlock": "img/build-buttons/tnt-block.png",
+    'knockBackBlock': "img/build-buttons/knockback.png",
     "rocketBoosterBlock": "img/build-buttons/rocket-booster-block.png",
     "SpikeBlock": "img/build-buttons/spike-block.png",
     "GrappleBlock": "img/build-buttons/grapple-block.png",

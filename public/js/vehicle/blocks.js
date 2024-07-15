@@ -9,7 +9,7 @@ import {
   WheelBlock,
   rocketBoosterBlock,
 } from "./blocks/movementBlocks/contents.js";
-import { SpikeBlock, TNTBlock, flameThrower } from "./blocks/weaponBlocks/contents.js";
+import { SpikeBlock, TNTBlock, knockBackBlock, flameThrower } from "./blocks/weaponBlocks/contents.js";
 import {
   GrappleBlock,
   PoweredHingeBlock,
@@ -30,4 +30,5 @@ export {
   RemoteBlock,
   flameThrower,
   LightBlock,
+  knockBackBlock
 };

@@ -1,0 +1,488 @@
+{
+    "blocks": [
+        {
+            "type": "GrassBlock",
+            "x": 6200,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6300,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6400,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6500,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6600,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6700,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6800,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6900,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7000,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7100,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7200,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7300,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7400,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7500,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7600,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7700,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7800,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7900,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "RampBlockR",
+            "x": 8000,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "slightRampBlockR",
+            "x": 8100,
+            "y": 4300,
+            "rotatedTimes": 1
+        },
+        {
+            "type": "GrassBlock",
+            "x": 8100,
+            "y": 4400,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 8000,
+            "y": 4200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6100,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6000,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5900,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5800,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "slightRampBlockL",
+            "x": 5700,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5700,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5600,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5400,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5300,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5200,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5100,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5000,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 4900,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 4800,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 4700,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "slightRampBlockR",
+            "x": 4600,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 4600,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 4500,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 4400,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 4300,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 4200,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "slightRampBlockR",
+            "x": 4100,
+            "y": 4100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 3900,
+            "y": 4200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 4000,
+            "y": 4200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 4100,
+            "y": 4200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 3800,
+            "y": 4200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "RampBlockR",
+            "x": 3700,
+            "y": 4200,
+            "rotatedTimes": 3
+        },
+        {
+            "type": "GrassBlock",
+            "x": 3700,
+            "y": 4300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 3600,
+            "y": 4500,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "slightRampBlockL",
+            "x": 3600,
+            "y": 4400,
+            "rotatedTimes": 3
+        },
+        {
+            "type": "RampBlockR",
+            "x": 8200,
+            "y": 4400,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "slightRampBlockR",
+            "x": 8300,
+            "y": 4600,
+            "rotatedTimes": 1
+        },
+        {
+            "type": "GrassBlock",
+            "x": 8200,
+            "y": 4500,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 8300,
+            "y": 4700,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "EnemySpawnBlock",
+            "x": 7300,
+            "y": 4000,
+            "enemyType": "spikeCar"
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5500,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5600,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6400,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6400,
+            "y": 3900,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6400,
+            "y": 3800,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6300,
+            "y": 3800,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6200,
+            "y": 3800,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6100,
+            "y": 3800,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6100,
+            "y": 3900,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6100,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6200,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6300,
+            "y": 4000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6300,
+            "y": 3900,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "BuildingAreaBlock",
+            "x": 6200,
+            "y": 3900,
+            "rotatedTimes": 1
+        }
+    ],
+    "objectives": [
+        {
+            "name": "Destroy",
+            "value": 1
+        },
+        {
+            "name": "Collect",
+            "value": 0
+        },
+        {
+            "name": "Survive",
+            "value": 0
+        },
+        {
+            "name": "BeforeTime",
+            "value": 0
+        }
+    ],
+    "buildingBlockTypes": [
+        {
+            "name": "Basic Wooden Block",
+            "key": "1",
+            "type": "BasicWoodenBlock",
+            "limit": 6
+        },
+        {
+            "name": "Wheel Block",
+            "key": "2",
+            "type": "WheelBlock",
+            "limit": 6
+        },
+        {
+            "name": "Seat Block",
+            "key": "3",
+            "type": "SeatBlock",
+            "limit": 1
+        },
+        {
+            "name": "knockBackBlock",
+            "key": "5",
+            "type": "knockBackBlock",
+            "limit": 1
+        },
+        {
+            "name": "rocket Booster Block",
+            "key": "6",
+            "type": "rocketBoosterBlock",
+            "limit": 1
+        },
+        {
+            "name": "Remote Block",
+            "key": "7",
+            "type": "RemoteBlock",
+            "limit": 1
+        }
+    ],
+    "title": "Begone",
+    "tutorialText": ""
+}

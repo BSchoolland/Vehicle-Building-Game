@@ -131,7 +131,6 @@ class TNTBlock extends Block {
                     // set the block's velocity to the explosion force
                     Matter.Body.setVelocity(body, { x: (body.position.x - x) * this.blastForce / body.distanceFromExplosion, y: (body.position.y - y) * this.blastForce / body.distanceFromExplosion });
                 }
-
             }
         });
         // add a cluster of explosions randomly around the block
@@ -172,7 +171,7 @@ class TNTBlock extends Block {
 
 class knockBackBlock extends Block {
     constructor (x, y, contraption) {
-        super(x, y, contraption, 20, 'A Block that deals high knock back', 30, '#780811', [], [], ['left', 'right', 'top', 'bottom']);
+        super(x, y, contraption, 20, 'A Block that deals high knock back', 15, '#780811', [], [], ['left', 'right', 'top', 'bottom']);
         this.makeBodies();
         this.makeConstraints();
 
@@ -298,7 +297,18 @@ class knockBackBlock extends Block {
                     if (damageReduction < 0) return;
                     body.block.damage(this.blastDamage * damageReduction);
                     // set the block's velocity to the explosion force
-                    Matter.Body.setVelocity(body, { x: (body.position.x - x) * this.blastForce / body.distanceFromExplosion, y: (body.position.y - y) * this.blastForce / body.distanceFromExplosion });
+                    // Retrieve the body's current velocity
+                    const currentVelocity = body.velocity;
+                    
+                    // Calculate the additional velocity due to the explosion force
+                    const additionalVelocityX = (body.position.x - x) * this.blastForce / body.distanceFromExplosion;
+                    const additionalVelocityY = (body.position.y - y) * this.blastForce / body.distanceFromExplosion;
+                    
+                    // Add the additional velocity to the body's current velocity
+                    Matter.Body.setVelocity(body, { 
+                        x: currentVelocity.x + additionalVelocityX, 
+                        y: currentVelocity.y + additionalVelocityY 
+                    });
                 }
             }
         });

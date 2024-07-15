@@ -31,9 +31,8 @@ const buildClassesToImages = {
   "PoweredHingeBlock": "img/build-buttons/powered-hinge-block.png",
   "RemoteBlock": "img/build-buttons/remote-block.png",
   "GrappleBlock": "img/build-buttons/grapple-block.png",
-  "PoweredHingeBlock": "img/build-buttons/powered-hinge-block.png",
   "LightBlock": "img/build-buttons/light-block.png",
-  "KnockBackBlock": "img/build-buttons/knockback.png",
+  "knockBackBlock": "img/build-buttons/knockback.png",
 };
 
 class RightClickMenu {

@@ -72,7 +72,7 @@ class BasicIronBlock extends BasicBlock {
 
 class LightBlock extends BasicBlock {
     constructor (x, y, contraption) {
-        super(x, y, contraption, 50, "#00000", 0.25);
+        super(x, y, contraption, 50, "#ffffff", 0.25);
         this.density = 0.25
     }
 

@@ -31,6 +31,7 @@ const buildClassesToImages = {
   "RemoteBlock": "img/build-buttons/remote-block.png",
   "GrappleBlock": "img/build-buttons/grapple-block.png",
   "PoweredHingeBlock": "img/build-buttons/powered-hinge-block.png",
+  "LightBlock": "img/build-buttons/light-block.png",
 };
 
 class RightClickMenu {
@@ -110,7 +111,6 @@ class BuildMenu {
     this.menu = document.createElement("div");
     this.menu.classList.add("menu");
     this.enemyEditor = enemyEditor;
-    this
     // create a button for each block type
     if (blockTypes) {
       this.blockTypes = blockTypes;

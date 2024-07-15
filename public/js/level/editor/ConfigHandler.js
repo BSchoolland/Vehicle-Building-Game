@@ -1,6 +1,7 @@
 import {
     RemoteBlock,
     BasicWoodenBlock,
+    BasicIronBlock,
     SeatBlock,
     WheelBlock,
     rocketBoosterBlock,
@@ -22,6 +23,7 @@ let blockTypes = {
     GrappleBlock,
     PoweredHingeBlock,
     LightBlock,
+    BasicIronBlock,
 };
 
 const buildClassesToImages = {
@@ -34,8 +36,9 @@ const buildClassesToImages = {
     "SeatBlock": "img/build-buttons/seat-block.png",
     "PoweredHingeBlock": "img/build-buttons/powered-hinge-block.png",
     "RemoteBlock": "img/build-buttons/remote-block.png",
-  };
-
+    "LightBlock": "img/build-buttons/lightBlock.png",
+    "BasicIronBlock": "img/build-buttons/basic-iron-block.png",
+};
 
 // handles all popups for configuring levels (e.g. setting the level name, objectives, and allowed blocks)
 class ConfigHandler {

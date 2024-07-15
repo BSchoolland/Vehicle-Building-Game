@@ -215,14 +215,26 @@
       "name": "Basic Block",
       "key": "1",
       "type": "BasicWoodenBlock",
-      "limit": 4
+      "limit": 3
     },
     { "name": "Wheel Block", "key": "2", "type": "WheelBlock", "limit": 4 },
     { "name": "Seat Block", "key": "3", "type": "SeatBlock", "limit": 1 },
-    { "name": "Spike Block", "key": "4", "type": "SpikeBlock", "limit": 1 },
+    {
+      "name": "Light Block",
+      "key": "4",
+      "type": "LightBlock",
+      "limit": 3
+    },
+    {
+      "name": "Iron Block",
+      "key": "5",
+      "type": "BasicIronBlock",
+      "limit": 3
+    },
+    { "name": "Spike Block", "key": "6", "type": "SpikeBlock", "limit": 1 },
     {
       "name": "Rocket Booster",
-      "key": "5",
+      "key": "7",
       "type": "rocketBoosterBlock",
       "limit": 1
     }

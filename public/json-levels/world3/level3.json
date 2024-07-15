@@ -1800,7 +1800,7 @@
             "name": "Basic Block",
             "key": "1",
             "type": "BasicWoodenBlock",
-            "limit": 8
+            "limit": 6
         },
         {
             "name": "Wheel Block",
@@ -1815,14 +1815,20 @@
             "limit": 1
         },
         {
-            "name": "Remote Block",
+            "name": "Light Block",
             "key": "4",
+            "type": "LightBlock",
+            "limit": 6
+        },
+        {
+            "name": "Remote Block",
+            "key": "5",
             "type": "RemoteBlock",
             "limit": 1
         },
         {
             "name": "rocket Booster Block",
-            "key": "5",
+            "key": "6",
             "type": "rocketBoosterBlock",
             "limit": 7
         }

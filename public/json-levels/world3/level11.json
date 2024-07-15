@@ -188,15 +188,21 @@
     },
     { "name": "Wheel Block", "key": "2", "type": "WheelBlock", "limit": 10 },
     { "name": "Seat Block", "key": "3", "type": "SeatBlock", "limit": 1 },
-    { "name": "Spike Block", "key": "4", "type": "SpikeBlock", "limit": 10 },
-    { "name": "TNT Block", "key": "5", "type": "TNTBlock", "limit": 2 },
+    {
+      "name": "Iron Block",
+      "key": "4",
+      "type": "BasicIronBlock",
+      "limit": 5
+    },
+    { "name": "Spike Block", "key": "5", "type": "SpikeBlock", "limit": 10 },
+    { "name": "TNT Block", "key": "6", "type": "TNTBlock", "limit": 2 },
     {
       "name": "Rocket Booster",
-      "key": "6",
+      "key": "7",
       "type": "rocketBoosterBlock",
       "limit": 1
     },
-    { "name": "Remote Block", "key": "7", "type": "RemoteBlock", "limit": 5 }
+    { "name": "Remote Block", "key": "8", "type": "RemoteBlock", "limit": 5 }
   ],
   "objectives": [
     { "name": "Destroy", "value": 6 },

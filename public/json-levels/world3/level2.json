@@ -112,12 +112,18 @@
       "name": "Basic Block",
       "key": "1",
       "type": "BasicWoodenBlock",
-      "limit": 8
+      "limit": 5
     },
     { "name": "Wheel Block", "key": "2", "type": "WheelBlock", "limit": 5 },
     { "name": "Seat Block", "key": "3", "type": "SeatBlock", "limit": 1 },
-    { "name": "Spike Block", "key": "4", "type": "SpikeBlock", "limit": 3 },
-    { "name": "Remote Block", "key": "5", "type": "RemoteBlock", "limit": 1 }
+    {
+      "name": "Iron Block",
+      "key": "4",
+      "type": "BasicIronBlock",
+      "limit": 3
+    },
+    { "name": "Spike Block", "key": "5", "type": "SpikeBlock", "limit": 3 },
+    { "name": "Remote Block", "key": "6", "type": "RemoteBlock", "limit": 1 }
   ],
   "objectives": [
     { "name": "Destroy", "value": 1 },

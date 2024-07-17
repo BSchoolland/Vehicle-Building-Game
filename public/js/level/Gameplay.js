@@ -263,8 +263,9 @@ class Gameplay {
         this.updateStats();
       }
       // check if the time limit has been reached
-      if (this.mustCompleteBefore > 0) {
+      else if (this.mustCompleteBefore > 0) {
         this.remainingTime = this.mustCompleteBefore - this.secondsSurvived;
+        this.updateStats();
         if (this.remainingTime <= 0) {
           // the player can no longer win
           return;

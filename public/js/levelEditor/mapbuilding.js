@@ -204,6 +204,7 @@ class Building {
         this.level = new LevelManager(this.engine, this.camera);
         this.level.LevelEditor.init(); // activate the level editor
         this.enemyHandler = new EnemyHandler();
+        this.enemyHandler.preLoadEnemies();
         this.buildArea = {
             x: 0,
             y: 0,
@@ -394,7 +395,11 @@ class Building {
                 block.enemyJson = enemies[enemy];
                 // destroy the current enemy contraption
                 if (block.enemyContraption) {
-                    block.enemyContraption.destroy();
+                    try {
+                        block.enemyContraption.destroy();
+                    } catch (error) {
+                        console.error('Failed to destroy enemy contraption');
+                    }
                 };
                 // create a new enemy contraption
                 block.enemyContraption = this.level.LevelLoader.loadEnemyContraption({ enemyType: enemy, x: block.x, y: block.y });

@@ -114,6 +114,11 @@ class LevelLoader {
       enemyType = "box";
     }
     // get the enemy contraption's JSON
+    // check if the EnemyHandler.preLoadEnemies function has been called
+    if (Object.keys(this.parent.EnemyHandler.enemyContraptionsJSON).length === 0) {
+      console.error("EnemyHandler.preLoadEnemies() has not been called");
+      await this.parent.EnemyHandler.preLoadEnemies();
+    }
     let enemyContraptionJson = this.parent.EnemyHandler.getEnemyJSON(enemyType);
     if (enemyContraptionJson === undefined) {
       console.error(`Unknown enemy type: ${enemyType}`);
@@ -588,7 +593,11 @@ class LevelLoader {
     // if it is an enemy spawn block, remove the enemy contraption
 
     if (block.enemyContraption) {
-      block.enemyContraption.destroy();
+      try {
+        block.enemyContraption.destroy();
+      } catch {
+        console.error('no destroy method')
+      }
     }
   }
 }

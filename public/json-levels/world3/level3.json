@@ -1842,7 +1842,12 @@
   ],
     
     "title": "Wall Crawler",
-    "tutorialText": "If you have trouble sticking to walls, try to control your speed",
-    "groundDepth": 30
-
+    "groundDepth": 30,
+    "reward": {
+        "WheelBlock": 1,
+        "rocketBoosterBlock": 1,
+        "BasicWoodenBlock": 1,
+        "LightBlock": 1,
+        "Coins": 3
+    }
 }

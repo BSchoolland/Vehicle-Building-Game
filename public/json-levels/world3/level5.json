@@ -538,5 +538,14 @@
         }
     ],
     "title": "Clash of Steel",
-    "tutorialText": "This is a hint for the level"
+    "tutorialText": "This is a hint for the level",
+    "reward": {
+        "WheelBlock": 1,
+        "rocketBoosterBlock": 1,
+        "BasicWoodenBlock": 1,
+        "SpikeBlock": 1,
+        "BasicIronBlock": 2,
+        "TNTBlock": 1,
+        "Coins": 3
+      }
 }

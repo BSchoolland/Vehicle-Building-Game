@@ -56,6 +56,8 @@ class EnemyHandler {
         if (enemyName === "randomL") { // a random enemy facing left
             enemyName = this.LeftFacingEnemies[Math.floor(Math.random() * this.LeftFacingEnemies.length)];
         }
+        console.log("Getting enemy JSON for: " + enemyName);
+        console.log(this.enemyContraptionsJSON);
         if (this.enemyContraptionsJSON[enemyName] === undefined) {
             console.error("Enemy not found, returning default enemy.");
             // return a default enemy (the first one in the list)

@@ -178,7 +178,7 @@ class knockBackBlock extends Block {
         this.simetricalX = true;
         this.exploded = false;
         this.blastRadius = 300; // the radius of the explosion
-        this.blastDamage = 25; // the damage of the explosion
+        this.blastDamage = 5; // the damage of the explosion
         this.blastForce = 30; // the force of the explosion
         // damage cooldown
         this.damageCooldown = 0.5; // seconds

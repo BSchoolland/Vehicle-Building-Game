@@ -466,23 +466,30 @@
         },
         {
             "name": "knockBackBlock",
-            "key": "5",
+            "key": "4",
             "type": "knockBackBlock",
             "limit": 1
         },
         {
             "name": "rocket Booster Block",
-            "key": "6",
+            "key": "5",
             "type": "rocketBoosterBlock",
             "limit": 1
         },
         {
             "name": "Remote Block",
-            "key": "7",
+            "key": "6",
             "type": "RemoteBlock",
             "limit": 1
         }
     ],
     "title": "Begone",
-    "tutorialText": ""
+    "tutorialText": "",
+    "reward": {
+        "WheelBlock": 1,
+        "rocketBoosterBlock": 1,
+        "BasicWoodenBlock": 1,
+        "knockBackBlock": 1,
+        "Coins": 3
+      }
 }

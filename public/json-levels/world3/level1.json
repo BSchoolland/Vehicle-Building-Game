@@ -105,6 +105,12 @@
     }
   ],
   
-  "tutorialText": "",
+  "reward": {
+    "WheelBlock": 1,
+    "rocketBoosterBlock": 1,
+    "BasicWoodenBlock": 1,
+    "LightBlock": 1,
+    "Coins": 3
+  },
   "title": "Flyover"
 }

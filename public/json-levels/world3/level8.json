@@ -304,5 +304,11 @@
         }
     ],
     "title": "Pogo Stick",
-    "tutorialText": ""
+    "tutorialText": "",
+    "reward": {
+        "WheelBlock": 1,
+        "LightBlock": 1,
+        "knockBackBlock": 1,
+        "Coins": 3
+      }
 }

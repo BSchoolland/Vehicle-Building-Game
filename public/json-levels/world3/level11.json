@@ -221,5 +221,16 @@
 
   ],
   "tutorialText": "",
-  "title": "Last Stand"
+  "title": "Last Stand",
+  "reward": {
+    "WheelBlock": 1,
+    "rocketBoosterBlock": 1,
+    "BasicWoodenBlock": 1,
+    "SpikeBlock": 1,
+    "RemoteBlock": 1,
+    "LightBlock": 1,
+    "BasicIronBlock": 1,
+    "knockBackBlock": 1,
+    "Coins": 3
+  }
 }

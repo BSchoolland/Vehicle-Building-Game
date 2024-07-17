@@ -442,5 +442,12 @@
         }
     ],
     "title": "Supersonic",
-    "tutorialText": ""
+    "tutorialText": "",
+    "reward": {
+        "BasicWoodenBlock": 1,
+        "SpikeBlock": 2,
+        "BasicIronBlock": 2,
+        "knockBackBlock": 2,
+        "Coins": 3
+    }
 }

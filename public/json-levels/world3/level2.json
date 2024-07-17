@@ -143,6 +143,8 @@
   "reward": {
     "BasicWoodenBlock": 1,
     "WheelBlock": 1,
+    "RemoteBlock": 1,
+    "BasicIronBlock": 1,
     "Coins": 3
   }
 }

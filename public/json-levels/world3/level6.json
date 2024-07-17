@@ -298,5 +298,13 @@
     }
   ],
   "tutorialText": "",
-  "title": "Short Fuse"
+  "title": "Short Fuse",
+  "reward": {
+    "WheelBlock": 1,
+    "rocketBoosterBlock": 1,
+    "SpikeBlock": 1,
+    "RemoteBlock": 1,
+    "TNTBlock": 1,
+    "Coins": 3
+  }
 }

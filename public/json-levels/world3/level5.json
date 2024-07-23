@@ -537,6 +537,13 @@
             "limit": 5
         }
     ],
+    "bonusChallenges": [
+        {
+          "name": "Disarmament",
+          "description": "Complete the level without using any TNT",
+          "value": 0
+        }
+      ],
     "title": "Clash of Steel",
     "tutorialText": "This is a hint for the level",
     "reward": {

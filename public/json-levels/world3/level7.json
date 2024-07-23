@@ -485,6 +485,13 @@
     ],
     "title": "Begone",
     "tutorialText": "",
+    "bonusChallenges": [
+        {
+          "name": "Who needs blocks?",
+          "description": "Complete the level using 4 blocks or less",
+          "value": 4
+        }
+      ],
     "reward": {
         "WheelBlock": 1,
         "rocketBoosterBlock": 1,

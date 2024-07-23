@@ -167,7 +167,7 @@ class ResourceHandler {
         }
     }
 
-    collectionAnimation(blockName,  to = null, from='auto', fromRandom = 200, toRandom = 0) {
+    collectionAnimation(blockName,  to = null, from='auto', fromRandom = 200, toRandom = 0, sound = 'coin') {
         // Create the resource element
         let resource = document.createElement("div");
         resource.classList.add("resource");
@@ -235,7 +235,7 @@ class ResourceHandler {
     
                 // Remove the resource element after animation
                 document.body.removeChild(resource);
-                playSound('coin');
+                playSound(sound);
             }
         }
     
@@ -266,7 +266,7 @@ class ResourceHandler {
             for (let i = 0; i < count; i++) {
                 // wait random between 0 and 1 seconds
                 setTimeout(() => {
-                    this.collectionAnimation(key, target, inventory, 50, 200);   
+                    this.collectionAnimation(key, target, inventory, 50, 200, 'placeBlock');   
                 }, Math.random() * 1000); 
             }
             

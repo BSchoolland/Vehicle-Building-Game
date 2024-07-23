@@ -395,6 +395,13 @@
     ],
     "title": "Impact",
     "tutorialText": "",
+    "bonusChallenges": [
+        {
+          "name": "No Remote Blocks",
+          "description": "Don't use any remote blocks",
+          "value": 0
+        }
+      ],
     "reward": {
         "WheelBlock": 1,
         "rocketBoosterBlock": 1,

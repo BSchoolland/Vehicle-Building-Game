@@ -303,6 +303,13 @@
             "limit": 8
         }
     ],
+    "bonusChallenges": [
+        {
+          "name": "No Remote Blocks",
+          "description": "Don't use any remote blocks",
+          "value": 0
+        }
+      ],
     "title": "Pogo Stick",
     "tutorialText": "",
     "reward": {

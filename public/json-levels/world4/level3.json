@@ -891,6 +891,13 @@
             "limit": 1
         }
     ],
+    "bonusChallenges": [
+        {
+          "name": "Complete Overkill",
+          "description": "Destroy all enemies!",
+          "value": 6
+        }
+      ],
     "title": "Tire Swing",
     "tutorialText": "This is a test hint for the level"
 }

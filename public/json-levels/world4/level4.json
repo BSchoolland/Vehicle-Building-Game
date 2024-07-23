@@ -2781,20 +2781,14 @@
             "limit": 6
         },
         {
-            "name": "Spike Block",
-            "key": "5",
-            "type": "SpikeBlock",
-            "limit": 3
-        },
-        {
             "name": "T N T Block",
-            "key": "6",
+            "key": "5",
             "type": "TNTBlock",
             "limit": 1
         },
         {
             "name": "Grapple Block",
-            "key": "7",
+            "key": "6",
             "type": "GrappleBlock",
             "limit": 2
         }

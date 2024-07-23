@@ -819,7 +819,14 @@
             "limit": 1
         }
     ],
-    "title": "Mobility Gear",
+    "title": "Grapple Hook",
     "tutorialText": "",
-    "groundDepth": 20
+    "groundDepth": 20,
+    "bonusChallenges": [
+        {
+          "name": "Who needs blocks?",
+          "description": "Complete the level using 4 blocks or less",
+          "value": 4
+        }
+      ]
 }

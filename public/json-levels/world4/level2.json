@@ -417,6 +417,14 @@
             "limit": 1
         }
     ],
+    "bonusChallenges": [
+        {
+          "name": "No Wheels",
+          "description": "Don't use any wheels",
+          "value": 0
+        }
+    
+      ],
     "title": "Nowhere to Run",
     "tutorialText": "This is a test hint for the level"
 }

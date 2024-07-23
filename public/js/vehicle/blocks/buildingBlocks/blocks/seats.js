@@ -4,12 +4,12 @@ import { playSound } from '../../../../sounds/playSound.js';
 
 // a function that makes a stickman to sit in the seat
 function makeStickMan(x, y, color='#FFFFFF') {
-    const head = Matter.Bodies.circle(x-5, y-18, 7, { render: { fillStyle: color }, });
+    const head = Matter.Bodies.circle(x-2.5, y-22, 7, { render: { sprite: { texture: './img/textures/robohead.png' }}});
     const body = Matter.Bodies.rectangle(x - 5, y - 3, 5, 30, { render: { fillStyle: color } });
-    const leftArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 3, { render: { fillStyle: color } });
-    const rightArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 3, { render: { fillStyle: color } });
-    const leftLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 3, { render: { fillStyle: color } });
-    const rightLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 3, { render: { fillStyle: color } });
+    const leftArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 5, { render: { fillStyle: color } });
+    const rightArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 5, { render: { fillStyle: color } });
+    const leftLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 5, { render: { fillStyle: color } });
+    const rightLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 5, { render: { fillStyle: color } });
     // make all the bodies unable to collide with anything
     head.collisionFilter = { mask: 0x0002 };
     body.collisionFilter = { mask: 0x0003 };
@@ -92,16 +92,16 @@ class SeatBlock extends Block {
         // make a stickman to sit in the seat
         let stickMan = null;
         if (!this.contraption.Ai) { 
-            stickMan = makeStickMan(this.x, this.y);
+            stickMan = makeStickMan(this.x, this.y, '#3d3d3d');
         }
-        else { // a red stickman for the AI
-            stickMan = makeStickMan(this.x, this.y, '#ff0000');
+        else { // a grey for the ai
+            stickMan = makeStickMan(this.x, this.y, '#3d3d3d');
         }
         this.bodies.push(...stickMan[0]);
         this.constraints.push(...stickMan[1]); // don't like that this is in makeBodies() but it works
     }
     damage(amount) {
-        super.damage(amount);
+        super.damage(amount, "seat");
         // if the seat is destroyed, play an explosion sound
         if (this.hitPoints <= 0 && !this.destroyed) {
             this.destroyed = true;
@@ -126,17 +126,17 @@ class SeatBlock extends Block {
         this.constraints.push(stickManConstraints[0]);
         this.constraints.push(stickManConstraints[1]);
         // constrain the stickman's head to the seat
-        this.constraints.push(Matter.Constraint.create({
-            bodyA: this.bodies[0], // the rectangle
-            bodyB: this.bodies[2], // the stickman's head
-            pointA: { x: 10, y: -20 },
-            pointB: { x: 0, y: 0 },
-            stiffness: 0.1,
-            length: 0,
-            render: {
-                visible: false
-            }
-        }));
+        // this.constraints.push(Matter.Constraint.create({
+        //     bodyA: this.bodies[0], // the rectangle
+        //     bodyB: this.bodies[2], // the stickman's head
+        //     pointA: { x: 10, y: -20 },
+        //     pointB: { x: 0, y: 0 },
+        //     stiffness: 0.1,
+        //     length: 0,
+        //     render: {
+        //         visible: false
+        //     }
+        // }));
         // weakly constrain the stickman's arms to the seat
         this.constraints.push(Matter.Constraint.create({
             bodyA: this.bodies[0], // the rectangle

@@ -218,9 +218,12 @@ showWarning() {
     playSound("blockTakesDamage");
     this.hitPoints -= amount;
     // the rest is for visual effects
-    let numSparks = amount / 100;
+    let numSparks = amount / 200;
     if (numSparks > 10) {
       numSparks = 10;
+    }
+    if (typeOfDamage === "fire") {
+      numSparks = 1
     }
     // add a shower of sparks
     for (var i = 0; i < numSparks; i++) {
@@ -246,6 +249,21 @@ showWarning() {
         // change the color by a random amount
       spark.render.fillStyle =
       "#ff" + Math.floor(Math.random() * 100).toString(16) + "00";
+      } else if (typeOfDamage === "seat") {
+        // if the typeOfDamage is seat, make it look like lightning
+        spark = Matter.Bodies.circle(
+          this.bodies[0].position.x + Math.random() * 10 - 5,
+          this.bodies[0].position.y + Math.random() * 10 - 5,
+          4,
+          { render: { fillStyle: "#0000ff", sprite: { texture: './img/textures/lightning.png' } } }
+        );
+        Matter.Body.setVelocity(spark, {
+          x: Math.random() * 30 - 15,
+          y: Math.random() * 15 - 20,
+        });
+        // change the color by a random amount
+      spark.render.fillStyle =
+      "#00" + Math.floor(Math.random() * 100).toString(16) + "ff";
       }
       // otherwise, it should be a square the color of the block
       else {
@@ -298,7 +316,13 @@ showWarning() {
         // record the original fill style
         body.render.originalFillStyle = body.render.fillStyle;
         // set the fill style to red
-        body.render.fillStyle = "red";
+        if (typeOfDamage === "fire") {
+          body.render.fillStyle = "#ff0000";
+        } else if (typeOfDamage === "lightblue") {
+        body.render.fillStyle = "blue";
+        } else {
+          body.render.fillStyle = "red";
+        }
       });
       // remove welds to this block across the contraption
       this.contraption.blocks.forEach((block) => {

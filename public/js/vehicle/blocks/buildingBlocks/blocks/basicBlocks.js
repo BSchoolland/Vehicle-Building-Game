@@ -31,9 +31,9 @@ class BasicIronBlock extends BasicBlock {
     constructor (x, y, contraption) { 
         super(x, y, contraption, 300, "#3b3b3b", 3); // 3 times the density of a wooden block
     }
-    damage(amount){
+    damage(amount, typeOfDamage = 'normal'){
         let previousHealth = this.hitPoints;
-        super.damage(amount);
+        super.damage(amount, typeOfDamage);
         if (this.hitPoints < 150 && previousHealth >= 150){
             // the steel plating breaks, and the color changes to 4d2902
             this.color = "#4d2902";

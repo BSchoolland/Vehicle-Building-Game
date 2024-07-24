@@ -35,7 +35,7 @@ function adjustHexColor(hex, changeFactor) {
   return newHexColor;
 }
 
-const constraintsVisible = false; // whether or not the constraints are visible
+const constraintsVisible = true; // whether or not the constraints are visible
 // the base class for all blocks, may be made of multiple bodies and constraints depending on subclass
 class Block {
   constructor(

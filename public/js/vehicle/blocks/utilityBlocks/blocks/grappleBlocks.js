@@ -26,6 +26,7 @@ class GrappleBlock extends Block {
         this.activationKey = 'r';
         this.reverseActivationKey = 'f';
         this.firing = false;
+        this.hasDamagedBlock = false
     }
     makeBodies(){
         // create a flat surface on the left side of the block
@@ -200,8 +201,9 @@ class GrappleBlock extends Block {
                     // damage the other block (if it's not invincible)
                     if (otherBody.block.invincibleParts && otherBody.block.invincibleParts.includes(otherBody)) {
                         // do nothing
-                    } else {
-                        otherBody.block.damage(30);
+                    } else if (!this.hasDamagedBlock) {
+                        this.hasDamagedBlock = true;
+                        otherBody.block.damage(75);
                     } 
 
                     // create a weld constraint between the grappling hook and the other body
@@ -266,6 +268,7 @@ class GrappleBlock extends Block {
         this.grappleAimConstraint.stiffness = 0.1;
         // make the hook unable to grab onto blocks
         this.readyToHook = false;
+        this.hasDamagedBlock = false;
     }
     async resetRope() {
         this.readyToHook = false;

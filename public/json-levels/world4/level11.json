@@ -321,7 +321,7 @@
         {
             "type": "EnemySpawnBlock",
             "x": 7500,
-            "y": 4100,
+            "y": 4150,
             "enemyType": "tntBox"
         },
         {

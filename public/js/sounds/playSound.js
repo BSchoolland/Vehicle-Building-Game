@@ -132,8 +132,11 @@ catch {
 musicGainNode.connect(audioContext.destination);
 
 function setSong(songName) {
-  // If there is already a song playing, stop it
+  // If there is already a song playing, stop it (unless it's the same song)
   if (currentSong) {
+    if (currentSong.buffer === loadedSongs[songName]) {
+      return;
+    }
     currentSong.stop();
     currentSong = null;
   }

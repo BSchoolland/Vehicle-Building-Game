@@ -42,8 +42,6 @@ class GrappleBlock extends Block {
         this.bodies.push(Matter.Bodies.rectangle(this.x, this.y, 30, 10, { render: { fillStyle: this.secondaryColor }}));
         this.bodies[3].collisionFilter = { mask: 0x0002 };
         this.bodies[3].block = this;
-
-
     }
     makeConstraints(){
         // constrain the joint and the grappling hook, allowing rotation
@@ -212,7 +210,7 @@ class GrappleBlock extends Block {
                         pointB: { x: 0, y: 0 },
                         stiffness: 0.5,
                         render: {
-                            visible: false
+                            visible: true
                         }
                     });
                     // add the weld to the welds array
@@ -268,6 +266,7 @@ class GrappleBlock extends Block {
         this.readyToHook = false;
     }
     async resetRope() {
+        this.readyToHook = false;
         this.destroyRope();
         // make the hook not static
         Matter.Body.setStatic(this.bodies[2], false);
@@ -282,6 +281,8 @@ class GrappleBlock extends Block {
         Matter.Body.setPosition(this.bodies[2], { x: x + 10, y: y });
         setTimeout(() => {
             this.resetValues();
+            Matter.Body.setStatic(this.bodies[2], false);
+
         }, 5);
         return;
     }

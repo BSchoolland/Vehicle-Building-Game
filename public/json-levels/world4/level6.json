@@ -572,6 +572,8 @@
         "BasicWoodenBlock": 1,
         "LightBlock": 1,
         "PoweredHingeBlock": 1,
+        "SpikeBlock": 1,
+        "BasicIronBlock": 2,
         "Coins": 3
     },
     "title": "Robot Arm",

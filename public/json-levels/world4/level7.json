@@ -1897,6 +1897,12 @@
             "key": "6",
             "type": "GrappleBlock",
             "limit": 1
+        },
+        {
+            "name": "Iron Block",
+            "key": "7",
+            "type": "BasicIronBlock",
+            "limit": 4
         }
     ],
     "title": "On all Sides",
@@ -1904,14 +1910,12 @@
     "groundDepth": 20,
     "reward": {
         "WheelBlock": 1,
-        "rocketBoosterBlock": 1,
         "BasicWoodenBlock": 1,
         "GrappleBlock": 1,
         "LightBlock": 1,
-        "TNTBlock": 1,
-        "BasicIronBlock": 1,
         "knockBackBlock": 1,
         "RemoteBlock": 1,
+        "SpikeBlock": 1,
         "Coins": 2
     }
 

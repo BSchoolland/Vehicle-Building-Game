@@ -2478,6 +2478,7 @@
         "BasicWoodenBlock": 2,
         "RemoteBlock": 1,
         "BasicIronBlock": 2,
+        "SpikeBlock": 2,
         "Coins": 2
     }
 

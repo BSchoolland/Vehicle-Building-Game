@@ -911,6 +911,7 @@
         "rocketBoosterBlock": 2,
         "BasicWoodenBlock": 1,
         "LightBlock": 2,
+        "SpikeBlock": 1,
         "Coins": 3
     }
 }

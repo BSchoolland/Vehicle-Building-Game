@@ -844,6 +844,7 @@
         "TNTBlock": 1,
         "PoweredHingeBlock": 1,
         "RemoteBlock": 1,
+        "SpikeBlock": 2,
         "Coins": 2
     },
     "title": "Ready, Aim, Harpoon!",

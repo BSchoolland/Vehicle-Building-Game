@@ -35,7 +35,7 @@ function adjustHexColor(hex, changeFactor) {
   return newHexColor;
 }
 
-const constraintsVisible = true; // whether or not the constraints are visible
+const constraintsVisible = false; // whether or not the constraints are visible
 // the base class for all blocks, may be made of multiple bodies and constraints depending on subclass
 class Block {
   constructor(
@@ -531,10 +531,16 @@ showWarning() {
           // weld the blocks together
           const bodyA = this.getWeldBody("right");
           const bodyB = this.contraption.blocks[i].getWeldBody("left");
+          // workaround for things being placed wrong
+          let ymod = 0;
+
+          if (bodyA.block.constructor.name === "GrappleBlock" && bodyA.block.rotatedTimes === 1) {
+            ymod = 20;
+          } 
           // find the pointA and pointB for the weld constraint
           let localPointA = {
             x: -(bodyA.bounds.max.x - bodyA.bounds.min.x) / 2,
-            y: 10,
+            y: 10 + ymod,
           };
           // turn the points into world coordinates
           let worldPointA = LocalToWorld(bodyA, localPointA);
@@ -549,6 +555,8 @@ showWarning() {
             stiffness: 1,
             render: {
               visible: constraintsVisible,
+              strokeStyle: '#0000FF', // Set the color of the weld to blue
+
             },
           });
           Matter.World.add(this.contraption.engine.world, weld);
@@ -559,6 +567,7 @@ showWarning() {
       // check if block is to the left
       if (xDistance === -50 && yDistance === 0) {
         // check if the weldable faces match
+        
         if (
           this.rotatedWeldableFaces.includes("left") &&
           this.contraption.blocks[i].rotatedWeldableFaces.includes("right")
@@ -567,26 +576,37 @@ showWarning() {
           const bodyA = this.getWeldBody("left");
           const bodyB = this.contraption.blocks[i].getWeldBody("right");
           // find the pointA and pointB for the weld constraint
+          let ymod = 0;
+          let strmod = 0;
+          let xmod = 0;
+          let constrain = true
+          if (bodyA.block.constructor.name === "GrappleBlock" && bodyA.block.rotatedTimes === 3) {
+            ymod = -20;
+          } else if (bodyA.block.constructor.name === "SeatBlock" && bodyA.block.flippedX) {
+            // xmod = -10;
+            // ymod = -25;
+          }
           let localPointA = {
-            x: (bodyA.bounds.max.x - bodyA.bounds.min.x) / 2,
-            y: -10,
+            x: (bodyA.bounds.max.x - bodyA.bounds.min.x) / 2 + xmod,
+            y: -10 + ymod,
           };
           // turn the points into world coordinates
           let worldPointA = LocalToWorld(bodyA, localPointA);
           // turn world coordinates into bodyB local coordinates
           let localPointB = WorldToLocal(bodyB, worldPointA);
           // create a weld constraint
-          const weld = Matter.Constraint.create({
+            const weld = Matter.Constraint.create({
             bodyA: bodyA,
             bodyB: bodyB,
             pointA: localPointA,
             pointB: localPointB,
-            stiffness: 1,
+            stiffness: constrain ? 1 : 0.1,
             render: {
               visible: constraintsVisible,
+              strokeStyle: '#FF0000', // Set the color of the weld to red
             },
-          });
-          Matter.World.add(this.contraption.engine.world, weld);
+            });
+            Matter.World.add(this.contraption.engine.world, weld);
           // add the weld to the welds array
           this.welds.push(weld);
         }
@@ -619,6 +639,8 @@ showWarning() {
             stiffness: 1,
             render: {
               visible: constraintsVisible,
+              strokeStyle: '#00FF00', // Set the color of the weld to red
+
             },
           });
           Matter.World.add(this.contraption.engine.world, weld);
@@ -637,8 +659,12 @@ showWarning() {
           const bodyA = this.getWeldBody("bottom");
           const bodyB = this.contraption.blocks[i].getWeldBody("top");
           // find the pointA and pointB for the weld constraint
+          let xmod = 0;
+          if (bodyA.block.constructor.name === "SeatBlock" && bodyA.block.flippedX) {
+            xmod = -5;
+          }
           let localPointA = {
-            x: -10,
+            x: -10  + xmod,
             y: (bodyA.bounds.max.y - bodyA.bounds.min.y) / 2,
           };
           // turn the points into world coordinates
@@ -654,6 +680,8 @@ showWarning() {
             stiffness: 1,
             render: {
               visible: constraintsVisible,
+              strokeStyle: '#FFFF00', // Set the color of the weld to red
+
             },
           });
           Matter.World.add(this.contraption.engine.world, weld);

@@ -1,6 +1,6 @@
 function LocalToWorld(body, localPoint) {
     // convert local coordinates to world coordinates
-    let worldPoint = Matter.Vector.add(body.position, Matter.Vector.rotate(localPoint, 0));
+    let worldPoint = Matter.Vector.add(body.position, localPoint);
     return worldPoint;
 }
 
@@ -9,6 +9,7 @@ function WorldToLocal(body, worldPoint) {
     let localPoint = Matter.Vector.rotate(Matter.Vector.sub(worldPoint, body.position), 0);
     return localPoint;
 }
+
 function constrainBodyToBody(bodyA, bodyB, stiffness = 1, visible = false) {
     // this function constrains bodyA to bodyB using two constraints
     // the result is that the bodies are rigidly connected as if they were welded together

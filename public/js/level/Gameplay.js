@@ -124,6 +124,7 @@ class Gameplay {
     catch (e) {
       console.log("CrazyGames SDK not found");
     }
+    this.parent.LevelUI.destroyBackArrow();
     let level = this.parent.LevelHandler.getLevelIndex() + 1;
     let world = this.parent.worldSelected;
     // if the player has completed the level before, they are able to achieve bonus objectives

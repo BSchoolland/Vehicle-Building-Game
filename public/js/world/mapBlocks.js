@@ -186,6 +186,7 @@ class RampBlockL extends Block {
        // a right triangle that is the color of the block
        let vertices ='100 0 100 100 0 100';
        this.bodies.push(Matter.Bodies.fromVertices(this.x + (50-33.3333), this.y + (50-33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+       this.bodies[0].block = this;
     }
 }
 
@@ -204,6 +205,7 @@ class slightRampBlockL extends Block {
         // a right triangle that is the color of the block
         let vertices = '200 100 0 0 0 100';
         this.bodies.push(Matter.Bodies.fromVertices(this.x + (-50+66.6666), this.y + (50-33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+        this.bodies[0].block = this;
     }
 }
 
@@ -222,6 +224,7 @@ class slightRampBlockLUpsideDown extends Block {
         // a right triangle that is the color of the block
         let vertices = '0 0 200 0 0 100';
         this.bodies.push(Matter.Bodies.fromVertices(this.x + (50-33.3333), this.y + (-50+33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+        this.bodies[0].block = this;
     }
 }
 
@@ -240,6 +243,7 @@ class slightRampBlockRUpsideDown extends Block {
         // a right triangle that is the color of the block
         let vertices = '200 0 0 0 200 100';
         this.bodies.push(Matter.Bodies.fromVertices(this.x + (-50+33.3333), this.y + (-50+33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+        this.bodies[0].block = this;
     }
 }
 
@@ -258,6 +262,8 @@ class RampBlockR extends Block {
        // a right triangle that is the color of the block
        let vertices ='0 0 100 100 0 100';
        this.bodies.push(Matter.Bodies.fromVertices(this.x - (50-33.3333), this.y + (50-33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+       this.bodies[0].block = this;
+
     }
 }
 
@@ -276,6 +282,7 @@ class slightRampBlockR extends Block {
        // a right triangle that is the color of the block
        let vertices ='200 0 0 100 200 100';
        this.bodies.push(Matter.Bodies.fromVertices(this.x + (50-66.6666), this.y + (50-33.3333), Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.color }}));
+        this.bodies[0].block = this;
     }
 }
 

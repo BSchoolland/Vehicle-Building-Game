@@ -2,14 +2,27 @@ import Block from '../../baseBlockClass.js';
 import { constrainBodyToBody } from '../../../utils.js';
 import { playSound } from '../../../../sounds/playSound.js';
 
+const colorChange = 25;
 // a function that makes a stickman to sit in the seat
 function makeStickMan(x, y, color='#FFFFFF') {
     const head = Matter.Bodies.circle(x-2.5, y-22, 7, { render: { sprite: { texture: './img/textures/robohead.png' }}});
+    
     const body = Matter.Bodies.rectangle(x - 5, y - 3, 5, 30, { render: { fillStyle: color } });
-    const leftArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 5, { render: { fillStyle: color } });
-    const rightArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 5, { render: { fillStyle: color } });
-    const leftLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 5, { render: { fillStyle: color } });
-    const rightLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 5, { render: { fillStyle: color } });
+    // change color by a few random shades
+    let newColor = '#' + (parseInt(color.substring(1), 16) + Math.floor(Math.random() * colorChange )).toString(16);
+
+    const leftArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 5, { render: { fillStyle: newColor } });
+    newColor = '#' + (parseInt(color.substring(1), 16) + Math.floor(Math.random() * colorChange )).toString(16);
+
+    const rightArm = Matter.Bodies.rectangle(x + 2, y - 8, 18, 5, { render: { fillStyle: newColor } });
+    newColor = '#' + (parseInt(color.substring(1), 16) + Math.floor(Math.random() * colorChange )).toString(16);
+
+    const leftLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 5, { render: { fillStyle: newColor } });
+    newColor = '#' + (parseInt(color.substring(1), 16) + Math.floor(Math.random() * colorChange )).toString(16);
+
+    const rightLeg = Matter.Bodies.rectangle(x + 2, y + 12, 18, 5, { render: { fillStyle: newColor } });
+    newColor = '#' + (parseInt(color.substring(1), 16) + Math.floor(Math.random() * colorChange )).toString(16);
+
     // make all the bodies unable to collide with anything
     head.collisionFilter = { mask: 0x0002 };
     body.collisionFilter = { mask: 0x0003 };
@@ -17,6 +30,7 @@ function makeStickMan(x, y, color='#FFFFFF') {
     rightArm.collisionFilter = { mask: 0x0005 };
     // leftLeg.collisionFilter = { mask: 0x0006 };
     rightLeg.collisionFilter = { mask: 0x0007 };
+    leftLeg.collisionFilter = { mask: 0x0008 };
 
     // constrain the head to the body
     const headConstraints = constrainBodyToBody(head, body, 0.1);
@@ -81,6 +95,8 @@ class SeatBlock extends Block {
         this.simetricalX = false;
         this.destroyed = true;
         // this.flippedX = true;
+        this.interval = null;
+        this.intervalCount = 0;
     }
     makeBodies() {
         // create a flat surface on the left side of the block
@@ -100,6 +116,50 @@ class SeatBlock extends Block {
         this.bodies.push(...stickMan[0]);
         this.constraints.push(...stickMan[1]); // don't like that this is in makeBodies() but it works
     }
+    addToWorld(world, rotate = true) {
+        super.addToWorld(world, rotate);
+        // record the positions of the seat bodies
+        let originalPositions = [];
+        for (let i = 0; i < this.bodies.length; i++) {
+            originalPositions.push({ x: this.bodies[i].position.x, y: this.bodies[i].position.y, angle: this.bodies[i].angle });
+        }
+
+        // make all the parts of the guy not static
+        for (let i = 0; i < this.bodies.length; i++) {
+            Matter.Body.setStatic(this.bodies[i], false);
+        }
+        // all the following is a workaround to fix a bug where matter.js doesn't handle constraints connected to static bodies well
+        setTimeout(() => {
+            Matter.Body.setStatic(this.bodies[0], !this.contraption.spawned);
+            Matter.Body.setStatic(this.bodies[1], !this.contraption.spawned);
+            Matter.Body.setVelocity(this.bodies[1], { x: 0, y: 0 });
+        }, 25);
+        if (this.interval !== null) {
+            clearInterval(this.interval);
+        }
+        
+        this.interval = setInterval(() => {
+            if (this.contraption.spawned) {
+                return;
+            }
+            // move the first two bodies to the correct position and make them static
+            Matter.Body.setPosition(this.bodies[0], { x: originalPositions[0].x, y: originalPositions[0].y });
+            Matter.Body.setPosition(this.bodies[1], { x: originalPositions[1].x, y: originalPositions[1].y });
+            // reset rotation
+            Matter.Body.setAngle(this.bodies[0], originalPositions[0].angle);
+            Matter.Body.setAngle(this.bodies[1], originalPositions[1].angle);
+        }, 1);
+        this.intervalCount++;
+        const intervalCount = this.intervalCount;
+        setTimeout(() => {
+            if (intervalCount !== this.intervalCount) {
+                return;
+            }
+            clearInterval(this.interval);
+            this.interval = null;
+        }, 1000);
+    }
+
     damage(amount) {
         super.damage(amount, "seat");
         // if the seat is destroyed, play an explosion sound
@@ -141,9 +201,9 @@ class SeatBlock extends Block {
         this.constraints.push(Matter.Constraint.create({
             bodyA: this.bodies[0], // the rectangle
             bodyB: this.bodies[4], // the stickman's left arm
-            pointA: { x: 40, y: -5 },
+            pointA: { x: 30, y: -7 },
             pointB: { x: 20, y: 2 },
-            stiffness: 0.001,
+            stiffness: 0.002,
             length: 0,
             render: {
                 visible: false
@@ -152,9 +212,9 @@ class SeatBlock extends Block {
         this.constraints.push(Matter.Constraint.create({
             bodyA: this.bodies[0], // the rectangle
             bodyB: this.bodies[5], // the stickman's right arm
-            pointA: { x: 40, y: -5 },
-            pointB: { x: -20, y: 2 },
-            stiffness: 0.001,
+            pointA: { x: 30, y: -5 },
+            pointB: { x: -10, y: 2 },
+            stiffness: 0.002,
             length: 0,
             render: {
                 visible: false
@@ -164,7 +224,7 @@ class SeatBlock extends Block {
         this.constraints.push(Matter.Constraint.create({
             bodyA: this.bodies[0], // the rectangle
             bodyB: this.bodies[6], // the stickman's left leg
-            pointA: { x: 20, y: 25 },
+            pointA: { x: 35, y: 25 },
             pointB: { x: 20, y: 2 },
             stiffness: 0.002,
             length: 0,
@@ -175,7 +235,7 @@ class SeatBlock extends Block {
         this.constraints.push(Matter.Constraint.create({
             bodyA: this.bodies[0], // the rectangle
             bodyB: this.bodies[7], // the stickman's right leg
-            pointA: { x: 30, y: 5 },
+            pointA: { x: 35, y: 5 },
             pointB: { x: 20, y: 2 },
             stiffness: 0.002,
             length: 0,

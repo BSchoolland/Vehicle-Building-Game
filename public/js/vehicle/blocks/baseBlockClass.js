@@ -689,7 +689,9 @@ showWarning() {
         }
       }
     }
-    this.damage(this.maxHitPoints);
+    if (this.contraption.spawned) {
+      this.damage(this.maxHitPoints);
+    }
     this.hitPoints = 0;
     return false;
   }  

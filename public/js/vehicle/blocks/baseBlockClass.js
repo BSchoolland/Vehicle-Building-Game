@@ -535,7 +535,7 @@ showWarning() {
           let ymod = 0;
 
           if (bodyA.block.constructor.name === "GrappleBlock" && bodyA.block.rotatedTimes === 1) {
-            ymod = 20;
+            ymod = 5;
           } 
           // find the pointA and pointB for the weld constraint
           let localPointA = {
@@ -581,7 +581,7 @@ showWarning() {
           let xmod = 0;
           let constrain = true
           if (bodyA.block.constructor.name === "GrappleBlock" && bodyA.block.rotatedTimes === 3) {
-            ymod = -20;
+            ymod = -5;
           } else if (bodyA.block.constructor.name === "SeatBlock" && bodyA.block.flippedX) {
             // xmod = -10;
             // ymod = -25;

@@ -186,9 +186,10 @@ class GrappleBlock extends Block {
         if (!this.readyToHook) {
             return;
         }
-        this.reelGrapple();
         // if the grappling hook is this body
         if (thisBody === this.bodies[2]) {
+            this.reelGrapple();
+
             // if the other body is not in this contraption
             // check if the other body is a block
             if (otherBody.block === "ground") {
@@ -214,7 +215,7 @@ class GrappleBlock extends Block {
                         pointB: { x: 0, y: 0 },
                         stiffness: 0.5,
                         render: {
-                            visible: true
+                            visible: false
                         }
                     });
                     // add the weld to the welds array

@@ -83,6 +83,7 @@ class Block {
 
     // a flag to tell if the block is deleted (permanent deletion)
     this.deleted = false;
+    this.fractionalSparks = 0; // used to keep track of fractional sparks
   }
   getControls() {
     // to be defined in subclasses
@@ -223,7 +224,16 @@ showWarning() {
       numSparks = 10;
     }
     if (typeOfDamage === "fire") {
-      numSparks = 1
+      numSparks = 0.1 / 50;
+    }
+    if (numSparks < 1) {
+      this.fractionalSparks += numSparks * 50;
+      if (this.fractionalSparks >= 1) {
+        numSparks = Math.floor(this.fractionalSparks);
+        this.fractionalSparks -= numSparks;
+      } else {
+        numSparks = 0;
+      }
     }
     // add a shower of sparks
     for (var i = 0; i < numSparks; i++) {
@@ -385,6 +395,10 @@ showWarning() {
   hit(thisBody, otherBody) {
     // to be defined in subclasses
     // called when the block is hit by another body
+  }
+  endHit(thisBody, otherBody) {
+    // to be defined in subclasses
+    // called when the block is no longer hit by another body
   }
   // called when the block is spawned in the world
   spawn() {

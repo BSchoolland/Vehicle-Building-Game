@@ -97,6 +97,8 @@ class SeatBlock extends Block {
         // this.flippedX = true;
         this.interval = null;
         this.intervalCount = 0;
+        // take damage while touching other blocks
+        this.isColliding = []
     }
     makeBodies() {
         // create a flat surface on the left side of the block
@@ -267,6 +269,10 @@ class SeatBlock extends Block {
         super.spawn(); 
     }
     update(deltaTime) {
+        if (this.isColliding.length > 0) {
+            // deal damage times delta time
+            this.damage(deltaTime * 0.03);
+        }
         // if this too far down, destroy it
         if (this.bodies[0].position.y > this.contraption.killBelow && !this.destroyed) {
             this.damage(this.maxHitPoints);
@@ -282,9 +288,14 @@ class SeatBlock extends Block {
     hit(thisBody, otherBody) { 
         // if the other body is not in this contraption, take damage
         if (!otherBody.Block || otherBody.block.contraption !== this.contraption) {
-            this.damage(5);
-            // apply an upward force to this body 
-            Matter.Body.setVelocity(thisBody, { x: 0, y: -30 });
+            if (!this.isColliding.includes(otherBody)) {
+                this.isColliding.push(otherBody);
+            }
+        }
+    }
+    endHit(thisBody, otherBody) {
+        if (this.isColliding.includes(otherBody)) {
+            this.isColliding.splice(this.isColliding.indexOf(otherBody), 1);
         }
     }
     triggerBlockDestroyed() {

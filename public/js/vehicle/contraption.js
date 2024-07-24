@@ -94,6 +94,28 @@ class Contraption {
         } 
       });
     });
+    Matter.Events.on(this.engine, "collisionEnd", (event) => {
+      event.pairs.forEach((pair) => {
+        // check if one of the bodies is a block in the contraption and the other is a block not in the contraption
+        if (
+          pair.bodyA.block &&
+          pair.bodyB.block &&
+          this.blocks.includes(pair.bodyA.block) &&
+          !this.blocks.includes(pair.bodyB.block)
+        ) {
+          // trigger hit on the block in the contraption
+          pair.bodyA.block.endHit(pair.bodyA, pair.bodyB);
+        } else if (
+          pair.bodyA.block &&
+          pair.bodyB.block &&
+          !this.blocks.includes(pair.bodyA.block) &&
+          this.blocks.includes(pair.bodyB.block)
+        ) {
+          // trigger hit on the block in the contraption
+          pair.bodyB.block.endHit(pair.bodyB, pair.bodyA);
+        } 
+      });
+    });
     // set the seat
     this.seat = null;
     // variables for calculating delta time

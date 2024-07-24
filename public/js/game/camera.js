@@ -130,7 +130,10 @@ class Camera {
                     return;
                 }
                 this.setCenterPosition(orderedTourPoints[i].x, orderedTourPoints[i].y);
-                await sleep(10); // Adjust time per point as needed
+                if (this.tourCancelled) {
+                    document.removeEventListener('keydown', keyHandler);
+                }
+                await sleep(10); 
             }
 
             if (this.tourNumber === tourNumber) {

@@ -1887,14 +1887,32 @@
             "limit": 1
         },
         {
-            "name": "Grapple Block",
+            "name": "knockBackBlock",
             "key": "5",
+            "type": "knockBackBlock",
+            "limit": 1
+        },
+        {
+            "name": "Grapple Block",
+            "key": "6",
             "type": "GrappleBlock",
             "limit": 1
         }
     ],
     "title": "On all Sides",
     "tutorialText": "",
-    "groundDepth": 20
+    "groundDepth": 20,
+    "reward": {
+        "WheelBlock": 1,
+        "rocketBoosterBlock": 1,
+        "BasicWoodenBlock": 1,
+        "GrappleBlock": 1,
+        "LightBlock": 1,
+        "TNTBlock": 1,
+        "BasicIronBlock": 1,
+        "knockBackBlock": 1,
+        "RemoteBlock": 1,
+        "Coins": 2
+    }
 
 }

@@ -513,6 +513,14 @@
             "limit": 1
         }
     ],
-    "title": "Ready, Aim, Harpoon!",
+    "reward": {
+        "rocketBoosterBlock": 1,
+        "BasicWoodenBlock": 1,
+        "GrappleBlock": 1,
+        "TNTBlock": 1,
+        "knockBackBlock": 1,
+        "Coins": 0
+    },
+    "title": "Curveball",
     "tutorialText": "The Grappling Hook and the Powered Hinge are a powerful combo!"
 }

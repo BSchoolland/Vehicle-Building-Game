@@ -3016,7 +3016,9 @@
     "buildingBlockTypes": "collected4",
     "suggestedBlocks": 35,
     "bonusChallenges": [],
-    "tutorialText": "This level uses the parts from your inventory! If you have trouble, try collecting more by beating more levels in world 2 or completing bonus objectives!",
+    "tutorialText": "This level uses the parts from your inventory! If you have trouble, try collecting more by beating more levels in world 4 or completing bonus objectives!",
     "title": "Fire Boss",
-    "reward": "unlockWorld3"
+    "reward": {
+        "Coins": 100
+    }
 }

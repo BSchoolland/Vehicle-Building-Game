@@ -889,15 +889,28 @@
             "key": "5",
             "type": "GrappleBlock",
             "limit": 1
+        },
+        {
+            "name": "Light Block",
+            "key": "6",
+            "type": "LightBlock",
+            "limit": 4
         }
+
     ],
     "bonusChallenges": [
         {
           "name": "Complete Overkill",
           "description": "Destroy all enemies!",
-          "value": 6
+          "value": 1
         }
       ],
     "title": "Tire Swing",
-    "tutorialText": "This is a test hint for the level"
+    "tutorialText": "This is a test hint for the level",
+    "reward": {
+        "rocketBoosterBlock": 2,
+        "BasicWoodenBlock": 1,
+        "LightBlock": 2,
+        "Coins": 3
+    }
 }

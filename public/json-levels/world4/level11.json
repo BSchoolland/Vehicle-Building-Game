@@ -1315,8 +1315,24 @@
             "key": "6",
             "type": "LightBlock",
             "limit": 3
+        },
+        {
+            "name": "rocket Booster Block",
+            "key": "7",
+            "type": "rocketBoosterBlock",
+            "limit": 1
         }
+
     ],
-    "title": "My Level #1",
+    "reward": {
+        "WheelBlock": 1,
+        "rocketBoosterBlock": 1,
+        "BasicWoodenBlock": 2,
+        "GrappleBlock": 1,
+        "TNTBlock": 2,
+        "RemoteBlock": 1,
+        "Coins": 1
+    },
+    "title": "Watch Your Head",
     "tutorialText": "This is a hint for the level"
 }

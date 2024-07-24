@@ -2791,9 +2791,31 @@
             "key": "6",
             "type": "GrappleBlock",
             "limit": 2
+        },
+        {
+            "name": "Light Block",
+            "key": "7",
+            "type": "LightBlock",
+            "limit": 4
+        },
+        {
+            "name": "Iron Block",
+            "key": "8",
+            "type": "BasicIronBlock",
+            "limit": 4
         }
     ],
     "title": "Spidercar",
     "tutorialText": "FIXME: show the first hook point in the level tour (may require a tour block)",
-    "floating": true
+    "floating": true,
+    "reward": {
+        "WheelBlock": 2,
+        "BasicWoodenBlock": 2,
+        "GrappleBlock": 1,
+        "LightBlock": 1,
+        "TNTBlock": 1,
+        "BasicIronBlock": 1,
+        "RemoteBlock": 1,
+        "Coins": 3
+    }
 }

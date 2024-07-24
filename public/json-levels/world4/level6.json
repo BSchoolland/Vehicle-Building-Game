@@ -567,6 +567,13 @@
             "limit": 3
         }
     ],
+    "reward": {
+        "WheelBlock": 1,
+        "BasicWoodenBlock": 1,
+        "LightBlock": 1,
+        "PoweredHingeBlock": 1,
+        "Coins": 3
+    },
     "title": "Robot Arm",
     "tutorialText": "The Powered Hinge Block can be used to make joints that rotate when activated. Attach something, then press 'Q' to rotate it one way, and 'E' to rotate it the other way."
 }

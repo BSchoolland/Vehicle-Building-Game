@@ -837,6 +837,15 @@
             "limit": 1
         }
     ],
+    "reward": {
+        "WheelBlock": 1,
+        "BasicWoodenBlock": 2,
+        "GrappleBlock": 1,
+        "TNTBlock": 1,
+        "PoweredHingeBlock": 1,
+        "RemoteBlock": 1,
+        "Coins": 2
+    },
     "title": "Ready, Aim, Harpoon!",
     "tutorialText": "The Grappling Hook and the Powered Hinge are a powerful combo!"
 }

@@ -426,5 +426,10 @@
     
       ],
     "title": "Nowhere to Run",
-    "tutorialText": "This is a test hint for the level"
+    "tutorialText": "This is a test hint for the level",
+    "reward": {
+        "WheelBlock": 1,
+        "BasicWoodenBlock": 3,
+        "GrappleBlock": 1
+        }
 }

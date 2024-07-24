@@ -417,5 +417,11 @@
             "limit": 2
         }
     ],
+    "reward": {
+        "WheelBlock": 2,
+        "BasicWoodenBlock": 3,
+        "PoweredHingeBlock": 2,
+        "Coins": 2
+    },
     "title": "Stairs"
 }

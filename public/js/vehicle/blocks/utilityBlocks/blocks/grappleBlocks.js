@@ -15,7 +15,6 @@ class GrappleBlock extends Block {
         this.rope = null;
         this.readyToHook = false;
         this.readyToShoot = true;
-        this.rope = null;
         this.ropeSqrMaxLength = this.maxRopeLength * this.maxRopeLength;  // Squared length for performance
         this.currentSquareLength = 0;
         this.simetricalX = false;
@@ -177,6 +176,11 @@ class GrappleBlock extends Block {
             playSound('grappleReel');
         }
     }
+    reset(atOriginalPosition = true) {
+        // remove the rope
+        this.destroyRope();
+        super.reset(atOriginalPosition);
+    }
     hit(thisBody, otherBody) {
         if (!this.readyToHook) {
             return;
@@ -235,7 +239,7 @@ class GrappleBlock extends Block {
             });
             this.hookWelds = [];
         } catch (error) {
-            console.log(error);
+            
         }
     };
 

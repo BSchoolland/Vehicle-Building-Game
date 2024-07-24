@@ -194,7 +194,7 @@ class LevelUI {
         // remove the tutorial text
         document.getElementById("tutorial-text").style.display = "none";
         // clear the player contraption
-        this.parent.playerContraption.clear();
+        this.parent.playerContraption.destroy();
         // deactivate build mode if it is active
         if (this.parent.building.buildInProgress) {
           // remove the tutorial so it does not get triggered accidentally

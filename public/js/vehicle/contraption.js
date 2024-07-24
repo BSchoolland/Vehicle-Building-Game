@@ -163,6 +163,7 @@ class Contraption {
   }
   destroy() { // remove all traces of this contraption
     console.log('destroying contraption')
+    this.despawn();
     this.clear();
     // delete the object
     delete this;
@@ -427,13 +428,12 @@ class Contraption {
   despawn(fancy = false) {
     this.spawned = false;
     if (fancy) {
-      // mreset all blocks one by one
+      // reset all blocks one by one
       let t = 0;
       this.blocks.forEach((block) => {
         setTimeout(() => {
           block.reset();
         }, t);
-        // t += 50;
       });
     }
     else{

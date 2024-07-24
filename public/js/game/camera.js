@@ -151,6 +151,11 @@ class Camera {
     }
 
     smoothUpdate() {
+        if (isNaN(this.position.x) || isNaN(this.position.y)) {
+            this.position.x = 0
+            this.position.y =  0
+            console.error('Camera was broken, resetting');
+        }
         // move the camera towards the targetBounds smoothly
         let targetBounds = {
             min: { x: this.position.x, y: this.position.y },

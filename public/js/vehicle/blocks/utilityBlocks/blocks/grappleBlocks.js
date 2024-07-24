@@ -1,6 +1,7 @@
 import Block from '../../baseBlockClass.js';
 import { constrainBodyToBody } from '../../../utils.js';
 import { playSound } from '../../../../sounds/playSound.js';
+import { rotateBodyAroundPoint } from '../../../utils.js';
 
 // a grappling hook block that can grab onto other blocks, and reel them in
 class GrappleBlock extends Block {
@@ -110,6 +111,7 @@ class GrappleBlock extends Block {
 
         if (!this.readyToShoot) {
             this.resetRope();
+            return;
         }
         this.readyToShoot = false;
         // play the grappling hook sound
@@ -269,7 +271,6 @@ class GrappleBlock extends Block {
         this.readyToHook = false;
         this.destroyRope();
         // make the hook not static
-        Matter.Body.setStatic(this.bodies[2], false);
         // destroy the welds between the hook and the block it is attached to
         this.hookWelds.forEach(weld => {
             Matter.World.remove(this.contraption.engine.world, weld);
@@ -278,11 +279,31 @@ class GrappleBlock extends Block {
         // bring the grappling hook back to the block
         let x = this.bodies[3].position.x;
         let y = this.bodies[3].position.y;
-        Matter.Body.setPosition(this.bodies[2], { x: x + 10, y: y });
-        setTimeout(() => {
-            this.resetValues();
-            Matter.Body.setStatic(this.bodies[2], false);
+        // delete the constraints from the array
+        this.constraints = this.constraints.filter(constraint => constraint !== this.grappleConstraint);
+        this.constraints = this.constraints.filter(constraint => constraint !== this.grappleAimConstraint);
+        // delete body 2 and create a new one
+        Matter.World.remove(this.contraption.engine.world, this.bodies[2]);
+        let vertices ='50 20 15 36 15 4';
+        this.bodies[2] = Matter.Bodies.fromVertices(x, y, Matter.Vertices.fromPath(vertices), { render: { fillStyle: this.secondaryColor }});
+        // for each rotatedTimes, rotate the body 90 degrees
+        for (let i = 0; i < this.rotatedTimes; i++) {
+            rotateBodyAroundPoint(this.bodies[2], { x: x, y: y }, 90);
+        }
+        // update the hook constraints with the new body
+        this.grappleConstraint.bodyA = this.bodies[2];
+        this.grappleAimConstraint.bodyA = this.bodies[2];
+        
+        this.bodies[2].block = this;
+        // set velocity to whatever [3]'s velocity is
+        Matter.Body.setVelocity(this.bodies[2], this.bodies[3].velocity);
 
+        this.invincibleParts.push(this.bodies[2]);
+
+        Matter.World.add(this.contraption.engine.world, this.bodies[2]);
+        
+        setTimeout(() => {
+            this.resetValues();     
         }, 5);
         return;
     }

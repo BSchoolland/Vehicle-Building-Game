@@ -269,6 +269,9 @@ class SeatBlock extends Block {
         super.spawn(); 
     }
     update(deltaTime) {
+        if (!this.contraption.Ai) {
+            console.log(this.hitPoints);
+        }
         if (this.isColliding.length > 0) {
             // deal damage times delta time
             this.damage(deltaTime * 0.03);

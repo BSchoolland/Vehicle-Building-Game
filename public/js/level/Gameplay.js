@@ -124,6 +124,8 @@ class Gameplay {
     catch (e) {
       console.log("CrazyGames SDK not found");
     }
+    // give the player infinite health so that they don't die during the level complete animation
+    this.parent.playerContraption.seat.hitPoints = Infinity;
     this.parent.LevelUI.destroyBackArrow();
     let level = this.parent.LevelHandler.getLevelIndex() + 1;
     let world = this.parent.worldSelected;
@@ -292,6 +294,14 @@ class Gameplay {
           // prevent build mode
           this.parent.building.canEnterBuildMode = false;
           setTimeout(() => {
+            // if the player contraption's seat is destroyed, the player loses instead of winning
+            if (this.parent.playerContraption.seat.destroyed) {
+              this.startTime = 0;
+              this.won = false;
+              this.parent.building.canEnterBuildMode = true;
+              this.parent.engine.timing.timeScale = this.baseTimeScale;
+              return;
+            }
             this.completeLevel();
           }, 500);
         }

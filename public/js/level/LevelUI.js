@@ -181,6 +181,10 @@ class LevelUI {
           this.parent.building.camera.doingTour = false;
           this.parent.building.camera.tourCancelled = true;
         }
+        // clear the level
+        this.parent.LevelLoader.clear(true);
+        // clear tutorial
+        this.parent.LevelTutorial.popups = [];
         // if we're in view mode, disable it then return to the level selector
         if (this.parent.building.viewMode) {
           this.parent.building.buildMenu.buildModeButton.click();
@@ -189,8 +193,7 @@ class LevelUI {
         this.parent.building.bossLevel = false;
         // prevent build mode
         this.parent.building.canEnterBuildMode = false;
-        // clear the level
-        this.parent.LevelLoader.clear(true);
+
         // remove the tutorial text
         document.getElementById("tutorial-text").style.display = "none";
         // clear the player contraption

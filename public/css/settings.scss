@@ -25,6 +25,25 @@
     flex-direction: column;
 }
 
+.tutorial-popup-content {
+    position: relative;
+    background-color: $ui-background-color;
+    // padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    width: 30%;
+    // min-height: 60%; 
+    overflow: hidden;
+    // center content
+    display: flex;
+    flex-direction: column;
+    @media screen and (max-width: 1200px) {
+        width: 70%;
+        
+    }
+}
+
+
 
 .help-popup-content {
     font-family: Arial, Helvetica, sans-serif;

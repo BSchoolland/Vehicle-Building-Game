@@ -421,6 +421,22 @@ a {
   flex-direction: column;
 }
 
+.tutorial-popup-content {
+  position: relative;
+  background-color: #1A3A5F;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  width: 30%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (max-width: 1200px) {
+  .tutorial-popup-content {
+    width: 70%;
+  }
+}
+
 .help-popup-content {
   font-family: Arial, Helvetica, sans-serif;
   position: relative;
@@ -971,6 +987,7 @@ a {
   align-items: left;
   padding: 0;
   overflow-x: wrap;
+  gap: 10px;
 }
 
 #inventory-list li {

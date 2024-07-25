@@ -966,11 +966,11 @@ a {
 }
 
 #inventory-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* Creates a responsive grid with square items at least 50px wide */
-  gap: 10px; /* Adjust the gap between items */
-  list-style-type: none; /* Removes default list styling */
-  padding: 0; /* Removes default padding */
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  padding: 0;
+  overflow-x: wrap;
 }
 
 #inventory-list li {

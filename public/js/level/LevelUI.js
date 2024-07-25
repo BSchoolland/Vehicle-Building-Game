@@ -1,6 +1,6 @@
 import { bonusObjectives } from "./bonusObjectives.js";
 import { playSound } from "../sounds/playSound.js";
-const override = true; // set to true to override the level completion requirement for the last level
+const override = false; // set to true to override the level completion requirement for the last level
 
 const worldGradients = [
   // world 1, a nice blue

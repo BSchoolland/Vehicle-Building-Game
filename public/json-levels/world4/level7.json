@@ -2,120 +2,6 @@
     "blocks": [
         {
             "type": "GrassBlock",
-            "x": 7700,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 7800,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 7900,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 8000,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 8100,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 8400,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 8500,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 8600,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 8700,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 8800,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 8900,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 9000,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 9100,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 8200,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 8300,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 7000,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 7000,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 7000,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 7000,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
             "x": 7000,
             "y": 3400,
             "rotatedTimes": 0
@@ -167,12 +53,6 @@
             "x": 7000,
             "y": 4100,
             "rotatedTimes": 0
-        },
-        {
-            "type": "EnemySpawnBlock",
-            "x": 8500,
-            "y": 3300,
-            "enemyType": "volley"
         },
         {
             "type": "GrassBlock",
@@ -499,18 +379,6 @@
             "rotatedTimes": 0
         },
         {
-            "type": "GrassBlock",
-            "x": 7600,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "slightRampBlockR",
-            "x": 7600,
-            "y": 3600,
-            "rotatedTimes": 3
-        },
-        {
             "type": "slightRampBlockR",
             "x": 7300,
             "y": 4200,
@@ -542,12 +410,6 @@
         },
         {
             "type": "GrassBlock",
-            "x": 7700,
-            "y": 3700,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
             "x": 8100,
             "y": 3900,
             "rotatedTimes": 0
@@ -616,18 +478,6 @@
             "type": "GrassBlock",
             "x": 9200,
             "y": 3700,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 9200,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "RampBlockR",
-            "x": 9200,
-            "y": 3500,
             "rotatedTimes": 0
         },
         {
@@ -841,102 +691,6 @@
             "rotatedTimes": 0
         },
         {
-            "type": "DirtBlock",
-            "x": 9100,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 8800,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 8500,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 8400,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 8600,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 9000,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 8100,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 8300,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 8900,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 8700,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 7900,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 8200,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 8000,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 7700,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 7800,
-            "y": 3600,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "RampBlockR",
-            "x": 7000,
-            "y": 3500,
-            "rotatedTimes": 1
-        },
-        {
             "type": "GrassBlock",
             "x": 6900,
             "y": 3500,
@@ -947,18 +701,6 @@
             "x": 6800,
             "y": 3500,
             "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 6700,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "slightRampBlockR",
-            "x": 6600,
-            "y": 3600,
-            "rotatedTimes": 2
         },
         {
             "type": "GrassBlock",
@@ -1027,147 +769,15 @@
             "rotatedTimes": 0
         },
         {
-            "type": "GrassBlock",
-            "x": 5400,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5400,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5300,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
             "type": "RampBlockR",
             "x": 5400,
             "y": 3400,
             "rotatedTimes": 2
         },
         {
-            "type": "RampBlockR",
-            "x": 5300,
-            "y": 3300,
-            "rotatedTimes": 2
-        },
-        {
-            "type": "GrassBlock",
-            "x": 6900,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 6800,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 6600,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 6100,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 6000,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5800,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5700,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5600,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5500,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5400,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5900,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
             "type": "DirtBlock",
             "x": 6900,
             "y": 3400,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6900,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6900,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6900,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6800,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6800,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6800,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6800,
-            "y": 3300,
             "rotatedTimes": 0
         },
         {
@@ -1221,12 +831,6 @@
         {
             "type": "DirtBlock",
             "x": 6100,
-            "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6000,
             "y": 3500,
             "rotatedTimes": 0
         },
@@ -1286,470 +890,8 @@
         },
         {
             "type": "DirtBlock",
-            "x": 6700,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
             "x": 6400,
             "y": 3500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6500,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6600,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6600,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6600,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6700,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6700,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6700,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6900,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6500,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6400,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6300,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6200,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6100,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6000,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5900,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5800,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5700,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5600,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5500,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5400,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5600,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5700,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5800,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6400,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6600,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5900,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5400,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5500,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5500,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5600,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5700,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5800,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5900,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6000,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6100,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6200,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6300,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6400,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6500,
-            "y": 3200,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6500,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6300,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6400,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6200,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6100,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6000,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5900,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5800,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5700,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5600,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5500,
-            "y": 3300,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "RampBlockR",
-            "x": 7000,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "slightRampBlockL",
-            "x": 5700,
-            "y": 2800,
-            "rotatedTimes": 3
-        },
-        {
-            "type": "slightRampBlockR",
-            "x": 5900,
-            "y": 2600,
-            "rotatedTimes": 1
-        },
-        {
-            "type": "slightRampBlockL",
-            "x": 5800,
-            "y": 2600,
-            "rotatedTimes": 3
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5800,
-            "y": 2800,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 5900,
-            "y": 2800,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6000,
-            "y": 2800,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5900,
-            "y": 2700,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "RampBlockR",
-            "x": 6000,
-            "y": 2700,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "RampBlockR",
-            "x": 6100,
-            "y": 2800,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5800,
-            "y": 2700,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "slightRampBlockL",
-            "x": 6200,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 6300,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6000,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "RampBlockR",
-            "x": 5300,
-            "y": 2900,
-            "rotatedTimes": 3
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5300,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 5300,
-            "y": 3100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "RampBlockR",
-            "x": 6500,
-            "y": 2900,
-            "rotatedTimes": 3
-        },
-        {
-            "type": "slightRampBlockL",
-            "x": 6600,
-            "y": 2800,
-            "rotatedTimes": 3
-        },
-        {
-            "type": "slightRampBlockR",
-            "x": 6800,
-            "y": 2800,
-            "rotatedTimes": 1
-        },
-        {
-            "type": "GrassBlock",
-            "x": 6700,
-            "y": 2700,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 6700,
-            "y": 2800,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6700,
-            "y": 2900,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6100,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "DirtBlock",
-            "x": 6200,
-            "y": 3000,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 7700,
-            "y": 3800,
             "rotatedTimes": 0
         },
         {
@@ -1840,6 +982,474 @@
             "type": "GrassBlock",
             "x": 7400,
             "y": 4800,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6900,
+            "y": 3600,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7000,
+            "y": 3500,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6600,
+            "y": 3600,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6800,
+            "y": 3600,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6700,
+            "y": 3600,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "EnemySpawnBlock",
+            "x": 8500,
+            "y": 3500,
+            "enemyType": "volley"
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7700,
+            "y": 3700,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7600,
+            "y": 3700,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "RampBlockR",
+            "x": 7500,
+            "y": 3700,
+            "rotatedTimes": 3
+        },
+        {
+            "type": "RampBlockR",
+            "x": 7000,
+            "y": 3600,
+            "rotatedTimes": 1
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7500,
+            "y": 3800,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "slightRampBlockL",
+            "x": 7600,
+            "y": 3900,
+            "rotatedTimes": 2
+        },
+        {
+            "type": "DirtBlock",
+            "x": 7600,
+            "y": 3800,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 7700,
+            "y": 3800,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6900,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 7000,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 7000,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 7100,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 7100,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7100,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7200,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7200,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7200,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7100,
+            "y": 3000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7000,
+            "y": 3000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5600,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5500,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5400,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "slightRampBlockR",
+            "x": 5500,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "slightRampBlockR",
+            "x": 5900,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "slightRampBlockR",
+            "x": 6400,
+            "y": 3000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5600,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5700,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5800,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 5900,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6000,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6000,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6100,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6200,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6300,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6400,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6500,
+            "y": 3000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6600,
+            "y": 3000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6700,
+            "y": 3000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6800,
+            "y": 3000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6900,
+            "y": 3000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "RampBlockR",
+            "x": 7200,
+            "y": 3000,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "slightRampBlockR",
+            "x": 7100,
+            "y": 3400,
+            "rotatedTimes": 2
+        },
+        {
+            "type": "DirtBlock",
+            "x": 5700,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 5800,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6000,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6100,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6100,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 5900,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6200,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6300,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6400,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6400,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6200,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6300,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6500,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6600,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6700,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6800,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6800,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6700,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6600,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6500,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6800,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6700,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6500,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6600,
+            "y": 3300,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 7000,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6900,
+            "y": 3100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6900,
+            "y": 3200,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "DirtBlock",
+            "x": 6700,
+            "y": 3500,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 6000,
+            "y": 3500,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 7200,
+            "y": 4200,
             "rotatedTimes": 0
         }
     ],

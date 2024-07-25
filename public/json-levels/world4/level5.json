@@ -2480,6 +2480,13 @@
         "BasicIronBlock": 2,
         "SpikeBlock": 2,
         "Coins": 2
-    }
+    },
+    "bonusChallenges": [
+        {
+          "name": "Unarmed and Dangerous",
+          "description": "Don't use any spike blocks.",
+          "value": 0
+        }
+      ]
 
 }

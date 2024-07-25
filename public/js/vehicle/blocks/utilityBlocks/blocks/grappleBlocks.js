@@ -211,7 +211,7 @@ class GrappleBlock extends Block {
                         // do nothing
                     } else if (!this.hasDamagedBlock) {
                         this.hasDamagedBlock = true;
-                        otherBody.block.damage(75);
+                        otherBody.block.damage(40);
                     } 
 
                     // create a weld constraint between the grappling hook and the other body

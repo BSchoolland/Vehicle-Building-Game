@@ -195,7 +195,7 @@ class flameThrower extends Block {
     // add the flame to the world
     Matter.World.add(this.contraption.engine.world, flame);
     // shoot the flame in the opposite direction of the rocket with some inaccuracy
-    const maxInaccuracy = 0.2;
+    const maxInaccuracy = 0.4;
     const inaccuracy = Math.random() * maxInaccuracy * 2 - maxInaccuracy;
     const direction = Matter.Vector.sub(this.bodies[0].position, this.bodies[1].position);
     const normalizedDirection = Matter.Vector.normalise(direction);

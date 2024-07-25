@@ -301,67 +301,76 @@ class LevelUI {
   }
 
   createForwardArrow(levelSelector, worldSelector, worldCount) {
-    let forwardArrow = document.createElement("button");
-    forwardArrow.className = "world-arrow";
-
-    let forwardImg = document.createElement("img");
-    forwardImg.src = "/img/Arrow.png";
-    // rotate the arrow 180 degrees
-    let lastLevel = this.parent.LevelHandler.getLevelCount(
-      this.parent.worldSelected
-    );
-    if (this.parent.LevelHandler.isLevelCompleted(this.parent.worldSelected, lastLevel) || override) {
-      forwardImg.style.transform = "rotate(180deg)";
-
-      forwardArrow.appendChild(forwardImg);
-      worldSelector.appendChild(forwardArrow);
-
-    }
-    else {
-      // show the lock icon if the last level has not been completed
-      let lock = document.createElement("img");
-      lock.src = "/img/lock.png";
-      lock.className = "lock-icon";
-      forwardArrow.appendChild(lock);
-      worldSelector.appendChild(forwardArrow);
-      // add a message explaining that the next world is locked until the last level is completed
-      let lockMessage = document.createElement("p");
-      lockMessage.style.cursor = "pointer";
-      lockMessage.style.maxWidth = "200px";
-      lockMessage.innerHTML = "Defeat the boss to unlock the next world!";
-      worldSelector.appendChild(lockMessage);
-      // if the message is clicked, start the boss level
-      lockMessage.addEventListener("click", () => {
-        let box = document.querySelector(".level-select-box:last-child");
-        // scroll to the last level and click it
-        box.scrollIntoView({ behavior: 'smooth' });
-        box.click();
-      });
-    }
-
-    forwardArrow.addEventListener("click", () => {
-      // check if the last level in the current world has been completed
+      let forwardArrow = document.createElement("button");
+      forwardArrow.className = "world-arrow";
+  
+      let forwardImg = document.createElement("img");
+      forwardImg.src = "/img/Arrow.png";
+      // rotate the arrow 180 degrees
       let lastLevel = this.parent.LevelHandler.getLevelCount(
-        this.parent.worldSelected
+          this.parent.worldSelected
       );
       if (this.parent.LevelHandler.isLevelCompleted(this.parent.worldSelected, lastLevel) || override) {
-        // if the last level has been completed, move to the next world
-        levelSelector.remove();
-
-        this.parent.worldSelected++;
-        this.loadLevelSelector();
-        this.updateArrowState(forwardArrow, worldCount);
-      } else {
-        // if the last level has not been completed, start the last level as a boss level        
-        let box = document.querySelector(".level-select-box:last-child");
-        // scroll to the last level and click it
-        box.scrollIntoView({ behavior: 'smooth' });
-        box.click();
-
+          forwardImg.style.transform = "rotate(180deg)";
+  
+          forwardArrow.appendChild(forwardImg);
+          worldSelector.appendChild(forwardArrow);
+  
       }
-    });
-
-    this.updateArrowState(forwardArrow, worldCount);
+      else {
+          // show the lock icon if the last level has not been completed
+          let lock = document.createElement("img");
+          lock.src = "/img/lock.png";
+          lock.className = "lock-icon";
+          forwardArrow.appendChild(lock);
+          worldSelector.appendChild(forwardArrow);
+          // add a message explaining that the next world is locked until the last level is completed
+          let lockMessage = document.createElement("p");
+          lockMessage.style.maxWidth = "200px";
+          lockMessage.innerHTML = "Defeat the boss to unlock the next world!";
+          worldSelector.appendChild(lockMessage);
+      }
+  
+      forwardArrow.addEventListener("click", () => {
+          // check if the last level in the current world has been completed
+          let lastLevel = this.parent.LevelHandler.getLevelCount(
+              this.parent.worldSelected
+          );
+          if (this.parent.LevelHandler.isLevelCompleted(this.parent.worldSelected, lastLevel) || override) {
+              // if the last level has been completed, move to the next world
+              levelSelector.remove();
+  
+              this.parent.worldSelected++;
+              this.loadLevelSelector();
+              this.updateArrowState(forwardArrow, worldCount);
+          } else {
+              // scroll down in the level selector (not the html body)
+              let levelContainer = document.getElementById("level-container");
+              let startTime = null;
+              let duration = 500; // total duration of the scroll in milliseconds
+              let startScroll = levelContainer.scrollTop;
+  
+              function easeInOutQuad(t) {
+                  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+              }
+  
+              function scrollStep(timestamp) {
+                  if (!startTime) startTime = timestamp;
+                  let progress = timestamp - startTime;
+                  let maxScroll = levelContainer.scrollHeight - levelContainer.clientHeight;
+                  let scrollPosition = startScroll + easeInOutQuad(Math.min(progress / duration, 1)) * (maxScroll - startScroll);
+                  levelContainer.scrollTop = scrollPosition;
+  
+                  if (progress < duration) {
+                      window.requestAnimationFrame(scrollStep);
+                  }
+              }
+  
+              window.requestAnimationFrame(scrollStep);
+          }
+      });
+  
+      this.updateArrowState(forwardArrow, worldCount);
   }
 
   createBackwardArrow(levelSelector, worldSelector, worldCount) {

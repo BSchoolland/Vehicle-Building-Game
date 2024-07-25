@@ -83,6 +83,10 @@ class Gameplay {
     }
     if (this.mustSurvive > 0) {
       let survive = document.createElement("h1");
+      if (this.secondsSurvived >= this.mustSurvive) {
+        // set seconds survived to the must survive time
+        this.secondsSurvived = this.mustSurvive;
+      }
       survive.innerHTML = `Survive ${this.secondsSurvived}/${this.mustSurvive}`;
       stats.appendChild(survive);
     }
@@ -276,6 +280,8 @@ class Gameplay {
       }
 
       if (this.secondsSurvived >= this.mustSurvive) {
+        // set seconds survived to the must survive time
+        this.secondsSurvived = this.mustSurvive;
         // check if the player has destroyed enough enemy contraptions
         if (this.enemyContraptionsDestroyed >= this.mustDestroy) {
           // check if the player has completed the level before the time limit

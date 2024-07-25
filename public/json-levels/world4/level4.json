@@ -2748,7 +2748,7 @@
         },
         {
             "name": "Survive",
-            "value": 15
+            "value": 0
         },
         {
             "name": "BeforeTime",
@@ -2757,28 +2757,28 @@
     ],
     "buildingBlockTypes": [
         {
-            "name": "Remote Block",
-            "key": "1",
-            "type": "RemoteBlock",
-            "limit": 1
-        },
-        {
             "name": "Basic Wooden Block",
-            "key": "2",
+            "key": "1",
             "type": "BasicWoodenBlock",
             "limit": 6
         },
         {
             "name": "Seat Block",
-            "key": "3",
+            "key": "2",
             "type": "SeatBlock",
             "limit": 1
         },
         {
             "name": "Wheel Block",
-            "key": "4",
+            "key": "3",
             "type": "WheelBlock",
             "limit": 6
+        },
+        {
+            "name": "Remote Block",
+            "key": "4",
+            "type": "RemoteBlock",
+            "limit": 1
         },
         {
             "name": "T N T Block",
@@ -2803,7 +2803,14 @@
             "key": "8",
             "type": "BasicIronBlock",
             "limit": 4
+        },
+        {
+            "name": "rocket Booster Block",
+            "key": "9",
+            "type": "rocketBoosterBlock",
+            "limit": 1
         }
+
     ],
     "title": "Spidercar",
     "tutorialText": "FIXME: show the first hook point in the level tour (may require a tour block)",
@@ -2816,6 +2823,7 @@
         "TNTBlock": 1,
         "BasicIronBlock": 1,
         "RemoteBlock": 1,
+        "rocketBoosterBlock": 1,
         "Coins": 3
     }
 }

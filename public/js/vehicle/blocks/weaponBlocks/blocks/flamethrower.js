@@ -31,7 +31,7 @@ class flameThrower extends Block {
     this.explosionDamage = 100;
     // fire damage
     // the number of flames this block can create per second
-    this.flameRate = 15;
+    this.flameRate = 5;
     this.secondsSinceLastFlame = 0;
     this.flameSize = 25; // the size of the flame
     this.flameRange = 500; // the range of the flame

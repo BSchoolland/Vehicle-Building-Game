@@ -93,6 +93,13 @@ class GrappleBlock extends Block {
         if (this.hitPoints <= 0) {
             return;
         }
+        // if any of the bodies the hookwelds are connected to are destroyed, destroy the welds
+        this.hookWelds.forEach(weld => {
+            if (weld.bodyA.block.hitPoints <= 0 || weld.bodyB.block.hitPoints <= 0) {
+                Matter.World.remove(this.contraption.engine.world, weld);
+            }
+        });
+
         // check if the right mouse button is pressed
         if (this.contraption.keysPressed[this.activationKey]) {
             this.shootGrapplingHook();

@@ -197,6 +197,13 @@
     "rocketBoosterBlock": 1,
     "Coins": 5
   },
+  "tutorial": [
+    {
+      "text": "As you progress through later worlds, you’ll unlock more powerful parts.  For example, this Rocket Booster.  This particular block is all about going places.  Attach it to the back of your car and hold SHIFT to get a powerful boost!",
+      "activates": "load",
+      "image": "1.png"
+    }
+  ],
   "tutorialText": "Press SHIFT to activate the rocket booster!",
   "title": "Jump"
 }

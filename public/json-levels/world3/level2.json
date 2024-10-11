@@ -138,6 +138,13 @@
       "value": 0
     }
   ],
+  "tutorial": [
+    {
+      "text": "The armor block is a heavy block that can take a lot of damage.",
+      "activates": "load",
+      "image": "1.png"
+    }
+  ],
   "tutorialText": "",
   "title": "Low Clearance",
   "reward": {

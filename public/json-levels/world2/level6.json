@@ -125,6 +125,13 @@
     "RemoteBlock": 1,
     "Coins": 1
   },
+  "tutorial": [
+    {
+      "text": "New block! Press x to drop anything connected by the disconnector block. Spikes are amazing enough on the front of your vehicle, but they're even more dangerous falling from the sky!",
+      "activates": "load",
+      "image": "1.png"
+    }
+  ],
   "tutorialText": "Press X to disconnect the remote block. Spikes are dangerous enough on the front of your vehicle, but they're even more dangerous falling from the sky.",
   "title": "Death from Above"
 }

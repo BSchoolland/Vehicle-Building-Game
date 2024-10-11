@@ -178,6 +178,13 @@
     "SpikeBlock": 1,
     "Coins": 4
   },
+  "tutorial": [
+    {
+      "text": "This level has a time limit. Finish the level before the time runs out!",
+      "activates": "load",
+      "image": "1.png"
+    }
+  ],
   "tutorialText": "Finish the level before the time runs out!",
   "title": "Twin Chasms"
 }

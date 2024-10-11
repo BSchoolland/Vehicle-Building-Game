@@ -11,13 +11,28 @@
     z-index: 100;
 }
 
+.tutorial-popup {
+    position: fixed;
+    top: 1.5%;
+    left: 10%;
+    width: 30%;
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    z-index: 100;
+    @media screen and (max-width: 1200px) {
+        width: 80%;
+        
+    }
+}
+
 .login-popup-content {
     position: relative;
     background-color: $ui-background-color;
     // padding: 20px;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-    width: 30%;
     // min-height: 60%; 
     overflow: hidden;
     // center content

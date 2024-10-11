@@ -72,6 +72,13 @@
     "rocketBoosterBlock": 1,
     "Coins": 2
   },
+  "tutorial": [
+    {
+      "text": "The rocket booster can also be rotated for toasting marshmallows and/or enemies!",
+      "activates": "load",
+      "image": "1.png"
+    }
+  ],
   "tutorialText": "The rocket booster can also be rotated for toasting marshmallows and/or enemies!",
   "title": "Flamethrower"
 }

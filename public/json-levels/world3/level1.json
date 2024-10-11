@@ -104,6 +104,13 @@
       "value": 6
     }
   ],
+  "tutorial": [
+    {
+      "text": "New block! The light block weighs much less than other blocks, making it ideal for flying vehicles.",
+      "activates": "load",
+      "image": "1.png"
+    }
+  ],
   
   "reward": {
     "WheelBlock": 1,

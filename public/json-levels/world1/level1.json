@@ -88,13 +88,8 @@
       "image": "1.png"
     },
     {
-      "text": "You can remove blocks by right clicking on them.  Try it out!",
-      "activates": "placeBlock",
-      "image": "2.png"
-    },
-    {
       "text": "You can switch which block you are using by clicking on it in the <b>Build Menu</b>.",
-      "activates": "removeBlock",
+      "activates": "placeBlock",
       "image": "3.png"
     },
     {

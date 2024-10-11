@@ -91,6 +91,13 @@
     "TNTBlock": 1,
     "Coins": 3
   },
+  "tutorial": [
+    {
+      "text": "TNT is dangerous if you're too close, and explodes whenever it is hit hard.  Use the disconnector and rocket to make it close to the enemy instead!",
+      "activates": "load",
+      "image": "1.png"
+    }
+  ],
   "tutorialText": "TNT is dangerous if you're too close.  Use the remote and rocket to make it close to the enemy instead!",
   "title": "Woosh, Boom!"
 }

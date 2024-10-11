@@ -19,9 +19,9 @@ class LevelTutorial{
         let tutorialText = document.querySelector("#tutorial-content p");
         tutorialText.innerHTML = test;
         // fill the image
-        let tutorialImage = document.querySelector("#tutorial-content img");
-        let fullSrc = `/img/tutorial/world${this.world}/level${this.level}/${this.popups[popupNumber].image}`
-        tutorialImage.src = fullSrc;
+        // let tutorialImage = document.querySelector("#tutorial-content img");
+        // let fullSrc = `/img/tutorial/world${this.world}/level${this.level}/${this.popups[popupNumber].image}`
+        // tutorialImage.src = fullSrc;
         // show the popup
         let tutorialPopup = document.querySelector("#tutorial-popup");
         tutorialPopup.classList.remove("hidden");

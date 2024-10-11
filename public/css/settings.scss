@@ -27,20 +27,16 @@
 
 .tutorial-popup-content {
     position: relative;
-    background-color: $ui-background-color;
+    background-color: #245081;
     // padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-    width: 30%;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
+    width: 100%;
     // min-height: 60%; 
     overflow: hidden;
     // center content
     display: flex;
     flex-direction: column;
-    @media screen and (max-width: 1200px) {
-        width: 70%;
-        
-    }
 }
 
 

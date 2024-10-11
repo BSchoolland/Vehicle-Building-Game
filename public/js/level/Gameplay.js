@@ -229,8 +229,6 @@ class Gameplay {
       document.getElementById("stats").style.display = "none";
       // set the survival time to 0
       this.secondsSurvived = 0;
-      // sync resources with the server
-      this.parent.building.ResourceHandler.syncResources(this.parent.worldSelected);
       // tell the tutorial that the level has been completed
       this.parent.LevelTutorial.checkVictory();
     }, 3000);

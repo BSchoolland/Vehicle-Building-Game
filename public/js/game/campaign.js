@@ -113,6 +113,7 @@ let building = new Building(engine, camera, resourceHandler);
 building.init();
 const levelObject = new LevelManager(engine, building, progressBar);
 levelObject.init();
+resourceHandler.parent = levelObject
 document.addEventListener("click", clickHandler);
 startGame();
 

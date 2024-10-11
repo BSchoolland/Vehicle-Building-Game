@@ -32,8 +32,9 @@ function checkUserCookie() {
 }
 
 class ResourceHandler {
-    constructor() {
+    constructor(parent = null) {
         this.resources = {};
+        this.parent = parent;
     }
     async init() {
         console.log("INIT RESOURCE HANDLER");
@@ -102,8 +103,18 @@ class ResourceHandler {
         console.log(resourcesArray);
         return resourcesArray;
     }
-    addBlockToResources(worldNum, blockName, count = 1) {
+    addBlockToResources(worldNum, blockName, count = 1, noShow = false) {
+        // to fix the weird bug where resources are letters and numbers, filter out any counts that are not numbers and block names that are not strings
+        if (typeof blockName !== "string") {
+            console.warn("blockName is not a string");
+            return;
+        }
+        if (typeof count !== "number") {
+            console.warn("count is not a number");
+            return;
+        }
         console.log(`Adding ${count} ${blockName} to world ${worldNum}`);
+
         let resources = this.resources[worldNum];
         if (resources[blockName]) {
             resources[blockName] += count;
@@ -112,6 +123,9 @@ class ResourceHandler {
         }
         localStorage.setItem(`world${worldNum}Resources`, JSON.stringify(resources));
         // wait till inventory-button is loaded
+        if (noShow) {
+            return;
+        }
         let interval = setInterval(() => {
             let inventory = document.getElementById("inventory-button");
             if (inventory) {
@@ -128,46 +142,93 @@ class ResourceHandler {
     }
 
     async syncResources(worldNum) {
+        if (!this.parent){
+            console.warn("failed to sync resources, parent not set");
+            // try again in 1 second
+            setTimeout(() => {
+                this.syncResources(worldNum);
+            }, 1000);
+            return;
+        }
         if (worldNum === 'all') {
             for (let i = 1; i <= worldCount; i++) {
                 await this.syncResources(i);
             }
             return;
         }
-        if (checkUserCookie()) {
-            // get resources from local storage
-            let resources = JSON.parse(localStorage.getItem(`world${worldNum}Resources`));
-            // get resources from the server
-            let response = await fetch(`/api/getResources?world=${worldNum}`);
-            let serverResources = await response.json();
-            // compare the resources, and always give the player the benefit of the doubt
-            let combinedResources = {}
-            for (let key in resources) {
-                if (resources[key] > serverResources[key]) {
-                    combinedResources[key] = resources[key];
-                } else {
-                    combinedResources[key] = serverResources[key];
+        // clear the resources
+        this.resources[worldNum] = [];
+
+        // add a seat and a wheel to the player's inventory
+        this.addBlockToResources(worldNum, "SeatBlock", 1, true);
+        this.addBlockToResources(worldNum, "WheelBlock", 1, true);
+
+        // simply recalculate resources from which levels have been completed
+
+        // get which levels have been completed locally
+        let count = this.parent.LevelHandler.getLevelCount(
+            worldNum,
+        );
+
+        // get the bonus objectives of each level
+        for (let i = 1; i < count; i++) {
+            let bonusObjectives = this.parent.LevelHandler.getBonusChallenges(
+                worldNum,
+                i
+            );
+            let areAllBonusObjectivesCompleted = true;
+            for (let j = 0; j < bonusObjectives.length; j++) {
+                let objectiveName = bonusObjectives[j].name;
+                if (this.parent.LevelHandler.isMedalEarned(
+                    worldNum,
+                    i,
+                    objectiveName
+                  )) {
+                    // do nothing
+                  } else {
+                    areAllBonusObjectivesCompleted = false;
+                    break;
+                  }
+            }
+            // if all bonus objectives are completed, award the player with the resources
+            if (areAllBonusObjectivesCompleted) {
+                // award the player with the resources
+                // get the level JSON
+                let levelJSON = this.parent.LevelHandler.getLevel(
+                    worldNum,
+                    i
+                );
+                let resources = levelJSON.reward;
+                for (let key in resources) {
+                    this.addBlockToResources(worldNum, key, resources[key], true);
                 }
             }
-            console.log("combined resources", combinedResources);
-            // send a post request to the server with the new resources
-            fetch('/api/updateResources', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    world: worldNum,
-                    resources: resources
-                })
-            });
-        }
-        else {
-            console.log("User not logged in, cannot sync resources");
+
+            // check if "Beat the Level" is completed
+            if (this.parent.LevelHandler.isMedalEarned(
+                worldNum,
+                i,
+                "Beat the Level"
+              )) {
+                // award the player with the resources again
+                let levelJSON = this.parent.LevelHandler.getLevel(
+                    worldNum,
+                    i
+                );
+                let resources = levelJSON.reward;
+                console.log(resources);
+
+                for (let key in resources) {
+                    this.addBlockToResources(worldNum, key, resources[key], true);
+                }
+            } 
         }
     }
 
     collectionAnimation(blockName,  to = null, from='auto', fromRandom = 200, toRandom = 0, sound = 'coin') {
+        // don't show coins
+        if (blockName === "Coins") return;
+        
         // Create the resource element
         let resource = document.createElement("div");
         resource.classList.add("resource");
@@ -246,7 +307,8 @@ class ResourceHandler {
         let inventory = [];
         let resources = this.resources[worldNum];
         for (let key in resources) {
-            
+            // ignore coins
+            if (key === "Coins") continue;
             inventory.push({
                 src: `img/build-buttons/${resourceImages[key]}`,
                 number: resources[key],

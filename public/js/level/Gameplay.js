@@ -115,9 +115,13 @@ class Gameplay {
     this.coinsCollected = 0;
     this.enemyContraptionsDestroyed = 0;
     this.secondsSurvived = 0;
-    this.startTime = 0;
+    this.startTime = Date.now();
     // update the stats
     this.updateStats();
+    setTimeout(() => {
+      this.startTime = 0;
+      this.updateStats();
+    }, 1000);
   }
 
   completeLevel() {
@@ -238,6 +242,8 @@ class Gameplay {
     if (!this.parent.playerContraption.seat) return;
     if (this.startTime === 0) {
       // if the level hasn't started yet, don't check for win conditions
+      // set the time remaining to the must complete before time
+      this.remainingTime = this.mustCompleteBefore;
       return;
     }
     this.parent.coins.forEach((coin) => {

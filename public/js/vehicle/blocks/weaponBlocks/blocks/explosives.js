@@ -123,6 +123,8 @@ class TNTBlock extends Block {
                 if (body.block.invincibleParts && body.block.invincibleParts.includes(body)) {
                     return;
                 }
+                // if the other block is static, don't damage it
+                if (body.isStatic) return;
                 // damage the block
                 if (body.block.damage) {
                     const damageReduction = 1 - body.distanceFromExplosion / this.blastRadius;
@@ -199,7 +201,6 @@ class knockBackBlock extends Block {
             // damage this block by the relative velocity of the other block
             let velocityDifference = Matter.Vector.sub(otherBody.velocity, this.bodies[0].velocity);
             this.damage(Math.abs(velocityDifference.x + velocityDifference.y) ** 2 + 3 ); // damage is proportional to the velocity squared
-            console.log('damage: ' + Math.abs(velocityDifference.x + velocityDifference.y) ** 2);
             // record the time of the hit
             this.lastHit = Date.now();
         }
@@ -291,6 +292,9 @@ class knockBackBlock extends Block {
                 if (body.block.invincibleParts && body.block.invincibleParts.includes(body)) {
                     return;
                 }
+                // if the other block is static, don't damage it
+                if (body.isStatic) return;
+
                 // damage the block
                 if (body.block.damage) {
                     const damageReduction = 1 - body.distanceFromExplosion / this.blastRadius;

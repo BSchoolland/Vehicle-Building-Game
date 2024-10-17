@@ -310,6 +310,13 @@
           "value": 0
         }
       ],
+      "tutorial": [
+        {
+          "text": "Use the blue TNT to launch your vehicle into the air",
+          "activates": "load",
+          "image": "1.png"
+        }
+      ],
     "title": "Pogo Stick",
     "tutorialText": "",
     "reward": {

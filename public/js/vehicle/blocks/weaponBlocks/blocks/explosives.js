@@ -112,6 +112,26 @@ class TNTBlock extends Block {
         let x = this.bodies[0].position.x;
         let y = this.bodies[0].position.y;
         Matter.World.remove(world, this.bodies[0]);
+        // remove all welds
+        for (weld in this.bodies[0].welds) {
+            Matter.World.remove(world, weld);
+        }
+        // remove all welds to this block across the contraption
+        this.contraption.blocks.forEach(block => {
+            // check if the block has welds
+            if (block.welds.length > 0) {
+                // check if the weld is attached to this block
+                block.welds.forEach(weld => {
+                    if (weld.bodyA === this.bodies[0] || weld.bodyB === this.bodies[0]) {
+                        // remove the weld
+                        Matter.World.remove(this.contraption.engine.world, weld);
+                        // remove the weld from the welds array
+                        block.welds.splice(block.welds.indexOf(weld), 1);
+                    }
+                });
+            }
+        }
+        );
         // create a circle explosion
         // find all the bodies in the explosion
         let bodies = this.getObjectsInExplosion();
@@ -282,6 +302,26 @@ class knockBackBlock extends Block {
         let y = this.bodies[0].position.y;
         Matter.World.remove(world, this.bodies[0]);
         // create a circle explosion
+        // remove all welds
+        for (weld in this.bodies[0].welds) {
+            Matter.World.remove(world, weld);
+        }
+        // remove all welds to this block across the contraption
+        this.contraption.blocks.forEach(block => {
+            // check if the block has welds
+            if (block.welds.length > 0) {
+                // check if the weld is attached to this block
+                block.welds.forEach(weld => {
+                    if (weld.bodyA === this.bodies[0] || weld.bodyB === this.bodies[0]) {
+                        // remove the weld
+                        Matter.World.remove(this.contraption.engine.world, weld);
+                        // remove the weld from the welds array
+                        block.welds.splice(block.welds.indexOf(weld), 1);
+                    }
+                });
+            }
+        }
+        );
         // find all the bodies in the explosion
         let bodies = this.getObjectsInExplosion();
         // damage all the bodies in the explosion

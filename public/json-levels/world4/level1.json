@@ -829,6 +829,13 @@
           "value": 4
         }
     ],
+    "tutorial": [
+        {
+          "text": "New block! The grapple hook shoots out when you press G. Once it attaches, pressing G again will detach it",
+          "activates": "load",
+          "image": "1.png"
+        }
+      ],
     "reward": {
         "WheelBlock": 2,
         "BasicWoodenBlock": 2,

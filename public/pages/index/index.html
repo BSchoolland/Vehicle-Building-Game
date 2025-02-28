@@ -112,6 +112,9 @@
     <a id="changelog" class="main-button hidden" href="/changelog">
         <img class="main-button-image" src="/img/Community.png" alt="change-log">
     </a>
+    <a id="other-games" class="main-button hidden" href="/other-games">
+        <img class="main-button-image" src="/img/OtherGames.png" alt="other-games">
+    </a>
 </div>
 
 <script type="module" src="/pages/index/index.js"></script>
@@ -191,7 +194,9 @@
         // The page is not in an iframe so remove the hidden class from the login button
         document.getElementById("login").classList.remove("hidden");
         //  remove the hidden class from the changelog button
-        document.getElementById("changelog").classList.remove("hidden");
+        // document.getElementById("changelog").classList.remove("hidden");
+        // remove the hidden class from the "other games" button
+        document.getElementById("other-games").classList.remove("hidden");
     }
     else {
         // the page is in an iframe (likely on crazygames)

@@ -847,6 +847,13 @@
         "SpikeBlock": 2,
         "Coins": 2
     },
+    "bonusChallenges": [
+    {
+      "name": "Who needs blocks?",
+      "description": "Complete the level using 6 blocks or less",
+      "value": 6
+    }
+  ],
     "title": "Ready, Aim, Harpoon!",
     "tutorialText": "The Grappling Hook and the Powered Hinge are a powerful combo!"
 }

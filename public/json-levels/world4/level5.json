@@ -530,12 +530,6 @@
         },
         {
             "type": "GrassBlock",
-            "x": 8600,
-            "y": 5100,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
             "x": 9100,
             "y": 5000,
             "rotatedTimes": 0
@@ -1451,18 +1445,6 @@
             "x": 9100,
             "y": 5800,
             "rotatedTimes": 3
-        },
-        {
-            "type": "RampBlockR",
-            "x": 8700,
-            "y": 5500,
-            "rotatedTimes": 0
-        },
-        {
-            "type": "GrassBlock",
-            "x": 8700,
-            "y": 5600,
-            "rotatedTimes": 0
         },
         {
             "type": "slightRampBlockL",
@@ -2405,6 +2387,18 @@
             "x": 7900,
             "y": 4900,
             "rotatedTimes": 0
+        },
+        {
+            "type": "RampBlockR",
+            "x": 8600,
+            "y": 5100,
+            "rotatedTimes": 0
+        },
+        {
+            "type": "GrassBlock",
+            "x": 8600,
+            "y": 5200,
+            "rotatedTimes": 0
         }
     ],
     "objectives": [
@@ -2463,30 +2457,12 @@
             "limit": 1
         },
         {
-            "name": "Iron Block",
+            "name": "Basic Iron Block",
             "key": "7",
             "type": "BasicIronBlock",
             "limit": 3
         }
     ],
     "title": "Stowaway",
-    "tutorialText": "",
-    "groundDepth": 30,
-    "reward": {
-        "WheelBlock": 1,
-        "rocketBoosterBlock": 1,
-        "BasicWoodenBlock": 2,
-        "RemoteBlock": 1,
-        "BasicIronBlock": 2,
-        "SpikeBlock": 2,
-        "Coins": 2
-    },
-    "bonusChallenges": [
-        {
-          "name": "Unarmed and Dangerous",
-          "description": "Don't use any spike blocks.",
-          "value": 0
-        }
-      ]
-
+    "tutorialText": ""
 }

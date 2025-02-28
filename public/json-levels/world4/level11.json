@@ -1333,6 +1333,13 @@
         "RemoteBlock": 1,
         "Coins": 1
     },
+    "bonusChallenges": [
+        {
+        "name": "No Wheels",
+        "description": "Complete the level without using any wheels.",
+        "value": 0
+        }
+    ],
     "title": "Watch Your Head",
     "tutorialText": "This is a hint for the level"
 }

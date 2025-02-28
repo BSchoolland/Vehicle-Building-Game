@@ -23,8 +23,8 @@ class GrappleBlock extends Block {
         this.grappleConstraint = null;
         this.grappleAimConstraint = null;
         // by default, the activation key is 'r' and the reverse activation key is 'f'
-        this.activationKey = 'r';
-        this.reverseActivationKey = 'f';
+        this.activationKey = 'g';
+        this.reverseActivationKey = 'r';
         this.firing = false;
         this.hasDamagedBlock = false
     }
@@ -101,7 +101,7 @@ class GrappleBlock extends Block {
         });
 
         // check if the right mouse button is pressed
-        if (this.contraption.keysPressed[this.activationKey]) {
+        if (this.contraption.keysPressed[this.activationKey] || this.contraption.keysPressed[this.reverseActivationKey]) {
             this.shootGrapplingHook();
         } else {
             this.firing = false;

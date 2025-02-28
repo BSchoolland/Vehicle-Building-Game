@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wrecking Wheels - Other Games</title>
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            background: linear-gradient(rgba(157, 157, 157, 0.8), rgba(157, 157, 157, 0.8)), url('/img/index-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Muro', sans-serif;
+            color: #ffffff;
+            letter-spacing: 0.1em;
+        }
+
+        .menu-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .menu-item img {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s;
+        }
+
+        .menu-item img:hover {
+            transform: scale(1.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-top: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .game-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding: 40px;
+            margin-top: 20px;
+        }
+
+        .game-item {
+            background-color: rgba(26, 58, 95, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .game-item img {
+            width: 300px;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .game-item p {
+            margin: 15px 0 0 0;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .game-item img {
+                width: 250px;
+                height: 160px;
+            }
+
+            .game-item p {
+                font-size: 1.2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="menu-container">
+        <div class="menu-item">
+            <a href="/">
+                <img src="/img/back-arrow.png" alt="back">
+            </a>
+        </div>
+    </div>
+    <h1>Other Games</h1>
+    <p>Sorry about the bad design, don't have a lot of time to work on this, but here's some links to other games I've made.</p>
+    <div class="game-container">
+        <a href="/sketchy_towers">
+            <div class="game-item">
+                    <img src="/img/sketchy-towers.png" alt="sketchy-towers">
+                <p>Sketchy Towers</p>
+            </div>
+        </a>
+
+        <a href="https://bladegame.duckdns.org/">
+            <div class="game-item">
+                    <img src="/img/blade_game.png" alt="blade-game">
+                <p>Blade Game</p>
+            </div>
+        </a>
+
+        <!-- <a href="https://www.minecraft.net/en-us/about-minecraft"></a>
+            <div class="game-item">
+                
+                    <img src="/img/minecraft.png" alt="minecraft">
+                <p>Minecraft (jk I didn't make this)</p>
+            </div>
+        </a> -->
+
+    </div>
+</body>
+</html>

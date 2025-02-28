@@ -1833,13 +1833,13 @@
             "limit": 7
         }
     ],
-   "bonusChallenges": [
-    {
-      "name": "No Wheels",
-      "description": "Complete the level without using any wheels.",
-      "value": 0
-    }
-  ],
+    "bonusChallenges": [
+        {
+        "name": "No Wheels",
+        "description": "Complete the level without using any wheels.",
+        "value": 0
+        }
+    ],
     
     "title": "Wall Crawler",
     "groundDepth": 30,

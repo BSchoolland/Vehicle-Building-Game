@@ -202,6 +202,7 @@ class Contraption {
     }
   }
   removeBlock(block, addToActionStack = true) {
+    block.resetValues()
     this.blocks.splice(this.blocks.indexOf(block), 1);
     // remove the block from the world
     block.removeFromWorld(this.engine.world);

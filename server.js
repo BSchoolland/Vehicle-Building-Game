@@ -77,6 +77,14 @@ app.get('/mylevel.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/editor/mylevel.html'));
 });
 
+app.get('/other-games', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/other-games/other-games.html'));
+});
+
+app.get('/other-games.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/pages/other-games/other-games.html'));
+});
+
 // api for getting all enemies
 app.get('/api/enemies', (req, res) => {
   console.log("enemies requested");

@@ -36,22 +36,6 @@ app.get('/changeLog.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/changeLog/changeLog.html'));
 });
 
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/pages/login/login.html'));
-});
-
-app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/pages/login/login.html'));
-});
-
-app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/pages/register/register.html'));
-});
-
-app.get('/register.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/pages/register/register.html'));
-});
-
 app.get('/sandbox', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/pages/sandbox/sandbox.html'));
 });

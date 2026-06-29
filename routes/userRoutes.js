@@ -15,7 +15,7 @@ if (!secret) {
 
 // Utility function to get the user's id from their cookie
 const getUserIdFromCookie = (cookie) => {
-  const decoded = jwt.verify(cookie, secret);
+  const decoded = jwt.verify(cookie, secret, { algorithms: ["HS256"] });
   return decoded.user_id;
 };
 
@@ -207,7 +207,7 @@ router.post("/api/voteFeature", (req, res) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, secret, { algorithms: ["HS256"] });
     const userId = decoded.user_id;
 
     // Check if the user has already voted
@@ -254,6 +254,9 @@ router.post("/api/voteFeature", (req, res) => {
       
     );
   } catch (error) {
+    // Log (without the token) so a rejected/expired/wrong-algorithm cookie is
+    // distinguishable from ordinary unauthenticated traffic.
+    console.warn("voteFeature: rejected JWT", { ip: req.ip, error: error.message });
     return res.status(401).json({ message: "Invalid token" });
   }
 });
@@ -270,7 +273,7 @@ router.post("/api/submitSuggestion", (req, res) => {
         .json({ message: "Unauthorized: No token provided" });
     }
 
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, secret, { algorithms: ["HS256"] });
     const userId = decoded.user_id;
 
     db.run(

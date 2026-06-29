@@ -27,7 +27,7 @@ const getUserIdFromCookie = (cookie) => {
     // Invalid/forged/expired token — unauthenticated, not a server error.
     // Log the reason only (never the token) so secret-rotation/expiry issues
     // are diagnosable without dumping a stack trace on every stale cookie.
-    console.warn(`Rejected auth cookie: ${err.name}`);
+    console.warn(`Rejected auth cookie: ${err.name}: ${err.message}`);
     return null;
   }
 };

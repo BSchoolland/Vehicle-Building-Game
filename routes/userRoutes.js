@@ -13,10 +13,23 @@ if (!secret) {
   secret = "default_secret_that_should_be_changed";
 }
 
-// Utility function to get the user's id from their cookie
+// Utility function to get the user's id from their cookie.
+// Returns null when the cookie is missing or the token is invalid/expired, so callers
+// can answer 401 instead of letting jwt.verify throw into a generic 500 handler.
 const getUserIdFromCookie = (cookie) => {
-  const decoded = jwt.verify(cookie, secret);
-  return decoded.user_id;
+  if (!cookie) {
+    return null;
+  }
+  try {
+    const decoded = jwt.verify(cookie, secret);
+    return decoded.user_id;
+  } catch (err) {
+    // Invalid/forged/expired token — unauthenticated, not a server error.
+    // Log the reason only (never the token) so secret-rotation/expiry issues
+    // are diagnosable without dumping a stack trace on every stale cookie.
+    console.warn(`Rejected auth cookie: ${err.name}: ${err.message}`);
+    return null;
+  }
 };
 
 // Insert a new row into the UserActivity table
@@ -67,12 +80,16 @@ router.post("/api/beat-level", (req, res) => {
     const world = req.body.world;
     const userIp = req.ip;
     const timestamp = new Date().toISOString();
-    // check for the user's cookie
-    let user_id;
-    if (!req.cookies || !req.cookies.user) {
-      user_id = null;
-    } else {
+    // check for the user's cookie. No cookie = anonymous play (allowed).
+    // A present-but-invalid cookie means a broken/expired session: answer 401 so
+    // the client re-authenticates, rather than silently logging the run as anonymous.
+    let user_id = null;
+    if (req.cookies && req.cookies.user) {
       user_id = getUserIdFromCookie(req.cookies.user);
+      if (user_id == null) {
+        res.status(401).send("Invalid or expired session");
+        return;
+      }
     }
     // an array of the medals the user has earned
     let medals = req.body.medals;
@@ -102,6 +119,11 @@ router.get("/api/getLevelsBeat", (req, res) => {
     }
     // get the user's id from the cookie
     const userId = getUserIdFromCookie(userCookie);
+    // a present-but-invalid/expired cookie is unauthenticated, not a server error
+    if (userId == null) {
+      res.status(401).send("User not logged in");
+      return;
+    }
     // create the sql query to get the levels the user has beaten
     const sql = `SELECT * FROM levelsBeat WHERE user_id = ?`;
     db.all(sql, [userId], (err, rows) => {

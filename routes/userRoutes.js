@@ -254,6 +254,9 @@ router.post("/api/voteFeature", (req, res) => {
       
     );
   } catch (error) {
+    // Log (without the token) so a rejected/expired/wrong-algorithm cookie is
+    // distinguishable from ordinary unauthenticated traffic.
+    console.warn("voteFeature: rejected JWT", { ip: req.ip, error: error.message });
     return res.status(401).json({ message: "Invalid token" });
   }
 });
